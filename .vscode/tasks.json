@@ -1,0 +1,78 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake Configure",
+            "type": "shell",
+            "command": "cmake -B build -DCMAKE_BUILD_TYPE=Debug",
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Configure CMake build files in the build directory"
+        },
+        {
+            "label": "CMake Build",
+            "type": "shell",
+            "command": "cmake --build build --config Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "CMake Configure"
+            ],
+            "problemMatcher": "$msCompile",
+            "detail": "Build executable via CMake"
+        },
+        {
+            "label": "Clean Build Directory",
+            "type": "shell",
+            "command": "cmake -E remove_directory build",
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Clean CMake build directory"
+        },
+        {
+            "label": "Build WebAssembly (Emscripten)",
+            "type": "shell",
+            "command": "powershell -ExecutionPolicy Bypass -File platforms/emscripten/build_web.ps1",
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Compile project to WebAssembly using Emscripten SDK"
+        },
+        {
+            "label": "Build Android APK (Debug)",
+            "type": "shell",
+            "command": "cd platforms/android && ./gradlew assembleDebug",
+            "windows": {
+                "command": "cd platforms/android && gradlew.bat assembleDebug"
+            },
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Compile Android project and generate Debug APK"
+        },
+        {
+            "label": "Build Linux (Release)",
+            "type": "shell",
+            "command": "cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Compile project for Linux (requires system SDL2 dependencies)"
+        },
+        {
+            "label": "Build iOS (Xcode Project)",
+            "type": "shell",
+            "command": "cmake -B build_ios -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES=arm64",
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Generate iOS Xcode project (macOS only)"
+        },
+        {
+            "label": "Build macOS (Release)",
+            "type": "shell",
+            "command": "cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Compile project for macOS (requires Homebrew SDL2 dependencies)"
+        }
+    ]
+}

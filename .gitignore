@@ -1,0 +1,44 @@
+# CMake Build outputs
+/build/
+
+# External third-party dependencies (downloaded via setup.py)
+/external/
+
+# VS Code temporary files
+.vscode/ipch/
+.vscode/chrome-debug-profile.json
+.vscode/cmake-tools-kits.json
+.vscode/.cmaketools.json
+
+# C++ Compiler outputs
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+*.o
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Android build outputs
+.gradle/
+/platforms/android/.gradle/
+/platforms/android/build/
+/platforms/android/app/build/
+/platforms/android/local.properties
+
+# Emscripten / WebAssembly builds
+/platforms/emscripten/build/
+*.html
+*.js
+*.wasm
+*.data
+
+# Temporary download files
+external/temp_*/
