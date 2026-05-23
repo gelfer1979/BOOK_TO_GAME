@@ -25,13 +25,14 @@ MINGW_URLS = {
     "SDL2_net": "https://github.com/libsdl-org/SDL_net/releases/download/release-2.2.0/SDL2_net-devel-2.2.0-mingw.zip"
 }
 
-# URLs for SDL2 Source Codes (for Android/iOS)
+# URLs for SDL2 Source Codes (for Android/iOS) and curl (for all platforms build-from-source)
 SRC_URLS = {
     "SDL2": "https://github.com/libsdl-org/SDL/releases/download/release-2.30.9/SDL2-2.30.9.zip",
     "SDL2_image": "https://github.com/libsdl-org/SDL_image/releases/download/release-2.8.2/SDL2_image-2.8.2.zip",
     "SDL2_mixer": "https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.0/SDL2_mixer-2.8.0.zip",
     "SDL2_ttf": "https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.22.0/SDL2_ttf-2.22.0.zip",
-    "SDL2_net": "https://github.com/libsdl-org/SDL_net/releases/download/release-2.2.0/SDL2_net-2.2.0.zip"
+    "SDL2_net": "https://github.com/libsdl-org/SDL_net/releases/download/release-2.2.0/SDL2_net-2.2.0.zip",
+    "curl": "https://github.com/curl/curl/archive/refs/tags/curl-8_8_0.zip"
 }
 
 FONT_URL = "https://github.com/googlefonts/roboto-2/raw/main/src/hinted/Roboto-Regular.ttf"
