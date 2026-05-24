@@ -1,0 +1,63 @@
+name: Build AppImage (Ubuntu 20.04)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libcurl4-openssl-dev wget
+
+    - name: Configure CMake
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+
+    - name: Build Project
+      run: |
+        cmake --build build --config Release --parallel $(nproc)
+
+    - name: Prepare AppDir (Installation)
+      run: |
+        DESTDIR=${{ github.workspace }}/AppDir cmake --install build
+
+    - name: Download linuxdeploy
+      run: |
+        wget https://github.com
+        chmod +x linuxdeploy-x86_64.AppImage
+
+    - name: Setup Dummy Desktop File & Icon
+      run: |
+        mkdir -p AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
+        
+        cat <<EOF > AppDir/usr/share/applications/game.desktop
+        [Desktop Entry]
+        Type=Application
+        Name=BookToGame
+        Exec=game
+        Icon=game
+        Categories=Game;
+        EOF
+        
+        touch AppDir/usr/share/icons/hicolor/256x256/apps/game.png
+
+    - name: Build AppImage
+      run: |
+        export OUTPUT_APPIMAGE=BookToGame-x86_64.AppImage
+        ./linuxdeploy-x86_64.AppImage --appdir AppDir --output appimage
+
+    - name: Upload Finished AppImage
+      uses: actions/upload-artifact@v4
+      with:
+        name: BookToGame-Linux-AppImage
+        path: build/*.AppImage
