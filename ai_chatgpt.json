@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://api.openai.com/v1/chat/completions",
+  "modelName": "gpt-4o",
+  "apiKey": "",
+  "apiKeyEnvVar": "OPENAI_API_KEY",
+  "format": "openai"
+}

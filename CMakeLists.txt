@@ -142,7 +142,7 @@ if(WIN32)
     # Add curl source subdirectory
     add_subdirectory(external/src/curl)
     
-    add_executable(${PROJECT_NAME} src/main.cpp)
+    add_executable(${PROJECT_NAME} WIN32 src/main.cpp)
     
     # Define CURL_STATICLIB so that the project consumes the static libcurl correctly
     target_compile_definitions(${PROJECT_NAME} PRIVATE CURL_STATICLIB)
@@ -171,6 +171,7 @@ if(WIN32)
         oleaut32
         version
         uuid
+        comdlg32
     )
     
     # Automatically copy required .dll files to the build folder post-compile

@@ -4,7 +4,10 @@
         {
             "label": "CMake Configure",
             "type": "shell",
-            "command": "cmake -B build -DCMAKE_BUILD_TYPE=Debug",
+            "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Debug",
+            "windows": {
+                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -G Ninja -DCMAKE_MAKE_PROGRAM=C:/msys64/ucrt64/bin/ninja.exe -DCMAKE_C_COMPILER=C:/msys64/ucrt64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/msys64/ucrt64/bin/g++.exe -DCMAKE_BUILD_TYPE=Debug"
+            },
             "group": "none",
             "problemMatcher": [],
             "detail": "Configure CMake build files in the build directory"
@@ -53,7 +56,10 @@
         {
             "label": "Build Linux (Release)",
             "type": "shell",
-            "command": "cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "windows": {
+                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build"
+            },
             "group": "none",
             "problemMatcher": [],
             "detail": "Compile project for Linux (requires system SDL2 dependencies)"
@@ -61,7 +67,7 @@
         {
             "label": "Build iOS (Xcode Project)",
             "type": "shell",
-            "command": "cmake -B build_ios -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES=arm64",
+            "command": "if [ -f build_ios/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build_ios/CMakeCache.txt; then echo 'Source path changed! Cleaning build_ios directory...'; rm -rf build_ios; fi; cmake -B build_ios -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES=arm64",
             "group": "none",
             "problemMatcher": [],
             "detail": "Generate iOS Xcode project (macOS only)"
@@ -69,7 +75,10 @@
         {
             "label": "Build macOS (Release)",
             "type": "shell",
-            "command": "cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "windows": {
+                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build"
+            },
             "group": "none",
             "problemMatcher": [],
             "detail": "Compile project for macOS (requires Homebrew SDL2 dependencies)"

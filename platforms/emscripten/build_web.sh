@@ -11,6 +11,13 @@ if [ -z "$EMSDK" ]; then
 fi
 
 echo "1. Running Emcmake Configure..."
+if [ -f "build_web/CMakeCache.txt" ]; then
+    CURRENT_DIR=$(pwd)
+    if ! grep -q "CMAKE_HOME_DIRECTORY:INTERNAL=$CURRENT_DIR" build_web/CMakeCache.txt; then
+        echo "Source path changed! Cleaning build_web directory..."
+        rm -rf build_web
+    fi
+fi
 emcmake cmake -B build_web -DCMAKE_BUILD_TYPE=Release
 
 if [ $? -ne 0 ]; then

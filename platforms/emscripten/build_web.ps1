@@ -11,6 +11,12 @@ if ($null -eq $env:EMSDK) {
 
 # Run CMake configuration and build
 Write-Host "1. Configuring CMake..." -ForegroundColor Green
+if (Test-Path build_web/CMakeCache.txt) {
+    if (!(Select-String -Path build_web/CMakeCache.txt -SimpleMatch -Pattern "CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\', '/'))")) {
+        Write-Host "Source path changed! Cleaning build_web directory..." -ForegroundColor Yellow
+        Remove-Item -Recurse -Force build_web
+    }
+}
 emcmake cmake -B build_web -DCMAKE_BUILD_TYPE=Release
 
 if ($LASTEXITCODE -ne 0) {
