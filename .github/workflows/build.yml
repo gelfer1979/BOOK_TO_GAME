@@ -135,13 +135,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Configure CMake for iOS device with Xcode generator
+      # Configure CMake for iOS simulator with Xcode generator and bypass signing
       - name: Configure CMake for iOS
         run: |
           cmake -B build-ios -G Xcode \
             -DCMAKE_SYSTEM_NAME=iOS \
-            -DCMAKE_OSX_SYSROOT=iphoneos \
-            -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_OSX_SYSROOT=iphonesimulator \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO \
+            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=NO \
+            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY=""
 
       # Compile and link the static iOS binary
       - name: Compile iOS Binary
@@ -152,7 +155,7 @@ jobs:
       - name: Package iOS Distributable
         run: |
           mkdir -p dist-ios
-          cp -r build-ios/Release-iphoneos/BOOK_TO_GAME.app dist-ios/
+          cp -r build-ios/Release-iphonesimulator/BOOK_TO_GAME.app dist-ios/
           cp -r assets dist-ios/BOOK_TO_GAME.app/assets
           cd dist-ios && zip -r ../book-to-game-ios.zip BOOK_TO_GAME.app
 

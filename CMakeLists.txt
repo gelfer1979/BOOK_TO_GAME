@@ -95,23 +95,28 @@ add_subdirectory(external/src/SDL2_ttf)
 add_subdirectory(external/src/SDL2_net)
 add_subdirectory(external/src/curl)
 
-if(WIN32)
-    add_executable(${PROJECT_NAME} WIN32 src/main.cpp)
+if(ANDROID)
+    set(TARGET_NAME main)
+    add_library(${TARGET_NAME} SHARED src/main.cpp)
 else()
-    add_executable(${PROJECT_NAME} src/main.cpp)
+    set(TARGET_NAME ${PROJECT_NAME})
+    if(WIN32)
+        add_executable(${TARGET_NAME} WIN32 src/main.cpp)
+    else()
+        add_executable(${TARGET_NAME} src/main.cpp)
+    endif()
 endif()
 
 # Define CURL_STATICLIB so that the project consumes the static libcurl correctly
-target_compile_definitions(${PROJECT_NAME} PRIVATE CURL_STATICLIB)
+target_compile_definitions(${TARGET_NAME} PRIVATE CURL_STATICLIB)
 
 # Statically link toolchain runtimes where supported (e.g. MinGW)
 if(WIN32 AND NOT MSVC)
-    target_link_options(${PROJECT_NAME} PRIVATE "-static-libgcc" "-static-libstdc++")
+    target_link_options(${TARGET_NAME} PRIVATE "-static-libgcc" "-static-libstdc++")
 endif()
 
 # Link static targets
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    SDL2main
+target_link_libraries(${TARGET_NAME} PRIVATE
     SDL2
     SDL2_image
     SDL2_mixer
@@ -120,8 +125,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     libcurl
 )
 
+if(ANDROID)
+    target_link_libraries(${TARGET_NAME} PRIVATE log android)
+endif()
+
+if(TARGET SDL2main)
+    target_link_libraries(${TARGET_NAME} PRIVATE SDL2main)
+endif()
+
 # Header files search paths for libraries compiled from source
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(${TARGET_NAME} PRIVATE
     external/src/SDL2/include
     external/src/SDL2_image
     external/src/SDL2_mixer
@@ -130,10 +143,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 # 3. GENERAL: Copy assets folder to application output directory
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "${CMAKE_CURRENT_SOURCE_DIR}/assets"
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
-)
+if(NOT ANDROID)
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+        $<TARGET_FILE_DIR:${TARGET_NAME}>/assets
+    )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+    install(TARGETS ${TARGET_NAME} DESTINATION bin)
+endif()

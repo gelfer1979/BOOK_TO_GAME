@@ -5,6 +5,7 @@ plugins {
 android {
     namespace 'com.example.booktogame'
     compileSdk 34
+    ndkVersion "25.2.9519653"
 
     defaultConfig {
         applicationId "com.example.booktogame"
@@ -17,6 +18,7 @@ android {
             cmake {
                 cppFlags "-std=c++17"
                 arguments "-DANDROID_STL=c++_shared"
+                targets "main"
             }
         }
         
