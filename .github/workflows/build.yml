@@ -3,12 +3,14 @@ name: Multiplatform Build
 on:
   push:
     branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   build:
     strategy:
+      fail-fast: false  # Не отменять сборку на других ОС, если одна упала
       matrix:
-        # GitHub запустит три параллельных сервера для каждой ОС!
         os: [ubuntu-22.04, windows-2022, macos-14]
     
     runs-on: ${{ matrix.os }}
@@ -22,27 +24,27 @@ jobs:
       if: matrix.os == 'ubuntu-22.04'
       run: |
         sudo apt update
-        sudo apt install -y build-essential cmake libsdl2-dev libsdl2-image-dev libcurl4-openssl-dev
+        sudo apt install -y build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libcurl4-openssl-dev wget
 
     - name: Install Dependencies (Windows via vcpkg)
       if: matrix.os == 'windows-2022'
       run: |
-        # На Windows библиотеки проще всего ставить через менеджер пакетов vcpkg
-        vcpkg install sdl2 sdl2-image curl
+        vcpkg install sdl2 sdl2-image sdl2-mixer sdl2-ttf sdl2-net curl
 
     - name: Install Dependencies (macOS via Homebrew)
       if: matrix.os == 'macos-14'
       run: |
-        brew install sdl2 sdl2_image curl
+        brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf sdl2_net curl
 
-    # --- ШАГ 2: Универсальная сборка через CMake ---
+    # --- ШАГ 2: Конфигурация через CMake ---
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 
+    # --- ШАГ 3: Компиляция проекта ---
     - name: Build Project
-      run: cmake --build build --config Release
+      run: cmake --build build --config Release --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 2)
 
-    # --- ШАГ 3: Сохранение готовых файлов ---
+    # --- ШАГ 4: Сохранение готовых файлов ---
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
