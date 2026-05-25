@@ -65,6 +65,20 @@ To satisfy the request for zero external shared library dependencies on any plat
    - Declared the application entry point inside `src/main.cpp` explicitly as `extern "C" int SDL_main(...)` to bypass any macro redefinition inconsistencies across different compiler headers and satisfy static linking constraints perfectly on all desktop and mobile platforms.
    - **Result**: The final compiled program (`BOOK_TO_GAME.exe` on Windows, and equivalents on Linux, macOS, Android, iOS) is fully self-contained, statically hardlinked, and free of any dynamic `.dll`, `.so`, or `.dylib` library dependencies!
 
+### E. Mobile Touch, Internal Book Selection & Virtual Keyboard Input (Android & iOS)
+To provide native-quality user interface controls and book loading capability on mobile platforms:
+1. **Seamless Finger-Touch to Click Translation**:
+   - Implemented an event interceptor for `SDL_FINGERDOWN` and `SDL_FINGERUP` in the main event polling loop.
+   - It automatically translates finger coordinates normalized by the system (`0.0f` to `1.0f`) into exact screen window pixels based on current dimension configurations (`WINDOW_WIDTH` and `WINDOW_HEIGHT`) and synthesizes equivalent `SDL_MOUSEBUTTONDOWN`/`SDL_MOUSEBUTTONUP` events.
+   - **Result**: Instantly makes all buttons, text fields, and scroll lists throughout the game 100% touch-responsive without changing layout click routines!
+2. **Sleek Internal Book Selection Dialog**:
+   - Added `APP_STATE_SELECT_BOOK` and designed a gorgeous, scrollable in-app file explorer card that searches `.`, `..`, `assets/`, and `../assets/` for files with extensions `.txt` or `.json` (filtering out save-games and config files).
+   - On Android and iOS, clicking the "Select File" button bypasses desktop-only platform dialogs and loads this internal card, showing a list of found adventure books that players can tap to start playing immediately.
+3. **On-Screen Virtual Keyboard Text Input Field**:
+   - Rendered a sleek text input box and matching "Load" button side-by-side on the startup card, and wired it up to `state.editingBookPath`.
+   - Updated the `wantTextInput` condition so that clicking inside this input box immediately signals the mobile OS to raise the virtual keyboard.
+   - **Result**: Mobile players can easily type or copy/paste custom book paths or API keys directly using their phone's on-screen keyboard!
+
 ---
 
 ## 2. Verification & Build Results

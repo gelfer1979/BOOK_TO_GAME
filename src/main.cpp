@@ -33,7 +33,8 @@ enum AppState {
     APP_STATE_SETUP,
     APP_STATE_AI_GENERATING,
     APP_STATE_GAMEPLAY,
-    APP_STATE_SELECT_AI
+    APP_STATE_SELECT_AI,
+    APP_STATE_SELECT_BOOK
 };
 
 // Default Window Dimensions
@@ -152,6 +153,18 @@ struct {
     SDL_Rect aiBtnRect = {0, 0, 0, 0};
     int aiSelectScrollOffset = 0;
     int aiSelectMaxScroll = 0;
+    
+    struct BookInfo {
+        std::string filename;
+        std::string path;
+    };
+    std::vector<BookInfo> availableBooks;
+    int bookSelectScrollOffset = 0;
+    int bookSelectMaxScroll = 0;
+    bool editingBookPath = false;
+    std::string bookPathInput = "";
+    SDL_Rect bookPathInputRect = {0, 0, 0, 0};
+    SDL_Rect bookConfirmBtnRect = {0, 0, 0, 0};
 } state;
 
 // Forward Declarations
@@ -814,6 +827,57 @@ void ScanAvailableAiModels() {
     } catch (...) {}
 }
 
+// Scans local folders for potential adventure book text/JSON files
+void ScanAvailableBooks() {
+    state.mutex.lock();
+    state.availableBooks.clear();
+    state.mutex.unlock();
+    
+    try {
+        std::vector<std::string> searchPaths = {".", "assets", "..", "../assets"};
+        for (const auto& path : searchPaths) {
+            if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
+                for (const auto& entry : std::filesystem::directory_iterator(path)) {
+                    if (entry.is_regular_file()) {
+                        std::string filename = entry.path().filename().string();
+                        std::string ext = entry.path().extension().string();
+                        
+                        // Convert to lowercase for checking extension
+                        std::string lowerExt = ext;
+                        std::transform(lowerExt.begin(), lowerExt.end(), lowerExt.begin(), ::tolower);
+                        
+                        if (lowerExt == ".txt" || lowerExt == ".json") {
+                            // Skip system configuration, save games, and makefiles
+                            if (filename == "save.json" || filename == "settings.json" || 
+                                filename == "options.json" || filename == "book_error.txt" ||
+                                filename == "CMakeLists.txt") {
+                                continue;
+                            }
+                            // Skip AI model files
+                            if (filename.rfind("ai_", 0) == 0 && lowerExt == ".json") {
+                                continue;
+                            }
+                            
+                            state.mutex.lock();
+                            bool duplicate = false;
+                            for (const auto& existing : state.availableBooks) {
+                                if (existing.filename == filename) {
+                                    duplicate = true;
+                                    break;
+                                }
+                            }
+                            if (!duplicate) {
+                                state.availableBooks.push_back({filename, entry.path().string()});
+                            }
+                            state.mutex.unlock();
+                        }
+                    }
+                }
+            }
+        }
+    } catch (...) {}
+}
+
 void TriggerUiLocalization(); // Forward declaration for ChangeGameLanguage
 
 void ReloadSettingsAndReinit(const std::string& newAiModelFile) {
@@ -1414,6 +1478,15 @@ inline std::string GetUiText(const std::string& key) {
 }
 
 std::string OpenFileDialogImpl() {
+#if defined(__ANDROID__) || defined(__IPHONEOS__) || defined(ANDROID) || defined(IOS)
+    // On mobile platforms, trigger the internal book scanner and selection screen
+    ScanAvailableBooks();
+    state.mutex.lock();
+    state.appState = APP_STATE_SELECT_BOOK;
+    state.bookSelectScrollOffset = 0;
+    state.mutex.unlock();
+    return "";
+#else
 #ifdef _WIN32
     OPENFILENAMEA ofn;       // common dialog box structure
     char szFile[260] = {0};  // buffer for file name
@@ -1463,6 +1536,7 @@ std::string OpenFileDialogImpl() {
     return "";
 #else
     return "";
+#endif
 #endif
 }
 
@@ -2649,7 +2723,7 @@ void ConsumeApiResponse() {
 // Main Frame Loop Execution
 void MainIteration() {
     // Ensure SDL text input state matches gameplay/editing requirements
-    bool wantTextInput = (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage);
+    bool wantTextInput = (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingBookPath);
     if (wantTextInput && !SDL_IsTextInputActive()) {
         SDL_StartTextInput();
     } else if (!wantTextInput && SDL_IsTextInputActive()) {
@@ -2687,6 +2761,26 @@ void MainIteration() {
     // 2. Process keyboard & mouse inputs
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_FINGERDOWN) {
+            SDL_Event fakeMouseEvent = {};
+            fakeMouseEvent.type = SDL_MOUSEBUTTONDOWN;
+            fakeMouseEvent.button.button = SDL_BUTTON_LEFT;
+            fakeMouseEvent.button.state = SDL_PRESSED;
+            fakeMouseEvent.button.x = (int)(event.tfinger.x * WINDOW_WIDTH);
+            fakeMouseEvent.button.y = (int)(event.tfinger.y * WINDOW_HEIGHT);
+            SDL_PushEvent(&fakeMouseEvent);
+            continue;
+        } else if (event.type == SDL_FINGERUP) {
+            SDL_Event fakeMouseEvent = {};
+            fakeMouseEvent.type = SDL_MOUSEBUTTONUP;
+            fakeMouseEvent.button.button = SDL_BUTTON_LEFT;
+            fakeMouseEvent.button.state = SDL_RELEASED;
+            fakeMouseEvent.button.x = (int)(event.tfinger.x * WINDOW_WIDTH);
+            fakeMouseEvent.button.y = (int)(event.tfinger.y * WINDOW_HEIGHT);
+            SDL_PushEvent(&fakeMouseEvent);
+            continue;
+        }
+        
         if (event.type == SDL_QUIT) {
             state.running = false;
         } else if (event.type == SDL_WINDOWEVENT) {
@@ -2736,6 +2830,25 @@ void MainIteration() {
                     SDL_StopTextInput();
                 } else if (sym == SDLK_BACKSPACE) {
                     PopUTF8Character(state.inputText);
+                }
+                // Bypass other hotkeys while in input mode
+                continue;
+            }
+            
+            if (state.editingBookPath) {
+                SDL_Keycode sym = event.key.keysym.sym;
+                if (sym == SDLK_RETURN) {
+                    if (!state.bookPathInput.empty()) {
+                        InitAdventureSetup(state.bookPathInput);
+                    }
+                    state.editingBookPath = false;
+                    SDL_StopTextInput();
+                } else if (sym == SDLK_ESCAPE) {
+                    state.editingBookPath = false;
+                    SDL_StopTextInput();
+                } else if (sym == SDLK_BACKSPACE) {
+                    PopUTF8Character(state.bookPathInput);
+                    state.inputText = state.bookPathInput;
                 }
                 // Bypass other hotkeys while in input mode
                 continue;
@@ -2790,6 +2903,17 @@ void MainIteration() {
                 if (sym == SDLK_RETURN || sym == SDLK_SPACE) {
                     std::string path = OpenFileDialog();
                     if (!path.empty()) {
+                        InitAdventureSetup(path);
+                    }
+                }
+            } else if (state.appState == APP_STATE_SELECT_BOOK) {
+                SDL_Keycode sym = event.key.keysym.sym;
+                if (sym == SDLK_ESCAPE) {
+                    state.appState = APP_STATE_ENTER_TXT_PATH;
+                } else if (sym >= SDLK_1 && sym <= SDLK_9) {
+                    int index = sym - SDLK_1;
+                    if (index >= 0 && index < (int)state.availableBooks.size()) {
+                        std::string path = state.availableBooks[index].path;
                         InitAdventureSetup(path);
                     }
                 }
@@ -2859,6 +2983,9 @@ void MainIteration() {
         } else if (event.type == SDL_TEXTINPUT) {
             if (state.editingLanguage) {
                 state.inputText += event.text.text;
+            } else if (state.editingBookPath) {
+                state.bookPathInput += event.text.text;
+                state.inputText = state.bookPathInput;
             } else if ((state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) && !state.modelState.gameOver && !state.modelState.gameWon) {
                 // Append keyboard string inputs safely
                 state.inputText += event.text.text;
@@ -2874,6 +3001,11 @@ void MainIteration() {
                 state.aiSelectScrollOffset -= event.wheel.y * 25;
                 if (state.aiSelectScrollOffset < 0) state.aiSelectScrollOffset = 0;
                 if (state.aiSelectScrollOffset > state.aiSelectMaxScroll) state.aiSelectScrollOffset = state.aiSelectMaxScroll;
+            } else if (state.appState == APP_STATE_SELECT_BOOK) {
+                // Smooth vertical select book scrollbox
+                state.bookSelectScrollOffset -= event.wheel.y * 25;
+                if (state.bookSelectScrollOffset < 0) state.bookSelectScrollOffset = 0;
+                if (state.bookSelectScrollOffset > state.bookSelectMaxScroll) state.bookSelectScrollOffset = state.bookSelectMaxScroll;
             }
         } else if (event.type == SDL_MOUSEBUTTONDOWN) {
             state.mutex.lock();
@@ -2995,11 +3127,60 @@ void MainIteration() {
                     state.appState = APP_STATE_ENTER_TXT_PATH;
                 }
             } else if (state.appState == APP_STATE_ENTER_TXT_PATH) {
+                // Click Select File
                 if (mx >= state.customBtnRect2.x && mx <= (state.customBtnRect2.x + state.customBtnRect2.w) &&
                     my >= state.customBtnRect2.y && my <= (state.customBtnRect2.y + state.customBtnRect2.h)) {
                     std::string path = OpenFileDialog();
                     if (!path.empty()) {
                         InitAdventureSetup(path);
+                    }
+                }
+                // Click inside Path Input Box
+                else if (mx >= state.bookPathInputRect.x && mx <= (state.bookPathInputRect.x + state.bookPathInputRect.w) &&
+                         my >= state.bookPathInputRect.y && my <= (state.bookPathInputRect.y + state.bookPathInputRect.h)) {
+                    state.editingBookPath = true;
+                    state.editingLanguage = false;
+                    state.inputText = state.bookPathInput;
+                    SDL_StartTextInput();
+                }
+                // Click Confirm Load Button
+                else if (mx >= state.bookConfirmBtnRect.x && mx <= (state.bookConfirmBtnRect.x + state.bookConfirmBtnRect.w) &&
+                         my >= state.bookConfirmBtnRect.y && my <= (state.bookConfirmBtnRect.y + state.bookConfirmBtnRect.h)) {
+                    if (!state.bookPathInput.empty()) {
+                        InitAdventureSetup(state.bookPathInput);
+                    }
+                    state.editingBookPath = false;
+                    SDL_StopTextInput();
+                }
+                // Click elsewhere to de-focus path editor
+                else {
+                    if (state.editingBookPath) {
+                        state.editingBookPath = false;
+                        SDL_StopTextInput();
+                    }
+                }
+            } else if (state.appState == APP_STATE_SELECT_BOOK) {
+                int cardX = WINDOW_WIDTH / 2 - 300;
+                int cardY = WINDOW_HEIGHT / 2 - 220;
+                
+                // Back button click
+                SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
+                if (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
+                    my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h)) {
+                    state.appState = APP_STATE_ENTER_TXT_PATH;
+                }
+                
+                // Scrollable book buttons click
+                int startBtnY = cardY + 130;
+                int btnSpacing = 55;
+                for (size_t i = 0; i < state.availableBooks.size(); i++) {
+                    SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.bookSelectScrollOffset, 500, 45 };
+                    if (my >= cardY + 130 && my <= cardY + 340 &&
+                        mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
+                        my >= btnRect.y && my <= (btnRect.y + btnRect.h)) {
+                        std::string path = state.availableBooks[i].path;
+                        InitAdventureSetup(path);
+                        break;
                     }
                 }
             } else if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
@@ -3583,12 +3764,50 @@ void MainIteration() {
             DrawRoundedRect(state.renderer.get(), state.customBtnRect2, 8, colorBtn);
             RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("btn_select_file"), state.customBtnRect2.x + state.customBtnRect2.w / 2, state.customBtnRect2.y + state.customBtnRect2.h / 2 + 8, textColBtn, true);
             
-            // Drag-and-drop indicator
-            RenderText(state.renderer.get(), state.fontSmallUI.get(), "[ Drag and drop your .txt file anywhere on this window ]", WINDOW_WIDTH / 2, cardY + 230, SDL_Color{ 120, 120, 150, 255 }, true);
+            // Render text input box for typing/entering path manually
+            state.bookPathInputRect = { cardX + 50, cardY + 220, 360, 45 };
+            state.bookConfirmBtnRect = { cardX + 420, cardY + 220, 130, 45 };
+            
+            bool hoveredInput = (mx >= state.bookPathInputRect.x && mx <= (state.bookPathInputRect.x + state.bookPathInputRect.w) &&
+                                 my >= state.bookPathInputRect.y && my <= (state.bookPathInputRect.y + state.bookPathInputRect.h));
+            bool hoveredConfirm = (mx >= state.bookConfirmBtnRect.x && mx <= (state.bookConfirmBtnRect.x + state.bookConfirmBtnRect.w) &&
+                                   my >= state.bookConfirmBtnRect.y && my <= (state.bookConfirmBtnRect.y + state.bookConfirmBtnRect.h));
+            
+            // Draw input box outline and background
+            SDL_Color inputBorderCol = state.editingBookPath ? SDL_Color{ 0, 255, 220, 255 } : (hoveredInput ? SDL_Color{ 142, 60, 220, 255 } : SDL_Color{ 100, 100, 120, 150 });
+            SDL_Color inputBgCol = SDL_Color{ 15, 15, 22, 255 };
+            
+            SDL_Rect inputOutline = { state.bookPathInputRect.x - 1, state.bookPathInputRect.y - 1, state.bookPathInputRect.w + 2, state.bookPathInputRect.h + 2 };
+            DrawRoundedRect(state.renderer.get(), inputOutline, 7, inputBorderCol);
+            DrawRoundedRect(state.renderer.get(), state.bookPathInputRect, 6, inputBgCol);
+            
+            // Display path or placeholder
+            if (state.bookPathInput.empty()) {
+                std::string placeholder = IsRussianLanguage(state.gameLanguage) ? "Или введите путь (например, book.txt)..." : "Or type book path (e.g. book.txt)...";
+                RenderText(state.renderer.get(), state.fontSmallUI.get(), placeholder, state.bookPathInputRect.x + 15, state.bookPathInputRect.y + state.bookPathInputRect.h / 2 + 5, SDL_Color{ 100, 100, 120, 255 }, false);
+            } else {
+                std::string drawPath = state.bookPathInput;
+                // Blinking cursor inside input box
+                if (state.editingBookPath && state.cursorVisible) {
+                    drawPath += "|";
+                }
+                RenderText(state.renderer.get(), state.fontSmallUI.get(), drawPath, state.bookPathInputRect.x + 15, state.bookPathInputRect.y + state.bookPathInputRect.h / 2 + 5, SDL_Color{ 255, 255, 255, 255 }, false);
+            }
+            
+            // Draw Confirm button
+            SDL_Color confirmBgCol = hoveredConfirm ? SDL_Color{ 0, 200, 100, 255 } : SDL_Color{ 20, 100, 60, 255 };
+            SDL_Color confirmTextCol = SDL_Color{ 255, 255, 255, 255 };
+            DrawRoundedRect(state.renderer.get(), state.bookConfirmBtnRect, 6, confirmBgCol);
+            std::string confirmText = IsRussianLanguage(state.gameLanguage) ? "Открыть" : "Load";
+            RenderText(state.renderer.get(), state.fontUI.get(), confirmText, state.bookConfirmBtnRect.x + state.bookConfirmBtnRect.w / 2, state.bookConfirmBtnRect.y + state.bookConfirmBtnRect.h / 2 + 8, confirmTextCol, true);
+            
+            // Mobile-compatible drag & drop / manual entry indicator
+            std::string dropHint = IsRussianLanguage(state.gameLanguage) ? "[ Перетащите файл .txt в окно или введите путь вручную ]" : "[ Drag & drop .txt file anywhere or enter path manually ]";
+            RenderText(state.renderer.get(), state.fontSmallUI.get(), dropHint, WINDOW_WIDTH / 2, cardY + 280, SDL_Color{ 120, 120, 150, 255 }, true);
             
             // Error handling (shifted down)
             if (!state.fileLoadError.empty()) {
-                RenderText(state.renderer.get(), state.fontUI.get(), state.fileLoadError, WINDOW_WIDTH / 2, cardY + 375, SDL_Color{ 255, 80, 80, 255 }, true);
+                RenderText(state.renderer.get(), state.fontUI.get(), state.fileLoadError, WINDOW_WIDTH / 2, cardY + 360, SDL_Color{ 255, 80, 80, 255 }, true);
             }
         }
         
@@ -3714,6 +3933,73 @@ void MainIteration() {
             SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
             bool hoveredBack = (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
                                 my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h));
+            SDL_Color backCol = hoveredBack ? SDL_Color{ 172, 45, 98, 255 } : SDL_Color{ 34, 34, 46, 255 };
+            SDL_Color textColBack = hoveredBack ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 255, 100, 100, 255 };
+            
+            DrawRoundedRect(state.renderer.get(), backBtnRect, 8, backCol);
+            std::string backText = IsRussianLanguage(state.gameLanguage) ? "Назад" : "Back";
+            RenderText(state.renderer.get(), state.fontUI.get(), backText, backBtnRect.x + backBtnRect.w / 2, backBtnRect.y + backBtnRect.h / 2 + 8, textColBack, true);
+        } else if (state.appState == APP_STATE_SELECT_BOOK) {
+            DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 142, 60, 220, 180 }); // Purple border
+            DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
+            
+            std::string selectTitle = IsRussianLanguage(state.gameLanguage) ? "ВЫБОР КНИГИ" : "SELECT BOOK FILE";
+            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите книгу (.txt или .json) для начала приключения:" : "Select a book file (.txt or .json) to start your adventure:";
+            
+            RenderText(state.renderer.get(), state.fontTitle.get(), selectTitle, WINDOW_WIDTH / 2, cardY + 40, SDL_Color{ 255, 80, 180, 255 }, true);
+            RenderText(state.renderer.get(), state.fontUI.get(), selectPrompt, WINDOW_WIDTH / 2, cardY + 85, SDL_Color{ 200, 200, 220, 255 }, true);
+            
+            int startBtnY = cardY + 130;
+            int btnSpacing = 55;
+            int listH = 210;
+            
+            // Calculate max scroll dynamically
+            int totalListH = (int)state.availableBooks.size() * btnSpacing - 10;
+            state.bookSelectMaxScroll = totalListH > listH ? totalListH - listH : 0;
+            if (state.bookSelectScrollOffset > state.bookSelectMaxScroll) {
+                state.bookSelectScrollOffset = state.bookSelectMaxScroll;
+            }
+            
+            // Set clipping rectangle to allow clean scrolling inside card bounds
+            SDL_Rect clipRect = { cardX + 20, cardY + 130, cardW - 40, listH };
+            SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
+            
+            if (state.availableBooks.empty()) {
+                RenderText(state.renderer.get(), state.fontUI.get(), "[ No compatible books found in local directory ]", WINDOW_WIDTH / 2, cardY + 180, SDL_Color{ 120, 120, 150, 255 }, true);
+            } else {
+                for (size_t i = 0; i < state.availableBooks.size(); i++) {
+                    SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.bookSelectScrollOffset, 500, 45 };
+                    bool hovered = (my >= cardY + 130 && my <= cardY + 340 &&
+                                    mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
+                                    my >= btnRect.y && my <= (btnRect.y + btnRect.h));
+                                    
+                    SDL_Color btnCol = hovered ? SDL_Color{ 45, 98, 172, 255 } : SDL_Color{ 34, 34, 46, 255 };
+                    SDL_Color textCol = hovered ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
+                    
+                    DrawRoundedRect(state.renderer.get(), btnRect, 8, btnCol);
+                    
+                    std::string btnText = std::to_string(i + 1) + ". " + state.availableBooks[i].filename;
+                    RenderText(state.renderer.get(), state.fontUI.get(), btnText, btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, textCol, true);
+                }
+            }
+            
+            // Clear clipping rectangle to allow rendering buttons outside of it
+            SDL_RenderSetClipRect(state.renderer.get(), nullptr);
+            
+            // Render premium scrollbar indicator on the right of the scrollable panel
+            if (state.bookSelectMaxScroll > 0) {
+                int scrollBarW = 4;
+                int scrollBarH = (listH * listH) / totalListH;
+                int scrollBarY = cardY + 130 + (state.bookSelectScrollOffset * (listH - scrollBarH)) / state.bookSelectMaxScroll;
+                SDL_Rect scrollBar = { cardX + cardW - 15, scrollBarY, scrollBarW, scrollBarH };
+                DrawRoundedRect(state.renderer.get(), scrollBar, 2, SDL_Color{ 255, 80, 180, 180 }); // Purple scrollbar
+            }
+            
+            // Draw elegant red Back button positioned statically at the bottom
+            SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
+            bool hoveredBack = (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
+                                my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h));
+                                
             SDL_Color backCol = hoveredBack ? SDL_Color{ 172, 45, 98, 255 } : SDL_Color{ 34, 34, 46, 255 };
             SDL_Color textColBack = hoveredBack ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 255, 100, 100, 255 };
             
