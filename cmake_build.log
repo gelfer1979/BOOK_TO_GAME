@@ -1,0 +1,338 @@
+[1/591] Generating include/SDL2/SDL_assert.h
+[2/591] Generating include/SDL2/SDL.h
+[3/591] Generating include/SDL2/SDL_atomic.h
+[4/591] Generating include/SDL2/SDL_bits.h
+[5/591] Generating include/SDL2/SDL_audio.h
+[6/591] Generating include/SDL2/SDL_blendmode.h
+[7/591] Generating include/SDL2/SDL_copying.h
+[8/591] Generating include/SDL2/SDL_clipboard.h
+[9/591] Generating include/SDL2/SDL_cpuinfo.h
+[10/591] Generating include/SDL2/SDL_egl.h
+[11/591] Generating include/SDL2/SDL_endian.h
+[12/591] Generating include/SDL2/SDL_error.h
+[13/591] Generating include/SDL2/SDL_filesystem.h
+[14/591] Generating include/SDL2/SDL_events.h
+[15/591] Generating include/SDL2/SDL_guid.h
+[16/591] Generating include/SDL2/SDL_gamecontroller.h
+[17/591] Generating include/SDL2/SDL_gesture.h
+[18/591] Generating include/SDL2/SDL_haptic.h
+[19/591] Generating include/SDL2/SDL_hidapi.h
+[20/591] Generating include/SDL2/SDL_joystick.h
+[21/591] Generating include/SDL2/SDL_hints.h
+[22/591] Generating include/SDL2/SDL_keyboard.h
+[23/591] Generating include/SDL2/SDL_keycode.h
+[24/591] Generating include/SDL2/SDL_loadso.h
+[25/591] Generating include/SDL2/SDL_log.h
+[26/591] Generating include/SDL2/SDL_locale.h
+[27/591] Generating include/SDL2/SDL_main.h
+[28/591] Generating include/SDL2/SDL_messagebox.h
+[29/591] Generating include/SDL2/SDL_metal.h
+[30/591] Generating include/SDL2/SDL_misc.h
+[31/591] Generating include/SDL2/SDL_mutex.h
+[32/591] Generating include/SDL2/SDL_mouse.h
+[33/591] Generating include/SDL2/SDL_opengl.h
+[34/591] Generating include/SDL2/SDL_name.h
+[35/591] Generating include/SDL2/SDL_opengles2.h
+[36/591] Generating include/SDL2/SDL_opengles.h
+[37/591] Generating include/SDL2/SDL_opengl_glext.h
+[38/591] Generating include/SDL2/SDL_opengles2_gl2.h
+[39/591] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[40/591] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[41/591] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[42/591] Generating include/SDL2/SDL_pixels.h
+[43/591] Generating include/SDL2/SDL_platform.h
+[44/591] Generating include/SDL2/SDL_power.h
+[45/591] Generating include/SDL2/SDL_quit.h
+[46/591] Generating include/SDL2/SDL_rect.h
+[47/591] Generating include/SDL2/SDL_render.h
+[48/591] Generating include/SDL2/SDL_scancode.h
+[49/591] Generating include/SDL2/SDL_rwops.h
+[50/591] Generating include/SDL2/SDL_sensor.h
+[51/591] Generating include/SDL2/SDL_surface.h
+[52/591] Generating include/SDL2/SDL_shape.h
+[53/591] Generating include/SDL2/SDL_stdinc.h
+[54/591] Generating include/SDL2/SDL_syswm.h
+[55/591] Generating include/SDL2/SDL_system.h
+[56/591] Generating include/SDL2/SDL_test.h
+[57/591] Generating include/SDL2/SDL_test_assert.h
+[58/591] Generating include/SDL2/SDL_test_common.h
+[59/591] Generating include/SDL2/SDL_test_font.h
+[60/591] Generating include/SDL2/SDL_test_fuzzer.h
+[61/591] Generating include/SDL2/SDL_test_compare.h
+[62/591] Generating include/SDL2/SDL_test_crc32.h
+[63/591] Generating include/SDL2/SDL_test_images.h
+[64/591] Generating include/SDL2/SDL_test_harness.h
+[65/591] Generating include/SDL2/SDL_test_memory.h
+[66/591] Generating include/SDL2/SDL_test_log.h
+[67/591] Generating include/SDL2/SDL_test_md5.h
+[68/591] Generating include/SDL2/SDL_test_random.h
+[69/591] Generating include/SDL2/SDL_timer.h
+[70/591] Generating include/SDL2/SDL_thread.h
+[71/591] Generating include/SDL2/SDL_touch.h
+[72/591] Generating include/SDL2/SDL_types.h
+[73/591] Generating include/SDL2/SDL_video.h
+[74/591] Generating include/SDL2/SDL_version.h
+[75/591] Generating include/SDL2/begin_code.h
+[76/591] Generating include/SDL2/SDL_vulkan.h
+[77/591] Generating include/SDL2/close_code.h
+[78/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbdf.c.obj
+[79/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbbox.c.obj
+[80/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbitmap.c.obj
+[81/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\autofit\autofit.c.obj
+[82/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbase.c.obj
+[83/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_error.c.obj
+[84/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_guid.c.obj
+[85/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_dataqueue.c.obj
+[86/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_hints.c.obj
+[87/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_utils.c.obj
+[88/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_list.c.obj
+[89/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\atomic\SDL_atomic.c.obj
+[90/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_assert.c.obj
+[91/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL.c.obj
+[92/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audiodev.c.obj
+[93/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_log.c.obj
+[94/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\atomic\SDL_spinlock.c.obj
+[95/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audiotypecvt.c.obj
+[96/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_mixer.c.obj
+[97/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audiocvt.c.obj
+[98/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_wave.c.obj
+[99/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audio.c.obj
+[100/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\cpuinfo\SDL_cpuinfo.c.obj
+[101/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_displayevents.c.obj
+[102/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_clipboardevents.c.obj
+[103/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_dropevents.c.obj
+[104/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_keysym_to_scancode.c.obj
+[105/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_events.c.obj
+[106/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_scancode_tables.c.obj
+[107/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\dynapi\SDL_dynapi.c.obj
+[108/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_gesture.c.obj
+[109/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\imKStoUCS.c.obj
+[110/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_mouse.c.obj
+[111/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_keyboard.c.obj
+[112/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_quit.c.obj
+[113/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\SDL_haptic.c.obj
+[114/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_windowevents.c.obj
+[115/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_touch.c.obj
+[116/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\file\SDL_rwops.c.obj
+[117/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\controller_type.c.obj
+[118/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_atan2.c.obj
+[119/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\hidapi\SDL_hidapi.c.obj
+[120/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\SDL_steam_virtual_gamepad.c.obj
+[121/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_exp.c.obj
+[122/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\SDL_gamecontroller.c.obj
+[123/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\SDL_joystick.c.obj
+[124/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_fmod.c.obj
+[125/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_log.c.obj
+[126/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_log10.c.obj
+[127/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_pow.c.obj
+[128/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_rem_pio2.c.obj
+[129/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_sqrt.c.obj
+[130/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_cos.c.obj
+[131/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_sin.c.obj
+[132/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_tan.c.obj
+[133/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_atan.c.obj
+[134/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_rem_pio2.c.obj
+[135/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_copysign.c.obj
+[136/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_cos.c.obj
+[137/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_fabs.c.obj
+[138/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_floor.c.obj
+[139/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_scalbn.c.obj
+[140/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_tan.c.obj
+[141/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_sin.c.obj
+[142/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\misc\SDL_url.c.obj
+[143/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\locale\SDL_locale.c.obj
+[144/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\power\SDL_power.c.obj
+[145/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\SDL_d3dmath.c.obj
+[146/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\SDL_yuv_sw.c.obj
+[147/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\SDL_render.c.obj
+[148/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d\SDL_shaders_d3d.c.obj
+[149/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d\SDL_render_d3d.c.obj
+[150/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d11\SDL_render_d3d11.c.obj
+[151/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d11\SDL_shaders_d3d11.c.obj
+[152/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengles\SDL_render_gles.c.obj
+[153/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d12\SDL_shaders_d3d12.c.obj
+[154/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d12\SDL_render_d3d12.c.obj
+[155/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\ps2\SDL_render_ps2.c.obj
+[156/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengles2\SDL_shaders_gles2.c.obj
+[157/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengl\SDL_render_gl.c.obj
+[158/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengl\SDL_shaders_gl.c.obj
+[159/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\psp\SDL_render_psp.c.obj
+[160/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengles2\SDL_render_gles2.c.obj
+[161/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_blendpoint.c.obj
+[162/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_drawline.c.obj
+[163/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_drawpoint.c.obj
+[164/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_blendfillrect.c.obj
+[165/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_render_sw.c.obj
+[166/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\vitagxm\SDL_render_vita_gxm.c.obj
+[167/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_blendline.c.obj
+[168/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\vitagxm\SDL_render_vita_gxm_memory.c.obj
+[169/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\vitagxm\SDL_render_vita_gxm_tools.c.obj
+[170/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_crc16.c.obj
+[171/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_triangle.c.obj
+[172/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_crc32.c.obj
+[173/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_rotate.c.obj
+[174/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_mslibc.c.obj
+[175/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_iconv.c.obj
+[176/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_qsort.c.obj
+[177/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\sensor\SDL_sensor.c.obj
+[178/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_stdlib.c.obj
+[179/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_getenv.c.obj
+[180/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_strtokr.c.obj
+[181/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_malloc.c.obj
+[182/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_string.c.obj
+[183/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\SDL_thread.c.obj
+[184/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\timer\SDL_timer.c.obj
+[185/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_0.c.obj
+[186/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit.c.obj
+[187/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_RLEaccel.c.obj
+[188/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_A.c.obj
+[189/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_auto.c.obj
+[190/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_copy.c.obj
+[191/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_N.c.obj
+[192/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_1.c.obj
+[193/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_bmp.c.obj
+[194/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_slow.c.obj
+[195/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_fillrect.c.obj
+[196/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_rect.c.obj
+[197/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_clipboard.c.obj
+[198/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_stretch.c.obj
+[199/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_egl.c.obj
+[200/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_pixels.c.obj
+[201/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_shape.c.obj
+[202/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\yuv2rgb\yuv_rgb_lsx.c.obj
+[203/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_surface.c.obj
+[204/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_vulkan_utils.c.obj
+[205/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\yuv2rgb\yuv_rgb_sse.c.obj
+[206/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\yuv2rgb\yuv_rgb_std.c.obj
+[207/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\dummy\SDL_dummyaudio.c.obj
+[208/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_video.c.obj
+[209/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_yuv.c.obj
+[210/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\disk\SDL_diskaudio.c.obj
+[211/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\virtual\SDL_virtualjoystick.c.obj
+[212/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\dummy\SDL_nullevents.c.obj
+[213/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\dummy\SDL_nullframebuffer.c.obj
+[214/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\dummy\SDL_nullvideo.c.obj
+[215/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenevents.c.obj
+[216/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenframebuffer.c.obj
+[217/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenopengles.c.obj
+[218/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_hid.c.obj
+[219/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenvideo.c.obj
+[220/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenwindow.c.obj
+[221/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_xinput.c.obj
+[222/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_windows.c.obj
+[223/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_immdevice.c.obj
+[224/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\misc\windows\SDL_sysurl.c.obj
+[225/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\winmm\SDL_winmm.c.obj
+[226/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\directsound\SDL_directsound.c.obj
+[227/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\wasapi\SDL_wasapi.c.obj
+[228/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\wasapi\SDL_wasapi_win32.c.obj
+[229/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsclipboard.c.obj
+[230/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsframebuffer.c.obj
+[231/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsevents.c.obj
+[232/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowskeyboard.c.obj
+[233/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsmessagebox.c.obj
+[234/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsmodes.c.obj
+[235/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsmouse.c.obj
+[236/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsopengles.c.obj
+[237/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsopengl.c.obj
+[238/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\generic\SDL_syscond.c.obj
+[239/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsshape.c.obj
+[240/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsvulkan.c.obj
+[241/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsvideo.c.obj
+[242/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_syscond_cv.c.obj
+[243/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowswindow.c.obj
+[244/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_sysmutex.c.obj
+[245/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_syssem.c.obj
+[246/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_systhread.c.obj
+[247/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_systls.c.obj
+[248/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\power\windows\SDL_syspower.c.obj
+[249/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\locale\windows\SDL_syslocale.c.obj
+[250/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\sensor\windows\SDL_windowssensor.c.obj
+[251/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_combined.c.obj
+[252/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\loadso\windows\SDL_sysloadso.c.obj
+[253/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_gamecube.c.obj
+[254/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\timer\windows\SDL_systimer.c.obj
+[255/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_luna.c.obj
+[256/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_ps3.c.obj
+[257/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_ps4.c.obj
+[258/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_ps5.c.obj
+[259/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_stadia.c.obj
+[260/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_shield.c.obj
+[261/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\filesystem\windows\SDL_sysfilesystem.c.obj
+[262/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_rumble.c.obj
+[263/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_steam.c.obj
+[264/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_steamdeck.c.obj
+[265/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_wii.c.obj
+[266/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_xbox360.c.obj
+[267/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_switch.c.obj
+[268/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_xbox360w.c.obj
+[269/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_xboxone.c.obj
+[270/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapijoystick.c.obj
+[271/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_dinputjoystick.c.obj
+[272/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_windowsjoystick.c.obj
+[273/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_xinputjoystick.c.obj
+[274/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftcid.c.obj
+[275/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftfstype.c.obj
+[276/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\windows\SDL_dinputhaptic.c.obj
+[277/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftgasp.c.obj
+[278/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\windows\SDL_windowshaptic.c.obj
+[279/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftglyph.c.obj
+[280/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftgxval.c.obj
+[281/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftinit.c.obj
+[282/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftmm.c.obj
+[283/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftotval.c.obj
+[284/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\windows\SDL_xinputhaptic.c.obj
+[285/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftpatent.c.obj
+[286/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftpfr.c.obj
+[287/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftsynth.c.obj
+[288/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\fttype1.c.obj
+[289/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftwinfnt.c.obj
+[290/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\bzip2\ftbzip2.c.obj
+[291/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftstroke.c.obj
+[292/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\cache\ftcache.c.obj
+[293/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\bdf\bdf.c.obj
+[294/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_windows_gaming_input.c.obj
+[295/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\cid\type1cid.c.obj
+[296/591] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_rawinputjoystick.c.obj
+[297/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\cff\cff.c.obj
+[298/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\lzw\ftlzw.c.obj
+[299/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\pcf\pcf.c.obj
+[300/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\pfr\pfr.c.obj
+[301/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\pshinter\pshinter.c.obj
+[302/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\psnames\psnames.c.obj
+[303/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\raster\raster.c.obj
+[304/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\smooth\smooth.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\smooth\ftgrays.c(1991): warning C4267: '+=': conversion from 'size_t' to 'TCoord', possible loss of data
+[305/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\gzip\ftgzip.c.obj
+[306/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\svg\svg.c.obj
+[307/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\sdf\sdf.c.obj
+[308/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\type42\type42.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type42\t42parse.c(878): warning C4244: '=': conversion from '__int64' to 'FT_Int', possible loss of data
+[309/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\sfnt\sfnt.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\sfnt\sfdriver.c(880): warning C4267: '=': conversion from 'size_t' to 'FT_UInt', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\sfnt\sfdriver.c(1032): warning C4244: 'function': conversion from '__int64' to 'const unsigned int', possible loss of data
+[310/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\winfonts\winfnt.c.obj
+[311/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\type1\type1.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(292): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(313): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(345): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(375): warning C4267: '=': conversion from 'size_t' to 'FT_UInt', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(584): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(593): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(602): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(611): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(621): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1load.c(1779): warning C4244: '=': conversion from '__int64' to 'FT_Int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1load.c(1953): warning C4244: '=': conversion from '__int64' to 'FT_Int', possible loss of data
+[312/591] Building C object CMakeFiles\book_miniz.dir\external\src\miniz\miniz.c.obj
+FAILED: [code=2] CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.obj 
+C:\PROGRA~1\MICROS~2\18\ENTERP~1\VC\Tools\MSVC\1451~1.362\bin\Hostx64\x64\cl.exe  /nologo  -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\vc\include -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\miniz /DWIN32 /D_WINDOWS /W3 /MD /O2 /Ob2 /DNDEBUG /showIncludes /FoCMakeFiles\book_miniz.dir\external\src\miniz\miniz.c.obj /FdCMakeFiles\book_miniz.dir\book_miniz.pdb /FS -c D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\miniz\miniz.c
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\miniz\miniz.h(115): fatal error C1083: Cannot open include file: 'miniz_export.h': No such file or directory
+[313/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\builds\windows\ftsystem.c.obj
+[314/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\builds\windows\ftdebug.c.obj
+[315/591] Building RC object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftver.rc.res
+[316/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\truetype\truetype.c.obj
+[317/591] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\psaux\psaux.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\psaux\t1decode.c(1996): warning C4267: '=': conversion from 'size_t' to 'FT_Int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\psaux\psintrp.c(1005): warning C4267: '=': conversion from 'size_t' to 'FT_Fast', possible loss of data
+ninja: build stopped: subcommand failed.
