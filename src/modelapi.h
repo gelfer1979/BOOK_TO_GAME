@@ -314,7 +314,22 @@ public:
                     } else {
                         std::cerr << "[API Response] Invalid Gemini response structure: " << readBuffer << std::endl;
                         SaveBookErrorLog(readBuffer, "Invalid Gemini response structure.");
-                        aiResponse = "Error: Invalid Gemini response format.";
+                        
+                        bool blocked = false;
+                        if (responseJson.contains("promptFeedback") && responseJson["promptFeedback"].contains("blockReason")) {
+                            blocked = true;
+                        } else if (responseJson.contains("candidates") && !responseJson["candidates"].empty()) {
+                            std::string finishReason = responseJson["candidates"][0].value("finishReason", "");
+                            if (finishReason == "SAFETY" || finishReason == "RECITATION" || finishReason == "OTHER") {
+                                blocked = true;
+                            }
+                        }
+                        
+                        if (blocked) {
+                            aiResponse = "Error: The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.\n\nОшибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                        } else {
+                            aiResponse = "Error: Invalid Gemini response format.";
+                        }
                     }
                 } else {
                     // Parse standard OpenAI response format
@@ -520,7 +535,22 @@ public:
                     } else {
                         std::cerr << "[API Response] Invalid Gemini response structure: " << readBuffer << std::endl;
                         SaveBookErrorLog(readBuffer, "Invalid Gemini response structure in chat.");
-                        aiResponse = "Error: Invalid Gemini response format.";
+                        
+                        bool blocked = false;
+                        if (responseJson.contains("promptFeedback") && responseJson["promptFeedback"].contains("blockReason")) {
+                            blocked = true;
+                        } else if (responseJson.contains("candidates") && !responseJson["candidates"].empty()) {
+                            std::string finishReason = responseJson["candidates"][0].value("finishReason", "");
+                            if (finishReason == "SAFETY" || finishReason == "RECITATION" || finishReason == "OTHER") {
+                                blocked = true;
+                            }
+                        }
+                        
+                        if (blocked) {
+                            aiResponse = "Error: The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.\n\nОшибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                        } else {
+                            aiResponse = "Error: Invalid Gemini response format.";
+                        }
                     }
                 } else {
                     if (responseJson.contains("choices") && !responseJson["choices"].empty() &&
