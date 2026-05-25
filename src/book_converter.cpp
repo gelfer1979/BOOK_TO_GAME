@@ -70,6 +70,94 @@ static std::string ToLower(const std::string& s) {
     return r;
 }
 
+static std::string CP1251ToUTF8(const std::string& str) {
+    std::string out;
+    out.reserve(str.size() * 2);
+    for (unsigned char c : str) {
+        if (c < 0x80) {
+            out += (char)c;
+        } else {
+            if (c >= 0xC0 && c <= 0xDF) {
+                out += (char)0xD0;
+                out += (char)(c - 0xC0 + 0x90);
+            } else if (c >= 0xE0 && c <= 0xEF) {
+                out += (char)0xD0;
+                out += (char)(c - 0xE0 + 0xB0);
+            } else if (c >= 0xF0 && c <= 0xFF) {
+                out += (char)0xD1;
+                out += (char)(c - 0xF0 + 0x80);
+            } else if (c == 0xA8) { // Ё
+                out += (char)0xD0;
+                out += (char)0x81;
+            } else if (c == 0xB8) { // ё
+                out += (char)0xD1;
+                out += (char)0x91;
+            } else {
+                switch(c) {
+                    case 0x82: out += "\xE2\x80\x9A"; break; // Single low-9 quotation mark
+                    case 0x84: out += "\xE2\x80\x9E"; break; // Double low-9 quotation mark
+                    case 0x85: out += "\xE2\x80\xA6"; break; // Horizontal ellipsis
+                    case 0x86: out += "\xE2\x80\xA0"; break; // Dagger
+                    case 0x87: out += "\xE2\x80\xA1"; break; // Double dagger
+                    case 0x89: out += "\xE2\x80\xB0"; break; // Per mille sign
+                    case 0x8A: out += "\xD0\x89"; break;     // LJE
+                    case 0x8B: out += "\xE2\x80\xB9"; break; // Single left-pointing angle quotation mark
+                    case 0x8C: out += "\xD0\x8A"; break;     // NJE
+                    case 0x8D: out += "\xD0\x8B"; break;     // KJE
+                    case 0x8E: out += "\xD0\x8C"; break;     // TSHE
+                    case 0x8F: out += "\xD0\x8F"; break;     // DZHE
+                    case 0x91: out += "\xE2\x80\x98"; break; // Left single quotation mark
+                    case 0x92: out += "\xE2\x80\x99"; break; // Right single quotation mark
+                    case 0x93: out += "\xE2\x80\x9C"; break; // Left double quotation mark
+                    case 0x94: out += "\xE2\x80\x9D"; break; // Right double quotation mark
+                    case 0x95: out += "\xE2\x80\xA2"; break; // Bullet
+                    case 0x96: out += "\xE2\x80\x93"; break; // En dash
+                    case 0x97: out += "\xE2\x80\x94"; break; // Em dash
+                    case 0x99: out += "\xE2\x84\xA2"; break; // Trademark sign
+                    case 0x9A: out += "\xD1\x89"; break;     // lje
+                    case 0x9B: out += "\xE2\x80\xBA"; break; // Single right-pointing angle quotation mark
+                    case 0x9C: out += "\xD1\x8A"; break;     // nje
+                    case 0x9D: out += "\xD1\x8B"; break;     // kje
+                    case 0x9E: out += "\xD1\x8C"; break;     // tshe
+                    case 0x9F: out += "\xD1\x8F"; break;     // dzhe
+                    case 0xA0: out += "\xC2\xA0"; break;     // Non-breaking space
+                    case 0xA1: out += "\xD0\x8E"; break;     // SHORT U
+                    case 0xA2: out += "\xD1\x8E"; break;     // short u
+                    case 0xA3: out += "\xD0\x88"; break;     // JE
+                    case 0xA4: out += "\xC2\xA4"; break;     // Currency sign
+                    case 0xA5: out += "\xD2\x90"; break;     // GHE WITH UPTURN
+                    case 0xA6: out += "\xC2\xA6"; break;     // Broken bar
+                    case 0xA7: out += "\xC2\xA7"; break;     // Section sign
+                    case 0xA9: out += "\xC2\xA9"; break;     // Copyright sign
+                    case 0xAA: out += "\xD0\x84"; break;     // UKRAINIAN IE
+                    case 0xAB: out += "\xC2\xAB"; break;     // Left-pointing double angle quotation mark
+                    case 0xAC: out += "\xC2\xAC"; break;     // Not sign
+                    case 0xAD: out += "\xC2\xAD"; break;     // Soft hyphen
+                    case 0xAE: out += "\xC2\xAE"; break;     // Registered sign
+                    case 0xAF: out += "\xD0\x87"; break;     // YI
+                    case 0xB0: out += "\xC2\xB0"; break;     // Degree sign
+                    case 0xB1: out += "\xC2\xB1"; break;     // Plus-minus sign
+                    case 0xB2: out += "\xD0\x86"; break;     // BYELORUSSIAN-UKRAINIAN I
+                    case 0xB3: out += "\xD1\x96"; break;     // byelorussian-ukrainian i
+                    case 0xB4: out += "\xD2\x91"; break;     // ghe with upturn
+                    case 0xB5: out += "\xC2\xB5"; break;     // Micro sign
+                    case 0xB6: out += "\xC2\xB6"; break;     // Pilcrow sign
+                    case 0xB7: out += "\xC2\xB7"; break;     // Middle dot
+                    case 0xB9: out += "\xD1\x98"; break;     // je
+                    case 0xBA: out += "\xD1\x94"; break;     // ukrainian ie
+                    case 0xBB: out += "\xC2\xBB"; break;     // Right-pointing double angle quotation mark
+                    case 0xBC: out += "\xD1\x9F"; break;     // dze
+                    case 0xBD: out += "\xD0\x85"; break;     // DZE
+                    case 0xBE: out += "\xD1\x95"; break;     // yi
+                    case 0xBF: out += "\xD1\x97"; break;     // yi
+                    default:   out += '?'; break;            // Fallback for others
+                }
+            }
+        }
+    }
+    return out;
+}
+
 std::string GetExt(const std::string& path) {
     size_t pos = path.rfind('.');
     if (pos == std::string::npos) return "";
@@ -157,6 +245,21 @@ static void GetTextContent(pugi::xml_node node, std::string& out) {
 static std::string ExtractTextFromFB2(const std::string& path) {
     std::string xmlData = ReadBinaryFile(path);
     if (xmlData.empty()) return "";
+
+    // Check if XML is encoded in windows-1251 or cp1251
+    bool isCp1251 = false;
+    size_t declEnd = xmlData.find('>');
+    if (declEnd != std::string::npos && declEnd < 500) {
+        std::string header = xmlData.substr(0, declEnd);
+        std::transform(header.begin(), header.end(), header.begin(), ::tolower);
+        if (header.find("windows-1251") != std::string::npos ||
+            header.find("cp1251") != std::string::npos) {
+            isCp1251 = true;
+        }
+    }
+    if (isCp1251) {
+        xmlData = CP1251ToUTF8(xmlData);
+    }
 
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_buffer(xmlData.data(), xmlData.size(),
