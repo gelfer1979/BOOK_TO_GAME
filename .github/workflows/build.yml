@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # Install Linux-specific graphics, audio, and window management dependencies
       # to ensure the static SDL2 build from source has full native system support.
@@ -76,7 +78,7 @@ jobs:
             EXE_PATH=$(find build -name "BOOK_TO_GAME.exe" | head -1)
             cp "$EXE_PATH" dist/
             cp -r "$(dirname "$EXE_PATH")/assets" dist/ 2>/dev/null || cp -r build/assets dist/ 2>/dev/null || true
-            cd dist && 7z a -r ../book-to-game-windows.zip *
+            cd dist && zip -r ../book-to-game-windows.zip *
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
             cp build/BOOK_TO_GAME dist/
             cp -r build/assets dist/
@@ -127,6 +129,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -180,6 +184,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # Configure CMake for iOS simulator with Xcode generator and bypass signing
       - name: Configure CMake for iOS

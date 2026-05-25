@@ -1,0 +1,9 @@
+[submodule "external/src/pugixml"]
+	path = external/src/pugixml
+	url = https://github.com/zeux/pugixml
+[submodule "external/src/miniz"]
+	path = external/src/miniz
+	url = https://github.com/richgel999/miniz
+[submodule "external/src/libmobi"]
+	path = external/src/libmobi
+	url = https://github.com/bfabiszewski/libmobi

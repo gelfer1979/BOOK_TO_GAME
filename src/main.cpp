@@ -12,6 +12,8 @@
 #include <map>
 #include <atomic>
 #include <filesystem>
+#include <unordered_map>
+#include "book_converter.h"
 
 #ifdef _WIN32
 #ifndef NOMINMAX
@@ -849,11 +851,12 @@ void ScanAvailableBooks() {
                         std::string lowerExt = ext;
                         std::transform(lowerExt.begin(), lowerExt.end(), lowerExt.begin(), ::tolower);
                         
-                        if (lowerExt == ".txt" || lowerExt == ".json") {
+                        if (BookConverter::IsSupportedBookFormat(lowerExt)) {
                             // Skip system configuration, save games, and makefiles
                             if (filename == "save.json" || filename == "settings.json" || 
                                 filename == "options.json" || filename == "book_error.txt" ||
-                                filename == "CMakeLists.txt") {
+                                filename == "CMakeLists.txt" ||
+                                filename == "book_converted_temp.txt") {
                                 continue;
                             }
                             // Skip AI model files
@@ -1500,7 +1503,7 @@ std::string OpenFileDialogImpl() {
     ofn.hwndOwner = NULL;
     ofn.lpstrFile = szFile;
     ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+    ofn.lpstrFilter = BookConverter::GetWindowsDialogFilter();
     ofn.nFilterIndex = 1;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
@@ -1513,7 +1516,7 @@ std::string OpenFileDialogImpl() {
     return "";
 #elif defined(__APPLE__)
     char path[1024] = {0};
-    FILE *f = popen("osascript -e 'POSIX path of (choose file of type {\"public.plain-text\"})' 2>/dev/null", "r");
+    FILE *f = popen(BookConverter::GetMacOSScript(), "r");
     if (f) {
         if (fgets(path, sizeof(path), f)) {
             std::string p(path);
@@ -1526,7 +1529,7 @@ std::string OpenFileDialogImpl() {
     return "";
 #elif defined(__linux__)
     char path[1024] = {0};
-    FILE *f = popen("zenity --file-selection --file-filter='Text Files | *.txt' 2>/dev/null", "r");
+    FILE *f = popen((std::string("zenity --file-selection --file-filter='") + BookConverter::GetZenityFilter() + "' 2>/dev/null").c_str(), "r");
     if (f) {
         if (fgets(path, sizeof(path), f)) {
             std::string p(path);
@@ -1786,8 +1789,25 @@ void InitAdventureSetup(const std::string& filePath) {
     std::remove("save.json");
     std::remove("../save.json");
 
+    // Auto-convert epub/fb2/docx/mobi to plain text before setup
+    std::string actualFilePath = filePath;
+    {
+        std::string ext = BookConverter::GetExt(filePath);
+        if (ext != ".txt" && ext != ".json") {
+            std::cout << "[BookConverter] Converting " << ext << " file: " << filePath << std::endl;
+            std::string tmpPath = BookConverter::ConvertBookToTempTxt(filePath);
+            if (!tmpPath.empty()) {
+                std::cout << "[BookConverter] Conversion successful -> " << tmpPath << std::endl;
+                actualFilePath = tmpPath;
+            } else {
+                std::cerr << "[BookConverter] Conversion failed for: " << filePath << std::endl;
+            }
+        }
+    }
+
     state.mutex.lock();
-    state.txtPath = filePath;
+    state.txtPath = actualFilePath;
+
     state.appState = APP_STATE_SETUP;
     state.setupStep = 0;
     state.chosenLengthText = "";
@@ -1807,9 +1827,9 @@ void InitAdventureSetup(const std::string& filePath) {
     
     // Spawn background thread to generate 5 tailored genres close to the original book
     state.setupDynamicGenres.clear();
-    std::thread([filePath]() {
+    std::thread([actualFilePath]() {
         // Read first 1000 characters from raw book to extract theme/setting
-        std::ifstream file(filePath);
+        std::ifstream file(actualFilePath);
         if (!file.is_open()) return;
         std::string sample;
         char buf[1000];
