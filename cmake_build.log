@@ -1,0 +1,487 @@
+[1/578] Generating include/SDL2/SDL_assert.h
+[2/578] Generating include/SDL2/SDL_atomic.h
+[3/578] Generating include/SDL2/SDL.h
+[4/578] Generating include/SDL2/SDL_audio.h
+[5/578] Generating include/SDL2/SDL_bits.h
+[6/578] Generating include/SDL2/SDL_blendmode.h
+[7/578] Generating include/SDL2/SDL_clipboard.h
+[8/578] Generating include/SDL2/SDL_copying.h
+[9/578] Generating include/SDL2/SDL_cpuinfo.h
+[10/578] Generating include/SDL2/SDL_egl.h
+[11/578] Generating include/SDL2/SDL_endian.h
+[12/578] Generating include/SDL2/SDL_error.h
+[13/578] Generating include/SDL2/SDL_events.h
+[14/578] Generating include/SDL2/SDL_filesystem.h
+[15/578] Generating include/SDL2/SDL_gamecontroller.h
+[16/578] Generating include/SDL2/SDL_gesture.h
+[17/578] Generating include/SDL2/SDL_guid.h
+[18/578] Generating include/SDL2/SDL_haptic.h
+[19/578] Generating include/SDL2/SDL_hidapi.h
+[20/578] Generating include/SDL2/SDL_hints.h
+[21/578] Generating include/SDL2/SDL_joystick.h
+[22/578] Generating include/SDL2/SDL_keyboard.h
+[23/578] Generating include/SDL2/SDL_keycode.h
+[24/578] Generating include/SDL2/SDL_loadso.h
+[25/578] Generating include/SDL2/SDL_locale.h
+[26/578] Generating include/SDL2/SDL_log.h
+[27/578] Generating include/SDL2/SDL_main.h
+[28/578] Generating include/SDL2/SDL_messagebox.h
+[29/578] Generating include/SDL2/SDL_metal.h
+[30/578] Generating include/SDL2/SDL_misc.h
+[31/578] Generating include/SDL2/SDL_mouse.h
+[32/578] Generating include/SDL2/SDL_mutex.h
+[33/578] Generating include/SDL2/SDL_name.h
+[34/578] Generating include/SDL2/SDL_opengl.h
+[35/578] Generating include/SDL2/SDL_opengl_glext.h
+[36/578] Generating include/SDL2/SDL_opengles.h
+[37/578] Generating include/SDL2/SDL_opengles2.h
+[38/578] Generating include/SDL2/SDL_opengles2_gl2.h
+[39/578] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[40/578] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[41/578] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[42/578] Generating include/SDL2/SDL_pixels.h
+[43/578] Generating include/SDL2/SDL_platform.h
+[44/578] Generating include/SDL2/SDL_power.h
+[45/578] Generating include/SDL2/SDL_quit.h
+[46/578] Generating include/SDL2/SDL_rect.h
+[47/578] Generating include/SDL2/SDL_render.h
+[48/578] Generating include/SDL2/SDL_rwops.h
+[49/578] Generating include/SDL2/SDL_scancode.h
+[50/578] Generating include/SDL2/SDL_sensor.h
+[51/578] Generating include/SDL2/SDL_shape.h
+[52/578] Generating include/SDL2/SDL_surface.h
+[53/578] Generating include/SDL2/SDL_stdinc.h
+[54/578] Generating include/SDL2/SDL_system.h
+[55/578] Generating include/SDL2/SDL_syswm.h
+[56/578] Generating include/SDL2/SDL_test.h
+[57/578] Generating include/SDL2/SDL_test_assert.h
+[58/578] Generating include/SDL2/SDL_test_common.h
+[59/578] Generating include/SDL2/SDL_test_compare.h
+[60/578] Generating include/SDL2/SDL_test_crc32.h
+[61/578] Generating include/SDL2/SDL_test_font.h
+[62/578] Generating include/SDL2/SDL_test_fuzzer.h
+[63/578] Generating include/SDL2/SDL_test_harness.h
+[64/578] Generating include/SDL2/SDL_test_log.h
+[65/578] Generating include/SDL2/SDL_test_images.h
+[66/578] Generating include/SDL2/SDL_test_md5.h
+[67/578] Generating include/SDL2/SDL_test_memory.h
+[68/578] Generating include/SDL2/SDL_thread.h
+[69/578] Generating include/SDL2/SDL_test_random.h
+[70/578] Generating include/SDL2/SDL_timer.h
+[71/578] Generating include/SDL2/SDL_touch.h
+[72/578] Generating include/SDL2/SDL_types.h
+[73/578] Generating include/SDL2/SDL_version.h
+[74/578] Generating include/SDL2/SDL_video.h
+[75/578] Generating include/SDL2/SDL_vulkan.h
+[76/578] Generating include/SDL2/begin_code.h
+[77/578] Generating include/SDL2/close_code.h
+[78/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[79/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[80/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_dataqueue.c.o
+[81/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_assert.c.o
+[82/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_error.c.o
+[83/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL.c.o
+[84/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_guid.c.o
+[85/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_hints.c.o
+[86/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_log.c.o
+[87/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_utils.c.o
+[88/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_list.c.o
+[89/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/atomic/SDL_atomic.c.o
+[90/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/atomic/SDL_spinlock.c.o
+[91/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiodev.c.o
+[92/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiotypecvt.c.o
+[93/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audio.c.o
+[94/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_mixer.c.o
+[95/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_wave.c.o
+[96/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/cpuinfo/SDL_cpuinfo.c.o
+[97/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiocvt.c.o
+[98/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_clipboardevents.c.o
+[99/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_displayevents.c.o
+[100/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_dropevents.c.o
+[101/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_gesture.c.o
+[102/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[103/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_keyboard.c.o
+[104/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_keysym_to_scancode.c.o
+[105/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_events.c.o
+[106/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_quit.c.o
+[107/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_scancode_tables.c.o
+[108/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_windowevents.c.o
+[109/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[110/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_touch.c.o
+[111/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/imKStoUCS.c.o
+[112/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/file/SDL_rwops.c.o
+[113/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/haptic/SDL_haptic.c.o
+[114/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_mouse.c.o
+[115/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_steam_virtual_gamepad.c.o
+[116/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/controller_type.c.o
+[117/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_atan2.c.o
+[118/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_exp.c.o
+[119/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/hidapi/SDL_hidapi.c.o
+[120/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_fmod.c.o
+[121/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_log.c.o
+[122/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_log10.c.o
+[123/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_pow.c.o
+[124/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_rem_pio2.c.o
+[125/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_gamecontroller.c.o
+[126/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_sqrt.c.o
+[127/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_cos.c.o
+[128/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_sin.c.o
+[129/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_tan.c.o
+[130/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_rem_pio2.c.o
+[131/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_atan.c.o
+[132/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_copysign.c.o
+[133/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_cos.c.o
+[134/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_fabs.c.o
+[135/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_floor.c.o
+[136/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_scalbn.c.o
+[137/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_sin.c.o
+[138/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_tan.c.o
+[139/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/locale/SDL_locale.c.o
+[140/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/misc/SDL_url.c.o
+[141/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/power/SDL_power.c.o
+[142/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_d3dmath.c.o
+[143/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_render_d3d.c.o
+[144/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_shaders_d3d.c.o
+[145/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_render_d3d11.c.o
+[146/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_yuv_sw.c.o
+[147/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_shaders_d3d11.c.o
+[148/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_joystick.c.o
+[149/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_render_d3d12.c.o
+[150/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.o
+[151/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles/SDL_render_gles.c.o
+[152/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_shaders_gl.c.o
+[153/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_shaders_gles2.c.o
+[154/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/ps2/SDL_render_ps2.c.o
+[155/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/psp/SDL_render_psp.c.o
+[156/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_render_gl.c.o
+[157/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/dynapi/SDL_dynapi.c.o
+[158/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendpoint.c.o
+[159/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_render_gles2.c.o
+[160/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawpoint.c.o
+[161/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawline.c.o
+[162/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_render.c.o
+[163/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendfillrect.c.o
+[164/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm.c.o
+[165/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.o
+[166/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_rotate.c.o
+[167/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.o
+[168/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_render_sw.c.o
+[169/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc16.c.o
+[170/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc32.c.o
+[171/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_getenv.c.o
+[172/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_iconv.c.o
+[173/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_malloc.c.o
+[174/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_mslibc.c.o
+[175/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_qsort.c.o
+[176/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/sensor/SDL_sensor.c.o
+[177/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_stdlib.c.o
+[178/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_strtokr.c.o
+[179/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_string.c.o
+[180/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/SDL_thread.c.o
+[181/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_triangle.c.o
+[182/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/timer/SDL_timer.c.o
+[183/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit.c.o
+[184/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendline.c.o
+[185/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_1.c.o
+[186/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_0.c.o
+[187/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_copy.c.o
+[188/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_slow.c.o
+[189/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_RLEaccel.c.o
+[190/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_clipboard.c.o
+[191/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_bmp.c.o
+[192/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_A.c.o
+[193/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_egl.c.o
+[194/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_fillrect.c.o
+[195/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_rect.c.o
+[196/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_shape.c.o
+[197/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_pixels.c.o
+[198/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_stretch.c.o
+[199/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_vulkan_utils.c.o
+[200/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_surface.c.o
+[201/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_N.c.o
+[202/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.o
+[203/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.o
+[204/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/dummy/SDL_dummyaudio.c.o
+[205/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/disk/SDL_diskaudio.c.o
+[206/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/loadso/dlopen/SDL_sysloadso.c.o
+[207/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/virtual/SDL_virtualjoystick.c.o
+[208/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullevents.c.o
+[209/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullframebuffer.c.o
+[210/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_video.c.o
+[211/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_yuv.c.o
+[212/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullvideo.c.o
+[213/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenevents.c.o
+[214/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenframebuffer.c.o
+[215/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenopengles.c.o
+[216/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenvideo.c.o
+[217/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenwindow.c.o
+[218/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.o
+[219/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_combined.c.o
+[220/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.o
+[221/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.o
+[222/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/file/cocoa/SDL_rwopsbundlesupport.m.o
+[223/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.o
+[224/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_auto.c.o
+[225/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.o
+[226/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.o
+[227/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.o
+[228/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_shield.c.o
+[229/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.o
+[230/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.o
+[231/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.o
+[232/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.o
+[233/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.o
+[234/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/coreaudio/SDL_coreaudio.m.o
+[235/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.o
+[236/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.o
+[237/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/misc/macosx/SDL_sysurl.m.o
+[238/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapijoystick.c.o
+[239/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_switch.c.o
+[240/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/power/macosx/SDL_syspower.c.o
+[241/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/darwin/SDL_iokitjoystick.c.o
+[242/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/haptic/darwin/SDL_syshaptic.c.o
+[243/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/timer/unix/SDL_systimer.c.o
+[244/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/locale/macosx/SDL_syslocale.m.o
+[245/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/filesystem/cocoa/SDL_sysfilesystem.m.o
+[246/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/iphoneos/SDL_mfijoystick.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:498:27: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+  498 |     } else if (controller.gamepad) {
+      |                           ^~~~~~~
+      |                           extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:628:27: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+  628 |     } else if (controller.gamepad) {
+      |                           ^~~~~~~
+      |                           extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:794:24: warning: 'controllerPausedHandler' is deprecated: first deprecated in macOS 10.15 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]
+  794 |             controller.controllerPausedHandler = nil;
+      |                        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:159:46: note: 'controllerPausedHandler' has been explicitly marked deprecated here
+  159 | @property (nonatomic, copy, nullable) void (^controllerPausedHandler)(GCController *controller) API_DEPRECATED("Use the Menu button found on the controller's input profile, if it exists.", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.0, 13.0));
+      |                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1013:28: warning: 'controllerPausedHandler' is deprecated: first deprecated in macOS 10.15 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]
+ 1013 |                 controller.controllerPausedHandler = ^(GCController *c) {
+      |                            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:159:46: note: 'controllerPausedHandler' has been explicitly marked deprecated here
+  159 | @property (nonatomic, copy, nullable) void (^controllerPausedHandler)(GCController *controller) API_DEPRECATED("Use the Menu button found on the controller's input profile, if it exists.", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.0, 13.0));
+      |                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1255:31: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 1255 |         } else if (controller.gamepad) {
+      |                               ^~~~~~~
+      |                               extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1257:13: warning: 'GCGamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 1257 |             GCGamepad *gamepad = controller.gamepad;
+      |             ^~~~~~~~~
+      |             GCExtendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCGamepad.h:27:12: note: 'GCGamepad' has been explicitly marked deprecated here
+   27 | @interface GCGamepad : GCPhysicalInputProfile
+      |            ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1257:45: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 1257 |             GCGamepad *gamepad = controller.gamepad;
+      |                                             ^~~~~~~
+      |                                             extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1797:24: warning: 'controllerPausedHandler' is deprecated: first deprecated in macOS 10.15 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]
+ 1797 |             controller.controllerPausedHandler = nil;
+      |                        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:159:46: note: 'controllerPausedHandler' has been explicitly marked deprecated here
+  159 | @property (nonatomic, copy, nullable) void (^controllerPausedHandler)(GCController *controller) API_DEPRECATED("Use the Menu button found on the controller's input profile, if it exists.", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.0, 13.0));
+      |                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:2029:20: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 2029 |     if (controller.gamepad) {
+      |                    ^~~~~~~
+      |                    extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:2030:27: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 2030 |         return controller.gamepad.dpad;
+      |                           ^~~~~~~
+      |                           extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+10 warnings generated.
+[247/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaclipboard.m.o
+[248/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaevents.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoaevents.m:295:36: warning: 'NSApplicationActivateIgnoringOtherApps' is deprecated: first deprecated in macOS 14.0 - ignoringOtherApps is deprecated in macOS 14 and will have no effect. [-Wdeprecated-declarations]
+  295 |             [i activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+      |                                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSRunningApplication.h:27:5: note: 'NSApplicationActivateIgnoringOtherApps' has been explicitly marked deprecated here
+   27 |     NSApplicationActivateIgnoringOtherApps API_DEPRECATED("ignoringOtherApps is deprecated in macOS 14 and will have no effect.", macos(10.6, 14.0)) = 1 << 1
+      |     ^
+1 warning generated.
+[249/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoamessagebox.m.o
+[250/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoakeyboard.m.o
+[251/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoametalview.m.o
+[252/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoamodes.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:93:23: warning: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+   93 |         CVTime time = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(link);
+      |                       ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
+  182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
+      |                  ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:122:23: warning: 'CGDisplayModeCopyPixelEncoding' is deprecated: first deprecated in macOS 10.11 - No longer supported [-Wdeprecated-declarations]
+  122 |     CFStringRef fmt = CGDisplayModeCopyPixelEncoding(vidmode);
+      |                       ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDirectDisplay.h:177:34: note: 'CGDisplayModeCopyPixelEncoding' has been explicitly marked deprecated here
+  177 | CG_EXTERN CFStringRef __nullable CGDisplayModeCopyPixelEncoding(
+      |                                  ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:284:32: warning: 'CGDisplayIOServicePort' is deprecated: first deprecated in macOS 10.9 - No longer supported [-Wdeprecated-declarations]
+  284 |     io_service_t servicePort = CGDisplayIOServicePort(displayID);
+      |                                ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDisplayConfiguration.h:372:24: note: 'CGDisplayIOServicePort' has been explicitly marked deprecated here
+  372 | CG_EXTERN io_service_t CGDisplayIOServicePort(CGDirectDisplayID display)
+      |                        ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:354:13: warning: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  354 |             CVDisplayLinkCreateWithCGDisplay(displays[i], &link);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+   89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+      |                    ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:360:17: warning: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  360 |                 CVDisplayLinkRelease(link);
+      |                 ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+  249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+      |                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:367:13: warning: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  367 |             CVDisplayLinkRelease(link);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+  249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+      |                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:512:5: warning: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  512 |     CVDisplayLinkCreateWithCGDisplay(data->display, &link);
+      |     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+   89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+      |                    ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:580:5: warning: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  580 |     CVDisplayLinkRelease(link);
+      |     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+  249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+      |                ^
+8 warnings generated.
+[253/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoamouse.m.o
+[254/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaopengl.m.o
+[255/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaopengles.m.o
+[256/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoashape.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoashape.m:67:38: warning: 'graphicsContext' is deprecated: first deprecated in macOS 10.14 - Add instances of NSView to display content in a window. [-Wdeprecated-declarations]
+   67 |     data.context = [windata.nswindow graphicsContext];
+      |                                      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1019:59: note: property 'graphicsContext' is declared deprecated here
+ 1019 | @property (nullable, readonly, strong) NSGraphicsContext *graphicsContext API_DEPRECATED("Add instances of NSView to display content in a window.", macos(10.0,10.14));
+      |                                                           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1019:59: note: 'graphicsContext' has been explicitly marked deprecated here
+1 warning generated.
+[257/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_systhread.c.o
+[258/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_sysmutex.c.o
+[259/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoavulkan.m.o
+[260/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_syscond.c.o
+[261/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_systls.c.o
+[262/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/sensor/dummy/SDL_dummysensor.c.o
+[263/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_syssem.c.o
+[264/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[265/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoavideo.m.o
+[266/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[267/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[268/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[269/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[270/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[271/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[272/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[273/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[274/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[275/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/metal/SDL_render_metal.m.o
+[276/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[277/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[278/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[279/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[280/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[281/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[282/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[283/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[284/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoawindow.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:164:47: warning: 'NSFilenamesPboardType' is deprecated: first deprecated in macOS 10.14 - Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead [-Wdeprecated-declarations]
+  164 |     NSArray *types = [NSArray arrayWithObject:NSFilenamesPboardType];
+      |                                               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPasteboard.h:433:32: note: 'NSFilenamesPboardType' has been explicitly marked deprecated here
+  433 | APPKIT_EXTERN NSPasteboardType NSFilenamesPboardType API_DEPRECATED("Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead", macos(10.0,10.14));
+      |                                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:182:45: warning: 'NSFilenamesPboardType' is deprecated: first deprecated in macOS 10.14 - Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead [-Wdeprecated-declarations]
+  182 |     SDL_assert([desiredType isEqualToString:NSFilenamesPboardType]);
+      |                                             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPasteboard.h:433:32: note: 'NSFilenamesPboardType' has been explicitly marked deprecated here
+  433 | APPKIT_EXTERN NSPasteboardType NSFilenamesPboardType API_DEPRECATED("Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead", macos(10.0,10.14));
+      |                                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:531:11: warning: 'setAcceptsTouchEvents:' is deprecated: first deprecated in macOS 10.12.2 - Use allowedTouchTypes instead [-Wdeprecated-declarations]
+  531 |     [view setAcceptsTouchEvents:YES];
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSView.h:231:16: note: property 'acceptsTouchEvents' is declared deprecated here
+  231 | @property BOOL acceptsTouchEvents API_DEPRECATED("Use allowedTouchTypes instead", macos(10.6,10.12.2));
+      |                ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSView.h:231:16: note: 'setAcceptsTouchEvents:' has been explicitly marked deprecated here
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:1718:15: warning: 'setOneShot:' is deprecated: first deprecated in macOS 10.14 - This property does not do anything and should not be used [-Wdeprecated-declarations]
+ 1718 |     [nswindow setOneShot:NO];
+      |               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1021:35: note: property 'oneShot' is declared deprecated here
+ 1021 | @property (getter=isOneShot) BOOL oneShot API_DEPRECATED("This property does not do anything and should not be used", macos(10.0,10.14));
+      |                                   ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1021:35: note: 'setOneShot:' has been explicitly marked deprecated here
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:2463:85: warning: 'kUTTypeFileURL' is deprecated: first deprecated in macOS 12.0 - Use UTTypeFileURL or UTType.fileURL (swift) instead. [-Wdeprecated-declarations]
+ 2463 |         [data.nswindow registerForDraggedTypes:[NSArray arrayWithObject:(NSString *)kUTTypeFileURL]];
+      |                                                                                     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTCoreTypes.h:211:26: note: 'kUTTypeFileURL' has been explicitly marked deprecated here
+  211 | extern const CFStringRef kUTTypeFileURL                              API_DEPRECATED("Use UTTypeFileURL or UTType.fileURL (swift) instead.", ios(3.0, 15.0), macos(10.4, 12.0), tvos(9.0, 15.0), watchos(1.0, 8.0));
+      |                          ^
+5 warnings generated.
+[285/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[286/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[287/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[288/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[289/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[290/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[291/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+In file included from /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/ftgzip.c:99:
+In file included from /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/zutil.c:8:
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/zutil.h:172:11: warning: 'OS_CODE' macro redefined [-Wmacro-redefined]
+  172 | #  define OS_CODE 19
+      |           ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/zutil.h:143:11: note: previous definition is here
+  143 | #  define OS_CODE  7
+      |           ^
+1 warning generated.
+[292/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[293/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[294/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[295/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[296/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[297/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[298/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[299/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[300/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[301/578] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o
+FAILED: [code=1] CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o 
+/usr/bin/cc  -I/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include -I/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz -O3 -DNDEBUG -arch arm64 -MD -MT CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o -MF CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o.d -o CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o -c /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz/miniz.c
+In file included from /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz/miniz.c:27:
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz/miniz.h:115:10: fatal error: 'miniz_export.h' file not found
+  115 | #include "miniz_export.h"
+      |          ^~~~~~~~~~~~~~~~
+1 error generated.
+[302/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[303/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[304/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[305/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+ninja: build stopped: subcommand failed.
