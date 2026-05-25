@@ -26,6 +26,8 @@
 #include "book_converter.h"
 
 
+inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& errorMsg);
+
 // Pure UI-independent Chat Message representation
 struct ChatMessageData {
     std::string sender; // "User" or "AI"
@@ -272,6 +274,7 @@ public:
                         aiResponse = responseJson["candidates"][0]["content"]["parts"][0]["text"].get<std::string>();
                     } else {
                         std::cerr << "[API Response] Invalid Gemini response structure: " << readBuffer << std::endl;
+                        SaveBookErrorLog(readBuffer, "Invalid Gemini response structure.");
                         aiResponse = "Error: Invalid Gemini response format.";
                     }
                 } else {
@@ -477,6 +480,7 @@ public:
                         aiResponse = responseJson["candidates"][0]["content"]["parts"][0]["text"].get<std::string>();
                     } else {
                         std::cerr << "[API Response] Invalid Gemini response structure: " << readBuffer << std::endl;
+                        SaveBookErrorLog(readBuffer, "Invalid Gemini response structure in chat.");
                         aiResponse = "Error: Invalid Gemini response format.";
                     }
                 } else {
