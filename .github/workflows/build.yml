@@ -171,7 +171,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git checkout -b build-logs-android-${{ github.run_id }}
-          cp platforms/android/android_build.log android_build.log || true
+          cp platforms/android/android_build.log ./android_build.log || true
           git add android_build.log
           git commit -m "ci: save android build logs run ${{ github.run_id }}"
           git push origin build-logs-android-${{ github.run_id }} --force
