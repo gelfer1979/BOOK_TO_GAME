@@ -87,7 +87,18 @@ add_subdirectory(external/src/pugixml)
 
 # miniz (ZIP decompressor for epub/docx)
 # Built as 'book_miniz' to avoid target name clash with libmobi's internal 'miniz' OBJECT lib.
-# MINIZ_NO_EXPORT bypasses the need for generated miniz_export.h.
+# Generate miniz_export.h (normally produced by CMake's GenerateExportHeader) at configure time.
+file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/external/src/miniz/miniz_export.h"
+"/* miniz_export.h - generated for static build */\n"
+"#ifndef MINIZ_EXPORT_H\n"
+"#define MINIZ_EXPORT_H\n"
+"#define MINIZ_EXPORT\n"
+"#define MINIZ_NO_EXPORT\n"
+"#define MINIZ_DEPRECATED\n"
+"#define MINIZ_DEPRECATED_EXPORT\n"
+"#define MINIZ_DEPRECATED_NO_EXPORT\n"
+"#endif /* MINIZ_EXPORT_H */\n"
+)
 add_library(book_miniz STATIC
     external/src/miniz/miniz.c
     external/src/miniz/miniz_tdef.c
