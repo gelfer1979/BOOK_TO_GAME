@@ -79,7 +79,6 @@ struct {
     std::vector<ActiveChoice> uiActiveChoices;
     
     std::string inputText = "";
-    std::string lastQuery = "";
     bool aiThinking = false;
     bool ignoreTags = false;
     std::string transitionPrefix = "Перейти к Главе ";
@@ -2126,7 +2125,7 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
         if (maxChapterNum == 0) maxChapterNum = 4;
         bool isVictory = (nextChapter > maxChapterNum);
 
-        state.lastQuery = queryCopy;
+        state.modelState.lastQuery = queryCopy;
         state.aiThinking = true;
         state.scrollToBottom = true;
         state.modelState.activeChoices.clear();
@@ -2517,7 +2516,7 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     }
     state.currentQueryId++;
     uint64_t queryId = state.currentQueryId;
-    state.lastQuery = queryCopy;
+    state.modelState.lastQuery = queryCopy;
     if (showInChat && !isRetry) {
         // Add User query to Dialogue bubbles list
         ChatMessageData userMsg;
@@ -2985,7 +2984,7 @@ void MainIteration() {
                                             state.modelState.messages.pop_back(); // Remove the error bubble from history
                                         }
                                         state.mutex.unlock();
-                                        SubmitQuery(state.lastQuery, true);
+                                        SubmitQuery(state.modelState.lastQuery, true);
                                     } else if (choiceText == GetUiText("btn_force_next_chapter")) {
                                         state.modelState.pendingNextChapter = state.modelState.currentChapter + 1;
                                         state.modelState.activeChoices = { state.transitionPrefix + std::to_string(state.modelState.pendingNextChapter) };
@@ -3343,7 +3342,7 @@ void MainIteration() {
                                         state.modelState.messages.pop_back(); // Remove the error bubble from history
                                     }
                                     state.mutex.unlock();
-                                    SubmitQuery(state.lastQuery, true);
+                                    SubmitQuery(state.modelState.lastQuery, true);
                                 } else if (clickedText == GetUiText("btn_force_next_chapter")) {
                                     state.mutex.lock();
                                     state.modelState.pendingNextChapter = state.modelState.currentChapter + 1;

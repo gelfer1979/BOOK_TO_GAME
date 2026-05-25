@@ -527,6 +527,7 @@ struct GameState {
     int maxTurnsForce = 10;
     std::vector<ChatMessageData> messages;
     std::vector<std::string> activeChoices;
+    std::string lastQuery = "";
     
     // Core game setup prompts
     std::string systemPrompt = "";
@@ -1242,6 +1243,7 @@ inline void SaveGame(const GameState& state, const std::string& filename = "save
     j["gameOver"] = state.gameOver;
     j["gameWon"] = state.gameWon;
     j["pendingNextChapter"] = state.pendingNextChapter;
+    j["lastQuery"] = state.lastQuery;
     
     nlohmann::json msgs = nlohmann::json::array();
     for (const auto& msg : state.messages) {
@@ -1322,6 +1324,12 @@ inline bool LoadGame(GameState& state, const std::string& filename = "save.json"
             state.pendingNextChapter = j["pendingNextChapter"].get<int>();
         } else {
             state.pendingNextChapter = -1;
+        }
+        
+        if (j.contains("lastQuery") && j["lastQuery"].is_string()) {
+            state.lastQuery = j["lastQuery"].get<std::string>();
+        } else {
+            state.lastQuery = "";
         }
         
         state.messages.clear();
