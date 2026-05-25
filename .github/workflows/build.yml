@@ -24,8 +24,7 @@ jobs:
       if: matrix.os == 'ubuntu-22.04'
       run: |
         sudo apt update
-        # Добавляем pkg-config, который поможет CMake найти SDL2 модули на Linux
-        sudo apt install -y build-essential cmake pkg-config libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libcurl4-openssl-dev wget
+        sudo apt install -y build-essential cmake pkg-config libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libsdl2-mixer-dev libcurl4-openssl-dev wget
 
     - name: Install Dependencies (Windows via vcpkg)
       if: matrix.os == 'windows-2022'
@@ -38,17 +37,28 @@ jobs:
         brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf sdl2_net curl
 
     # --- ШАГ 2: Конфигурация через CMake ---
-    - name: Configure CMake (Non-Windows)
-      if: matrix.os != 'windows-2022'
+    - name: Configure CMake (Linux)
+      if: matrix.os == 'ubuntu-22.04'
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+          -DSDL2_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2 \
+          -DSDL2_image_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_image \
+          -DSDL2_mixer_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_mixer \
+          -DSDL2_net_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_net \
+          -DSDL2_ttf_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_ttf || \
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+
+    - name: Configure CMake (macOS)
+      if: matrix.os == 'macos-14'
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 
     - name: Configure CMake (Windows)
       if: matrix.os == 'windows-2022'
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows
 
-    # --- ШАГ 3: Компиляция проекта ---
+    # --- ШАГ 3: Компиляция проекта (Исправленный кроссплатформенный шаг) ---
     - name: Build Project
-      run: cmake --build build --config Release --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 2)
+      run: cmake --build build --config Release --parallel
 
     # --- ШАГ 4: Сохранение готовых файлов ---
     - name: Upload Artifacts
