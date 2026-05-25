@@ -4504,3 +4504,13 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     std::cout << "All BOOK_TO_GAME subsystems shut down cleanly!" << std::endl;
     return 0;
 }
+
+#if defined(__APPLE__)
+#include <TargetConditionals.h>
+#endif
+
+#if !defined(_WIN32) && !defined(__ANDROID__) && (!defined(__APPLE__) || !TARGET_OS_IPHONE)
+int main(int argc, char* argv[]) {
+    return SDL_main(argc, argv);
+}
+#endif
