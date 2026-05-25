@@ -74,11 +74,13 @@ jobs:
         run: |
           mkdir -p dist
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            # MSVC/Ninja places exe in build/Release/ subfolder
-            EXE_PATH=$(find build -name "BOOK_TO_GAME.exe" | head -1)
+            # MSVC/Ninja places exe in build/ root or build/Release/ subfolder
+            EXE_PATH=$(find build -name "BOOK_TO_GAME.exe" 2>/dev/null | head -1)
+            if [ -z "$EXE_PATH" ]; then echo "ERROR: BOOK_TO_GAME.exe not found"; find build -type f -name "*.exe"; exit 1; fi
+            echo "Found exe at: $EXE_PATH"
             cp "$EXE_PATH" dist/
             cp -r "$(dirname "$EXE_PATH")/assets" dist/ 2>/dev/null || cp -r build/assets dist/ 2>/dev/null || true
-            cd dist && zip -r ../book-to-game-windows.zip *
+            cd dist && powershell -Command "Compress-Archive -Path * -DestinationPath ../book-to-game-windows.zip"
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
             cp build/BOOK_TO_GAME dist/
             cp -r build/assets dist/
@@ -147,6 +149,7 @@ jobs:
         run: |
           set -o pipefail
           cd platforms/android
+          chmod +x gradlew
           ./gradlew assembleRelease 2>&1 | tee android_build.log
 
       # Upload the compiled APK as an artifact
