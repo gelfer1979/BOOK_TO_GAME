@@ -640,9 +640,9 @@ std::string ConvertBookToTempTxt(const std::string& filePath) {
     std::string text = ConvertBookToText(filePath);
     if (text.empty()) return "";
 
-    std::string tmpPath = "book_converted_temp.txt";
+    std::string tmpPath = "book.txt";
     if (!WriteTextFile(tmpPath, text)) {
-        tmpPath = "../book_converted_temp.txt";
+        tmpPath = "../book.txt";
         if (!WriteTextFile(tmpPath, text)) return "";
     }
     return tmpPath;

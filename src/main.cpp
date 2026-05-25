@@ -855,7 +855,7 @@ void ScanAvailableBooks() {
                             if (filename == "save.json" || filename == "settings.json" || 
                                 filename == "options.json" || filename == "book_error.txt" ||
                                 filename == "CMakeLists.txt" ||
-                                filename == "book_converted_temp.txt") {
+                                filename == "book.txt") {
                                 continue;
                             }
                             // Skip AI model files
