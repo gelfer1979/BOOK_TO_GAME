@@ -1,0 +1,1586 @@
+[1/578] Generating include/SDL2/SDL.h
+[2/578] Generating include/SDL2/SDL_assert.h
+[3/578] Generating include/SDL2/SDL_atomic.h
+[4/578] Generating include/SDL2/SDL_bits.h
+[5/578] Generating include/SDL2/SDL_audio.h
+[6/578] Generating include/SDL2/SDL_blendmode.h
+[7/578] Generating include/SDL2/SDL_clipboard.h
+[8/578] Generating include/SDL2/SDL_copying.h
+[9/578] Generating include/SDL2/SDL_cpuinfo.h
+[10/578] Generating include/SDL2/SDL_egl.h
+[11/578] Generating include/SDL2/SDL_endian.h
+[12/578] Generating include/SDL2/SDL_error.h
+[13/578] Generating include/SDL2/SDL_events.h
+[14/578] Generating include/SDL2/SDL_filesystem.h
+[15/578] Generating include/SDL2/SDL_gamecontroller.h
+[16/578] Generating include/SDL2/SDL_gesture.h
+[17/578] Generating include/SDL2/SDL_guid.h
+[18/578] Generating include/SDL2/SDL_haptic.h
+[19/578] Generating include/SDL2/SDL_hidapi.h
+[20/578] Generating include/SDL2/SDL_hints.h
+[21/578] Generating include/SDL2/SDL_joystick.h
+[22/578] Generating include/SDL2/SDL_keyboard.h
+[23/578] Generating include/SDL2/SDL_keycode.h
+[24/578] Generating include/SDL2/SDL_loadso.h
+[25/578] Generating include/SDL2/SDL_locale.h
+[26/578] Generating include/SDL2/SDL_log.h
+[27/578] Generating include/SDL2/SDL_main.h
+[28/578] Generating include/SDL2/SDL_messagebox.h
+[29/578] Generating include/SDL2/SDL_metal.h
+[30/578] Generating include/SDL2/SDL_misc.h
+[31/578] Generating include/SDL2/SDL_mutex.h
+[32/578] Generating include/SDL2/SDL_mouse.h
+[33/578] Generating include/SDL2/SDL_name.h
+[34/578] Generating include/SDL2/SDL_opengl.h
+[35/578] Generating include/SDL2/SDL_opengl_glext.h
+[36/578] Generating include/SDL2/SDL_opengles.h
+[37/578] Generating include/SDL2/SDL_opengles2.h
+[38/578] Generating include/SDL2/SDL_opengles2_gl2.h
+[39/578] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[40/578] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[41/578] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[42/578] Generating include/SDL2/SDL_pixels.h
+[43/578] Generating include/SDL2/SDL_power.h
+[44/578] Generating include/SDL2/SDL_platform.h
+[45/578] Generating include/SDL2/SDL_quit.h
+[46/578] Generating include/SDL2/SDL_rect.h
+[47/578] Generating include/SDL2/SDL_render.h
+[48/578] Generating include/SDL2/SDL_scancode.h
+[49/578] Generating include/SDL2/SDL_rwops.h
+[50/578] Generating include/SDL2/SDL_sensor.h
+[51/578] Generating include/SDL2/SDL_shape.h
+[52/578] Generating include/SDL2/SDL_stdinc.h
+[53/578] Generating include/SDL2/SDL_surface.h
+[54/578] Generating include/SDL2/SDL_system.h
+[55/578] Generating include/SDL2/SDL_syswm.h
+[56/578] Generating include/SDL2/SDL_test.h
+[57/578] Generating include/SDL2/SDL_test_assert.h
+[58/578] Generating include/SDL2/SDL_test_common.h
+[59/578] Generating include/SDL2/SDL_test_compare.h
+[60/578] Generating include/SDL2/SDL_test_crc32.h
+[61/578] Generating include/SDL2/SDL_test_font.h
+[62/578] Generating include/SDL2/SDL_test_fuzzer.h
+[63/578] Generating include/SDL2/SDL_test_harness.h
+[64/578] Generating include/SDL2/SDL_test_images.h
+[65/578] Generating include/SDL2/SDL_test_log.h
+[66/578] Generating include/SDL2/SDL_test_md5.h
+[67/578] Generating include/SDL2/SDL_test_memory.h
+[68/578] Generating include/SDL2/SDL_test_random.h
+[69/578] Generating include/SDL2/SDL_thread.h
+[70/578] Generating include/SDL2/SDL_timer.h
+[71/578] Generating include/SDL2/SDL_touch.h
+[72/578] Generating include/SDL2/SDL_types.h
+[73/578] Generating include/SDL2/SDL_version.h
+[74/578] Generating include/SDL2/SDL_video.h
+[75/578] Generating include/SDL2/SDL_vulkan.h
+[76/578] Generating include/SDL2/begin_code.h
+[77/578] Generating include/SDL2/close_code.h
+[78/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[79/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[80/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_dataqueue.c.o
+[81/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_assert.c.o
+[82/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL.c.o
+[83/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_error.c.o
+[84/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_guid.c.o
+[85/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_hints.c.o
+[86/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_log.c.o
+[87/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_utils.c.o
+[88/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/atomic/SDL_atomic.c.o
+[89/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/atomic/SDL_spinlock.c.o
+[90/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_list.c.o
+[91/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiodev.c.o
+[92/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiotypecvt.c.o
+[93/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audio.c.o
+[94/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_mixer.c.o
+[95/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_wave.c.o
+[96/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/cpuinfo/SDL_cpuinfo.c.o
+[97/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_clipboardevents.c.o
+[98/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiocvt.c.o
+[99/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_displayevents.c.o
+[100/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_dropevents.c.o
+[101/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[102/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_gesture.c.o
+[103/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_keyboard.c.o
+[104/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_keysym_to_scancode.c.o
+[105/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_quit.c.o
+[106/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_scancode_tables.c.o
+[107/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_mouse.c.o
+[108/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_touch.c.o
+[109/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_events.c.o
+[110/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[111/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_windowevents.c.o
+[112/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/imKStoUCS.c.o
+[113/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/file/SDL_rwops.c.o
+[114/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/haptic/SDL_haptic.c.o
+[115/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_steam_virtual_gamepad.c.o
+[116/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/controller_type.c.o
+[117/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_atan2.c.o
+[118/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/hidapi/SDL_hidapi.c.o
+[119/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_exp.c.o
+[120/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_fmod.c.o
+[121/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_log.c.o
+[122/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_log10.c.o
+[123/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_gamecontroller.c.o
+[124/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_rem_pio2.c.o
+[125/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_pow.c.o
+[126/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_cos.c.o
+[127/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_sqrt.c.o
+[128/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_rem_pio2.c.o
+[129/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_sin.c.o
+[130/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_tan.c.o
+[131/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_copysign.c.o
+[132/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_atan.c.o
+[133/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_cos.c.o
+[134/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_fabs.c.o
+[135/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_floor.c.o
+[136/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_scalbn.c.o
+[137/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_sin.c.o
+[138/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_tan.c.o
+[139/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/locale/SDL_locale.c.o
+[140/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/misc/SDL_url.c.o
+[141/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/power/SDL_power.c.o
+[142/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_d3dmath.c.o
+[143/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_render_d3d.c.o
+[144/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_shaders_d3d.c.o
+[145/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_render_d3d11.c.o
+[146/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_shaders_d3d11.c.o
+[147/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_yuv_sw.c.o
+[148/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_render_d3d12.c.o
+[149/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.o
+[150/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_shaders_gl.c.o
+[151/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_joystick.c.o
+[152/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles/SDL_render_gles.c.o
+[153/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/dynapi/SDL_dynapi.c.o
+[154/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_shaders_gles2.c.o
+[155/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_render_gl.c.o
+[156/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/ps2/SDL_render_ps2.c.o
+[157/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/psp/SDL_render_psp.c.o
+[158/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_render.c.o
+[159/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_render_gles2.c.o
+[160/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendpoint.c.o
+[161/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawline.c.o
+[162/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawpoint.c.o
+[163/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_render_sw.c.o
+[164/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_rotate.c.o
+[165/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendfillrect.c.o
+[166/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm.c.o
+[167/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.o
+[168/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.o
+[169/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc16.c.o
+[170/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc32.c.o
+[171/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_getenv.c.o
+[172/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_malloc.c.o
+[173/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_iconv.c.o
+[174/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_mslibc.c.o
+[175/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_qsort.c.o
+[176/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/sensor/SDL_sensor.c.o
+[177/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_stdlib.c.o
+[178/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_strtokr.c.o
+[179/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_string.c.o
+[180/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/SDL_thread.c.o
+[181/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/timer/SDL_timer.c.o
+[182/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_triangle.c.o
+[183/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit.c.o
+[184/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendline.c.o
+[185/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_1.c.o
+[186/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_0.c.o
+[187/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_RLEaccel.c.o
+[188/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_copy.c.o
+[189/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_A.c.o
+[190/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_slow.c.o
+[191/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_clipboard.c.o
+[192/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_bmp.c.o
+[193/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_egl.c.o
+[194/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_rect.c.o
+[195/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_fillrect.c.o
+[196/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_shape.c.o
+[197/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_pixels.c.o
+[198/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_stretch.c.o
+[199/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_vulkan_utils.c.o
+[200/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_N.c.o
+[201/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_surface.c.o
+[202/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.o
+[203/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_video.c.o
+[204/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/dummy/SDL_dummyaudio.c.o
+[205/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.o
+[206/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/disk/SDL_diskaudio.c.o
+[207/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/loadso/dlopen/SDL_sysloadso.c.o
+[208/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/virtual/SDL_virtualjoystick.c.o
+[209/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullevents.c.o
+[210/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_yuv.c.o
+[211/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullframebuffer.c.o
+[212/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenevents.c.o
+[213/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenframebuffer.c.o
+[214/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenopengles.c.o
+[215/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullvideo.c.o
+[216/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenvideo.c.o
+[217/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenwindow.c.o
+[218/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.o
+[219/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_combined.c.o
+[220/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_auto.c.o
+[221/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.o
+[222/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/file/cocoa/SDL_rwopsbundlesupport.m.o
+[223/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.o
+[224/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.o
+[225/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.o
+[226/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.o
+[227/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.o
+[228/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_shield.c.o
+[229/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.o
+[230/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.o
+[231/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.o
+[232/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.o
+[233/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.o
+[234/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/coreaudio/SDL_coreaudio.m.o
+[235/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.o
+[236/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/misc/macosx/SDL_sysurl.m.o
+[237/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.o
+[238/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_switch.c.o
+[239/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/darwin/SDL_iokitjoystick.c.o
+[240/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/power/macosx/SDL_syspower.c.o
+[241/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapijoystick.c.o
+[242/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/timer/unix/SDL_systimer.c.o
+[243/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/haptic/darwin/SDL_syshaptic.c.o
+[244/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/locale/macosx/SDL_syslocale.m.o
+[245/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/filesystem/cocoa/SDL_sysfilesystem.m.o
+[246/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/iphoneos/SDL_mfijoystick.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:498:27: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+  498 |     } else if (controller.gamepad) {
+      |                           ^~~~~~~
+      |                           extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:628:27: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+  628 |     } else if (controller.gamepad) {
+      |                           ^~~~~~~
+      |                           extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:794:24: warning: 'controllerPausedHandler' is deprecated: first deprecated in macOS 10.15 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]
+  794 |             controller.controllerPausedHandler = nil;
+      |                        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:159:46: note: 'controllerPausedHandler' has been explicitly marked deprecated here
+  159 | @property (nonatomic, copy, nullable) void (^controllerPausedHandler)(GCController *controller) API_DEPRECATED("Use the Menu button found on the controller's input profile, if it exists.", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.0, 13.0));
+      |                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1013:28: warning: 'controllerPausedHandler' is deprecated: first deprecated in macOS 10.15 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]
+ 1013 |                 controller.controllerPausedHandler = ^(GCController *c) {
+      |                            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:159:46: note: 'controllerPausedHandler' has been explicitly marked deprecated here
+  159 | @property (nonatomic, copy, nullable) void (^controllerPausedHandler)(GCController *controller) API_DEPRECATED("Use the Menu button found on the controller's input profile, if it exists.", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.0, 13.0));
+      |                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1255:31: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 1255 |         } else if (controller.gamepad) {
+      |                               ^~~~~~~
+      |                               extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1257:13: warning: 'GCGamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 1257 |             GCGamepad *gamepad = controller.gamepad;
+      |             ^~~~~~~~~
+      |             GCExtendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCGamepad.h:27:12: note: 'GCGamepad' has been explicitly marked deprecated here
+   27 | @interface GCGamepad : GCPhysicalInputProfile
+      |            ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1257:45: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 1257 |             GCGamepad *gamepad = controller.gamepad;
+      |                                             ^~~~~~~
+      |                                             extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:1797:24: warning: 'controllerPausedHandler' is deprecated: first deprecated in macOS 10.15 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]
+ 1797 |             controller.controllerPausedHandler = nil;
+      |                        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:159:46: note: 'controllerPausedHandler' has been explicitly marked deprecated here
+  159 | @property (nonatomic, copy, nullable) void (^controllerPausedHandler)(GCController *controller) API_DEPRECATED("Use the Menu button found on the controller's input profile, if it exists.", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.0, 13.0));
+      |                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:2029:20: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 2029 |     if (controller.gamepad) {
+      |                    ^~~~~~~
+      |                    extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/joystick/iphoneos/SDL_mfijoystick.m:2030:27: warning: 'gamepad' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+ 2030 |         return controller.gamepad.dpad;
+      |                           ^~~~~~~
+      |                           extendedGamepad
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GameController.framework/Headers/GCController.h:230:62: note: 'gamepad' has been explicitly marked deprecated here
+  230 | @property (nonatomic, strong, readonly, nullable) GCGamepad *gamepad API_DEPRECATED_WITH_REPLACEMENT("extendedGamepad", macos(10.9, 10.12), ios(7.0, 10.0), tvos(7.0, 10.0));
+      |                                                              ^
+10 warnings generated.
+[247/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaclipboard.m.o
+[248/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaevents.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoaevents.m:295:36: warning: 'NSApplicationActivateIgnoringOtherApps' is deprecated: first deprecated in macOS 14.0 - ignoringOtherApps is deprecated in macOS 14 and will have no effect. [-Wdeprecated-declarations]
+  295 |             [i activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+      |                                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSRunningApplication.h:27:5: note: 'NSApplicationActivateIgnoringOtherApps' has been explicitly marked deprecated here
+   27 |     NSApplicationActivateIgnoringOtherApps API_DEPRECATED("ignoringOtherApps is deprecated in macOS 14 and will have no effect.", macos(10.6, 14.0)) = 1 << 1
+      |     ^
+1 warning generated.
+[249/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoamessagebox.m.o
+[250/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoakeyboard.m.o
+[251/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoametalview.m.o
+[252/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoamodes.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:93:23: warning: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+   93 |         CVTime time = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(link);
+      |                       ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
+  182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
+      |                  ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:122:23: warning: 'CGDisplayModeCopyPixelEncoding' is deprecated: first deprecated in macOS 10.11 - No longer supported [-Wdeprecated-declarations]
+  122 |     CFStringRef fmt = CGDisplayModeCopyPixelEncoding(vidmode);
+      |                       ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDirectDisplay.h:177:34: note: 'CGDisplayModeCopyPixelEncoding' has been explicitly marked deprecated here
+  177 | CG_EXTERN CFStringRef __nullable CGDisplayModeCopyPixelEncoding(
+      |                                  ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:284:32: warning: 'CGDisplayIOServicePort' is deprecated: first deprecated in macOS 10.9 - No longer supported [-Wdeprecated-declarations]
+  284 |     io_service_t servicePort = CGDisplayIOServicePort(displayID);
+      |                                ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDisplayConfiguration.h:372:24: note: 'CGDisplayIOServicePort' has been explicitly marked deprecated here
+  372 | CG_EXTERN io_service_t CGDisplayIOServicePort(CGDirectDisplayID display)
+      |                        ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:354:13: warning: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  354 |             CVDisplayLinkCreateWithCGDisplay(displays[i], &link);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+   89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+      |                    ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:360:17: warning: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  360 |                 CVDisplayLinkRelease(link);
+      |                 ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+  249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+      |                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:367:13: warning: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  367 |             CVDisplayLinkRelease(link);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+  249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+      |                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:512:5: warning: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  512 |     CVDisplayLinkCreateWithCGDisplay(data->display, &link);
+      |     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+   89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+      |                    ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoamodes.m:580:5: warning: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Wdeprecated-declarations]
+  580 |     CVDisplayLinkRelease(link);
+      |     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+  249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+      |                ^
+8 warnings generated.
+[253/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoamouse.m.o
+[254/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaopengl.m.o
+[255/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoaopengles.m.o
+[256/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoashape.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoashape.m:67:38: warning: 'graphicsContext' is deprecated: first deprecated in macOS 10.14 - Add instances of NSView to display content in a window. [-Wdeprecated-declarations]
+   67 |     data.context = [windata.nswindow graphicsContext];
+      |                                      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1019:59: note: property 'graphicsContext' is declared deprecated here
+ 1019 | @property (nullable, readonly, strong) NSGraphicsContext *graphicsContext API_DEPRECATED("Add instances of NSView to display content in a window.", macos(10.0,10.14));
+      |                                                           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1019:59: note: 'graphicsContext' has been explicitly marked deprecated here
+1 warning generated.
+[257/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_systhread.c.o
+[258/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_sysmutex.c.o
+[259/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_syscond.c.o
+[260/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_systls.c.o
+[261/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_syssem.c.o
+[262/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoavideo.m.o
+[263/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoavulkan.m.o
+[264/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/sensor/dummy/SDL_dummysensor.c.o
+[265/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[266/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[267/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[268/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[269/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[270/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[271/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[272/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[273/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[274/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[275/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[276/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[277/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[278/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[279/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[280/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/metal/SDL_render_metal.m.o
+[281/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[282/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[283/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[284/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[285/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[286/578] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/cocoa/SDL_cocoawindow.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:164:47: warning: 'NSFilenamesPboardType' is deprecated: first deprecated in macOS 10.14 - Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead [-Wdeprecated-declarations]
+  164 |     NSArray *types = [NSArray arrayWithObject:NSFilenamesPboardType];
+      |                                               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPasteboard.h:433:32: note: 'NSFilenamesPboardType' has been explicitly marked deprecated here
+  433 | APPKIT_EXTERN NSPasteboardType NSFilenamesPboardType API_DEPRECATED("Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead", macos(10.0,10.14));
+      |                                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:182:45: warning: 'NSFilenamesPboardType' is deprecated: first deprecated in macOS 10.14 - Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead [-Wdeprecated-declarations]
+  182 |     SDL_assert([desiredType isEqualToString:NSFilenamesPboardType]);
+      |                                             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPasteboard.h:433:32: note: 'NSFilenamesPboardType' has been explicitly marked deprecated here
+  433 | APPKIT_EXTERN NSPasteboardType NSFilenamesPboardType API_DEPRECATED("Create multiple pasteboard items with NSPasteboardTypeFileURL or kUTTypeFileURL instead", macos(10.0,10.14));
+      |                                ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:531:11: warning: 'setAcceptsTouchEvents:' is deprecated: first deprecated in macOS 10.12.2 - Use allowedTouchTypes instead [-Wdeprecated-declarations]
+  531 |     [view setAcceptsTouchEvents:YES];
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSView.h:231:16: note: property 'acceptsTouchEvents' is declared deprecated here
+  231 | @property BOOL acceptsTouchEvents API_DEPRECATED("Use allowedTouchTypes instead", macos(10.6,10.12.2));
+      |                ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSView.h:231:16: note: 'setAcceptsTouchEvents:' has been explicitly marked deprecated here
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:1718:15: warning: 'setOneShot:' is deprecated: first deprecated in macOS 10.14 - This property does not do anything and should not be used [-Wdeprecated-declarations]
+ 1718 |     [nswindow setOneShot:NO];
+      |               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1021:35: note: property 'oneShot' is declared deprecated here
+ 1021 | @property (getter=isOneShot) BOOL oneShot API_DEPRECATED("This property does not do anything and should not be used", macos(10.0,10.14));
+      |                                   ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:1021:35: note: 'setOneShot:' has been explicitly marked deprecated here
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/cocoa/SDL_cocoawindow.m:2463:85: warning: 'kUTTypeFileURL' is deprecated: first deprecated in macOS 12.0 - Use UTTypeFileURL or UTType.fileURL (swift) instead. [-Wdeprecated-declarations]
+ 2463 |         [data.nswindow registerForDraggedTypes:[NSArray arrayWithObject:(NSString *)kUTTypeFileURL]];
+      |                                                                                     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTCoreTypes.h:211:26: note: 'kUTTypeFileURL' has been explicitly marked deprecated here
+  211 | extern const CFStringRef kUTTypeFileURL                              API_DEPRECATED("Use UTTypeFileURL or UTType.fileURL (swift) instead.", ios(3.0, 15.0), macos(10.4, 12.0), tvos(9.0, 15.0), watchos(1.0, 8.0));
+      |                          ^
+5 warnings generated.
+[287/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[288/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[289/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[290/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[291/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+In file included from /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/ftgzip.c:99:
+In file included from /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/zutil.c:8:
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/zutil.h:172:11: warning: 'OS_CODE' macro redefined [-Wmacro-redefined]
+  172 | #  define OS_CODE 19
+      |           ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf/external/freetype/src/gzip/zutil.h:143:11: note: previous definition is here
+  143 | #  define OS_CODE  7
+      |           ^
+1 warning generated.
+[292/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[293/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[294/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[295/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[296/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[297/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[298/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[299/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[300/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[301/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[302/578] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o
+[303/578] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o
+[304/578] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o
+[305/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[306/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/buffer.c.o
+[307/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/compression.c.o
+[308/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/debug.c.o
+[309/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/index.c.o
+[310/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/memory.c.o
+[311/578] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o
+[312/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/meta.c.o
+[313/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/read.c.o
+[314/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/structure.c.o
+[315/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[316/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/parse_rawml.c.o
+[317/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/write.c.o
+[318/578] Building C object external/src/SDL2/CMakeFiles/SDL2main.dir/src/main/dummy/SDL_dummy_main.c.o
+[319/578] Linking C static library external/src/SDL2/libSDL2.a
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_audiodev.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_keysym_to_scancode.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_scancode_tables.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(imKStoUCS.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_d3dmath.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_d3d.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_shaders_d3d.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_d3d11.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_shaders_d3d11.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_d3d12.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_shaders_d3d12.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_gles.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_ps2.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_psp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_vita_gxm.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_vita_gxm_memory.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_vita_gxm_tools.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_mslibc.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(yuv_rgb_lsx.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_audiodev.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_keysym_to_scancode.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_scancode_tables.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(imKStoUCS.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_d3dmath.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_d3d.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_shaders_d3d.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_d3d11.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_shaders_d3d11.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_d3d12.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_shaders_d3d12.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_gles.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_ps2.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_psp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_vita_gxm.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_vita_gxm_memory.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_render_vita_gxm_tools.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(SDL_mslibc.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2/libSDL2.a(yuv_rgb_lsx.c.o) has no symbols
+[320/578] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/util.c.o
+[321/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG.c.o
+[322/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_WIC.c.o
+[323/578] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[324/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_avif.c.o
+[325/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_bmp.c.o
+[326/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_jxl.c.o
+[327/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_gif.c.o
+[328/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_pcx.c.o
+[329/578] Building C object external/src/libmobi/src/CMakeFiles/miniz.dir/miniz.c.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/libmobi/src/miniz.c:933:9: warning: 'NDEBUG' macro redefined [-Wmacro-redefined]
+  933 | #define NDEBUG
+      |         ^
+<command line>:15:9: note: previous definition is here
+   15 | #define NDEBUG 1
+      |         ^
+1 warning generated.
+[330/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_lbm.c.o
+[331/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_jpg.c.o
+[332/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_pnm.c.o
+[333/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_qoi.c.o
+[334/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_tga.c.o
+[335/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_tif.c.o
+[336/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_webp.c.o
+[337/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_png.c.o
+[338/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_xcf.c.o
+[339/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_xv.c.o
+[340/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_xpm.c.o
+[341/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/load_aiff.c.o
+[342/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/load_voc.c.o
+[343/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/mp3utils.c.o
+[344/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_cmd.c.o
+[345/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_drflac.c.o
+[346/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_flac.c.o
+[347/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_fluidsynth.c.o
+[348/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_gme.c.o
+[349/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_minimp3.c.o
+[350/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_modplug.c.o
+[351/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_mpg123.c.o
+[352/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_nativemidi.c.o
+[353/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_ogg.c.o
+[354/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_ImageIO.m.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/src/IMG_ImageIO.m:409:20: warning: 'UTTypeConformsTo' is deprecated: first deprecated in macOS 12.0 - Use -[UTType conformsToType:] instead. [-Wdeprecated-declarations]
+  409 |     is_type = (int)UTTypeConformsTo(uti_string_to_test, uti_type);
+      |                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTType.h:472:1: note: 'UTTypeConformsTo' has been explicitly marked deprecated here
+  472 | UTTypeConformsTo(
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/src/IMG_ImageIO.m:440:33: warning: 'kUTTypeGIF' is deprecated: first deprecated in macOS 12.0 - Use UTTypeGIF or UTType.gif (swift) instead. [-Wdeprecated-declarations]
+  440 |     return Internal_isType(src, kUTTypeGIF);
+      |                                 ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTCoreTypes.h:729:26: note: 'kUTTypeGIF' has been explicitly marked deprecated here
+  729 | extern const CFStringRef kUTTypeGIF                                  API_DEPRECATED("Use UTTypeGIF or UTType.gif (swift) instead.", ios(3.0, 15.0), macos(10.4, 12.0), tvos(9.0, 15.0), watchos(1.0, 8.0));
+      |                          ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/src/IMG_ImageIO.m:470:33: warning: 'kUTTypeTIFF' is deprecated: first deprecated in macOS 12.0 - Use UTTypeTIFF or UTType.tiff (swift) instead. [-Wdeprecated-declarations]
+  470 |     return Internal_isType(src, kUTTypeTIFF);
+      |                                 ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTCoreTypes.h:727:26: note: 'kUTTypeTIFF' has been explicitly marked deprecated here
+  727 | extern const CFStringRef kUTTypeTIFF                                 API_DEPRECATED("Use UTTypeTIFF or UTType.tiff (swift) instead.", ios(3.0, 15.0), macos(10.4, 12.0), tvos(9.0, 15.0), watchos(1.0, 8.0));
+      |                          ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/src/IMG_ImageIO.m:536:37: warning: 'kUTTypeGIF' is deprecated: first deprecated in macOS 12.0 - Use UTTypeGIF or UTType.gif (swift) instead. [-Wdeprecated-declarations]
+  536 |     return LoadImageFromRWops (src, kUTTypeGIF);
+      |                                     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTCoreTypes.h:729:26: note: 'kUTTypeGIF' has been explicitly marked deprecated here
+  729 | extern const CFStringRef kUTTypeGIF                                  API_DEPRECATED("Use UTTypeGIF or UTType.gif (swift) instead.", ios(3.0, 15.0), macos(10.4, 12.0), tvos(9.0, 15.0), watchos(1.0, 8.0));
+      |                          ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/src/IMG_ImageIO.m:564:36: warning: 'kUTTypeTIFF' is deprecated: first deprecated in macOS 12.0 - Use UTTypeTIFF or UTType.tiff (swift) instead. [-Wdeprecated-declarations]
+  564 |     return LoadImageFromRWops(src, kUTTypeTIFF);
+      |                                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/UTCoreTypes.h:727:26: note: 'kUTTypeTIFF' has been explicitly marked deprecated here
+  727 | extern const CFStringRef kUTTypeTIFF                                 API_DEPRECATED("Use UTTypeTIFF or UTType.tiff (swift) instead.", ios(3.0, 15.0), macos(10.4, 12.0), tvos(9.0, 15.0), watchos(1.0, 8.0));
+      |                          ^
+5 warnings generated.
+[355/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_opus.c.o
+[356/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_timidity.c.o
+[357/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_wav.c.o
+[358/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_wavpack.c.o
+[359/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_xmp.c.o
+[360/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_svg.c.o
+[361/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/effect_stereoreverse.c.o
+[362/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/effects_internal.c.o
+[363/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/effect_position.c.o
+[364/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/music.c.o
+[365/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/utils.c.o
+[366/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/mixer.c.o
+[367/578] Linking C static library external/src/SDL2_ttf/external/freetype/libfreetype.a
+[368/578] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnet.c.o
+[369/578] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_stb.c.o
+[370/578] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnetselect.c.o
+[371/578] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnetTCP.c.o
+[372/578] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnetUDP.c.o
+[373/578] Generating CURLINFO_ACTIVESOCKET.3, CURLINFO_APPCONNECT_TIME.3, CURLINFO_APPCONNECT_TIME_T.3, CURLINFO_CAINFO.3, CURLINFO_CAPATH.3, CURLINFO_CERTINFO.3, CURLINFO_CONDITION_UNMET.3, CURLINFO_CONNECT_TIME.3, CURLINFO_CONNECT_TIME_T.3, CURLINFO_CONN_ID.3, CURLINFO_CONTENT_LENGTH_DOWNLOAD.3, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T.3, CURLINFO_CONTENT_LENGTH_UPLOAD.3, CURLINFO_CONTENT_LENGTH_UPLOAD_T.3, CURLINFO_CONTENT_TYPE.3, CURLINFO_COOKIELIST.3, CURLINFO_EFFECTIVE_METHOD.3, CURLINFO_EFFECTIVE_URL.3, CURLINFO_FILETIME.3, CURLINFO_FILETIME_T.3, CURLINFO_FTP_ENTRY_PATH.3, CURLINFO_HEADER_SIZE.3, CURLINFO_HTTP_CONNECTCODE.3, CURLINFO_HTTP_VERSION.3, CURLINFO_HTTPAUTH_AVAIL.3, CURLINFO_LASTSOCKET.3, CURLINFO_LOCAL_IP.3, CURLINFO_LOCAL_PORT.3, CURLINFO_NAMELOOKUP_TIME.3, CURLINFO_NAMELOOKUP_TIME_T.3, CURLINFO_NUM_CONNECTS.3, CURLINFO_OS_ERRNO.3, CURLINFO_PRETRANSFER_TIME.3, CURLINFO_PRETRANSFER_TIME_T.3, CURLINFO_PRIMARY_IP.3, CURLINFO_PRIMARY_PORT.3, CURLINFO_PRIVATE.3, CURLINFO_PROTOCOL.3, CURLINFO_PROXY_ERROR.3, CURLINFO_PROXY_SSL_VERIFYRESULT.3, CURLINFO_PROXYAUTH_AVAIL.3, CURLINFO_QUEUE_TIME_T.3, CURLINFO_REDIRECT_COUNT.3, CURLINFO_REDIRECT_TIME.3, CURLINFO_REDIRECT_TIME_T.3, CURLINFO_REDIRECT_URL.3, CURLINFO_REFERER.3, CURLINFO_REQUEST_SIZE.3, CURLINFO_RESPONSE_CODE.3, CURLINFO_RETRY_AFTER.3, CURLINFO_RTSP_CLIENT_CSEQ.3, CURLINFO_RTSP_CSEQ_RECV.3, CURLINFO_RTSP_SERVER_CSEQ.3, CURLINFO_RTSP_SESSION_ID.3, CURLINFO_SCHEME.3, CURLINFO_SIZE_DOWNLOAD.3, CURLINFO_SIZE_DOWNLOAD_T.3, CURLINFO_SIZE_UPLOAD.3, CURLINFO_SIZE_UPLOAD_T.3, CURLINFO_SPEED_DOWNLOAD.3, CURLINFO_SPEED_DOWNLOAD_T.3, CURLINFO_SPEED_UPLOAD.3, CURLINFO_SPEED_UPLOAD_T.3, CURLINFO_SSL_ENGINES.3, CURLINFO_SSL_VERIFYRESULT.3, CURLINFO_STARTTRANSFER_TIME.3, CURLINFO_STARTTRANSFER_TIME_T.3, CURLINFO_TLS_SESSION.3, CURLINFO_TLS_SSL_PTR.3, CURLINFO_TOTAL_TIME.3, CURLINFO_TOTAL_TIME_T.3, CURLINFO_USED_PROXY.3, CURLINFO_XFER_ID.3, CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE.3, CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE.3, CURLMOPT_MAX_CONCURRENT_STREAMS.3, CURLMOPT_MAX_HOST_CONNECTIONS.3, CURLMOPT_MAX_PIPELINE_LENGTH.3, CURLMOPT_MAX_TOTAL_CONNECTIONS.3, CURLMOPT_MAXCONNECTS.3, CURLMOPT_PIPELINING.3, CURLMOPT_PIPELINING_SERVER_BL.3, CURLMOPT_PIPELINING_SITE_BL.3, CURLMOPT_PUSHDATA.3, CURLMOPT_PUSHFUNCTION.3, CURLMOPT_SOCKETDATA.3, CURLMOPT_SOCKETFUNCTION.3, CURLMOPT_TIMERDATA.3, CURLMOPT_TIMERFUNCTION.3, CURLOPT_ABSTRACT_UNIX_SOCKET.3, CURLOPT_ACCEPT_ENCODING.3, CURLOPT_ACCEPTTIMEOUT_MS.3, CURLOPT_ADDRESS_SCOPE.3, CURLOPT_ALTSVC.3, CURLOPT_ALTSVC_CTRL.3, CURLOPT_APPEND.3, CURLOPT_AUTOREFERER.3, CURLOPT_AWS_SIGV4.3, CURLOPT_BUFFERSIZE.3, CURLOPT_CAINFO.3, CURLOPT_CAINFO_BLOB.3, CURLOPT_CAPATH.3, CURLOPT_CA_CACHE_TIMEOUT.3, CURLOPT_CERTINFO.3, CURLOPT_CHUNK_BGN_FUNCTION.3, CURLOPT_CHUNK_DATA.3, CURLOPT_CHUNK_END_FUNCTION.3, CURLOPT_CLOSESOCKETDATA.3, CURLOPT_CLOSESOCKETFUNCTION.3, CURLOPT_CONNECT_ONLY.3, CURLOPT_CONNECT_TO.3, CURLOPT_CONNECTTIMEOUT.3, CURLOPT_CONNECTTIMEOUT_MS.3, CURLOPT_CONV_FROM_NETWORK_FUNCTION.3, CURLOPT_CONV_FROM_UTF8_FUNCTION.3, CURLOPT_CONV_TO_NETWORK_FUNCTION.3, CURLOPT_COOKIE.3, CURLOPT_COOKIEFILE.3, CURLOPT_COOKIEJAR.3, CURLOPT_COOKIELIST.3, CURLOPT_COOKIESESSION.3, CURLOPT_COPYPOSTFIELDS.3, CURLOPT_CRLF.3, CURLOPT_CRLFILE.3, CURLOPT_CURLU.3, CURLOPT_CUSTOMREQUEST.3, CURLOPT_DEBUGDATA.3, CURLOPT_DEBUGFUNCTION.3, CURLOPT_DEFAULT_PROTOCOL.3, CURLOPT_DIRLISTONLY.3, CURLOPT_DISALLOW_USERNAME_IN_URL.3, CURLOPT_DNS_CACHE_TIMEOUT.3, CURLOPT_DNS_INTERFACE.3, CURLOPT_DNS_LOCAL_IP4.3, CURLOPT_DNS_LOCAL_IP6.3, CURLOPT_DNS_SERVERS.3, CURLOPT_DNS_SHUFFLE_ADDRESSES.3, CURLOPT_DNS_USE_GLOBAL_CACHE.3, CURLOPT_DOH_SSL_VERIFYHOST.3, CURLOPT_DOH_SSL_VERIFYPEER.3, CURLOPT_DOH_SSL_VERIFYSTATUS.3, CURLOPT_DOH_URL.3, CURLOPT_ECH.3, CURLOPT_EGDSOCKET.3, CURLOPT_ERRORBUFFER.3, CURLOPT_EXPECT_100_TIMEOUT_MS.3, CURLOPT_FAILONERROR.3, CURLOPT_FILETIME.3, CURLOPT_FNMATCH_DATA.3, CURLOPT_FNMATCH_FUNCTION.3, CURLOPT_FOLLOWLOCATION.3, CURLOPT_FORBID_REUSE.3, CURLOPT_FRESH_CONNECT.3, CURLOPT_FTP_ACCOUNT.3, CURLOPT_FTP_ALTERNATIVE_TO_USER.3, CURLOPT_FTP_CREATE_MISSING_DIRS.3, CURLOPT_FTP_FILEMETHOD.3, CURLOPT_FTP_SKIP_PASV_IP.3, CURLOPT_FTP_SSL_CCC.3, CURLOPT_FTP_USE_EPRT.3, CURLOPT_FTP_USE_EPSV.3, CURLOPT_FTP_USE_PRET.3, CURLOPT_FTPPORT.3, CURLOPT_FTPSSLAUTH.3, CURLOPT_GSSAPI_DELEGATION.3, CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS.3, CURLOPT_HAPROXYPROTOCOL.3, CURLOPT_HAPROXY_CLIENT_IP.3, CURLOPT_HEADER.3, CURLOPT_HEADERDATA.3, CURLOPT_HEADERFUNCTION.3, CURLOPT_HEADEROPT.3, CURLOPT_HSTS.3, CURLOPT_HSTS_CTRL.3, CURLOPT_HSTSREADDATA.3, CURLOPT_HSTSREADFUNCTION.3, CURLOPT_HSTSWRITEDATA.3, CURLOPT_HSTSWRITEFUNCTION.3, CURLOPT_HTTP09_ALLOWED.3, CURLOPT_HTTP200ALIASES.3, CURLOPT_HTTP_CONTENT_DECODING.3, CURLOPT_HTTP_TRANSFER_DECODING.3, CURLOPT_HTTP_VERSION.3, CURLOPT_HTTPAUTH.3, CURLOPT_HTTPGET.3, CURLOPT_HTTPHEADER.3, CURLOPT_HTTPPOST.3, CURLOPT_HTTPPROXYTUNNEL.3, CURLOPT_IGNORE_CONTENT_LENGTH.3, CURLOPT_INFILESIZE.3, CURLOPT_INFILESIZE_LARGE.3, CURLOPT_INTERFACE.3, CURLOPT_INTERLEAVEDATA.3, CURLOPT_INTERLEAVEFUNCTION.3, CURLOPT_IOCTLDATA.3, CURLOPT_IOCTLFUNCTION.3, CURLOPT_IPRESOLVE.3, CURLOPT_ISSUERCERT.3, CURLOPT_ISSUERCERT_BLOB.3, CURLOPT_KEEP_SENDING_ON_ERROR.3, CURLOPT_KEYPASSWD.3, CURLOPT_KRBLEVEL.3, CURLOPT_LOCALPORT.3, CURLOPT_LOCALPORTRANGE.3, CURLOPT_LOGIN_OPTIONS.3, CURLOPT_LOW_SPEED_LIMIT.3, CURLOPT_LOW_SPEED_TIME.3, CURLOPT_MAIL_AUTH.3, CURLOPT_MAIL_FROM.3, CURLOPT_MAIL_RCPT.3, CURLOPT_MAIL_RCPT_ALLOWFAILS.3, CURLOPT_MAX_RECV_SPEED_LARGE.3, CURLOPT_MAX_SEND_SPEED_LARGE.3, CURLOPT_MAXAGE_CONN.3, CURLOPT_MAXCONNECTS.3, CURLOPT_MAXFILESIZE.3, CURLOPT_MAXFILESIZE_LARGE.3, CURLOPT_MAXLIFETIME_CONN.3, CURLOPT_MAXREDIRS.3, CURLOPT_MIME_OPTIONS.3, CURLOPT_MIMEPOST.3, CURLOPT_NETRC.3, CURLOPT_NETRC_FILE.3, CURLOPT_NEW_DIRECTORY_PERMS.3, CURLOPT_NEW_FILE_PERMS.3, CURLOPT_NOBODY.3, CURLOPT_NOPROGRESS.3, CURLOPT_NOPROXY.3, CURLOPT_NOSIGNAL.3, CURLOPT_OPENSOCKETDATA.3, CURLOPT_OPENSOCKETFUNCTION.3, CURLOPT_PASSWORD.3, CURLOPT_PATH_AS_IS.3, CURLOPT_PINNEDPUBLICKEY.3, CURLOPT_PIPEWAIT.3, CURLOPT_PORT.3, CURLOPT_POST.3, CURLOPT_POSTFIELDS.3, CURLOPT_POSTFIELDSIZE.3, CURLOPT_POSTFIELDSIZE_LARGE.3, CURLOPT_POSTQUOTE.3, CURLOPT_POSTREDIR.3, CURLOPT_PRE_PROXY.3, CURLOPT_PREQUOTE.3, CURLOPT_PREREQDATA.3, CURLOPT_PREREQFUNCTION.3, CURLOPT_PRIVATE.3, CURLOPT_PROGRESSDATA.3, CURLOPT_PROGRESSFUNCTION.3, CURLOPT_PROTOCOLS.3, CURLOPT_PROTOCOLS_STR.3, CURLOPT_PROXY.3, CURLOPT_PROXY_CAINFO.3, CURLOPT_PROXY_CAINFO_BLOB.3, CURLOPT_PROXY_CAPATH.3, CURLOPT_PROXY_CRLFILE.3, CURLOPT_PROXY_ISSUERCERT.3, CURLOPT_PROXY_ISSUERCERT_BLOB.3, CURLOPT_PROXY_KEYPASSWD.3, CURLOPT_PROXY_PINNEDPUBLICKEY.3, CURLOPT_PROXY_SERVICE_NAME.3, CURLOPT_PROXY_SSL_CIPHER_LIST.3, CURLOPT_PROXY_SSL_OPTIONS.3, CURLOPT_PROXY_SSL_VERIFYHOST.3, CURLOPT_PROXY_SSL_VERIFYPEER.3, CURLOPT_PROXY_SSLCERT.3, CURLOPT_PROXY_SSLCERT_BLOB.3, CURLOPT_PROXY_SSLCERTTYPE.3, CURLOPT_PROXY_SSLKEY.3, CURLOPT_PROXY_SSLKEY_BLOB.3, CURLOPT_PROXY_SSLKEYTYPE.3, CURLOPT_PROXY_SSLVERSION.3, CURLOPT_PROXY_TLS13_CIPHERS.3, CURLOPT_PROXY_TLSAUTH_PASSWORD.3, CURLOPT_PROXY_TLSAUTH_TYPE.3, CURLOPT_PROXY_TLSAUTH_USERNAME.3, CURLOPT_PROXY_TRANSFER_MODE.3, CURLOPT_PROXYAUTH.3, CURLOPT_PROXYHEADER.3, CURLOPT_PROXYPASSWORD.3, CURLOPT_PROXYPORT.3, CURLOPT_PROXYTYPE.3, CURLOPT_PROXYUSERNAME.3, CURLOPT_PROXYUSERPWD.3, CURLOPT_PUT.3, CURLOPT_QUICK_EXIT.3, CURLOPT_QUOTE.3, CURLOPT_RANDOM_FILE.3, CURLOPT_RANGE.3, CURLOPT_READDATA.3, CURLOPT_READFUNCTION.3, CURLOPT_REDIR_PROTOCOLS.3, CURLOPT_REDIR_PROTOCOLS_STR.3, CURLOPT_REFERER.3, CURLOPT_REQUEST_TARGET.3, CURLOPT_RESOLVE.3, CURLOPT_RESOLVER_START_DATA.3, CURLOPT_RESOLVER_START_FUNCTION.3, CURLOPT_RESUME_FROM.3, CURLOPT_RESUME_FROM_LARGE.3, CURLOPT_RTSP_CLIENT_CSEQ.3, CURLOPT_RTSP_REQUEST.3, CURLOPT_RTSP_SERVER_CSEQ.3, CURLOPT_RTSP_SESSION_ID.3, CURLOPT_RTSP_STREAM_URI.3, CURLOPT_RTSP_TRANSPORT.3, CURLOPT_SASL_AUTHZID.3, CURLOPT_SASL_IR.3, CURLOPT_SEEKDATA.3, CURLOPT_SEEKFUNCTION.3, CURLOPT_SERVER_RESPONSE_TIMEOUT.3, CURLOPT_SERVER_RESPONSE_TIMEOUT_MS.3, CURLOPT_SERVICE_NAME.3, CURLOPT_SHARE.3, CURLOPT_SOCKOPTDATA.3, CURLOPT_SOCKOPTFUNCTION.3, CURLOPT_SOCKS5_AUTH.3, CURLOPT_SOCKS5_GSSAPI_NEC.3, CURLOPT_SOCKS5_GSSAPI_SERVICE.3, CURLOPT_SSH_AUTH_TYPES.3, CURLOPT_SSH_COMPRESSION.3, CURLOPT_SSH_HOSTKEYDATA.3, CURLOPT_SSH_HOSTKEYFUNCTION.3, CURLOPT_SSH_HOST_PUBLIC_KEY_MD5.3, CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256.3, CURLOPT_SSH_KEYDATA.3, CURLOPT_SSH_KEYFUNCTION.3, CURLOPT_SSH_KNOWNHOSTS.3, CURLOPT_SSH_PRIVATE_KEYFILE.3, CURLOPT_SSH_PUBLIC_KEYFILE.3, CURLOPT_SSL_CIPHER_LIST.3, CURLOPT_SSL_CTX_DATA.3, CURLOPT_SSL_CTX_FUNCTION.3, CURLOPT_SSL_EC_CURVES.3, CURLOPT_SSL_ENABLE_ALPN.3, CURLOPT_SSL_ENABLE_NPN.3, CURLOPT_SSL_FALSESTART.3, CURLOPT_SSL_OPTIONS.3, CURLOPT_SSL_SESSIONID_CACHE.3, CURLOPT_SSL_VERIFYHOST.3, CURLOPT_SSL_VERIFYPEER.3, CURLOPT_SSL_VERIFYSTATUS.3, CURLOPT_SSLCERT.3, CURLOPT_SSLCERT_BLOB.3, CURLOPT_SSLCERTTYPE.3, CURLOPT_SSLENGINE.3, CURLOPT_SSLENGINE_DEFAULT.3, CURLOPT_SSLKEY.3, CURLOPT_SSLKEY_BLOB.3, CURLOPT_SSLKEYTYPE.3, CURLOPT_SSLVERSION.3, CURLOPT_STDERR.3, CURLOPT_STREAM_DEPENDS.3, CURLOPT_STREAM_DEPENDS_E.3, CURLOPT_STREAM_WEIGHT.3, CURLOPT_SUPPRESS_CONNECT_HEADERS.3, CURLOPT_TCP_FASTOPEN.3, CURLOPT_TCP_KEEPALIVE.3, CURLOPT_TCP_KEEPIDLE.3, CURLOPT_TCP_KEEPINTVL.3, CURLOPT_TCP_NODELAY.3, CURLOPT_TELNETOPTIONS.3, CURLOPT_TFTP_BLKSIZE.3, CURLOPT_TFTP_NO_OPTIONS.3, CURLOPT_TIMECONDITION.3, CURLOPT_TIMEOUT.3, CURLOPT_TIMEOUT_MS.3, CURLOPT_TIMEVALUE.3, CURLOPT_TIMEVALUE_LARGE.3, CURLOPT_TLS13_CIPHERS.3, CURLOPT_TLSAUTH_PASSWORD.3, CURLOPT_TLSAUTH_TYPE.3, CURLOPT_TLSAUTH_USERNAME.3, CURLOPT_TRAILERDATA.3, CURLOPT_TRAILERFUNCTION.3, CURLOPT_TRANSFER_ENCODING.3, CURLOPT_TRANSFERTEXT.3, CURLOPT_UNIX_SOCKET_PATH.3, CURLOPT_UNRESTRICTED_AUTH.3, CURLOPT_UPKEEP_INTERVAL_MS.3, CURLOPT_UPLOAD.3, CURLOPT_UPLOAD_BUFFERSIZE.3, CURLOPT_URL.3, CURLOPT_USE_SSL.3, CURLOPT_USERAGENT.3, CURLOPT_USERNAME.3, CURLOPT_USERPWD.3, CURLOPT_VERBOSE.3, CURLOPT_WILDCARDMATCH.3, CURLOPT_WRITEDATA.3, CURLOPT_WRITEFUNCTION.3, CURLOPT_WS_OPTIONS.3, CURLOPT_XFERINFODATA.3, CURLOPT_XFERINFOFUNCTION.3, CURLOPT_XOAUTH2_BEARER.3, CURLSHOPT_LOCKFUNC.3, CURLSHOPT_SHARE.3, CURLSHOPT_UNLOCKFUNC.3, CURLSHOPT_UNSHARE.3, CURLSHOPT_USERDATA.3
+[374/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/amigaos.c.o
+[375/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/altsvc.c.o
+[376/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/asyn-ares.c.o
+[377/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/base64.c.o
+[378/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/asyn-thread.c.o
+[379/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/bufref.c.o
+[380/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/bufq.c.o
+[381/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/c-hyper.c.o
+[382/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-h2-proxy.c.o
+[383/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-h1-proxy.c.o
+[384/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-haproxy.c.o
+[385/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-https-connect.c.o
+[386/578] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_ogg_stb.c.o
+[387/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-socket.c.o
+[388/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/conncache.c.o
+[389/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cfilters.c.o
+[390/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/content_encoding.c.o
+[391/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_addrinfo.c.o
+[392/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/connect.c.o
+[393/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cookie.c.o
+[394/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_des.c.o
+[395/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_endian.c.o
+[396/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_fnmatch.c.o
+[397/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_gethostname.c.o
+[398/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_get_line.c.o
+[399/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_gssapi.c.o
+[400/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_memrchr.c.o
+[401/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_multibyte.c.o
+[402/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_ntlm_core.c.o
+[403/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_range.c.o
+[404/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_path.c.o
+[405/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_rtmp.c.o
+[406/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_sasl.c.o
+[407/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_sspi.c.o
+[408/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_sha512_256.c.o
+[409/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_threads.c.o
+[410/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/dict.c.o
+[411/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_trc.c.o
+[412/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cw-out.c.o
+[413/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/dynbuf.c.o
+[414/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/dynhds.c.o
+[415/578] Building CXX object external/src/pugixml/CMakeFiles/pugixml-static.dir/src/pugixml.cpp.o
+[416/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/easygetopt.c.o
+[417/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/easyoptions.c.o
+[418/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/easy.c.o
+[419/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/file.c.o
+[420/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/escape.c.o
+[421/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/fileinfo.c.o
+[422/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ftp.c.o
+[423/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/fopen.c.o
+[424/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/doh.c.o
+[425/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ftplistparser.c.o
+[426/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/getenv.c.o
+[427/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/gopher.c.o
+[428/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/getinfo.c.o
+[429/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hash.c.o
+[430/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hmac.c.o
+[431/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostasyn.c.o
+[432/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/headers.c.o
+[433/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostip4.c.o
+[434/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostip6.c.o
+[435/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostsyn.c.o
+[436/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/formdata.c.o
+[437/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http1.c.o
+[438/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hsts.c.o
+[439/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http2.c.o
+[440/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostip.c.o
+[441/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_digest.c.o
+[442/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_chunks.c.o
+[443/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_aws_sigv4.c.o
+[444/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_negotiate.c.o
+[445/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/idn.c.o
+[446/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_ntlm.c.o
+[447/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_proxy.c.o
+[448/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/imap.c.o
+[449/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/if2ip.c.o
+[450/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/inet_ntop.c.o
+[451/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/inet_pton.c.o
+[452/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/krb5.c.o
+[453/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ldap.c.o
+[454/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/llist.c.o
+[455/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/md4.c.o
+[456/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/memdebug.c.o
+[457/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/macos.c.o
+[458/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/md5.c.o
+[459/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/mqtt.c.o
+[460/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/mime.c.o
+[461/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http.c.o
+[462/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/nonblock.c.o
+[463/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/netrc.c.o
+[464/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/openldap.c.o
+[465/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/noproxy.c.o
+[466/578] Building C object external/src/SDL2_ttf/CMakeFiles/SDL2_ttf.dir/SDL_ttf.c.o
+[467/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/pop3.c.o
+[468/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/pingpong.c.o
+[469/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/parsedate.c.o
+[470/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/psl.c.o
+[471/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/rand.c.o
+[472/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/progress.c.o
+[473/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/rename.c.o
+[474/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/rtsp.c.o
+[475/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/request.c.o
+[476/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/select.c.o
+[477/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/sha256.c.o
+[478/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/multi.c.o
+[479/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/share.c.o
+[480/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/slist.c.o
+[481/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/mprintf.c.o
+[482/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/smb.c.o
+[483/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/smtp.c.o
+[484/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socketpair.c.o
+[485/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socks_gssapi.c.o
+[486/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/sendf.c.o
+[487/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socks_sspi.c.o
+[488/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/speedcheck.c.o
+[489/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/splay.c.o
+[490/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strcase.c.o
+[491/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strdup.c.o
+[492/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strtok.c.o
+[493/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strerror.c.o
+[494/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strtoofft.c.o
+[495/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/system_win32.c.o
+[496/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/telnet.c.o
+[497/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/tftp.c.o
+[498/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/timediff.c.o
+[499/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/timeval.c.o
+[500/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socks.c.o
+[501/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/setopt.c.o
+[502/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/transfer.c.o
+[503/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/version.c.o
+[504/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/version_win32.c.o
+[505/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/warnless.c.o
+[506/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ws.c.o
+[507/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/cleartext.c.o
+[508/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/cram.c.o
+[509/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/digest_sspi.c.o
+[510/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/gsasl.c.o
+[511/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/krb5_gssapi.c.o
+[512/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/krb5_sspi.c.o
+[513/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/ntlm_sspi.c.o
+[514/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/ntlm.c.o
+[515/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/urlapi.c.o
+[516/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/oauth2.c.o
+[517/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/spnego_gssapi.c.o
+[518/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/spnego_sspi.c.o
+[519/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/digest.c.o
+[520/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/cipher_suite.c.o
+[521/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/bearssl.c.o
+[522/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/gtls.c.o
+[523/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/vauth.c.o
+[524/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/hostcheck.c.o
+[525/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/keylog.c.o
+[526/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/mbedtls.c.o
+[527/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/mbedtls_threadlock.c.o
+[528/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/openssl.c.o
+[529/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/rustls.c.o
+[530/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/schannel.c.o
+[531/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/schannel_verify.c.o
+[532/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/wolfssl.c.o
+[533/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/url.c.o
+[534/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_ngtcp2.c.o
+[535/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_msh3.c.o
+[536/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_osslq.c.o
+[537/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_quiche.c.o
+[538/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/vtls.c.o
+[539/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/vquic-tls.c.o
+[540/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/vquic.c.o
+[541/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vssh/libssh.c.o
+[542/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/x509asn1.c.o
+[543/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vssh/wolfssh.c.o
+[544/578] Linking C static library libbook_miniz.a
+[545/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/sectransp.c.o
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1207:7: warning: 'CFURLCreateDataAndPropertiesFromResource' is deprecated: first deprecated in macOS 10.9 - For resource data, use the CFReadStream API. For file resource properties, use CFURLCopyResourcePropertiesForKeys. [-Wdeprecated-declarations]
+ 1207 |       CFURLCreateDataAndPropertiesFromResource(NULL,
+      |       ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFURLAccess.h:52:9: note: 'CFURLCreateDataAndPropertiesFromResource' has been explicitly marked deprecated here
+   52 | Boolean CFURLCreateDataAndPropertiesFromResource(CFAllocatorRef alloc, CFURLRef url, CFDataRef *resourceData, CFDictionaryRef *properties, CFArrayRef desiredProperties, SInt32 *errorCode) API_DEPRECATED("For resource data, use the CFReadStream API. For file resource properties, use CFURLCopyResourcePropertiesForKeys.", macos(10.0,10.9), ios(2.0,7.0), watchos(2.0,2.0), tvos(9.0,9.0));
+      |         ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1320:20: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1320 |       *darwinver = kTLSProtocol1;
+      |                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+  157 |     kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1323:20: warning: 'kTLSProtocol11' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1323 |       *darwinver = kTLSProtocol11;
+      |                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:158:5: note: 'kTLSProtocol11' has been explicitly marked deprecated here
+  158 |     kTLSProtocol11 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 7,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1326:20: warning: 'kTLSProtocol12' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1326 |       *darwinver = kTLSProtocol12;
+      |                    ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:159:5: note: 'kTLSProtocol12' has been explicitly marked deprecated here
+  159 |     kTLSProtocol12 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 8,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1332:22: warning: 'kTLSProtocol13' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1332 |         *darwinver = kTLSProtocol13;
+      |                      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:161:5: note: 'kTLSProtocol13' has been explicitly marked deprecated here
+  161 |     kTLSProtocol13 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 10,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1386:6: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1386 |   if(SSLSetProtocolVersionMax) {
+      |      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+  494 | SSLSetProtocolVersionMax  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1387:34: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1387 |     SSLProtocol darwin_ver_min = kTLSProtocol1;
+      |                                  ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+  157 |     kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1388:34: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1388 |     SSLProtocol darwin_ver_max = kTLSProtocol1;
+      |                                  ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+  157 |     kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1402:11: warning: 'SSLSetProtocolVersionMin' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1402 |     (void)SSLSetProtocolVersionMin(backend->ssl_ctx, darwin_ver_min);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:458:1: note: 'SSLSetProtocolVersionMin' has been explicitly marked deprecated here
+  458 | SSLSetProtocolVersionMin  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1403:11: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1403 |     (void)SSLSetProtocolVersionMax(backend->ssl_ctx, darwin_ver_max);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+  494 | SSLSetProtocolVersionMax  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1488:9: warning: 'SSLGetNumberSupportedCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1488 |   err = SSLGetNumberSupportedCiphers(ssl_ctx, &all_ciphers_count);
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:818:1: note: 'SSLGetNumberSupportedCiphers' has been explicitly marked deprecated here
+  818 | SSLGetNumberSupportedCiphers (SSLContextRef                     context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1505:9: warning: 'SSLGetSupportedCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1505 |   err = SSLGetSupportedCiphers(ssl_ctx, all_ciphers,
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:832:1: note: 'SSLGetSupportedCiphers' has been explicitly marked deprecated here
+  832 | SSLGetSupportedCiphers           (SSLContextRef                 context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1527:9: warning: 'SSLSetEnabledCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1527 |   err = SSLSetEnabledCiphers(ssl_ctx, allowed_ciphers,
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:865:1: note: 'SSLSetEnabledCiphers' has been explicitly marked deprecated here
+  865 | SSLSetEnabledCiphers            (SSLContextRef                  context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1631:9: warning: 'SSLSetEnabledCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1631 |   err = SSLSetEnabledCiphers(ssl_ctx, selected_ciphers, ciphers_count);
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:865:1: note: 'SSLSetEnabledCiphers' has been explicitly marked deprecated here
+  865 | SSLSetEnabledCiphers            (SSLContextRef                  context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1678:6: warning: 'SSLCreateContext' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1678 |   if(SSLCreateContext) {  /* use the newer API if available */
+      |      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:316:1: note: 'SSLCreateContext' has been explicitly marked deprecated here
+  316 | SSLCreateContext(CFAllocatorRef __nullable alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType)
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1681:24: warning: 'SSLCreateContext' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1681 |     backend->ssl_ctx = SSLCreateContext(NULL, kSSLClientSide, kSSLStreamType);
+      |                        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:316:1: note: 'SSLCreateContext' has been explicitly marked deprecated here
+  316 | SSLCreateContext(CFAllocatorRef __nullable alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType)
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1681:47: warning: 'kSSLClientSide' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1681 |     backend->ssl_ctx = SSLCreateContext(NULL, kSSLClientSide, kSSLStreamType);
+      |                                               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:218:5: note: 'kSSLClientSide' has been explicitly marked deprecated here
+  218 |     kSSLClientSide CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0)
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1681:63: warning: 'kSSLStreamType' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1681 |     backend->ssl_ctx = SSLCreateContext(NULL, kSSLClientSide, kSSLStreamType);
+      |                                                               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:223:5: note: 'kSSLStreamType' has been explicitly marked deprecated here
+  223 |     kSSLStreamType CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0),
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1712:6: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1712 |   if(SSLSetProtocolVersionMax) {
+      |      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+  494 | SSLSetProtocolVersionMax  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1715:13: warning: 'SSLSetProtocolVersionMin' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1715 |       (void)SSLSetProtocolVersionMin(backend->ssl_ctx, kTLSProtocol1);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:458:1: note: 'SSLSetProtocolVersionMin' has been explicitly marked deprecated here
+  458 | SSLSetProtocolVersionMin  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1715:56: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1715 |       (void)SSLSetProtocolVersionMin(backend->ssl_ctx, kTLSProtocol1);
+      |                                                        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+  157 |     kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1718:15: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1718 |         (void)SSLSetProtocolVersionMax(backend->ssl_ctx, kTLSProtocol13);
+      |               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+  494 | SSLSetProtocolVersionMax  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1718:58: warning: 'kTLSProtocol13' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1718 |         (void)SSLSetProtocolVersionMax(backend->ssl_ctx, kTLSProtocol13);
+      |                                                          ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:161:5: note: 'kTLSProtocol13' has been explicitly marked deprecated here
+  161 |     kTLSProtocol13 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 10,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1721:15: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1721 |         (void)SSLSetProtocolVersionMax(backend->ssl_ctx, kTLSProtocol12);
+      |               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+  494 | SSLSetProtocolVersionMax  (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1721:58: warning: 'kTLSProtocol12' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1721 |         (void)SSLSetProtocolVersionMax(backend->ssl_ctx, kTLSProtocol12);
+      |                                                          ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:159:5: note: 'kTLSProtocol12' has been explicitly marked deprecated here
+  159 |     kTLSProtocol12 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 8,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1836:13: warning: 'SSLSetALPNProtocols' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1836 |       err = SSLSetALPNProtocols(backend->ssl_ctx, alpnArr);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1332:1: note: 'SSLSetALPNProtocols' has been explicitly marked deprecated here
+ 1332 | SSLSetALPNProtocols         (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1904:13: warning: 'SSLSetCertificate' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1904 |       err = SSLSetCertificate(backend->ssl_ctx, certs);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:637:1: note: 'SSLSetCertificate' has been explicitly marked deprecated here
+  637 | SSLSetCertificate                       (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1965:6: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1965 |   if(SSLSetSessionOption && darwinver_maj >= 13) {
+      |      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+  384 | SSLSetSessionOption                     (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1971:11: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 1971 |     err = SSLSetSessionOption(backend->ssl_ctx,
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+  384 | SSLSetSessionOption                     (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:1972:31: warning: 'kSSLSessionOptionBreakOnServerAuth' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 1972 |                               kSSLSessionOptionBreakOnServerAuth,
+      |                               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:99:2: note: 'kSSLSessionOptionBreakOnServerAuth' has been explicitly marked deprecated here
+   99 |         kSSLSessionOptionBreakOnServerAuth CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0) = 0,
+      |         ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2015:11: warning: 'SSLSetPeerDomainName' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2015 |     err = SSLSetPeerDomainName(backend->ssl_ctx, server, strlen(server));
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:686:1: note: 'SSLSetPeerDomainName' has been explicitly marked deprecated here
+  686 | SSLSetPeerDomainName            (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2048:6: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2048 |   if(SSLSetSessionOption) {
+      |      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+  384 | SSLSetSessionOption                     (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2049:5: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2049 |     SSLSetSessionOption(backend->ssl_ctx, kSSLSessionOptionSendOneByteRecord,
+      |     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+  384 | SSLSetSessionOption                     (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2049:43: warning: 'kSSLSessionOptionSendOneByteRecord' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2049 |     SSLSetSessionOption(backend->ssl_ctx, kSSLSessionOptionSendOneByteRecord,
+      |                                           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:123:5: note: 'kSSLSessionOptionSendOneByteRecord' has been explicitly marked deprecated here
+  123 |     kSSLSessionOptionSendOneByteRecord CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0) = 4,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2051:5: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2051 |     SSLSetSessionOption(backend->ssl_ctx, kSSLSessionOptionFalseStart,
+      |     ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+  384 | SSLSetSessionOption                     (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2051:43: warning: 'kSSLSessionOptionFalseStart' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2051 |     SSLSetSessionOption(backend->ssl_ctx, kSSLSessionOptionFalseStart,
+      |                                           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:117:5: note: 'kSSLSessionOptionFalseStart' has been explicitly marked deprecated here
+  117 |     kSSLSessionOptionFalseStart CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0) = 3,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2065:13: warning: 'SSLSetPeerID' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2065 |       err = SSLSetPeerID(backend->ssl_ctx, ssl_sessionid, ssl_sessionid_len);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1285:1: note: 'SSLSetPeerID' has been explicitly marked deprecated here
+ 1285 | SSLSetPeerID                            (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2085:13: warning: 'SSLSetPeerID' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2085 |       err = SSLSetPeerID(backend->ssl_ctx, ssl_sessionid, ssl_sessionid_len);
+      |             ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1285:1: note: 'SSLSetPeerID' has been explicitly marked deprecated here
+ 1285 | SSLSetPeerID                            (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2101:9: warning: 'SSLSetIOFuncs' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2101 |   err = SSLSetIOFuncs(backend->ssl_ctx,
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:418:1: note: 'SSLSetIOFuncs' has been explicitly marked deprecated here
+  418 | SSLSetIOFuncs                           (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2109:9: warning: 'SSLSetConnection' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2109 |   err = SSLSetConnection(backend->ssl_ctx, cf);
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:657:1: note: 'SSLSetConnection' has been explicitly marked deprecated here
+  657 | SSLSetConnection                        (SSLContextRef                  context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2317:9: warning: 'SSLCopyPeerTrust' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2317 |   ret = SSLCopyPeerTrust(ctx, &trust);
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1261:1: note: 'SSLCopyPeerTrust' has been explicitly marked deprecated here
+ 1261 | SSLCopyPeerTrust                        (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2340:9: warning: 'SecTrustEvaluate' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2340 |   ret = SecTrustEvaluate(trust, &trust_eval);
+      |         ^~~~~~~~~~~~~~~~
+      |         SecTrustEvaluateWithError
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:377:10: note: 'SecTrustEvaluate' has been explicitly marked deprecated here
+  377 | OSStatus SecTrustEvaluate(SecTrustRef trust, SecTrustResultType *result)
+      |          ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2435:11: warning: 'SSLCopyPeerTrust' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2435 |     ret = SSLCopyPeerTrust(ctx, &trust);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1261:1: note: 'SSLCopyPeerTrust' has been explicitly marked deprecated here
+ 1261 | SSLCopyPeerTrust                        (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2439:14: warning: 'SecTrustCopyPublicKey' is deprecated: first deprecated in macOS 11.0 [-Wdeprecated-declarations]
+ 2439 |     keyRef = SecTrustCopyPublicKey(trust);
+      |              ^~~~~~~~~~~~~~~~~~~~~
+      |              SecTrustCopyKey
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:489:11: note: 'SecTrustCopyPublicKey' has been explicitly marked deprecated here
+  489 | SecKeyRef SecTrustCopyPublicKey(SecTrustRef trust)
+      |           ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2541:9: warning: 'SSLHandshake' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2541 |   err = SSLHandshake(backend->ssl_ctx);
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1641:1: note: 'SSLHandshake' has been explicitly marked deprecated here
+ 1641 | SSLHandshake                            (SSLContextRef          context)
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2778:11: warning: 'SSLGetNegotiatedCipher' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2778 |     (void)SSLGetNegotiatedCipher(backend->ssl_ctx, &cipher);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1314:1: note: 'SSLGetNegotiatedCipher' has been explicitly marked deprecated here
+ 1314 | SSLGetNegotiatedCipher          (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2779:11: warning: 'SSLGetNegotiatedProtocolVersion' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2779 |     (void)SSLGetNegotiatedProtocolVersion(backend->ssl_ctx, &protocol);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:803:1: note: 'SSLGetNegotiatedProtocolVersion' has been explicitly marked deprecated here
+  803 | SSLGetNegotiatedProtocolVersion         (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2781:12: warning: 'kSSLProtocol2' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2781 |       case kSSLProtocol2:
+      |            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:164:5: note: 'kSSLProtocol2' has been explicitly marked deprecated here
+  164 |     kSSLProtocol2 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 1,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2785:12: warning: 'kSSLProtocol3' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2785 |       case kSSLProtocol3:
+      |            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:165:5: note: 'kSSLProtocol3' has been explicitly marked deprecated here
+  165 |     kSSLProtocol3 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 2,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2789:12: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2789 |       case kTLSProtocol1:
+      |            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+  157 |     kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2794:12: warning: 'kTLSProtocol11' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2794 |       case kTLSProtocol11:
+      |            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:158:5: note: 'kTLSProtocol11' has been explicitly marked deprecated here
+  158 |     kTLSProtocol11 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 7,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2798:12: warning: 'kTLSProtocol12' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2798 |       case kTLSProtocol12:
+      |            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:159:5: note: 'kTLSProtocol12' has been explicitly marked deprecated here
+  159 |     kTLSProtocol12 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 8,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2804:12: warning: 'kTLSProtocol13' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+ 2804 |       case kTLSProtocol13:
+      |            ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:161:5: note: 'kTLSProtocol13' has been explicitly marked deprecated here
+  161 |     kTLSProtocol13 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 10,
+      |     ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2819:15: warning: 'SSLCopyALPNProtocols' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2819 |         err = SSLCopyALPNProtocols(backend->ssl_ctx, &alpnArr);
+      |               ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1354:1: note: 'SSLCopyALPNProtocols' has been explicitly marked deprecated here
+ 1354 | SSLCopyALPNProtocols        (SSLContextRef      context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2947:6: warning: 'SecTrustCopyPublicKey' is deprecated: first deprecated in macOS 11.0 [-Wdeprecated-declarations]
+ 2947 |   if(SecTrustCopyPublicKey) {
+      |      ^~~~~~~~~~~~~~~~~~~~~
+      |      SecTrustCopyKey
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:489:11: note: 'SecTrustCopyPublicKey' has been explicitly marked deprecated here
+  489 | SecKeyRef SecTrustCopyPublicKey(SecTrustRef trust)
+      |           ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2949:11: warning: 'SSLCopyPeerTrust' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 2949 |     err = SSLCopyPeerTrust(backend->ssl_ctx, &trust);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1261:1: note: 'SSLCopyPeerTrust' has been explicitly marked deprecated here
+ 1261 | SSLCopyPeerTrust                        (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:2957:23: warning: 'SecTrustGetCertificateAtIndex' is deprecated: first deprecated in macOS 12.0 [-Wdeprecated-declarations]
+ 2957 |         server_cert = SecTrustGetCertificateAtIndex(trust, i);
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                       SecTrustCopyCertificateChain
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:536:19: note: 'SecTrustGetCertificateAtIndex' has been explicitly marked deprecated here
+  536 | SecCertificateRef SecTrustGetCertificateAtIndex(SecTrustRef trust, CFIndex ix)
+      |                   ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3161:11: warning: 'SSLClose' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3161 |     (void)SSLClose(backend->ssl_ctx);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1731:1: note: 'SSLClose' has been explicitly marked deprecated here
+ 1731 | SSLClose                                        (SSLContextRef          context)
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3163:8: warning: 'SSLCreateContext' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3163 |     if(SSLCreateContext)
+      |        ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:316:1: note: 'SSLCreateContext' has been explicitly marked deprecated here
+  316 | SSLCreateContext(CFAllocatorRef __nullable alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType)
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3258:11: warning: 'SSLGetBufferedReadSize' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3258 |     err = SSLGetBufferedReadSize(backend->ssl_ctx, &buffer);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1705:1: note: 'SSLGetBufferedReadSize' has been explicitly marked deprecated here
+ 1705 | SSLGetBufferedReadSize          (SSLContextRef context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3301:6: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3301 |   if(SSLSetSessionOption)
+      |      ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+  384 | SSLSetSessionOption                     (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3338:11: warning: 'SSLWrite' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3338 |     err = SSLWrite(backend->ssl_ctx, NULL, 0UL, &processed);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1670:1: note: 'SSLWrite' has been explicitly marked deprecated here
+ 1670 | SSLWrite                                        (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3357:11: warning: 'SSLWrite' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3357 |     err = SSLWrite(backend->ssl_ctx, mem, len, &processed);
+      |           ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1670:1: note: 'SSLWrite' has been explicitly marked deprecated here
+ 1670 | SSLWrite                                        (SSLContextRef          context,
+      | ^
+/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/lib/vtls/sectransp.c:3393:9: warning: 'SSLRead' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+ 3393 |   err = SSLRead(backend->ssl_ctx, buf, buffersize, &processed);
+      |         ^
+/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1689:1: note: 'SSLRead' has been explicitly marked deprecated here
+ 1689 | SSLRead                                         (SSLContextRef          context,
+      | ^
+64 warnings generated.
+[546/578] Linking CXX static library external/src/pugixml/libpugixml.a
+[547/578] Linking C static library external/src/libmobi/src/libmobi.a
+[548/578] Linking C static library external/src/SDL2/libSDL2main.a
+[549/578] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vssh/libssh2.c.o
+[550/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_assert.c.o
+[551/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_compare.c.o
+[552/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_crc32.c.o
+[553/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_font.c.o
+[554/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_fuzzer.c.o
+[555/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_common.c.o
+[556/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_imageBlit.c.o
+[557/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_imageBlitBlend.c.o
+[558/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_harness.c.o
+[559/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_imagePrimitives.c.o
+[560/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_imageFace.c.o
+[561/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_imagePrimitivesBlend.c.o
+[562/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_log.c.o
+[563/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_memory.c.o
+[564/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_md5.c.o
+[565/578] Linking C static library external/src/SDL2_image/libSDL2_image.a
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_image/libSDL2_image.a(IMG_WIC.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_image/libSDL2_image.a(IMG_tga.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_image/libSDL2_image.a(IMG_tif.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_image/libSDL2_image.a(IMG_WIC.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_image/libSDL2_image.a(IMG_tga.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_image/libSDL2_image.a(IMG_tif.c.o) has no symbols
+[566/578] Linking C static library external/src/SDL2_mixer/libSDL2_mixer.a
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_cmd.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_drflac.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_flac.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_fluidsynth.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_gme.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_minimp3.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_modplug.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_mpg123.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_nativemidi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_ogg.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_opus.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_timidity.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_wavpack.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_xmp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_cmd.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_drflac.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_flac.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_fluidsynth.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_gme.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_minimp3.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_modplug.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_mpg123.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_nativemidi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_ogg.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_opus.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_timidity.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_wavpack.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/SDL2_mixer/libSDL2_mixer.a(music_xmp.c.o) has no symbols
+[567/578] Linking C static library external/src/SDL2_ttf/libSDL2_ttf.a
+[568/578] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_random.c.o
+[569/578] Generating libcurl-symbols.md
+[570/578] Linking C static library external/src/SDL2_net/libSDL2_net.a
+[571/578] Generating curl-config.1
+[572/578] Linking C static library external/src/SDL2/libSDL2_test.a
+[573/578] Linking C static library external/src/curl/lib/libcurl.a
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(amigaos.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(asyn-ares.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(c-hyper.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(cf-h2-proxy.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_fnmatch.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_multibyte.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_range.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_rtmp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_sasl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(dict.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(file.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(fileinfo.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ftp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ftplistparser.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(gopher.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(hostip4.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(hostsyn.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(http_negotiate.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(imap.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(inet_ntop.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(inet_pton.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(krb5.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ldap.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(memdebug.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(mqtt.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(openldap.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(pingpong.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(pop3.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(psl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(rtsp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(smb.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(smtp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(socks_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(socks_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(strtok.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(system_win32.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(telnet.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(tftp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(version_win32.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(cleartext.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(digest_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(gsasl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(krb5_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(krb5_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ntlm_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(oauth2.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(spnego_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(spnego_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(bearssl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(cipher_suite.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(gtls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(hostcheck.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(keylog.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(mbedtls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(mbedtls_threadlock.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(openssl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(rustls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(schannel.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(schannel_verify.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(wolfssl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_msh3.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_ngtcp2.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_osslq.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_quiche.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(vquic-tls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(libssh.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(wolfssh.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(amigaos.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(asyn-ares.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(c-hyper.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(cf-h2-proxy.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_fnmatch.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_multibyte.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_range.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_rtmp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_sasl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(dict.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(file.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(fileinfo.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ftp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ftplistparser.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(gopher.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(hostip4.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(hostsyn.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(http_negotiate.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(imap.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(inet_ntop.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(inet_pton.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(krb5.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ldap.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(memdebug.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(mqtt.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(openldap.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(pingpong.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(pop3.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(psl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(rtsp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(smb.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(smtp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(socks_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(socks_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(strtok.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(system_win32.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(telnet.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(tftp.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(version_win32.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(cleartext.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(digest_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(gsasl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(krb5_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(krb5_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(ntlm_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(oauth2.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(spnego_gssapi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(spnego_sspi.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(bearssl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(cipher_suite.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(gtls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(hostcheck.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(keylog.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(mbedtls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(mbedtls_threadlock.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(openssl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(rustls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(schannel.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(schannel_verify.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(wolfssl.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_msh3.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_ngtcp2.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_osslq.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(curl_quiche.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(vquic-tls.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(libssh.c.o) has no symbols
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: external/src/curl/lib/libcurl.a(wolfssh.c.o) has no symbols
+[574/578] Generating mk-ca-bundle.1
+[575/578] Generating curl_easy_cleanup.3, curl_easy_duphandle.3, curl_easy_escape.3, curl_easy_getinfo.3, curl_easy_header.3, curl_easy_init.3, curl_easy_nextheader.3, curl_easy_option_by_id.3, curl_easy_option_by_name.3, curl_easy_option_next.3, curl_easy_pause.3, curl_easy_perform.3, curl_easy_recv.3, curl_easy_reset.3, curl_easy_send.3, curl_easy_setopt.3, curl_easy_strerror.3, curl_easy_unescape.3, curl_easy_upkeep.3, curl_escape.3, curl_formadd.3, curl_formfree.3, curl_formget.3, curl_free.3, curl_getdate.3, curl_getenv.3, curl_global_cleanup.3, curl_global_init.3, curl_global_init_mem.3, curl_global_trace.3, curl_global_sslset.3, curl_mime_addpart.3, curl_mime_data.3, curl_mime_data_cb.3, curl_mime_encoder.3, curl_mime_filedata.3, curl_mime_filename.3, curl_mime_free.3, curl_mime_headers.3, curl_mime_init.3, curl_mime_name.3, curl_mime_subparts.3, curl_mime_type.3, curl_mprintf.3, curl_multi_add_handle.3, curl_multi_assign.3, curl_multi_cleanup.3, curl_multi_fdset.3, curl_multi_get_handles.3, curl_multi_info_read.3, curl_multi_init.3, curl_multi_perform.3, curl_multi_poll.3, curl_multi_remove_handle.3, curl_multi_setopt.3, curl_multi_socket.3, curl_multi_socket_action.3, curl_multi_socket_all.3, curl_multi_strerror.3, curl_multi_timeout.3, curl_multi_wakeup.3, curl_multi_wait.3, curl_multi_waitfds.3, curl_pushheader_bynum.3, curl_pushheader_byname.3, curl_share_cleanup.3, curl_share_init.3, curl_share_setopt.3, curl_share_strerror.3, curl_slist_append.3, curl_slist_free_all.3, curl_strequal.3, curl_strnequal.3, curl_unescape.3, curl_url.3, curl_url_cleanup.3, curl_url_dup.3, curl_url_get.3, curl_url_set.3, curl_url_strerror.3, curl_version.3, curl_version_info.3, curl_ws_meta.3, curl_ws_recv.3, curl_ws_send.3, libcurl-easy.3, libcurl-env.3, libcurl-env-dbg.3, libcurl-errors.3, libcurl-multi.3, libcurl-security.3, libcurl-share.3, libcurl-symbols.3, libcurl-thread.3, libcurl-tutorial.3, libcurl-url.3, libcurl-ws.3, libcurl.3
+[576/578] Building CXX object CMakeFiles/BOOK_TO_GAME.dir/src/book_converter.cpp.o
+[577/578] Building CXX object CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o
+[578/578] Linking CXX executable BOOK_TO_GAME
+FAILED: [code=1] BOOK_TO_GAME 
+: && /usr/bin/c++ -O3 -DNDEBUG -arch x86_64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o CMakeFiles/BOOK_TO_GAME.dir/src/book_converter.cpp.o -o BOOK_TO_GAME  external/src/SDL2/libSDL2.a  external/src/SDL2_image/libSDL2_image.a  external/src/SDL2_mixer/libSDL2_mixer.a  external/src/SDL2_ttf/libSDL2_ttf.a  external/src/SDL2_net/libSDL2_net.a  external/src/curl/lib/libcurl.a  libbook_miniz.a  external/src/libmobi/src/libmobi.a  external/src/SDL2/libSDL2main.a  -Wl,-framework,ApplicationServices  -lobjc  external/src/SDL2_ttf/external/freetype/libfreetype.a  external/src/SDL2/libSDL2.a  -lm  -Wl,-framework,CoreVideo  -Wl,-framework,Cocoa  -Wl,-framework,IOKit  -Wl,-framework,ForceFeedback  -Wl,-framework,Carbon  -Wl,-framework,CoreAudio  -Wl,-framework,AudioToolbox  -Wl,-framework,AVFoundation  -Wl,-framework,Foundation  -Wl,-weak_framework,GameController  -Wl,-weak_framework,Metal  -Wl,-weak_framework,QuartzCore  -Wl,-weak_framework,CoreHaptics  -framework SystemConfiguration  -framework Security  -framework CoreFoundation -framework CoreServices  /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libz.tbd  /opt/homebrew/lib/libssh2.dylib  external/src/pugixml/libpugixml.a && cd /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/build && /opt/homebrew/bin/cmake -E copy_directory /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/assets /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/build/assets
+ld: warning: ignoring duplicate libraries: 'external/src/SDL2/libSDL2.a'
+ld: warning: ignoring file '/opt/homebrew/lib/libssh2.dylib': found architecture 'arm64', required architecture 'x86_64'
+Undefined symbols for architecture x86_64:
+  "_libssh2_agent_connect", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_agent_disconnect", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_agent_free", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_agent_get_identity", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_agent_init", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_agent_list_identities", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_agent_userauth", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_channel_free", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_channel_read_ex", referenced from:
+      _scp_recv in libcurl.a[169](libssh2.c.o)
+  "_libssh2_channel_send_eof", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_channel_wait_closed", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_channel_wait_eof", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_channel_write_ex", referenced from:
+      _scp_send in libcurl.a[169](libssh2.c.o)
+  "_libssh2_exit", referenced from:
+      _Curl_ssh_cleanup in libcurl.a[169](libssh2.c.o)
+  "_libssh2_hostkey_hash", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_init", referenced from:
+      _Curl_ssh_init in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_add", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_checkp", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_del", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_free", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_get", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_init", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_readfile", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+  "_libssh2_knownhost_writefile", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_scp_recv2", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_scp_send64", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_abstract", referenced from:
+      _ssh_attach in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_block_directions", referenced from:
+      _ssh_do in libcurl.a[169](libssh2.c.o)
+      _ssh_do in libcurl.a[169](libssh2.c.o)
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+      _ssh_multi_statemach in libcurl.a[169](libssh2.c.o)
+      _scp_doing in libcurl.a[169](libssh2.c.o)
+      _sftp_doing in libcurl.a[169](libssh2.c.o)
+      _scp_recv in libcurl.a[169](libssh2.c.o)
+      ...
+  "_libssh2_session_callback_set2", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_disconnect_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_flag", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_free", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_handshake", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_hostkey", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_init_ex", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_last_errno", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      ...
+  "_libssh2_session_last_error", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      ...
+  "_libssh2_session_method_pref", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_set_blocking", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_session_set_read_timeout", referenced from:
+      _ssh_connect in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_close_handle", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_init", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_last_error", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      ...
+  "_libssh2_sftp_mkdir_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_open_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_read", referenced from:
+      _sftp_recv in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_readdir_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_rename_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_rmdir_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_seek64", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_shutdown", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_stat_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_statvfs", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_symlink_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_unlink_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_sftp_write", referenced from:
+      _sftp_send in libcurl.a[169](libssh2.c.o)
+  "_libssh2_userauth_authenticated", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_userauth_keyboard_interactive_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_userauth_list", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_userauth_password_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_userauth_publickey_fromfile_ex", referenced from:
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+  "_libssh2_version", referenced from:
+      _Curl_ssh_version in libcurl.a[169](libssh2.c.o)
+      _ssh_statemach_act in libcurl.a[169](libssh2.c.o)
+ld: symbol(s) not found for architecture x86_64
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+ninja: build stopped: subcommand failed.
