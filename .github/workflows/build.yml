@@ -137,15 +137,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # Generate Gradle wrapper so we don't rely on pre-installed Gradle versions
-      - name: Generate Gradle Wrapper
-        run: |
-          cd platforms/android
-          gradle wrapper
+      # Grant executable permissions to the existing Gradle wrapper from repository
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x platforms/android/gradlew
 
-      # Compile and assemble Android Release APK
+      # Compile and assemble Android Release APK with strict error catching
       - name: Build Android APK
         run: |
+          set -o pipefail
           cd platforms/android
           ./gradlew assembleRelease 2>&1 | tee android_build.log
 
