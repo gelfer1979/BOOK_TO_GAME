@@ -4190,7 +4190,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         SDL_free(basePath);
     }
     // 1. Load settings.json configuration properties
-    std::string aiModel = "gemini.json";
+    std::string aiModel = "ai_gemini.json";
     std::string systemPrompt = "";
     int maxRetries = 3;
     int bookRetries = 3;

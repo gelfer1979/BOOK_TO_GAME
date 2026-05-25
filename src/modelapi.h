@@ -98,6 +98,45 @@ public:
             std::cerr << "[Config] Failed to open configuration file: " << configFilePath << " (also tried parent directory)." << std::endl;
         }
 
+        if (baseUrl_.empty() && configFilePath != "ai_gemini.json") {
+            std::cout << "[Config] Attempting robust fallback to default 'ai_gemini.json'..." << std::endl;
+            std::ifstream fallbackFile("ai_gemini.json");
+            std::string fallbackLoadedPath = "ai_gemini.json";
+            if (!fallbackFile.is_open()) {
+                fallbackFile.open("../ai_gemini.json");
+                fallbackLoadedPath = "../ai_gemini.json";
+            }
+            if (fallbackFile.is_open()) {
+                try {
+                    nlohmann::json j;
+                    fallbackFile >> j;
+                    if (j.contains("baseUrl") && j["baseUrl"].is_string()) {
+                        baseUrl_ = j["baseUrl"].get<std::string>();
+                    }
+                    if (j.contains("modelName") && j["modelName"].is_string()) {
+                        modelName_ = j["modelName"].get<std::string>();
+                    }
+                    if (j.contains("apiKey") && j["apiKey"].is_string()) {
+                        apiKey_ = j["apiKey"].get<std::string>();
+                    }
+                    if (j.contains("apiKeyEnvVar") && j["apiKeyEnvVar"].is_string()) {
+                        apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+                    }
+                    if (j.contains("format") && j["format"].is_string()) {
+                        format_ = j["format"].get<std::string>();
+                    }
+                    if (j.contains("maxRetries") && j["maxRetries"].is_number()) {
+                        maxRetries_ = j["maxRetries"].get<int>();
+                    }
+                    if (j.contains("retryDelayMs") && j["retryDelayMs"].is_number()) {
+                        retryDelayMs_ = j["retryDelayMs"].get<int>();
+                    }
+                    std::cout << "[Config] Robust fallback successful. Loaded default config from: " << fallbackLoadedPath << std::endl;
+                } catch (...) {}
+                fallbackFile.close();
+            }
+        }
+
 
         // Apply environment override if defined to ensure key security
         if (!apiKeyEnvVar_.empty()) {
@@ -1749,6 +1788,10 @@ inline bool CreateBookFromTxt(
         std::cout << "[AI Book Gen] AI response received (Length: " << response.length() << " characters)." << std::endl;
         
         response = Trim(response);
+        if (response.rfind("Error", 0) == 0) {
+            outError = response;
+            return false;
+        }
         if (response.rfind("```", 0) == 0) {
             size_t start = response.find("{");
             size_t end = response.rfind("}");
@@ -1897,6 +1940,10 @@ inline bool CreateBookFromTxt(
             }
 
             response = Trim(response);
+            if (response.rfind("Error", 0) == 0) {
+                blueprintError = response;
+                continue;
+            }
             if (response.rfind("```", 0) == 0) {
                 size_t start = response.find("{");
                 size_t end = response.rfind("}");
@@ -2043,6 +2090,10 @@ inline bool CreateBookFromTxt(
                 }
 
                 response = Trim(response);
+                if (response.rfind("Error", 0) == 0) {
+                    blockError = response;
+                    continue;
+                }
                 if (response.rfind("```", 0) == 0) {
                     size_t start = response.find("{");
                     size_t end = response.rfind("}");
