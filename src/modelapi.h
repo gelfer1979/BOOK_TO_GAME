@@ -22,6 +22,7 @@
 #include <functional>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
+#include <filesystem>
 
 
 // Pure UI-independent Chat Message representation
@@ -1623,7 +1624,11 @@ inline bool CreateBookFromTxt(
         aiClient->setSystemPrompt(""); // Clear any stale system prompts (e.g. from the old book) to prevent mixing or inheriting old book context
     }
 
+#if defined(_WIN32)
+    std::ifstream txtFile(std::filesystem::path(std::filesystem::u8path(txtFilePath)));
+#else
     std::ifstream txtFile(txtFilePath);
+#endif
     if (!txtFile.is_open()) {
         outError = "Could not open text file: " + txtFilePath;
         return false;

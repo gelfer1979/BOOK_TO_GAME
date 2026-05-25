@@ -13,6 +13,7 @@
 #include <functional>
 #include <unordered_map>
 #include <iostream>
+#include <filesystem>
 
 // --------------------------------------------------------------------------
 // pugixml — XML parser for FB2, EPUB (XHTML), DOCX
@@ -51,14 +52,22 @@ std::string GetExt(const std::string& path) {
 }
 
 static std::string ReadBinaryFile(const std::string& path) {
+#if defined(_WIN32)
+    std::ifstream f(std::filesystem::path(std::filesystem::u8path(path)), std::ios::binary);
+#else
     std::ifstream f(path, std::ios::binary);
+#endif
     if (!f.is_open()) return "";
     return std::string(std::istreambuf_iterator<char>(f),
                        std::istreambuf_iterator<char>());
 }
 
 static bool WriteTextFile(const std::string& path, const std::string& content) {
+#if defined(_WIN32)
+    std::ofstream f(std::filesystem::path(std::filesystem::u8path(path)));
+#else
     std::ofstream f(path);
+#endif
     if (!f.is_open()) return false;
     f << content;
     return true;
@@ -85,8 +94,11 @@ static std::string NormalizeWhitespace(const std::string& s) {
 // ==========================================================================
 
 static std::string ExtractTextFromFB2(const std::string& path) {
+    std::string xmlData = ReadBinaryFile(path);
+    if (xmlData.empty()) return "";
+
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file(path.c_str(),
+    pugi::xml_parse_result result = doc.load_buffer(xmlData.data(), xmlData.size(),
         pugi::parse_default | pugi::parse_declaration);
     if (!result) return "";
 
@@ -328,7 +340,12 @@ static std::string ExtractTextFromMOBI(const std::string& path) {
     MOBIData* m = mobi_init();
     if (!m) return "";
 
+#if defined(_WIN32)
+    std::wstring wpath = std::filesystem::path(std::filesystem::u8path(path)).wstring();
+    FILE* fp = _wfopen(wpath.c_str(), L"rb");
+#else
     FILE* fp = fopen(path.c_str(), "rb");
+#endif
     if (!fp) { mobi_free(m); return ""; }
 
     MOBI_RET ret = mobi_load_file(m, fp);
