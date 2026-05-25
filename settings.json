@@ -4,6 +4,7 @@
     "CURLOPT_TIMEOUT": 15,
     "Language": "Russian",
     "bookRetries": 3,
+    "fontSizeOffset": 4,
     "maxRetries": 5,
     "maxTurnsForce": 10,
     "retryDelayMs": 1000,

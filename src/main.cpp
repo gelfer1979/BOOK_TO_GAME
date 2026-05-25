@@ -138,6 +138,9 @@ struct {
     bool editingLanguage = false;
     std::string tempLanguageInput = "";
     SDL_Rect langBtnRect = {0, 0, 0, 0};
+    SDL_Rect fontIncBtnRect = {0, 0, 0, 0};
+    SDL_Rect fontDecBtnRect = {0, 0, 0, 0};
+    int fontSizeOffset = 0;
     
     struct AIModelInfo {
         std::string filename;
@@ -736,6 +739,34 @@ void SaveLanguageToSettings(const std::string& newLanguage) {
         outFile << j.dump(4);
         outFile.close();
         std::cout << "[Config] Saved new language '" << newLanguage << "' to " << settingsPath << std::endl;
+    }
+}
+
+// Saves the dynamic font size offset (modifier) to settings.json so it persists across sessions
+void SaveFontSizeOffsetToSettings(int offset) {
+    nlohmann::json j;
+    std::string settingsPath = "settings.json";
+    std::ifstream inFile(settingsPath);
+    if (!inFile.is_open()) {
+        settingsPath = "../settings.json";
+        inFile.open(settingsPath);
+    }
+    if (inFile.is_open()) {
+        try {
+            inFile >> j;
+        } catch (...) {
+            std::cerr << "[Config] Error parsing settings.json before font size save." << std::endl;
+        }
+        inFile.close();
+    }
+    
+    j["fontSizeOffset"] = offset;
+    
+    std::ofstream outFile(settingsPath);
+    if (outFile.is_open()) {
+        outFile << j.dump(4);
+        outFile.close();
+        std::cout << "[Config] Saved font size offset '" << offset << "' to " << settingsPath << std::endl;
     }
 }
 
@@ -1483,6 +1514,26 @@ std::string GetSystemFontPath() {
     }
     std::cout << "[FontLoader] Loaded Font: " << bestFont << " (Coverage Score: " << bestScore << ")" << std::endl;
     return bestFont;
+}
+
+void ApplyFontScale() {
+    std::string fontPath = GetSystemFontPath();
+    int baseTitle = 24;
+    int baseMessage = 18;
+    int baseUI = 16;
+    int baseSmallUI = 13;
+    
+    int titleSize = std::max(12, baseTitle + state.fontSizeOffset);
+    int messageSize = std::max(10, baseMessage + state.fontSizeOffset);
+    int uiSize = std::max(9, baseUI + state.fontSizeOffset);
+    int smallUiSize = std::max(8, baseSmallUI + state.fontSizeOffset);
+    
+    state.fontTitle.reset(TTF_OpenFont(fontPath.c_str(), titleSize));
+    state.fontMessage.reset(TTF_OpenFont(fontPath.c_str(), messageSize));
+    state.fontUI.reset(TTF_OpenFont(fontPath.c_str(), uiSize));
+    state.fontSmallUI.reset(TTF_OpenFont(fontPath.c_str(), smallUiSize));
+    
+    SyncModelToUi();
 }
 
 void AddArchitectBubble(const std::string& text) {
@@ -2952,6 +3003,32 @@ void MainIteration() {
                     }
                 }
             } else if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
+                // Check if they clicked the Font Increase 'A' button at top-left
+                if (mx >= state.fontIncBtnRect.x && mx <= (state.fontIncBtnRect.x + state.fontIncBtnRect.w) &&
+                    my >= state.fontIncBtnRect.y && my <= (state.fontIncBtnRect.y + state.fontIncBtnRect.h)) {
+                    state.mutex.lock();
+                    if (state.fontSizeOffset < 8) { // Maximum font increase limit (+8px)
+                        state.fontSizeOffset += 2;
+                        ApplyFontScale();
+                        SaveFontSizeOffsetToSettings(state.fontSizeOffset);
+                    }
+                    state.mutex.unlock();
+                    continue; // Skip further event processing
+                }
+                
+                // Check if they clicked the Font Decrease 'a' button at top-left
+                if (mx >= state.fontDecBtnRect.x && mx <= (state.fontDecBtnRect.x + state.fontDecBtnRect.w) &&
+                    my >= state.fontDecBtnRect.y && my <= (state.fontDecBtnRect.y + state.fontDecBtnRect.h)) {
+                    state.mutex.lock();
+                    if (state.fontSizeOffset > -4) { // Minimum font decrease limit (-4px)
+                        state.fontSizeOffset -= 2;
+                        ApplyFontScale();
+                        SaveFontSizeOffsetToSettings(state.fontSizeOffset);
+                    }
+                    state.mutex.unlock();
+                    continue; // Skip further event processing
+                }
+
                 // Check if they clicked the Home / Main Menu button at top-right
                 if (mx >= state.homeBtnRect.x && mx <= (state.homeBtnRect.x + state.homeBtnRect.w) &&
                     my >= state.homeBtnRect.y && my <= (state.homeBtnRect.y + state.homeBtnRect.h)) {
@@ -3280,9 +3357,51 @@ void MainIteration() {
         int labelX = (WINDOW_WIDTH - 160) - labelTw / 2;
         RenderText(state.renderer.get(), state.fontSmallUI.get(), labelText, labelX, 21, labelCol, true);
 
+        // 1.8. Render font increase/decrease scaling buttons on top-left of header
+        state.fontIncBtnRect = { 10, 6, 30, 30 };
+        state.fontDecBtnRect = { 46, 6, 30, 30 };
+        
+        int mx, my;
+        SDL_GetMouseState(&mx, &my);
+        bool hoverInc = (mx >= state.fontIncBtnRect.x && mx <= state.fontIncBtnRect.x + state.fontIncBtnRect.w &&
+                         my >= state.fontIncBtnRect.y && my <= state.fontIncBtnRect.y + state.fontIncBtnRect.h);
+        bool hoverDec = (mx >= state.fontDecBtnRect.x && mx <= state.fontDecBtnRect.x + state.fontDecBtnRect.w &&
+                         my >= state.fontDecBtnRect.y && my <= state.fontDecBtnRect.y + state.fontDecBtnRect.h);
+        
+        SDL_Color incBgCol = hoverInc ? SDL_Color{ 45, 98, 172, 255 } : SDL_Color{ 34, 34, 46, 220 };
+        SDL_Color incTxtCol = hoverInc ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
+        
+        SDL_Color decBgCol = hoverDec ? SDL_Color{ 45, 98, 172, 255 } : SDL_Color{ 34, 34, 46, 220 };
+        SDL_Color decTxtCol = hoverDec ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
+        
+        // Draw Increase button 'A'
+        DrawRoundedRect(state.renderer.get(), state.fontIncBtnRect, 6, incBgCol);
+        if (hoverInc) {
+            SDL_SetRenderDrawColor(state.renderer.get(), 0, 192, 255, 255);
+        } else {
+            SDL_SetRenderDrawColor(state.renderer.get(), 40, 40, 60, 255);
+        }
+        SDL_RenderDrawRect(state.renderer.get(), &state.fontIncBtnRect);
+        RenderText(state.renderer.get(), state.fontUI.get(), "A", 
+                   state.fontIncBtnRect.x + state.fontIncBtnRect.w / 2, 
+                   state.fontIncBtnRect.y + state.fontIncBtnRect.h / 2 + 4, 
+                   incTxtCol, true);
+                   
+        // Draw Decrease button 'a'
+        DrawRoundedRect(state.renderer.get(), state.fontDecBtnRect, 6, decBgCol);
+        if (hoverDec) {
+            SDL_SetRenderDrawColor(state.renderer.get(), 0, 192, 255, 255);
+        } else {
+            SDL_SetRenderDrawColor(state.renderer.get(), 40, 40, 60, 255);
+        }
+        SDL_RenderDrawRect(state.renderer.get(), &state.fontDecBtnRect);
+        RenderText(state.renderer.get(), state.fontUI.get(), "a", 
+                   state.fontDecBtnRect.x + state.fontDecBtnRect.w / 2, 
+                   state.fontDecBtnRect.y + state.fontDecBtnRect.h / 2 + 4, 
+                   decTxtCol, true);
+
         // 2. Render Home / Main Menu button at top-right
         state.homeBtnRect = { WINDOW_WIDTH - 140, 6, 120, 30 };
-        int mx, my;
         SDL_GetMouseState(&mx, &my);
         bool hoverHome = (mx >= state.homeBtnRect.x && mx <= state.homeBtnRect.x + state.homeBtnRect.w &&
                           my >= state.homeBtnRect.y && my <= state.homeBtnRect.y + state.homeBtnRect.h);
@@ -3325,7 +3444,6 @@ void MainIteration() {
             SDL_SetRenderDrawColor(state.renderer.get(), 24, 24, 34, 255);
             SDL_RenderFillRect(state.renderer.get(), &shelfBg);
             
-            int mx, my;
             SDL_GetMouseState(&mx, &my);
             
             state.mutex.lock();
@@ -3808,7 +3926,12 @@ void MainIteration() {
     SDL_RenderPresent(state.renderer.get());
 }
 
-int main(int argc, char* argv[]) {
+#ifdef main
+#undef main
+#endif
+
+// Explicit entry point with C linkage for static linking across all platforms
+extern "C" int SDL_main(int argc, char* argv[]) {
 #ifdef _WIN32
     // Hide terminal/console window on startup
     HWND hwnd = GetConsoleWindow();
@@ -3838,6 +3961,12 @@ int main(int argc, char* argv[]) {
             }
             if (j.contains("Language") && j["Language"].is_string()) {
                 state.gameLanguage = j["Language"].get<std::string>();
+            }
+            // Read the dynamic font size offset from settings and apply safe constraints
+            if (j.contains("fontSizeOffset") && j["fontSizeOffset"].is_number()) {
+                state.fontSizeOffset = j["fontSizeOffset"].get<int>();
+                if (state.fontSizeOffset > 8) state.fontSizeOffset = 8;
+                if (state.fontSizeOffset < -4) state.fontSizeOffset = -4;
             }
             if (j.contains("systemPrompt") && j["systemPrompt"].is_string()) {
                 systemPrompt = j["systemPrompt"].get<std::string>();
@@ -4044,11 +4173,7 @@ int main(int argc, char* argv[]) {
     SDL_StartTextInput();
     
     // 6. Select and open dynamic Windows system or local fonts
-    std::string fontPath = GetSystemFontPath();
-    state.fontTitle.reset(TTF_OpenFont(fontPath.c_str(), 24));
-    state.fontMessage.reset(TTF_OpenFont(fontPath.c_str(), 18));
-    state.fontUI.reset(TTF_OpenFont(fontPath.c_str(), 16));
-    state.fontSmallUI.reset(TTF_OpenFont(fontPath.c_str(), 13));
+    ApplyFontScale();
     
     if (!state.fontTitle || !state.fontMessage || !state.fontUI || !state.fontSmallUI) {
         std::cerr << "Font Init Fail: " << TTF_GetError() << std::endl;
