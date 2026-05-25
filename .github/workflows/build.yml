@@ -24,7 +24,7 @@ jobs:
       if: matrix.os == 'ubuntu-22.04'
       run: |
         sudo apt update
-        sudo apt install -y build-essential cmake pkg-config libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libsdl2-mixer-dev libcurl4-openssl-dev wget
+        sudo apt install -y build-essential cmake pkg-config libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libsdl2-mixer-dev libcurl4-openssl-dev wget git
 
     - name: Install Dependencies (Windows via vcpkg)
       if: matrix.os == 'windows-2022'
@@ -40,20 +40,8 @@ jobs:
     - name: Configure CMake (Linux)
       if: matrix.os == 'ubuntu-22.04'
       run: |
-        export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-        
-        mkdir -p cmake
-        echo "find_package(PkgConfig REQUIRED)" > cmake/FindSDL2_image.cmake
-        echo "pkg_check_modules(SDL2_IMAGE REQUIRED sdl2_image)" >> cmake/FindSDL2_image.cmake
-        echo "add_library(SDL2_image::SDL2_image INTERFACE IMPORTED)" >> cmake/FindSDL2_image.cmake
-        echo "target_include_directories(SDL2_image::SDL2_image INTERFACE \${SDL2_IMAGE_INCLUDE_DIRS})" >> cmake/FindSDL2_image.cmake
-        echo "target_link_libraries(SDL2_image::SDL2_image INTERFACE \${SDL2_IMAGE_LIBRARIES})" >> cmake/FindSDL2_image.cmake
-        
-        cp cmake/FindSDL2_image.cmake cmake/FindSDL2_mixer.cmake && sed -i 's/image/mixer/g' cmake/FindSDL2_mixer.cmake && sed -i 's/IMAGE/MIXER/g' cmake/FindSDL2_mixer.cmake
-        cp cmake/FindSDL2_image.cmake cmake/FindSDL2_net.cmake && sed -i 's/image/net/g' cmake/FindSDL2_net.cmake && sed -i 's/IMAGE/NET/g' cmake/FindSDL2_net.cmake
-        cp cmake/FindSDL2_image.cmake cmake/FindSDL2_ttf.cmake && sed -i 's/image/ttf/g' cmake/FindSDL2_ttf.cmake && sed -i 's/IMAGE/TTF/g' cmake/FindSDL2_ttf.cmake
-
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_MODULE_PATH="${{ github.workspace }}/cmake"
+        git clone https://github.com cmake-modules
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_MODULE_PATH="${{ github.workspace }}/cmake-modules"
 
     - name: Configure CMake (macOS)
       if: matrix.os == 'macos-14'
@@ -61,21 +49,12 @@ jobs:
 
     - name: Configure CMake (Windows)
       if: matrix.os == 'windows-2022'
-      # Добавляем пути к библиотекам vcpkg напрямую в линкер через флаг CMAKE_EXE_LINKER_FLAGS
-      run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" \
-          -DVCPKG_TARGET_TRIPLET=x64-windows \
-          -DCMAKE_CXX_FLAGS="/DNOMINMAX /EHsc" \
-          -DCMAKE_EXE_LINKER_FLAGS="/LIBPATH:C:/vcpkg/installed/x64-windows/lib"
+      # Записали всю команду строго в одну строку без переносов \, чтобы PowerShell её понял
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_CXX_FLAGS="/DNOMINMAX /EHsc" -DCMAKE_EXE_LINKER_FLAGS="/LIBPATH:C:/vcpkg/installed/x64-windows/lib"
 
     # --- ШАГ 3: Компиляция проекта ---
     - name: Build Project
-      run: |
-        if [ "${{ matrix.os }}" = "ubuntu-22.04" ]; then
-          export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-        fi
-        cmake --build build --config Release --parallel
+      run: cmake --build build --config Release --parallel
 
     # --- ШАГ 4: Сохранение готовых файлов ---
     - name: Upload Artifacts
