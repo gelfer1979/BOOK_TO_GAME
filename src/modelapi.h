@@ -23,6 +23,7 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 #include <filesystem>
+#include "book_converter.h"
 
 
 // Pure UI-independent Chat Message representation
@@ -1625,7 +1626,7 @@ inline bool CreateBookFromTxt(
     }
 
 #if defined(_WIN32)
-    std::ifstream txtFile(std::filesystem::path(std::filesystem::u8path(txtFilePath)));
+    std::ifstream txtFile(std::filesystem::path(BookConverter::UTF8ToWide(txtFilePath)));
 #else
     std::ifstream txtFile(txtFilePath);
 #endif

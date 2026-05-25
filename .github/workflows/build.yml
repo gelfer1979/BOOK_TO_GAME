@@ -156,10 +156,23 @@ jobs:
         run: |
           mkdir -p dist
           cp -r build/BOOK_TO_GAME.app dist/
+          
+          # Create both Contents/MacOS and Contents/Resources directories
+          mkdir -p dist/BOOK_TO_GAME.app/Contents/MacOS
+          mkdir -p dist/BOOK_TO_GAME.app/Contents/Resources
+          
+          # Copy to Contents/Resources (which SDL_GetBasePath returns on macOS)
+          cp -r build/assets dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          cp ai_*.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          cp options.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          cp settings.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          
+          # Copy to Contents/MacOS (for fallback or alternate execution modes)
           cp -r build/assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp ai_*.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
+          
           cd dist && zip -r ../book-to-game-macos-${{ matrix.arch }}.zip *
 
       # Upload the finished static packages to GitHub Releases / Artifacts

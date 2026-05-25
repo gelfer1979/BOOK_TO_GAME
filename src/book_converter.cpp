@@ -15,6 +15,13 @@
 #include <iostream>
 #include <filesystem>
 
+#if defined(_WIN32)
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
+
 // --------------------------------------------------------------------------
 // pugixml — XML parser for FB2, EPUB (XHTML), DOCX
 // --------------------------------------------------------------------------
@@ -35,6 +42,24 @@
 
 namespace BookConverter {
 
+#if defined(_WIN32)
+std::wstring UTF8ToWide(const std::string& str) {
+    if (str.empty()) return L"";
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+    std::wstring wstrTo(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+    return wstrTo;
+}
+
+std::string WideToUTF8(const std::wstring& wstr) {
+    if (wstr.empty()) return "";
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
+    std::string strTo(size_needed, 0);
+    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    return strTo;
+}
+#endif
+
 // ==========================================================================
 //  Internal utilities
 // ==========================================================================
@@ -53,7 +78,7 @@ std::string GetExt(const std::string& path) {
 
 static std::string ReadBinaryFile(const std::string& path) {
 #if defined(_WIN32)
-    std::ifstream f(std::filesystem::path(std::filesystem::u8path(path)), std::ios::binary);
+    std::ifstream f(std::filesystem::path(UTF8ToWide(path)), std::ios::binary);
 #else
     std::ifstream f(path, std::ios::binary);
 #endif
@@ -64,7 +89,7 @@ static std::string ReadBinaryFile(const std::string& path) {
 
 static bool WriteTextFile(const std::string& path, const std::string& content) {
 #if defined(_WIN32)
-    std::ofstream f(std::filesystem::path(std::filesystem::u8path(path)));
+    std::ofstream f(std::filesystem::path(UTF8ToWide(path)));
 #else
     std::ofstream f(path);
 #endif
@@ -89,6 +114,42 @@ static std::string NormalizeWhitespace(const std::string& s) {
     return out;
 }
 
+static std::string GetLocalName(const char* name) {
+    if (!name) return "";
+    const char* colon = strchr(name, ':');
+    return colon ? std::string(colon + 1) : std::string(name);
+}
+
+static pugi::xml_node FindDescendantByLocalName(pugi::xml_node parent, const std::string& localName) {
+    if (ToLower(GetLocalName(parent.name())) == ToLower(localName)) {
+        return parent;
+    }
+    for (pugi::xml_node child : parent.children()) {
+        pugi::xml_node res = FindDescendantByLocalName(child, localName);
+        if (res) return res;
+    }
+    return pugi::xml_node();
+}
+
+static void FindAllDescendantsByLocalName(pugi::xml_node parent, const std::string& localName, std::vector<pugi::xml_node>& results) {
+    if (ToLower(GetLocalName(parent.name())) == ToLower(localName)) {
+        results.push_back(parent);
+    }
+    for (pugi::xml_node child : parent.children()) {
+        FindAllDescendantsByLocalName(child, localName, results);
+    }
+}
+
+static void GetTextContent(pugi::xml_node node, std::string& out) {
+    if (node.type() == pugi::node_pcdata || node.type() == pugi::node_cdata) {
+        out += node.value();
+    } else {
+        for (pugi::xml_node child : node.children()) {
+            GetTextContent(child, out);
+        }
+    }
+}
+
 // ==========================================================================
 //  FB2 converter (FictionBook 2.0 XML)
 // ==========================================================================
@@ -106,7 +167,7 @@ static std::string ExtractTextFromFB2(const std::string& path) {
 
     // Recursive walker — collects text from <p>, <v>, <title>, <subtitle>
     std::function<void(pugi::xml_node)> walk = [&](pugi::xml_node node) {
-        std::string name = ToLower(node.name());
+        std::string name = ToLower(GetLocalName(node.name()));
         if (name == "binary") return;
 
         bool isParagraph = (name == "p" || name == "v");
@@ -115,16 +176,7 @@ static std::string ExtractTextFromFB2(const std::string& path) {
 
         if (isParagraph || isTitle) {
             std::string line;
-            for (pugi::xml_node child : node.children()) {
-                if (child.type() == pugi::node_pcdata ||
-                    child.type() == pugi::node_cdata) {
-                    line += child.value();
-                } else {
-                    for (pugi::xml_node sub : child.children()) {
-                        if (sub.type() == pugi::node_pcdata) line += sub.value();
-                    }
-                }
-            }
+            GetTextContent(node, line);
             if (!line.empty()) {
                 out += line + "\n";
                 if (isTitle) out += "\n";
@@ -135,9 +187,11 @@ static std::string ExtractTextFromFB2(const std::string& path) {
         }
     };
 
-    pugi::xml_node fictionBook = doc.child("FictionBook");
+    pugi::xml_node fictionBook = FindDescendantByLocalName(doc, "FictionBook");
     if (!fictionBook) fictionBook = doc.document_element();
-    for (pugi::xml_node body : fictionBook.children("body")) walk(body);
+    std::vector<pugi::xml_node> bodies;
+    FindAllDescendantsByLocalName(fictionBook, "body", bodies);
+    for (pugi::xml_node body : bodies) walk(body);
 
     return NormalizeWhitespace(out);
 }
@@ -193,7 +247,7 @@ static std::string XhtmlBodyToText(const std::string& xhtmlData) {
 
     std::string out;
     std::function<void(pugi::xml_node)> walk = [&](pugi::xml_node node) {
-        std::string name = ToLower(node.name());
+        std::string name = ToLower(GetLocalName(node.name()));
         if (name == "script" || name == "style") return;
 
         bool isBlock = (name == "p" || name == "div" || name == "h1" ||
@@ -210,8 +264,8 @@ static std::string XhtmlBodyToText(const std::string& xhtmlData) {
         if (isBlock && !out.empty() && out.back() != '\n') out += "\n";
     };
 
-    auto body = doc.select_node("//body");
-    if (body) walk(body.node());
+    pugi::xml_node body = FindDescendantByLocalName(doc, "body");
+    if (body) walk(body);
     else      walk(doc.document_element());
 
     return out;
@@ -232,8 +286,8 @@ static std::string ExtractTextFromEPUB(const std::string& path) {
         if (!files.empty()) {
             pugi::xml_document d;
             d.load_string(files[0].data.c_str());
-            auto rf = d.select_node("//rootfile");
-            if (rf) opfPath = rf.node().attribute("full-path").value();
+            pugi::xml_node rf = FindDescendantByLocalName(d, "rootfile");
+            if (rf) opfPath = rf.attribute("full-path").value();
         }
     }
 
@@ -253,10 +307,12 @@ static std::string ExtractTextFromEPUB(const std::string& path) {
             opfDoc.load_string(opfFiles[0].data.c_str());
 
             std::unordered_map<std::string, std::string> idToHref;
-            for (auto& item : opfDoc.select_nodes("//manifest/item")) {
-                std::string id   = item.node().attribute("id").value();
-                std::string href = item.node().attribute("href").value();
-                std::string mt   = item.node().attribute("media-type").value();
+            std::vector<pugi::xml_node> items;
+            FindAllDescendantsByLocalName(opfDoc, "item", items);
+            for (auto& item : items) {
+                std::string id   = item.attribute("id").value();
+                std::string href = item.attribute("href").value();
+                std::string mt   = item.attribute("media-type").value();
                 if (!id.empty() && !href.empty() &&
                     (mt.find("html") != std::string::npos ||
                      mt.find("xhtml") != std::string::npos)) {
@@ -264,8 +320,10 @@ static std::string ExtractTextFromEPUB(const std::string& path) {
                 }
             }
 
-            for (auto& itemref : opfDoc.select_nodes("//spine/itemref")) {
-                std::string idref = itemref.node().attribute("idref").value();
+            std::vector<pugi::xml_node> itemrefs;
+            FindAllDescendantsByLocalName(opfDoc, "itemref", itemrefs);
+            for (auto& itemref : itemrefs) {
+                std::string idref = itemref.attribute("idref").value();
                 auto it = idToHref.find(idref);
                 if (it != idToHref.end()) {
                     std::string href = it->second;
@@ -322,10 +380,15 @@ static std::string ExtractTextFromDOCX(const std::string& path) {
     doc.load_string(docFiles[0].data.c_str());
 
     std::string out;
-    for (auto& para : doc.select_nodes("//w:p")) {
+    std::vector<pugi::xml_node> paras;
+    FindAllDescendantsByLocalName(doc, "p", paras);
+    for (auto& para : paras) {
         std::string line;
-        for (auto& t : para.node().select_nodes(".//w:t"))
-            line += t.node().text().get();
+        std::vector<pugi::xml_node> ts;
+        FindAllDescendantsByLocalName(para, "t", ts);
+        for (auto& t : ts) {
+            line += t.text().get();
+        }
         if (!line.empty()) out += line + "\n";
     }
     return NormalizeWhitespace(out);
@@ -341,7 +404,7 @@ static std::string ExtractTextFromMOBI(const std::string& path) {
     if (!m) return "";
 
 #if defined(_WIN32)
-    std::wstring wpath = std::filesystem::path(std::filesystem::u8path(path)).wstring();
+    std::wstring wpath = UTF8ToWide(path);
     FILE* fp = _wfopen(wpath.c_str(), L"rb");
 #else
     FILE* fp = fopen(path.c_str(), "rb");
@@ -436,6 +499,19 @@ const char* GetWindowsDialogFilter() {
            "Mobipocket (*.mobi)\0*.mobi\0"
            "All Files (*.*)\0*.*\0";
 }
+
+#if defined(_WIN32)
+const wchar_t* GetWindowsDialogFilterW() {
+    return L"Book Files (*.txt;*.fb2;*.epub;*.docx;*.mobi)\0"
+           L"*.txt;*.fb2;*.epub;*.docx;*.mobi\0"
+           L"Text Files (*.txt)\0*.txt\0"
+           L"FictionBook (*.fb2)\0*.fb2\0"
+           L"EPUB (*.epub)\0*.epub\0"
+           L"Word Document (*.docx)\0*.docx\0"
+           L"Mobipocket (*.mobi)\0*.mobi\0"
+           L"All Files (*.*)\0*.*\0";
+}
+#endif
 
 const char* GetZenityFilter() {
     return "Book Files | *.txt *.fb2 *.epub *.docx *.mobi";

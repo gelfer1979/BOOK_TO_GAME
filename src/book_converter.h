@@ -26,4 +26,10 @@ const char* GetWindowsDialogFilter();
 const char* GetZenityFilter();
 const char* GetMacOSScript();
 
+#if defined(_WIN32)
+std::wstring UTF8ToWide(const std::string& str);
+std::string WideToUTF8(const std::wstring& wstr);
+const wchar_t* GetWindowsDialogFilterW();
+#endif
+
 } // namespace BookConverter

@@ -1493,24 +1493,24 @@ std::string OpenFileDialogImpl() {
     return "";
 #else
 #ifdef _WIN32
-    OPENFILENAMEA ofn;       // common dialog box structure
-    char szFile[260] = {0};  // buffer for file name
+    OPENFILENAMEW ofn;       // common dialog box structure
+    wchar_t szFile[512] = {0};  // buffer for file name
 
-    // Initialize OPENFILENAME
+    // Initialize OPENFILENAMEW
     ZeroMemory(&ofn, sizeof(ofn));
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = NULL;
     ofn.lpstrFile = szFile;
-    ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = BookConverter::GetWindowsDialogFilter();
+    ofn.nMaxFile = sizeof(szFile) / sizeof(wchar_t);
+    ofn.lpstrFilter = BookConverter::GetWindowsDialogFilterW();
     ofn.nFilterIndex = 1;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
     ofn.lpstrInitialDir = NULL;
     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
-    if (GetOpenFileNameA(&ofn) == TRUE) {
-        return std::string(ofn.lpstrFile);
+    if (GetOpenFileNameW(&ofn) == TRUE) {
+        return BookConverter::WideToUTF8(szFile);
     }
     return "";
 #elif defined(__APPLE__)
