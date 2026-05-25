@@ -24,12 +24,13 @@ jobs:
       if: matrix.os == 'ubuntu-22.04'
       run: |
         sudo apt update
-        sudo apt install -y build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libcurl4-openssl-dev wget
+        # Добавляем pkg-config, который поможет CMake найти SDL2 модули на Linux
+        sudo apt install -y build-essential cmake pkg-config libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libcurl4-openssl-dev wget
 
     - name: Install Dependencies (Windows via vcpkg)
       if: matrix.os == 'windows-2022'
       run: |
-        vcpkg install sdl2 sdl2-image sdl2-mixer sdl2-ttf sdl2-net curl
+        vcpkg install sdl2:x64-windows sdl2-image:x64-windows sdl2-mixer:x64-windows sdl2-ttf:x64-windows sdl2-net:x64-windows curl:x64-windows
 
     - name: Install Dependencies (macOS via Homebrew)
       if: matrix.os == 'macos-14'
@@ -37,8 +38,13 @@ jobs:
         brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf sdl2_net curl
 
     # --- ШАГ 2: Конфигурация через CMake ---
-    - name: Configure CMake
+    - name: Configure CMake (Non-Windows)
+      if: matrix.os != 'windows-2022'
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+
+    - name: Configure CMake (Windows)
+      if: matrix.os == 'windows-2022'
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows
 
     # --- ШАГ 3: Компиляция проекта ---
     - name: Build Project
