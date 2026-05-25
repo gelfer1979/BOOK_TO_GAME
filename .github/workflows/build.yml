@@ -10,14 +10,14 @@ permissions:
   contents: write
 
 jobs:
-  # 1. DESKTOP BUILDS (Windows, Linux, macOS)
+  # 1. DESKTOP BUILDS (Windows, Linux)
   build-desktop:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest ]
 
     steps:
       - name: Checkout Repository
@@ -46,11 +46,6 @@ jobs:
             libasound2-dev \
             libpulse-dev
 
-      - name: Install macOS Dependencies
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install ninja
-
       # Setup compiler on Windows to ensure Developer Command Prompt environment
       - name: Setup MSVC on Windows
         if: matrix.os == 'windows-latest'
@@ -68,7 +63,7 @@ jobs:
         run: |
           cmake --build build --config Release 2>&1 | tee cmake_build.log
 
-      # Bundle the compiled static binary and asset folder into a clean archive
+      # Bundle the compiled static binary, assets, and configs into a clean archive
       - name: Package Distributable
         shell: bash
         run: |
@@ -80,14 +75,16 @@ jobs:
             echo "Found exe at: $EXE_PATH"
             cp "$EXE_PATH" dist/
             cp -r "$(dirname "$EXE_PATH")/assets" dist/ 2>/dev/null || cp -r build/assets dist/ 2>/dev/null || true
+            cp ai_*.json dist/ 2>/dev/null || true
+            cp options.json dist/ 2>/dev/null || true
+            cp settings.json dist/ 2>/dev/null || true
             cd dist && powershell -Command "Compress-Archive -Path * -DestinationPath ../book-to-game-windows.zip"
-          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            cp build/BOOK_TO_GAME dist/
-            cp -r build/assets dist/
-            cd dist && zip -r ../book-to-game-macos.zip *
           else
             cp build/BOOK_TO_GAME dist/
             cp -r build/assets dist/
+            cp ai_*.json dist/ 2>/dev/null || true
+            cp options.json dist/ 2>/dev/null || true
+            cp settings.json dist/ 2>/dev/null || true
             cd dist && tar -czf ../book-to-game-linux.tar.gz *
           fi
 
@@ -98,7 +95,6 @@ jobs:
           name: book-to-game-${{ matrix.os }}
           path: |
             book-to-game-windows.zip
-            book-to-game-macos.zip
             book-to-game-linux.tar.gz
           if-no-files-found: ignore
 
@@ -124,7 +120,79 @@ jobs:
           git commit -m "ci: save build logs for ${{ matrix.os }} run ${{ github.run_id }}"
           git push origin build-logs-${{ matrix.os }}-${{ github.run_id }} --force
 
-  # 2. MOBILE BUILD FOR ANDROID (APK)
+  # 2. DESKTOP BUILDS (macOS - Apple Silicon and Intel)
+  build-macos:
+    name: Build macOS (${{ matrix.arch }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [ arm64, x86_64 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install macOS Dependencies
+        run: |
+          brew install ninja
+
+      # Configure the project using CMake and Ninja
+      - name: Configure CMake
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} 2>&1 | tee cmake_config.log
+
+      # Build the unified static binary and copy assets
+      - name: Compile and Link
+        run: |
+          cmake --build build --config Release 2>&1 | tee cmake_build.log
+
+      # Bundle the compiled static binary, assets, and config files into a clean archive
+      - name: Package Distributable
+        run: |
+          mkdir -p dist
+          cp build/BOOK_TO_GAME dist/
+          cp -r build/assets dist/
+          cp ai_*.json dist/ 2>/dev/null || true
+          cp options.json dist/ 2>/dev/null || true
+          cp settings.json dist/ 2>/dev/null || true
+          cd dist && zip -r ../book-to-game-macos-${{ matrix.arch }}.zip *
+
+      # Upload the finished static packages to GitHub Releases / Artifacts
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-to-game-macos-${{ matrix.arch }}
+          path: book-to-game-macos-${{ matrix.arch }}.zip
+          if-no-files-found: ignore
+
+      # Proactively upload debug logs if compilation fails
+      - name: Upload Debug Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-logs-macos-${{ matrix.arch }}
+          path: |
+            cmake_config.log
+            cmake_build.log
+
+      # Push desktop build logs to a dedicated branch if failed
+      - name: Push Build Logs to Git
+        if: failure()
+        shell: bash
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout -b build-logs-macos-${{ matrix.arch }}-${{ github.run_id }}
+          git add cmake_config.log cmake_build.log
+          git commit -m "ci: save build logs for macOS ${{ matrix.arch }} run ${{ github.run_id }}"
+          git push origin build-logs-macos-${{ matrix.arch }}-${{ github.run_id }} --force
+
+  # 3. MOBILE BUILD FOR ANDROID (APK)
   build-android:
     name: Build Android APK
     runs-on: ubuntu-latest
@@ -143,7 +211,6 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-
       # Compile and assemble Android Release APK
       - name: Build Android APK
         run: |
@@ -151,6 +218,23 @@ jobs:
           cd platforms/android
           chmod +x gradlew
           ./gradlew assembleRelease 2>&1 | tee android_build.log
+
+      # Package Android Distributable (ZIP containing APK + config files in root)
+      - name: Package Android Distributable
+        run: |
+          mkdir -p dist-android
+          cp platforms/android/app/build/outputs/apk/release/*.apk dist-android/
+          cp ai_*.json dist-android/ 2>/dev/null || true
+          cp options.json dist-android/ 2>/dev/null || true
+          cp settings.json dist-android/ 2>/dev/null || true
+          cd dist-android && zip -r ../book-to-game-android.zip *
+
+      # Upload the packaged Android ZIP
+      - name: Upload Packaged Android ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-to-game-android-zip
+          path: book-to-game-android.zip
 
       # Upload the compiled APK as an artifact
       - name: Upload Android APK
@@ -180,7 +264,7 @@ jobs:
           git commit -m "ci: save android build logs run ${{ github.run_id }}"
           git push origin build-logs-android-${{ github.run_id }} --force
 
-  # 3. MOBILE BUILD FOR IOS (App Bundle)
+  # 4. MOBILE BUILD FOR IOS (App Bundle)
   build-ios:
     name: Build iOS App
     runs-on: macos-latest
@@ -212,7 +296,13 @@ jobs:
           mkdir -p dist-ios
           cp -r build-ios/Release-iphonesimulator/BOOK_TO_GAME.app dist-ios/
           cp -r assets dist-ios/BOOK_TO_GAME.app/assets
-          cd dist-ios && zip -r ../book-to-game-ios.zip BOOK_TO_GAME.app
+          cp ai_*.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
+          cp options.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
+          cp settings.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
+          cp ai_*.json dist-ios/ 2>/dev/null || true
+          cp options.json dist-ios/ 2>/dev/null || true
+          cp settings.json dist-ios/ 2>/dev/null || true
+          cd dist-ios && zip -r ../book-to-game-ios.zip *
 
       # Upload the compiled iOS zip package as an artifact
       - name: Upload iOS Package
