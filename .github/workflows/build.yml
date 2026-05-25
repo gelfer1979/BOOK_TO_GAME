@@ -40,6 +40,8 @@ jobs:
     - name: Configure CMake (Linux)
       if: matrix.os == 'ubuntu-22.04'
       run: |
+        export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+        
         mkdir -p cmake
         echo "find_package(PkgConfig REQUIRED)" > cmake/FindSDL2_image.cmake
         echo "pkg_check_modules(SDL2_IMAGE REQUIRED sdl2_image)" >> cmake/FindSDL2_image.cmake
@@ -59,12 +61,21 @@ jobs:
 
     - name: Configure CMake (Windows)
       if: matrix.os == 'windows-2022'
-      # Добавляем -DCOMPILE_DEFINITIONS=NOMINMAX, чтобы отключить ломающие макросы в Windows.h
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_CXX_FLAGS="/DNOMINMAX"
+      # Добавляем пути к библиотекам vcpkg напрямую в линкер через флаг CMAKE_EXE_LINKER_FLAGS
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" \
+          -DVCPKG_TARGET_TRIPLET=x64-windows \
+          -DCMAKE_CXX_FLAGS="/DNOMINMAX /EHsc" \
+          -DCMAKE_EXE_LINKER_FLAGS="/LIBPATH:C:/vcpkg/installed/x64-windows/lib"
 
     # --- ШАГ 3: Компиляция проекта ---
     - name: Build Project
-      run: cmake --build build --config Release --parallel
+      run: |
+        if [ "${{ matrix.os }}" = "ubuntu-22.04" ]; then
+          export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+        fi
+        cmake --build build --config Release --parallel
 
     # --- ШАГ 4: Сохранение готовых файлов ---
     - name: Upload Artifacts
