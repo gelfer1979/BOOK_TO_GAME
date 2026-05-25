@@ -78,7 +78,7 @@ if(WIN32)
 elseif(IOS OR APPLE)
     set(CURL_USE_SECTRANSP ON CACHE INTERNAL "")
 else()
-    set(CURL_USE_OPENSSL OFF CACHE INTERNAL "")
+    set(CURL_USE_OPENSSL ON CACHE INTERNAL "")
 endif()
 
 # pugixml (XML parser for fb2/epub/docx)
