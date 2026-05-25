@@ -1,4 +1,4 @@
-name: Build and Package Desktop Releases
+name: Build and Package Releases
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-and-package:
+  # 1. DESKTOP BUILDS (Windows, Linux, macOS)
+  build-desktop:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -89,3 +90,75 @@ jobs:
             book-to-game-macos.zip
             book-to-game-linux.tar.gz
           if-no-files-found: ignore
+
+  # 2. MOBILE BUILD FOR ANDROID (APK)
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # Generate Gradle wrapper so we don't rely on pre-installed Gradle versions
+      - name: Generate Gradle Wrapper
+        run: |
+          cd platforms/android
+          gradle wrapper
+
+      # Compile and assemble Android Release APK
+      - name: Build Android APK
+        run: |
+          cd platforms/android
+          ./gradlew assembleRelease
+
+      # Upload the compiled APK as an artifact
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-to-game-android
+          path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
+
+  # 3. MOBILE BUILD FOR IOS (App Bundle)
+  build-ios:
+    name: Build iOS App
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Configure CMake for iOS device with Xcode generator
+      - name: Configure CMake for iOS
+        run: |
+          cmake -B build-ios -G Xcode \
+            -DCMAKE_SYSTEM_NAME=iOS \
+            -DCMAKE_OSX_SYSROOT=iphoneos \
+            -DCMAKE_BUILD_TYPE=Release
+
+      # Compile and link the static iOS binary
+      - name: Compile iOS Binary
+        run: |
+          cmake --build build-ios --config Release
+
+      # Bundle the built app and assets
+      - name: Package iOS Distributable
+        run: |
+          mkdir -p dist-ios
+          cp -r build-ios/Release-iphoneos/BOOK_TO_GAME.app dist-ios/
+          cp -r assets dist-ios/BOOK_TO_GAME.app/assets
+          cd dist-ios && zip -r ../book-to-game-ios.zip BOOK_TO_GAME.app
+
+      # Upload the compiled iOS zip package as an artifact
+      - name: Upload iOS Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-to-game-ios
+          path: book-to-game-ios.zip
