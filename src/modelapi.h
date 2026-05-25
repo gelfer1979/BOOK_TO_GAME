@@ -27,6 +27,7 @@
 
 
 inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& errorMsg);
+inline std::string Trim(const std::string& str);
 
 // Pure UI-independent Chat Message representation
 struct ChatMessageData {
@@ -326,11 +327,24 @@ public:
                         }
                         
                         if (blocked) {
-                            bool isRu = (language == "Russian" || language == "ru" || language == "RU");
-                            if (isRu) {
-                                aiResponse = "Ошибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
-                            } else {
+                            bool isEn = (language == "English" || language == "en" || language == "EN");
+                            if (isEn) {
                                 aiResponse = "Error: The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.";
+                            } else {
+                                std::string englishError = "The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.";
+                                std::string translatePrompt = "You are a professional translator. Translate the following error message into the language: '" + language + "'. Return ONLY the translated text, with no extra formatting, quotes, or conversational phrases:\n\n" + englishError;
+                                std::cout << "[API Error Translation] Translating error to: " << language << "..." << std::endl;
+                                std::string translated = ask(translatePrompt, "English");
+                                translated = Trim(translated);
+                                if (!translated.empty() && translated.find("Error") == std::string::npos) {
+                                    aiResponse = "Error: " + translated;
+                                } else {
+                                    if (language == "Russian" || language == "ru" || language == "RU") {
+                                        aiResponse = "Ошибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                                    } else {
+                                        aiResponse = "Error: " + englishError;
+                                    }
+                                }
                             }
                         } else {
                             aiResponse = "Error: Invalid Gemini response format.";
@@ -552,11 +566,24 @@ public:
                         }
                         
                         if (blocked) {
-                            bool isRu = (language == "Russian" || language == "ru" || language == "RU");
-                            if (isRu) {
-                                aiResponse = "Ошибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
-                            } else {
+                            bool isEn = (language == "English" || language == "en" || language == "EN");
+                            if (isEn) {
                                 aiResponse = "Error: The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.";
+                            } else {
+                                std::string englishError = "The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.";
+                                std::string translatePrompt = "You are a professional translator. Translate the following error message into the language: '" + language + "'. Return ONLY the translated text, with no extra formatting, quotes, or conversational phrases:\n\n" + englishError;
+                                std::cout << "[API Error Translation] Translating chat error to: " << language << "..." << std::endl;
+                                std::string translated = ask(translatePrompt, "English");
+                                translated = Trim(translated);
+                                if (!translated.empty() && translated.find("Error") == std::string::npos) {
+                                    aiResponse = "Error: " + translated;
+                                } else {
+                                    if (language == "Russian" || language == "ru" || language == "RU") {
+                                        aiResponse = "Ошибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                                    } else {
+                                        aiResponse = "Error: " + englishError;
+                                    }
+                                }
                             }
                         } else {
                             aiResponse = "Error: Invalid Gemini response format.";
