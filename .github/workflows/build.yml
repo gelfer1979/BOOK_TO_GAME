@@ -72,8 +72,10 @@ jobs:
         run: |
           mkdir -p dist
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            cp build/BOOK_TO_GAME.exe dist/
-            cp -r build/assets dist/
+            # MSVC/Ninja places exe in build/Release/ subfolder
+            EXE_PATH=$(find build -name "BOOK_TO_GAME.exe" | head -1)
+            cp "$EXE_PATH" dist/
+            cp -r "$(dirname "$EXE_PATH")/assets" dist/ 2>/dev/null || cp -r build/assets dist/ 2>/dev/null || true
             cd dist && zip -r ../book-to-game-windows.zip *
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
             cp build/BOOK_TO_GAME dist/
