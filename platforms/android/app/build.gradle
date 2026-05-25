@@ -36,14 +36,14 @@ android {
     
     externalNativeBuild {
         cmake {
-            path "../../CMakeLists.txt"
+            path "../../../CMakeLists.txt"
         }
     }
 
     // Unified source of game assets - we use the common assets directory at the root
     sourceSets {
         main {
-            assets.srcDirs = ['../../assets']
+            assets.srcDirs = ['../../../assets']
         }
     }
 }
