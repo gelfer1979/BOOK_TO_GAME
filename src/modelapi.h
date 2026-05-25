@@ -37,10 +37,10 @@ struct ChatMessageData {
 // Abstract base class for asking AI questions
 class AskAi {
 public:
-    virtual std::string ask(const std::string& question) = 0;   
+    virtual std::string ask(const std::string& question, const std::string& language = "English") = 0;   
     virtual std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) {
         if (history.empty()) return "";
-        return ask(history.back().text);
+        return ask(history.back().text, language);
     }
     virtual void setSystemPrompt(const std::string& prompt) {}
     virtual ~AskAi() = default;
@@ -152,7 +152,7 @@ public:
         systemPrompt_ = prompt;
     }
 
-    std::string ask(const std::string& question) override {
+    std::string ask(const std::string& question, const std::string& language = "English") override {
         int attempt = 0;
         int delayMs = retryDelayMs_;
         
@@ -326,7 +326,12 @@ public:
                         }
                         
                         if (blocked) {
-                            aiResponse = "Error: The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.\n\nОшибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                            bool isRu = (language == "Russian" || language == "ru" || language == "RU");
+                            if (isRu) {
+                                aiResponse = "Ошибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                            } else {
+                                aiResponse = "Error: The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.";
+                            }
                         } else {
                             aiResponse = "Error: Invalid Gemini response format.";
                         }
@@ -547,7 +552,12 @@ public:
                         }
                         
                         if (blocked) {
-                            aiResponse = "Error: The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.\n\nОшибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                            bool isRu = (language == "Russian" || language == "ru" || language == "RU");
+                            if (isRu) {
+                                aiResponse = "Ошибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                            } else {
+                                aiResponse = "Error: The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.";
+                            }
                         } else {
                             aiResponse = "Error: Invalid Gemini response format.";
                         }
@@ -1809,7 +1819,7 @@ inline bool CreateBookFromTxt(
         }
 
         std::cout << "[AI Book Gen] Route A: Sending raw story to AI (Length: " << content.length() << " characters)..." << std::endl;
-        std::string response = aiClient->ask(prompt);
+        std::string response = aiClient->ask(prompt, gameLanguage);
         
         if (extClient) {
             extClient->setTimeoutSettings(oldConnect, oldRequest);
@@ -1964,7 +1974,7 @@ inline bool CreateBookFromTxt(
                 extClient->setTimeoutSettings(15, 240);
             }
             std::cout << "[AI Book Gen] Route B: Blueprint Attempt " << attempt << "..." << std::endl;
-            std::string response = aiClient->ask(blueprintPrompt);
+            std::string response = aiClient->ask(blueprintPrompt, gameLanguage);
             if (extClient) {
                 extClient->setTimeoutSettings(oldConnect, oldRequest);
             }
@@ -2114,7 +2124,7 @@ inline bool CreateBookFromTxt(
                     extClient->setTimeoutSettings(15, 240);
                 }
                 std::cout << "[AI Book Gen] Hydrating chapters " << startCh << " to " << endCh << " (Attempt " << attempt << ")..." << std::endl;
-                std::string response = aiClient->ask(hydrationPrompt);
+                std::string response = aiClient->ask(hydrationPrompt, gameLanguage);
                 if (extClient) {
                     extClient->setTimeoutSettings(oldConnect, oldRequest);
                 }
