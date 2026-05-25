@@ -53,13 +53,15 @@ jobs:
 
       # Configure the project using CMake and Ninja
       - name: Configure CMake
+        shell: bash
         run: |
-          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release 2>&1 | tee cmake_config.log
 
       # Build the unified static binary and copy assets
       - name: Compile and Link
+        shell: bash
         run: |
-          cmake --build build --config Release
+          cmake --build build --config Release 2>&1 | tee cmake_build.log
 
       # Bundle the compiled static binary and asset folder into a clean archive
       - name: Package Distributable
@@ -91,6 +93,16 @@ jobs:
             book-to-game-linux.tar.gz
           if-no-files-found: ignore
 
+      # Proactively upload debug logs if compilation fails
+      - name: Upload Debug Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-logs-${{ matrix.os }}
+          path: |
+            cmake_config.log
+            cmake_build.log
+
   # 2. MOBILE BUILD FOR ANDROID (APK)
   build-android:
     name: Build Android APK
@@ -118,7 +130,7 @@ jobs:
       - name: Build Android APK
         run: |
           cd platforms/android
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease 2>&1 | tee android_build.log
 
       # Upload the compiled APK as an artifact
       - name: Upload Android APK
@@ -126,6 +138,14 @@ jobs:
         with:
           name: book-to-game-android
           path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
+
+      # Proactively upload debug logs if compilation fails
+      - name: Upload Android Debug Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-logs-android
+          path: platforms/android/android_build.log
 
   # 3. MOBILE BUILD FOR IOS (App Bundle)
   build-ios:
@@ -144,12 +164,12 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO \
             -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=NO \
-            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY=""
+            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY="" 2>&1 | tee ios_config.log
 
       # Compile and link the static iOS binary
       - name: Compile iOS Binary
         run: |
-          cmake --build build-ios --config Release
+          cmake --build build-ios --config Release 2>&1 | tee ios_build.log
 
       # Bundle the built app and assets
       - name: Package iOS Distributable
@@ -165,3 +185,13 @@ jobs:
         with:
           name: book-to-game-ios
           path: book-to-game-ios.zip
+
+      # Proactively upload debug logs if compilation fails
+      - name: Upload iOS Debug Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-logs-ios
+          path: |
+            ios_config.log
+            ios_build.log
