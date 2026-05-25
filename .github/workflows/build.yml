@@ -40,7 +40,6 @@ jobs:
     - name: Configure CMake (Linux)
       if: matrix.os == 'ubuntu-22.04'
       run: |
-        # Ссылка исправлена на полную и корректную
         git clone https://github.com cmake-modules
         cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_MODULE_PATH="${{ github.workspace }}/cmake-modules"
 
@@ -50,7 +49,17 @@ jobs:
 
     - name: Configure CMake (Windows)
       if: matrix.os == 'windows-2022'
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_CXX_FLAGS="/DNOMINMAX /EHsc" -DCMAKE_EXE_LINKER_FLAGS="/LIBPATH:C:/vcpkg/installed/x64-windows/lib"
+      run: |
+        $VCPKG_LIB_DIR = "C:/vcpkg/installed/x64-windows/lib"
+        if (-not (Test-Path $VCPKG_LIB_DIR)) {
+            $VCPKG_LIB_DIR = "${{ github.workspace }}/vcpkg/installed/x64-windows/lib"
+        }
+        cmake -B build -DCMAKE_BUILD_TYPE=Release `
+          -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
+          -DVCPKG_TARGET_TRIPLET=x64-windows `
+          -DCMAKE_CXX_FLAGS="/DNOMINMAX /EHsc" `
+          -DSDL2_LIBRARIES="SDL2;SDL2main" `
+          -DCMAKE_EXE_LINKER_FLAGS="/LIBPATH:$VCPKG_LIB_DIR"
 
     # --- ШАГ 3: Компиляция проекта ---
     - name: Build Project
