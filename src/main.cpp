@@ -1215,8 +1215,8 @@ void TriggerUiLocalization() {
                                  "  \"btn_yes\": \"1. Yes, continue the adventure\",\n"
                                  "  \"btn_no\": \"2. No, start a new book\",\n"
                                  "  \"load_title\": \"LOAD NEW BOOK\",\n"
-                                 "  \"load_prompt\": \"Click below to select a .txt file, or drag-and-drop it:\",\n"
-                                 "  \"btn_select_file\": \"Choose Book File (.txt)\",\n"
+                                 "  \"load_prompt\": \"Click below to select a book file, or drag-and-drop it:\",\n"
+                                 "  \"btn_select_file\": \"Choose Book File (.txt, .epub, .docx, .mobi, .fb2)\",\n"
                                  "  \"generating_title\": \"AI IS WEAVING THE GAME...\",\n"
                                  "  \"generating_desc\": \"Please wait. The AI is reading the text, creating chapters, and setting up the game world...\",\n"
                                  "  \"err_file_not_found\": \"Error: File not found or could not be opened!\",\n"
@@ -1429,8 +1429,8 @@ inline std::string GetUiText(const std::string& key) {
     if (key == "btn_yes") return "1. Yes, continue the adventure";
     if (key == "btn_no") return "2. No, start a new book";
     if (key == "load_title") return "LOAD NEW BOOK";
-    if (key == "load_prompt") return "Click below to select a .txt file, or drag-and-drop it:";
-    if (key == "btn_select_file") return "Choose Book File (.txt)";
+    if (key == "load_prompt") return "Click below to select a book file, or drag-and-drop it:";
+    if (key == "btn_select_file") return "Choose Book File (.txt, .epub, .docx, .mobi, .fb2)";
     if (key == "generating_title") return "AI IS WEAVING THE GAME...";
     if (key == "generating_desc") return "Please wait. The AI is reading the text, creating chapters, and setting up the game world...";
     if (key == "err_file_not_found") return "Error: File not found or could not be opened!";
@@ -3151,30 +3151,6 @@ void MainIteration() {
                         InitAdventureSetup(path);
                     }
                 }
-                // Click inside Path Input Box
-                else if (mx >= state.bookPathInputRect.x && mx <= (state.bookPathInputRect.x + state.bookPathInputRect.w) &&
-                         my >= state.bookPathInputRect.y && my <= (state.bookPathInputRect.y + state.bookPathInputRect.h)) {
-                    state.editingBookPath = true;
-                    state.editingLanguage = false;
-                    state.inputText = state.bookPathInput;
-                    SDL_StartTextInput();
-                }
-                // Click Confirm Load Button
-                else if (mx >= state.bookConfirmBtnRect.x && mx <= (state.bookConfirmBtnRect.x + state.bookConfirmBtnRect.w) &&
-                         my >= state.bookConfirmBtnRect.y && my <= (state.bookConfirmBtnRect.y + state.bookConfirmBtnRect.h)) {
-                    if (!state.bookPathInput.empty()) {
-                        InitAdventureSetup(state.bookPathInput);
-                    }
-                    state.editingBookPath = false;
-                    SDL_StopTextInput();
-                }
-                // Click elsewhere to de-focus path editor
-                else {
-                    if (state.editingBookPath) {
-                        state.editingBookPath = false;
-                        SDL_StopTextInput();
-                    }
-                }
             } else if (state.appState == APP_STATE_SELECT_BOOK) {
                 int cardX = WINDOW_WIDTH / 2 - 300;
                 int cardY = WINDOW_HEIGHT / 2 - 220;
@@ -3780,46 +3756,9 @@ void MainIteration() {
             DrawRoundedRect(state.renderer.get(), state.customBtnRect2, 8, colorBtn);
             RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("btn_select_file"), state.customBtnRect2.x + state.customBtnRect2.w / 2, state.customBtnRect2.y + state.customBtnRect2.h / 2 + 8, textColBtn, true);
             
-            // Render text input box for typing/entering path manually
-            state.bookPathInputRect = { cardX + 50, cardY + 220, 360, 45 };
-            state.bookConfirmBtnRect = { cardX + 420, cardY + 220, 130, 45 };
-            
-            bool hoveredInput = (mx >= state.bookPathInputRect.x && mx <= (state.bookPathInputRect.x + state.bookPathInputRect.w) &&
-                                 my >= state.bookPathInputRect.y && my <= (state.bookPathInputRect.y + state.bookPathInputRect.h));
-            bool hoveredConfirm = (mx >= state.bookConfirmBtnRect.x && mx <= (state.bookConfirmBtnRect.x + state.bookConfirmBtnRect.w) &&
-                                   my >= state.bookConfirmBtnRect.y && my <= (state.bookConfirmBtnRect.y + state.bookConfirmBtnRect.h));
-            
-            // Draw input box outline and background
-            SDL_Color inputBorderCol = state.editingBookPath ? SDL_Color{ 0, 255, 220, 255 } : (hoveredInput ? SDL_Color{ 142, 60, 220, 255 } : SDL_Color{ 100, 100, 120, 150 });
-            SDL_Color inputBgCol = SDL_Color{ 15, 15, 22, 255 };
-            
-            SDL_Rect inputOutline = { state.bookPathInputRect.x - 1, state.bookPathInputRect.y - 1, state.bookPathInputRect.w + 2, state.bookPathInputRect.h + 2 };
-            DrawRoundedRect(state.renderer.get(), inputOutline, 7, inputBorderCol);
-            DrawRoundedRect(state.renderer.get(), state.bookPathInputRect, 6, inputBgCol);
-            
-            // Display path or placeholder
-            if (state.bookPathInput.empty()) {
-                std::string placeholder = IsRussianLanguage(state.gameLanguage) ? "Или введите путь (например, book.txt)..." : "Or type book path (e.g. book.txt)...";
-                RenderText(state.renderer.get(), state.fontSmallUI.get(), placeholder, state.bookPathInputRect.x + 15, state.bookPathInputRect.y + state.bookPathInputRect.h / 2 + 5, SDL_Color{ 100, 100, 120, 255 }, false);
-            } else {
-                std::string drawPath = state.bookPathInput;
-                // Blinking cursor inside input box
-                if (state.editingBookPath && state.cursorVisible) {
-                    drawPath += "|";
-                }
-                RenderText(state.renderer.get(), state.fontSmallUI.get(), drawPath, state.bookPathInputRect.x + 15, state.bookPathInputRect.y + state.bookPathInputRect.h / 2 + 5, SDL_Color{ 255, 255, 255, 255 }, false);
-            }
-            
-            // Draw Confirm button
-            SDL_Color confirmBgCol = hoveredConfirm ? SDL_Color{ 0, 200, 100, 255 } : SDL_Color{ 20, 100, 60, 255 };
-            SDL_Color confirmTextCol = SDL_Color{ 255, 255, 255, 255 };
-            DrawRoundedRect(state.renderer.get(), state.bookConfirmBtnRect, 6, confirmBgCol);
-            std::string confirmText = IsRussianLanguage(state.gameLanguage) ? "Открыть" : "Load";
-            RenderText(state.renderer.get(), state.fontUI.get(), confirmText, state.bookConfirmBtnRect.x + state.bookConfirmBtnRect.w / 2, state.bookConfirmBtnRect.y + state.bookConfirmBtnRect.h / 2 + 8, confirmTextCol, true);
-            
-            // Mobile-compatible drag & drop / manual entry indicator
-            std::string dropHint = IsRussianLanguage(state.gameLanguage) ? "[ Перетащите файл .txt в окно или введите путь вручную ]" : "[ Drag & drop .txt file anywhere or enter path manually ]";
-            RenderText(state.renderer.get(), state.fontSmallUI.get(), dropHint, WINDOW_WIDTH / 2, cardY + 280, SDL_Color{ 120, 120, 150, 255 }, true);
+            // Drag & drop hint
+            std::string dropHint = IsRussianLanguage(state.gameLanguage) ? "[ Перетащите файл книги в окно ]" : "[ Drag & drop book file anywhere ]";
+            RenderText(state.renderer.get(), state.fontSmallUI.get(), dropHint, WINDOW_WIDTH / 2, cardY + 235, SDL_Color{ 120, 120, 150, 255 }, true);
             
             // Error handling (shifted down)
             if (!state.fileLoadError.empty()) {
@@ -4241,6 +4180,15 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         ShowWindow(hwnd, SW_HIDE);
     }
 #endif
+    // Change working directory to executable path to resolve config files and assets on macOS / all platforms
+    char* basePath = SDL_GetBasePath();
+    if (basePath) {
+        try {
+            std::filesystem::current_path(basePath);
+            std::cout << "[WorkingDirectory] Changed process directory to: " << basePath << std::endl;
+        } catch (...) {}
+        SDL_free(basePath);
+    }
     // 1. Load settings.json configuration properties
     std::string aiModel = "gemini.json";
     std::string systemPrompt = "";
