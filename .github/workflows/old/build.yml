@@ -154,7 +154,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: book-to-game-android
-          path: platforms/android/app/build/outputs/apk/release/*.apk
+          path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
 
       # Proactively upload debug logs if compilation fails
       - name: Upload Android Debug Logs
