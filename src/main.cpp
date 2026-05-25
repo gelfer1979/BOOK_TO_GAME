@@ -2537,9 +2537,6 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     state.uiActiveChoices.clear();
     state.mutex.unlock();
     
-    if (showInChat && !isRetry) {
-        SaveGame();
-    }
     
     // Fire detaching query thread
     std::thread([queryCopy, historyCopy, langCopy, queryId]() {
@@ -2589,9 +2586,6 @@ void ConsumeApiResponse() {
             state.modelState.activeChoices = { "Повторить запрос" };
             SyncModelToUi();
             state.mutex.unlock();
-            
-            // Save regular state
-            SaveGame();
             return;
         }
         
