@@ -1,0 +1,617 @@
+[1/570] Generating include/SDL2/SDL_atomic.h
+[2/570] Generating include/SDL2/SDL.h
+[3/570] Generating include/SDL2/SDL_assert.h
+[4/570] Generating include/SDL2/SDL_blendmode.h
+[5/570] Generating include/SDL2/SDL_bits.h
+[6/570] Generating include/SDL2/SDL_audio.h
+[7/570] Generating include/SDL2/SDL_copying.h
+[8/570] Generating include/SDL2/SDL_egl.h
+[9/570] Generating include/SDL2/SDL_cpuinfo.h
+[10/570] Generating include/SDL2/SDL_clipboard.h
+[11/570] Generating include/SDL2/SDL_endian.h
+[12/570] Generating include/SDL2/SDL_error.h
+[13/570] Generating include/SDL2/SDL_events.h
+[14/570] Generating include/SDL2/SDL_filesystem.h
+[15/570] Generating include/SDL2/SDL_gesture.h
+[16/570] Generating include/SDL2/SDL_gamecontroller.h
+[17/570] Generating include/SDL2/SDL_guid.h
+[18/570] Generating include/SDL2/SDL_haptic.h
+[19/570] Generating include/SDL2/SDL_hidapi.h
+[20/570] Generating include/SDL2/SDL_joystick.h
+[21/570] Generating include/SDL2/SDL_keyboard.h
+[22/570] Generating include/SDL2/SDL_hints.h
+[23/570] Generating include/SDL2/SDL_keycode.h
+[24/570] Generating include/SDL2/SDL_loadso.h
+[25/570] Generating include/SDL2/SDL_locale.h
+[26/570] Generating include/SDL2/SDL_main.h
+[27/570] Generating include/SDL2/SDL_log.h
+[28/570] Generating include/SDL2/SDL_metal.h
+[29/570] Generating include/SDL2/SDL_messagebox.h
+[30/570] Generating include/SDL2/SDL_mouse.h
+[31/570] Generating include/SDL2/SDL_misc.h
+[32/570] Generating include/SDL2/SDL_name.h
+[33/570] Generating include/SDL2/SDL_opengl.h
+[34/570] Generating include/SDL2/SDL_mutex.h
+[35/570] Generating include/SDL2/SDL_opengl_glext.h
+[36/570] Generating include/SDL2/SDL_opengles2.h
+[37/570] Generating include/SDL2/SDL_opengles.h
+[38/570] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[39/570] Generating include/SDL2/SDL_opengles2_gl2.h
+[40/570] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[41/570] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[42/570] Generating include/SDL2/SDL_pixels.h
+[43/570] Generating include/SDL2/SDL_platform.h
+[44/570] Generating include/SDL2/SDL_power.h
+[45/570] Generating include/SDL2/SDL_quit.h
+[46/570] Generating include/SDL2/SDL_rect.h
+[47/570] Generating include/SDL2/SDL_render.h
+[48/570] Generating include/SDL2/SDL_rwops.h
+[49/570] Generating include/SDL2/SDL_sensor.h
+[50/570] Generating include/SDL2/SDL_scancode.h
+[51/570] Generating include/SDL2/SDL_shape.h
+[52/570] Generating include/SDL2/SDL_system.h
+[53/570] Generating include/SDL2/SDL_syswm.h
+[54/570] Generating include/SDL2/SDL_stdinc.h
+[55/570] Generating include/SDL2/SDL_surface.h
+[56/570] Generating include/SDL2/SDL_test.h
+[57/570] Generating include/SDL2/SDL_test_assert.h
+[58/570] Generating include/SDL2/SDL_test_crc32.h
+[59/570] Generating include/SDL2/SDL_test_common.h
+[60/570] Generating include/SDL2/SDL_test_compare.h
+[61/570] Generating include/SDL2/SDL_test_font.h
+[62/570] Generating include/SDL2/SDL_test_images.h
+[63/570] Generating include/SDL2/SDL_test_fuzzer.h
+[64/570] Generating include/SDL2/SDL_test_harness.h
+[65/570] Generating include/SDL2/SDL_test_random.h
+[66/570] Generating include/SDL2/SDL_test_log.h
+[67/570] Generating include/SDL2/SDL_test_md5.h
+[68/570] Generating include/SDL2/SDL_thread.h
+[69/570] Generating include/SDL2/SDL_test_memory.h
+[70/570] Generating include/SDL2/SDL_timer.h
+[71/570] Generating include/SDL2/SDL_types.h
+[72/570] Generating include/SDL2/SDL_touch.h
+[73/570] Generating include/SDL2/SDL_video.h
+[74/570] Generating include/SDL2/begin_code.h
+[75/570] Generating include/SDL2/SDL_vulkan.h
+[76/570] Generating include/SDL2/SDL_version.h
+[77/570] Generating include/SDL2/close_code.h
+[78/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbbox.c.obj
+[79/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbdf.c.obj
+[80/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbitmap.c.obj
+[81/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\autofit\autofit.c.obj
+[82/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftbase.c.obj
+[83/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_error.c.obj
+[84/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_guid.c.obj
+[85/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_dataqueue.c.obj
+[86/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_hints.c.obj
+[87/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_utils.c.obj
+[88/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_list.c.obj
+[89/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL.c.obj
+[90/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_assert.c.obj
+[91/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\atomic\SDL_atomic.c.obj
+[92/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audiodev.c.obj
+[93/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\SDL_log.c.obj
+[94/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audiotypecvt.c.obj
+[95/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\atomic\SDL_spinlock.c.obj
+[96/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audiocvt.c.obj
+[97/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_audio.c.obj
+[98/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_wave.c.obj
+[99/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\SDL_mixer.c.obj
+[100/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\cpuinfo\SDL_cpuinfo.c.obj
+[101/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_clipboardevents.c.obj
+[102/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_displayevents.c.obj
+[103/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_dropevents.c.obj
+[104/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_keysym_to_scancode.c.obj
+[105/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_events.c.obj
+[106/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_scancode_tables.c.obj
+[107/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_gesture.c.obj
+[108/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\dynapi\SDL_dynapi.c.obj
+[109/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_keyboard.c.obj
+[110/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\imKStoUCS.c.obj
+[111/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_mouse.c.obj
+[112/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_quit.c.obj
+[113/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\SDL_haptic.c.obj
+[114/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_touch.c.obj
+[115/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\events\SDL_windowevents.c.obj
+[116/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\file\SDL_rwops.c.obj
+[117/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\controller_type.c.obj
+[118/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\hidapi\SDL_hidapi.c.obj
+[119/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_atan2.c.obj
+[120/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\SDL_gamecontroller.c.obj
+[121/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\SDL_steam_virtual_gamepad.c.obj
+[122/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_exp.c.obj
+[123/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\SDL_joystick.c.obj
+[124/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_fmod.c.obj
+[125/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_log.c.obj
+[126/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_log10.c.obj
+[127/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_rem_pio2.c.obj
+[128/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_pow.c.obj
+[129/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\e_sqrt.c.obj
+[130/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_cos.c.obj
+[131/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_sin.c.obj
+[132/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_tan.c.obj
+[133/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\k_rem_pio2.c.obj
+[134/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_atan.c.obj
+[135/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_copysign.c.obj
+[136/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_cos.c.obj
+[137/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_fabs.c.obj
+[138/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_floor.c.obj
+[139/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_scalbn.c.obj
+[140/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_sin.c.obj
+[141/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\libm\s_tan.c.obj
+[142/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\locale\SDL_locale.c.obj
+[143/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\power\SDL_power.c.obj
+[144/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\misc\SDL_url.c.obj
+[145/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\SDL_d3dmath.c.obj
+[146/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\SDL_yuv_sw.c.obj
+[147/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\SDL_render.c.obj
+[148/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d\SDL_shaders_d3d.c.obj
+[149/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d11\SDL_shaders_d3d11.c.obj
+[150/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d\SDL_render_d3d.c.obj
+[151/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d11\SDL_render_d3d11.c.obj
+[152/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengles\SDL_render_gles.c.obj
+[153/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d12\SDL_render_d3d12.c.obj
+[154/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\direct3d12\SDL_shaders_d3d12.c.obj
+[155/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\ps2\SDL_render_ps2.c.obj
+[156/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengles2\SDL_shaders_gles2.c.obj
+[157/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\psp\SDL_render_psp.c.obj
+[158/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengl\SDL_shaders_gl.c.obj
+[159/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengl\SDL_render_gl.c.obj
+[160/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_blendpoint.c.obj
+[161/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\opengles2\SDL_render_gles2.c.obj
+[162/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_drawline.c.obj
+[163/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_drawpoint.c.obj
+[164/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_blendfillrect.c.obj
+[165/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\vitagxm\SDL_render_vita_gxm.c.obj
+[166/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_render_sw.c.obj
+[167/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_blendline.c.obj
+[168/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\vitagxm\SDL_render_vita_gxm_memory.c.obj
+[169/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\vitagxm\SDL_render_vita_gxm_tools.c.obj
+[170/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_triangle.c.obj
+[171/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_crc16.c.obj
+[172/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\render\software\SDL_rotate.c.obj
+[173/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_crc32.c.obj
+[174/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_mslibc.c.obj
+[175/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_iconv.c.obj
+[176/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_qsort.c.obj
+[177/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_getenv.c.obj
+[178/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_stdlib.c.obj
+[179/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_strtokr.c.obj
+[180/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\sensor\SDL_sensor.c.obj
+[181/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_malloc.c.obj
+[182/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\stdlib\SDL_string.c.obj
+[183/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\SDL_thread.c.obj
+[184/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_0.c.obj
+[185/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\timer\SDL_timer.c.obj
+[186/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit.c.obj
+[187/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_RLEaccel.c.obj
+[188/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_A.c.obj
+[189/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_1.c.obj
+[190/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_copy.c.obj
+[191/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_auto.c.obj
+[192/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_N.c.obj
+[193/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_bmp.c.obj
+[194/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_blit_slow.c.obj
+[195/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_fillrect.c.obj
+[196/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_rect.c.obj
+[197/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_clipboard.c.obj
+[198/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_stretch.c.obj
+[199/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_egl.c.obj
+[200/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_pixels.c.obj
+[201/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_shape.c.obj
+[202/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\yuv2rgb\yuv_rgb_lsx.c.obj
+[203/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_surface.c.obj
+[204/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\yuv2rgb\yuv_rgb_sse.c.obj
+[205/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_vulkan_utils.c.obj
+[206/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_video.c.obj
+[207/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\yuv2rgb\yuv_rgb_std.c.obj
+[208/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\dummy\SDL_dummyaudio.c.obj
+[209/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\virtual\SDL_virtualjoystick.c.obj
+[210/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\disk\SDL_diskaudio.c.obj
+[211/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\SDL_yuv.c.obj
+[212/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\dummy\SDL_nullevents.c.obj
+[213/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\dummy\SDL_nullframebuffer.c.obj
+[214/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenopengles.c.obj
+[215/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\dummy\SDL_nullvideo.c.obj
+[216/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenframebuffer.c.obj
+[217/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenevents.c.obj
+[218/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_xinput.c.obj
+[219/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_hid.c.obj
+[220/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenvideo.c.obj
+[221/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\offscreen\SDL_offscreenwindow.c.obj
+[222/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_windows.c.obj
+[223/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\core\windows\SDL_immdevice.c.obj
+[224/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\misc\windows\SDL_sysurl.c.obj
+[225/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\winmm\SDL_winmm.c.obj
+[226/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\directsound\SDL_directsound.c.obj
+[227/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\wasapi\SDL_wasapi.c.obj
+[228/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\audio\wasapi\SDL_wasapi_win32.c.obj
+[229/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsclipboard.c.obj
+[230/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsframebuffer.c.obj
+[231/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsevents.c.obj
+[232/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowskeyboard.c.obj
+[233/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsmessagebox.c.obj
+[234/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsmodes.c.obj
+[235/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsmouse.c.obj
+[236/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsopengl.c.obj
+[237/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsopengles.c.obj
+[238/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\generic\SDL_syscond.c.obj
+[239/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsshape.c.obj
+[240/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsvulkan.c.obj
+[241/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowsvideo.c.obj
+[242/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_syscond_cv.c.obj
+[243/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\video\windows\SDL_windowswindow.c.obj
+[244/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_sysmutex.c.obj
+[245/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_syssem.c.obj
+[246/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_systhread.c.obj
+[247/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\thread\windows\SDL_systls.c.obj
+[248/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\power\windows\SDL_syspower.c.obj
+[249/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\locale\windows\SDL_syslocale.c.obj
+[250/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\sensor\windows\SDL_windowssensor.c.obj
+[251/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_combined.c.obj
+[252/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\timer\windows\SDL_systimer.c.obj
+[253/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\loadso\windows\SDL_sysloadso.c.obj
+[254/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_gamecube.c.obj
+[255/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_luna.c.obj
+[256/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_ps3.c.obj
+[257/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_ps4.c.obj
+[258/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_ps5.c.obj
+[259/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\filesystem\windows\SDL_sysfilesystem.c.obj
+[260/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_stadia.c.obj
+[261/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_shield.c.obj
+[262/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_rumble.c.obj
+[263/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_steam.c.obj
+[264/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_steamdeck.c.obj
+[265/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_xbox360.c.obj
+[266/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_switch.c.obj
+[267/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_wii.c.obj
+[268/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_xbox360w.c.obj
+[269/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapi_xboxone.c.obj
+[270/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\hidapi\SDL_hidapijoystick.c.obj
+[271/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_dinputjoystick.c.obj
+[272/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_windowsjoystick.c.obj
+[273/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_xinputjoystick.c.obj
+[274/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftcid.c.obj
+[275/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftfstype.c.obj
+[276/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\windows\SDL_dinputhaptic.c.obj
+[277/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftgasp.c.obj
+[278/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftgxval.c.obj
+[279/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftglyph.c.obj
+[280/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\windows\SDL_windowshaptic.c.obj
+[281/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftinit.c.obj
+[282/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftmm.c.obj
+[283/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\haptic\windows\SDL_xinputhaptic.c.obj
+[284/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftotval.c.obj
+[285/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftpatent.c.obj
+[286/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftpfr.c.obj
+[287/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftsynth.c.obj
+[288/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftwinfnt.c.obj
+[289/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\fttype1.c.obj
+[290/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\bzip2\ftbzip2.c.obj
+[291/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\cache\ftcache.c.obj
+[292/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftstroke.c.obj
+[293/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\bdf\bdf.c.obj
+[294/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\cid\type1cid.c.obj
+[295/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_rawinputjoystick.c.obj
+[296/570] Building C object external\src\SDL2\CMakeFiles\SDL2-static.dir\src\joystick\windows\SDL_windows_gaming_input.c.obj
+[297/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\cff\cff.c.obj
+[298/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\lzw\ftlzw.c.obj
+[299/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\pcf\pcf.c.obj
+[300/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\pfr\pfr.c.obj
+[301/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\raster\raster.c.obj
+[302/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\pshinter\pshinter.c.obj
+[303/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\psnames\psnames.c.obj
+[304/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\gzip\ftgzip.c.obj
+[305/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\svg\svg.c.obj
+[306/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\sdf\sdf.c.obj
+[307/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\smooth\smooth.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\smooth\ftgrays.c(1991): warning C4267: '+=': conversion from 'size_t' to 'TCoord', possible loss of data
+[308/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\sfnt\sfnt.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\sfnt\sfdriver.c(880): warning C4267: '=': conversion from 'size_t' to 'FT_UInt', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\sfnt\sfdriver.c(1032): warning C4244: 'function': conversion from '__int64' to 'const unsigned int', possible loss of data
+[309/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\type42\type42.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type42\t42parse.c(878): warning C4244: '=': conversion from '__int64' to 'FT_Int', possible loss of data
+[310/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\winfonts\winfnt.c.obj
+[311/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\type1\type1.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(292): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(313): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(345): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(375): warning C4267: '=': conversion from 'size_t' to 'FT_UInt', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(584): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(593): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(602): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(611): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1driver.c(621): warning C4267: '=': conversion from 'size_t' to 'FT_ULong', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1load.c(1779): warning C4244: '=': conversion from '__int64' to 'FT_Int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\type1\t1load.c(1953): warning C4244: '=': conversion from '__int64' to 'FT_Int', possible loss of data
+[312/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\builds\windows\ftdebug.c.obj
+[313/570] Building RC object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\base\ftver.rc.res
+[314/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\builds\windows\ftsystem.c.obj
+[315/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_WIC.c.obj
+[316/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG.c.obj
+[317/570] Linking C static library external\src\SDL2\SDL2-static.lib
+[318/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_avif.c.obj
+[319/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_bmp.c.obj
+[320/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\truetype\truetype.c.obj
+[321/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_gif.c.obj
+[322/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_jxl.c.obj
+[323/570] Building C object external\src\SDL2\CMakeFiles\SDL2main.dir\src\main\windows\SDL_windows_main.c.obj
+[324/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_lbm.c.obj
+[325/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_pcx.c.obj
+[326/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_jpg.c.obj
+[327/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_pnm.c.obj
+[328/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_qoi.c.obj
+[329/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_tga.c.obj
+[330/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_svg.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image\src\nanosvg.h(1304): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image\src\nanosvg.h(1305): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image\src\nanosvg.h(1306): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image\src\nanosvgrast.h(336): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image\src\nanosvgrast.h(336): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+[331/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_tif.c.obj
+[332/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_png.c.obj
+[333/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_webp.c.obj
+[334/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_stb.c.obj
+[335/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_xv.c.obj
+[336/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\load_aiff.c.obj
+[337/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_xpm.c.obj
+[338/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_drflac.c.obj
+[339/570] Building C object external\src\SDL2_image\CMakeFiles\SDL2_image.dir\src\IMG_xcf.c.obj
+[340/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_cmd.c.obj
+[341/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_fluidsynth.c.obj
+[342/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_flac.c.obj
+[343/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\load_voc.c.obj
+[344/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_gme.c.obj
+[345/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_nativemidi.c.obj
+[346/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_minimp3.c.obj
+[347/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_modplug.c.obj
+[348/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_mpg123.c.obj
+[349/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\mp3utils.c.obj
+[350/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_opus.c.obj
+[351/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_ogg.c.obj
+[352/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_wavpack.c.obj
+[353/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_timidity.c.obj
+[354/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_xmp.c.obj
+[355/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\effect_stereoreverse.c.obj
+[356/570] Building C object external\src\SDL2_ttf\external\freetype\CMakeFiles\freetype.dir\src\psaux\psaux.c.obj
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\psaux\t1decode.c(1996): warning C4267: '=': conversion from 'size_t' to 'FT_Int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\src\psaux\psintrp.c(1005): warning C4267: '=': conversion from 'size_t' to 'FT_Fast', possible loss of data
+[357/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_wav.c.obj
+[358/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\effects_internal.c.obj
+[359/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\effect_position.c.obj
+[360/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\utils.c.obj
+[361/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\mixer.c.obj
+[362/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\music.c.obj
+[363/570] Linking C static library external\src\SDL2_ttf\external\freetype\freetype.lib
+[364/570] Building C object external\src\SDL2_net\CMakeFiles\SDL2_net.dir\SDLnetselect.c.obj
+[365/570] Building C object external\src\SDL2_net\CMakeFiles\SDL2_net.dir\SDLnet.c.obj
+[366/570] Building C object external\src\SDL2_net\CMakeFiles\SDL2_net.dir\SDLnetTCP.c.obj
+[367/570] Building C object external\src\SDL2_ttf\CMakeFiles\SDL2_ttf.dir\SDL_ttf.c.obj
+[368/570] Building C object external\src\SDL2_mixer\CMakeFiles\SDL2_mixer.dir\src\codecs\music_ogg_stb.c.obj
+[369/570] Generating CURLSHOPT_USERDATA.3
+[370/570] Building C object external\src\SDL2_net\CMakeFiles\SDL2_net.dir\SDLnetUDP.c.obj
+[371/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\asyn-ares.c.obj
+[372/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\amigaos.c.obj
+[373/570] Generating CURLINFO_ACTIVESOCKET.3, CURLINFO_APPCONNECT_TIME.3, CURLINFO_APPCONNECT_TIME_T.3, CURLINFO_CAINFO.3, CURLINFO_CAPATH.3, CURLINFO_CERTINFO.3, CURLINFO_CONDITION_UNMET.3, CURLINFO_CONNECT_TIME.3, CURLINFO_CONNECT_TIME_T.3, CURLINFO_CONN_ID.3, CURLINFO_CONTENT_LENGTH_DOWNLOAD.3, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T.3, CURLINFO_CONTENT_LENGTH_UPLOAD.3, CURLINFO_CONTENT_LENGTH_UPLOAD_T.3, CURLINFO_CONTENT_TYPE.3, CURLINFO_COOKIELIST.3, CURLINFO_EFFECTIVE_METHOD.3, CURLINFO_EFFECTIVE_URL.3, CURLINFO_FILETIME.3, CURLINFO_FILETIME_T.3, CURLINFO_FTP_ENTRY_PATH.3, CURLINFO_HEADER_SIZE.3, CURLINFO_HTTP_CONNECTCODE.3, CURLINFO_HTTP_VERSION.3, CURLINFO_HTTPAUTH_AVAIL.3, CURLINFO_LASTSOCKET.3, CURLINFO_LOCAL_IP.3, CURLINFO_LOCAL_PORT.3, CURLINFO_NAMELOOKUP_TIME.3, CURLINFO_NAMELOOKUP_TIME_T.3, CURLINFO_NUM_CONNECTS.3, CURLINFO_OS_ERRNO.3, CURLINFO_PRETRANSFER_TIME.3, CURLINFO_PRETRANSFER_TIME_T.3, CURLINFO_PRIMARY_IP.3, CURLINFO_PRIMARY_PORT.3, CURLINFO_PRIVATE.3, CURLINFO_PROTOCOL.3, CURLINFO_PROXY_ERROR.3, CURLINFO_PROXY_SSL_VERIFYRESULT.3, CURLINFO_PROXYAUTH_AVAIL.3, CURLINFO_QUEUE_TIME_T.3, CURLINFO_REDIRECT_COUNT.3, CURLINFO_REDIRECT_TIME.3, CURLINFO_REDIRECT_TIME_T.3, CURLINFO_REDIRECT_URL.3, CURLINFO_REFERER.3, CURLINFO_REQUEST_SIZE.3, CURLINFO_RESPONSE_CODE.3, CURLINFO_RETRY_AFTER.3, CURLINFO_RTSP_CLIENT_CSEQ.3, CURLINFO_RTSP_CSEQ_RECV.3, CURLINFO_RTSP_SERVER_CSEQ.3, CURLINFO_RTSP_SESSION_ID.3, CURLINFO_SCHEME.3, CURLINFO_SIZE_DOWNLOAD.3, CURLINFO_SIZE_DOWNLOAD_T.3, CURLINFO_SIZE_UPLOAD.3, CURLINFO_SIZE_UPLOAD_T.3, CURLINFO_SPEED_DOWNLOAD.3, CURLINFO_SPEED_DOWNLOAD_T.3, CURLINFO_SPEED_UPLOAD.3, CURLINFO_SPEED_UPLOAD_T.3, CURLINFO_SSL_ENGINES.3, CURLINFO_SSL_VERIFYRESULT.3, CURLINFO_STARTTRANSFER_TIME.3, CURLINFO_STARTTRANSFER_TIME_T.3, CURLINFO_TLS_SESSION.3, CURLINFO_TLS_SSL_PTR.3, CURLINFO_TOTAL_TIME.3, CURLINFO_TOTAL_TIME_T.3, CURLINFO_USED_PROXY.3, CURLINFO_XFER_ID.3, CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE.3, CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE.3, CURLMOPT_MAX_CONCURRENT_STREAMS.3, CURLMOPT_MAX_HOST_CONNECTIONS.3, CURLMOPT_MAX_PIPELINE_LENGTH.3, CURLMOPT_MAX_TOTAL_CONNECTIONS.3, CURLMOPT_MAXCONNECTS.3, CURLMOPT_PIPELINING.3, CURLMOPT_PIPELINING_SERVER_BL.3, CURLMOPT_PIPELINING_SITE_BL.3, CURLMOPT_PUSHDATA.3, CURLMOPT_PUSHFUNCTION.3, CURLMOPT_SOCKETDATA.3, CURLMOPT_SOCKETFUNCTION.3, CURLMOPT_TIMERDATA.3, CURLMOPT_TIMERFUNCTION.3, CURLOPT_ABSTRACT_UNIX_SOCKET.3, CURLOPT_ACCEPT_ENCODING.3, CURLOPT_ACCEPTTIMEOUT_MS.3, CURLOPT_ADDRESS_SCOPE.3, CURLOPT_ALTSVC.3, CURLOPT_ALTSVC_CTRL.3, CURLOPT_APPEND.3, CURLOPT_AUTOREFERER.3, CURLOPT_AWS_SIGV4.3, CURLOPT_BUFFERSIZE.3, CURLOPT_CAINFO.3, CURLOPT_CAINFO_BLOB.3, CURLOPT_CAPATH.3, CURLOPT_CA_CACHE_TIMEOUT.3, CURLOPT_CERTINFO.3, CURLOPT_CHUNK_BGN_FUNCTION.3, CURLOPT_CHUNK_DATA.3, CURLOPT_CHUNK_END_FUNCTION.3, CURLOPT_CLOSESOCKETDATA.3, CURLOPT_CLOSESOCKETFUNCTION.3, CURLOPT_CONNECT_ONLY.3, CURLOPT_CONNECT_TO.3, CURLOPT_CONNECTTIMEOUT.3, CURLOPT_CONNECTTIMEOUT_MS.3, CURLOPT_CONV_FROM_NETWORK_FUNCTION.3, CURLOPT_CONV_FROM_UTF8_FUNCTION.3, CURLOPT_CONV_TO_NETWORK_FUNCTION.3, CURLOPT_COOKIE.3, CURLOPT_COOKIEFILE.3, CURLOPT_COOKIEJAR.3, CURLOPT_COOKIELIST.3, CURLOPT_COOKIESESSION.3, CURLOPT_COPYPOSTFIELDS.3, CURLOPT_CRLF.3, CURLOPT_CRLFILE.3, CURLOPT_CURLU.3, CURLOPT_CUSTOMREQUEST.3, CURLOPT_DEBUGDATA.3, CURLOPT_DEBUGFUNCTION.3, CURLOPT_DEFAULT_PROTOCOL.3, CURLOPT_DIRLISTONLY.3, CURLOPT_DISALLOW_USERNAME_IN_URL.3, CURLOPT_DNS_CACHE_TIMEOUT.3, CURLOPT_DNS_INTERFACE.3, CURLOPT_DNS_LOCAL_IP4.3, CURLOPT_DNS_LOCAL_IP6.3, CURLOPT_DNS_SERVERS.3, CURLOPT_DNS_SHUFFLE_ADDRESSES.3, CURLOPT_DNS_USE_GLOBAL_CACHE.3, CURLOPT_DOH_SSL_VERIFYHOST.3, CURLOPT_DOH_SSL_VERIFYPEER.3, CURLOPT_DOH_SSL_VERIFYSTATUS.3, CURLOPT_DOH_URL.3, CURLOPT_ECH.3, CURLOPT_EGDSOCKET.3, CURLOPT_ERRORBUFFER.3, CURLOPT_EXPECT_100_TIMEOUT_MS.3, CURLOPT_FAILONERROR.3, CURLOPT_FILETIME.3, CURLOPT_FNMATCH_DATA.3, CURLOPT_FNMATCH_FUNCTION.3, CURLOPT_FOLLOWLOCATION.3, CURLOPT_FORBID_REUSE.3, CURLOPT_FRESH_CONNECT.3, CURLOPT_FTP_ACCOUNT.3, CURLOPT_FTP_ALTERNATIVE_TO_USER.3, CURLOPT_FTP_CREATE_MISSING_DIRS.3, CURLOPT_FTP_FILEMETHOD.3, CURLOPT_FTP_SKIP_PASV_IP.3, CURLOPT_FTP_SSL_CCC.3, CURLOPT_FTP_USE_EPRT.3, CURLOPT_FTP_USE_EPSV.3, CURLOPT_FTP_USE_PRET.3, CURLOPT_FTPPORT.3, CURLOPT_FTPSSLAUTH.3, CURLOPT_GSSAPI_DELEGATION.3, CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS.3, CURLOPT_HAPROXYPROTOCOL.3, CURLOPT_HAPROXY_CLIENT_IP.3, CURLOPT_HEADER.3, CURLOPT_HEADERDATA.3, CURLOPT_HEADERFUNCTION.3, CURLOPT_HEADEROPT.3, CURLOPT_HSTS.3, CURLOPT_HSTS_CTRL.3, CURLOPT_HSTSREADDATA.3, CURLOPT_HSTSREADFUNCTION.3, CURLOPT_HSTSWRITEDATA.3, CURLOPT_HSTSWRITEFUNCTION.3, CURLOPT_HTTP09_ALLOWED.3, CURLOPT_HTTP200ALIASES.3, CURLOPT_HTTP_CONTENT_DECODING.3, CURLOPT_HTTP_TRANSFER_DECODING.3, CURLOPT_HTTP_VERSION.3, CURLOPT_HTTPAUTH.3, CURLOPT_HTTPGET.3, CURLOPT_HTTPHEADER.3, CURLOPT_HTTPPOST.3, CURLOPT_HTTPPROXYTUNNEL.3, CURLOPT_IGNORE_CONTENT_LENGTH.3, CURLOPT_INFILESIZE.3, CURLOPT_INFILESIZE_LARGE.3, CURLOPT_INTERFACE.3, CURLOPT_INTERLEAVEDATA.3, CURLOPT_INTERLEAVEFUNCTION.3, CURLOPT_IOCTLDATA.3, CURLOPT_IOCTLFUNCTION.3, CURLOPT_IPRESOLVE.3, CURLOPT_ISSUERCERT.3, CURLOPT_ISSUERCERT_BLOB.3
+[374/570] Generating CURLOPT_KEEP_SENDING_ON_ERROR.3, CURLOPT_KEYPASSWD.3, CURLOPT_KRBLEVEL.3, CURLOPT_LOCALPORT.3, CURLOPT_LOCALPORTRANGE.3, CURLOPT_LOGIN_OPTIONS.3, CURLOPT_LOW_SPEED_LIMIT.3, CURLOPT_LOW_SPEED_TIME.3, CURLOPT_MAIL_AUTH.3, CURLOPT_MAIL_FROM.3, CURLOPT_MAIL_RCPT.3, CURLOPT_MAIL_RCPT_ALLOWFAILS.3, CURLOPT_MAX_RECV_SPEED_LARGE.3, CURLOPT_MAX_SEND_SPEED_LARGE.3, CURLOPT_MAXAGE_CONN.3, CURLOPT_MAXCONNECTS.3, CURLOPT_MAXFILESIZE.3, CURLOPT_MAXFILESIZE_LARGE.3, CURLOPT_MAXLIFETIME_CONN.3, CURLOPT_MAXREDIRS.3, CURLOPT_MIME_OPTIONS.3, CURLOPT_MIMEPOST.3, CURLOPT_NETRC.3, CURLOPT_NETRC_FILE.3, CURLOPT_NEW_DIRECTORY_PERMS.3, CURLOPT_NEW_FILE_PERMS.3, CURLOPT_NOBODY.3, CURLOPT_NOPROGRESS.3, CURLOPT_NOPROXY.3, CURLOPT_NOSIGNAL.3, CURLOPT_OPENSOCKETDATA.3, CURLOPT_OPENSOCKETFUNCTION.3, CURLOPT_PASSWORD.3, CURLOPT_PATH_AS_IS.3, CURLOPT_PINNEDPUBLICKEY.3, CURLOPT_PIPEWAIT.3, CURLOPT_PORT.3, CURLOPT_POST.3, CURLOPT_POSTFIELDS.3, CURLOPT_POSTFIELDSIZE.3, CURLOPT_POSTFIELDSIZE_LARGE.3, CURLOPT_POSTQUOTE.3, CURLOPT_POSTREDIR.3, CURLOPT_PRE_PROXY.3, CURLOPT_PREQUOTE.3, CURLOPT_PREREQDATA.3, CURLOPT_PREREQFUNCTION.3, CURLOPT_PRIVATE.3, CURLOPT_PROGRESSDATA.3, CURLOPT_PROGRESSFUNCTION.3, CURLOPT_PROTOCOLS.3, CURLOPT_PROTOCOLS_STR.3, CURLOPT_PROXY.3, CURLOPT_PROXY_CAINFO.3, CURLOPT_PROXY_CAINFO_BLOB.3, CURLOPT_PROXY_CAPATH.3, CURLOPT_PROXY_CRLFILE.3, CURLOPT_PROXY_ISSUERCERT.3, CURLOPT_PROXY_ISSUERCERT_BLOB.3, CURLOPT_PROXY_KEYPASSWD.3, CURLOPT_PROXY_PINNEDPUBLICKEY.3, CURLOPT_PROXY_SERVICE_NAME.3, CURLOPT_PROXY_SSL_CIPHER_LIST.3, CURLOPT_PROXY_SSL_OPTIONS.3, CURLOPT_PROXY_SSL_VERIFYHOST.3, CURLOPT_PROXY_SSL_VERIFYPEER.3, CURLOPT_PROXY_SSLCERT.3, CURLOPT_PROXY_SSLCERT_BLOB.3, CURLOPT_PROXY_SSLCERTTYPE.3, CURLOPT_PROXY_SSLKEY.3, CURLOPT_PROXY_SSLKEY_BLOB.3, CURLOPT_PROXY_SSLKEYTYPE.3, CURLOPT_PROXY_SSLVERSION.3, CURLOPT_PROXY_TLS13_CIPHERS.3, CURLOPT_PROXY_TLSAUTH_PASSWORD.3, CURLOPT_PROXY_TLSAUTH_TYPE.3, CURLOPT_PROXY_TLSAUTH_USERNAME.3, CURLOPT_PROXY_TRANSFER_MODE.3, CURLOPT_PROXYAUTH.3, CURLOPT_PROXYHEADER.3, CURLOPT_PROXYPASSWORD.3, CURLOPT_PROXYPORT.3, CURLOPT_PROXYTYPE.3, CURLOPT_PROXYUSERNAME.3, CURLOPT_PROXYUSERPWD.3, CURLOPT_PUT.3, CURLOPT_QUICK_EXIT.3, CURLOPT_QUOTE.3, CURLOPT_RANDOM_FILE.3, CURLOPT_RANGE.3, CURLOPT_READDATA.3, CURLOPT_READFUNCTION.3, CURLOPT_REDIR_PROTOCOLS.3, CURLOPT_REDIR_PROTOCOLS_STR.3, CURLOPT_REFERER.3, CURLOPT_REQUEST_TARGET.3, CURLOPT_RESOLVE.3, CURLOPT_RESOLVER_START_DATA.3, CURLOPT_RESOLVER_START_FUNCTION.3, CURLOPT_RESUME_FROM.3, CURLOPT_RESUME_FROM_LARGE.3, CURLOPT_RTSP_CLIENT_CSEQ.3, CURLOPT_RTSP_REQUEST.3, CURLOPT_RTSP_SERVER_CSEQ.3, CURLOPT_RTSP_SESSION_ID.3, CURLOPT_RTSP_STREAM_URI.3, CURLOPT_RTSP_TRANSPORT.3, CURLOPT_SASL_AUTHZID.3, CURLOPT_SASL_IR.3, CURLOPT_SEEKDATA.3, CURLOPT_SEEKFUNCTION.3, CURLOPT_SERVER_RESPONSE_TIMEOUT.3, CURLOPT_SERVER_RESPONSE_TIMEOUT_MS.3, CURLOPT_SERVICE_NAME.3, CURLOPT_SHARE.3, CURLOPT_SOCKOPTDATA.3, CURLOPT_SOCKOPTFUNCTION.3, CURLOPT_SOCKS5_AUTH.3, CURLOPT_SOCKS5_GSSAPI_NEC.3, CURLOPT_SOCKS5_GSSAPI_SERVICE.3, CURLOPT_SSH_AUTH_TYPES.3, CURLOPT_SSH_COMPRESSION.3, CURLOPT_SSH_HOSTKEYDATA.3, CURLOPT_SSH_HOSTKEYFUNCTION.3, CURLOPT_SSH_HOST_PUBLIC_KEY_MD5.3, CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256.3, CURLOPT_SSH_KEYDATA.3, CURLOPT_SSH_KEYFUNCTION.3, CURLOPT_SSH_KNOWNHOSTS.3, CURLOPT_SSH_PRIVATE_KEYFILE.3, CURLOPT_SSH_PUBLIC_KEYFILE.3, CURLOPT_SSL_CIPHER_LIST.3, CURLOPT_SSL_CTX_DATA.3, CURLOPT_SSL_CTX_FUNCTION.3, CURLOPT_SSL_EC_CURVES.3, CURLOPT_SSL_ENABLE_ALPN.3, CURLOPT_SSL_ENABLE_NPN.3, CURLOPT_SSL_FALSESTART.3, CURLOPT_SSL_OPTIONS.3, CURLOPT_SSL_SESSIONID_CACHE.3, CURLOPT_SSL_VERIFYHOST.3, CURLOPT_SSL_VERIFYPEER.3, CURLOPT_SSL_VERIFYSTATUS.3, CURLOPT_SSLCERT.3, CURLOPT_SSLCERT_BLOB.3, CURLOPT_SSLCERTTYPE.3, CURLOPT_SSLENGINE.3, CURLOPT_SSLENGINE_DEFAULT.3, CURLOPT_SSLKEY.3, CURLOPT_SSLKEY_BLOB.3, CURLOPT_SSLKEYTYPE.3, CURLOPT_SSLVERSION.3, CURLOPT_STDERR.3, CURLOPT_STREAM_DEPENDS.3, CURLOPT_STREAM_DEPENDS_E.3, CURLOPT_STREAM_WEIGHT.3, CURLOPT_SUPPRESS_CONNECT_HEADERS.3, CURLOPT_TCP_FASTOPEN.3, CURLOPT_TCP_KEEPALIVE.3, CURLOPT_TCP_KEEPIDLE.3, CURLOPT_TCP_KEEPINTVL.3, CURLOPT_TCP_NODELAY.3, CURLOPT_TELNETOPTIONS.3, CURLOPT_TFTP_BLKSIZE.3, CURLOPT_TFTP_NO_OPTIONS.3, CURLOPT_TIMECONDITION.3, CURLOPT_TIMEOUT.3, CURLOPT_TIMEOUT_MS.3, CURLOPT_TIMEVALUE.3, CURLOPT_TIMEVALUE_LARGE.3, CURLOPT_TLS13_CIPHERS.3, CURLOPT_TLSAUTH_PASSWORD.3, CURLOPT_TLSAUTH_TYPE.3, CURLOPT_TLSAUTH_USERNAME.3, CURLOPT_TRAILERDATA.3, CURLOPT_TRAILERFUNCTION.3, CURLOPT_TRANSFER_ENCODING.3, CURLOPT_TRANSFERTEXT.3, CURLOPT_UNIX_SOCKET_PATH.3, CURLOPT_UNRESTRICTED_AUTH.3, CURLOPT_UPKEEP_INTERVAL_MS.3, CURLOPT_UPLOAD.3, CURLOPT_UPLOAD_BUFFERSIZE.3, CURLOPT_URL.3, CURLOPT_USE_SSL.3, CURLOPT_USERAGENT.3, CURLOPT_USERNAME.3, CURLOPT_USERPWD.3, CURLOPT_VERBOSE.3, CURLOPT_WILDCARDMATCH.3, CURLOPT_WRITEDATA.3, CURLOPT_WRITEFUNCTION.3, CURLOPT_WS_OPTIONS.3, CURLOPT_XFERINFODATA.3, CURLOPT_XFERINFOFUNCTION.3, CURLOPT_XOAUTH2_BEARER.3, CURLSHOPT_LOCKFUNC.3, CURLSHOPT_SHARE.3, CURLSHOPT_UNLOCKFUNC.3, CURLSHOPT_UNSHARE.3
+[375/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\altsvc.c.obj
+[376/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\c-hyper.c.obj
+[377/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\base64.c.obj
+[378/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\asyn-thread.c.obj
+[379/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\bufq.c.obj
+[380/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\bufref.c.obj
+[381/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cf-h2-proxy.c.obj
+[382/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cf-haproxy.c.obj
+[383/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cf-h1-proxy.c.obj
+[384/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cf-socket.c.obj
+[385/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cfilters.c.obj
+[386/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cf-https-connect.c.obj
+[387/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\conncache.c.obj
+[388/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\content_encoding.c.obj
+[389/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_addrinfo.c.obj
+[390/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\connect.c.obj
+[391/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_des.c.obj
+[392/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cookie.c.obj
+[393/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_fnmatch.c.obj
+[394/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_endian.c.obj
+[395/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_get_line.c.obj
+[396/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_gssapi.c.obj
+[397/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_gethostname.c.obj
+[398/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_memrchr.c.obj
+[399/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_multibyte.c.obj
+[400/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_ntlm_core.c.obj
+[401/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_path.c.obj
+[402/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_range.c.obj
+[403/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_sasl.c.obj
+[404/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_rtmp.c.obj
+[405/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_sspi.c.obj
+[406/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\dict.c.obj
+[407/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_sha512_256.c.obj
+[408/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_threads.c.obj
+[409/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\cw-out.c.obj
+[410/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\curl_trc.c.obj
+[411/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\dynbuf.c.obj
+[412/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\dynhds.c.obj
+[413/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\easy.c.obj
+[414/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\easyoptions.c.obj
+[415/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\easygetopt.c.obj
+[416/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\file.c.obj
+[417/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\doh.c.obj
+[418/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\fileinfo.c.obj
+[419/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\escape.c.obj
+[420/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\fopen.c.obj
+[421/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\ftp.c.obj
+[422/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\ftplistparser.c.obj
+[423/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\gopher.c.obj
+[424/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\getenv.c.obj
+[425/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\formdata.c.obj
+[426/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\getinfo.c.obj
+[427/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hash.c.obj
+[428/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hostasyn.c.obj
+[429/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hmac.c.obj
+[430/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\headers.c.obj
+[431/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hostip4.c.obj
+[432/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hostip6.c.obj
+[433/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hostsyn.c.obj
+[434/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hostip.c.obj
+[435/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\hsts.c.obj
+[436/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http2.c.obj
+[437/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http1.c.obj
+[438/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http.c.obj
+[439/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http_aws_sigv4.c.obj
+[440/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http_chunks.c.obj
+[441/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http_digest.c.obj
+[442/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http_ntlm.c.obj
+[443/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http_negotiate.c.obj
+[444/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\imap.c.obj
+[445/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\http_proxy.c.obj
+[446/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\idn.c.obj
+[447/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\inet_ntop.c.obj
+[448/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\if2ip.c.obj
+[449/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\inet_pton.c.obj
+[450/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\krb5.c.obj
+[451/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\ldap.c.obj
+[452/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\macos.c.obj
+[453/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\llist.c.obj
+[454/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\md4.c.obj
+[455/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\memdebug.c.obj
+[456/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\md5.c.obj
+[457/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\mqtt.c.obj
+[458/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\mime.c.obj
+[459/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\nonblock.c.obj
+[460/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\mprintf.c.obj
+[461/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\netrc.c.obj
+[462/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\noproxy.c.obj
+[463/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\openldap.c.obj
+[464/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\pop3.c.obj
+[465/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\parsedate.c.obj
+[466/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\pingpong.c.obj
+[467/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\multi.c.obj
+[468/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\progress.c.obj
+[469/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\psl.c.obj
+[470/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\rtsp.c.obj
+[471/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\rename.c.obj
+[472/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\rand.c.obj
+[473/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\request.c.obj
+[474/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\select.c.obj
+[475/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\sha256.c.obj
+[476/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\sendf.c.obj
+[477/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\slist.c.obj
+[478/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\share.c.obj
+[479/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\smb.c.obj
+[480/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\smtp.c.obj
+[481/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\socks_gssapi.c.obj
+[482/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\socketpair.c.obj
+[483/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\speedcheck.c.obj
+[484/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\splay.c.obj
+[485/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\strcase.c.obj
+[486/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\socks.c.obj
+[487/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\socks_sspi.c.obj
+[488/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\setopt.c.obj
+[489/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\strtoofft.c.obj
+[490/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\strdup.c.obj
+[491/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\strerror.c.obj
+[492/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\strtok.c.obj
+[493/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\telnet.c.obj
+[494/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\tftp.c.obj
+[495/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\timediff.c.obj
+[496/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\system_win32.c.obj
+[497/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\timeval.c.obj
+[498/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\transfer.c.obj
+[499/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\version_win32.c.obj
+[500/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\warnless.c.obj
+[501/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\version.c.obj
+[502/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\urlapi.c.obj
+[503/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\url.c.obj
+[504/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\ws.c.obj
+[505/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\cleartext.c.obj
+[506/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\cram.c.obj
+[507/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\krb5_gssapi.c.obj
+[508/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\digest.c.obj
+[509/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\gsasl.c.obj
+[510/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\digest_sspi.c.obj
+[511/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\ntlm.c.obj
+[512/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\krb5_sspi.c.obj
+[513/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\spnego_gssapi.c.obj
+[514/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\ntlm_sspi.c.obj
+[515/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\oauth2.c.obj
+[516/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\bearssl.c.obj
+[517/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\gtls.c.obj
+[518/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\spnego_sspi.c.obj
+[519/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vauth\vauth.c.obj
+[520/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\hostcheck.c.obj
+[521/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\cipher_suite.c.obj
+[522/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\keylog.c.obj
+[523/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\openssl.c.obj
+[524/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\mbedtls_threadlock.c.obj
+[525/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\mbedtls.c.obj
+[526/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\rustls.c.obj
+[527/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\sectransp.c.obj
+[528/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\wolfssl.c.obj
+[529/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\schannel_verify.c.obj
+[530/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\vtls.c.obj
+[531/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\schannel.c.obj
+[532/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vquic\curl_msh3.c.obj
+[533/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vquic\curl_osslq.c.obj
+[534/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vquic\curl_ngtcp2.c.obj
+[535/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vquic\curl_quiche.c.obj
+[536/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vssh\libssh.c.obj
+[537/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vssh\libssh2.c.obj
+[538/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vquic\vquic.c.obj
+[539/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vquic\vquic-tls.c.obj
+[540/570] Linking C static library external\src\SDL2\SDL2main.lib
+[541/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vssh\wolfssh.c.obj
+[542/570] Building C object external\src\curl\lib\CMakeFiles\libcurl_object.dir\vtls\x509asn1.c.obj
+[543/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_assert.c.obj
+[544/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_compare.c.obj
+[545/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_crc32.c.obj
+[546/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_common.c.obj
+[547/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_font.c.obj
+[548/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_fuzzer.c.obj
+[549/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_harness.c.obj
+[550/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_imageBlit.c.obj
+[551/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_imageBlitBlend.c.obj
+[552/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_imageFace.c.obj
+[553/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_imagePrimitives.c.obj
+[554/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_imagePrimitivesBlend.c.obj
+[555/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_log.c.obj
+[556/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_memory.c.obj
+[557/570] Linking C static library external\src\SDL2_image\SDL2_image-static.lib
+[558/570] Linking C static library external\src\SDL2_mixer\SDL2_mixer-static.lib
+[559/570] Linking C static library external\src\SDL2_ttf\SDL2_ttf.lib
+[560/570] Linking C static library external\src\SDL2_net\SDL2_net-static.lib
+[561/570] Generating libcurl-symbols.md
+[562/570] Generating curl-config.1
+[563/570] Linking C static library external\src\curl\lib\libcurl.lib
+[564/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_md5.c.obj
+[565/570] Building C object external\src\SDL2\CMakeFiles\SDL2_test.dir\src\test\SDL_test_random.c.obj
+[566/570] Generating mk-ca-bundle.1
+[567/570] Linking C static library external\src\SDL2\SDL2_test.lib
+[568/570] Generating curl_easy_cleanup.3, curl_easy_duphandle.3, curl_easy_escape.3, curl_easy_getinfo.3, curl_easy_header.3, curl_easy_init.3, curl_easy_nextheader.3, curl_easy_option_by_id.3, curl_easy_option_by_name.3, curl_easy_option_next.3, curl_easy_pause.3, curl_easy_perform.3, curl_easy_recv.3, curl_easy_reset.3, curl_easy_send.3, curl_easy_setopt.3, curl_easy_strerror.3, curl_easy_unescape.3, curl_easy_upkeep.3, curl_escape.3, curl_formadd.3, curl_formfree.3, curl_formget.3, curl_free.3, curl_getdate.3, curl_getenv.3, curl_global_cleanup.3, curl_global_init.3, curl_global_init_mem.3, curl_global_trace.3, curl_global_sslset.3, curl_mime_addpart.3, curl_mime_data.3, curl_mime_data_cb.3, curl_mime_encoder.3, curl_mime_filedata.3, curl_mime_filename.3, curl_mime_free.3, curl_mime_headers.3, curl_mime_init.3, curl_mime_name.3, curl_mime_subparts.3, curl_mime_type.3, curl_mprintf.3, curl_multi_add_handle.3, curl_multi_assign.3, curl_multi_cleanup.3, curl_multi_fdset.3, curl_multi_get_handles.3, curl_multi_info_read.3, curl_multi_init.3, curl_multi_perform.3, curl_multi_poll.3, curl_multi_remove_handle.3, curl_multi_setopt.3, curl_multi_socket.3, curl_multi_socket_action.3, curl_multi_socket_all.3, curl_multi_strerror.3, curl_multi_timeout.3, curl_multi_wakeup.3, curl_multi_wait.3, curl_multi_waitfds.3, curl_pushheader_bynum.3, curl_pushheader_byname.3, curl_share_cleanup.3, curl_share_init.3, curl_share_setopt.3, curl_share_strerror.3, curl_slist_append.3, curl_slist_free_all.3, curl_strequal.3, curl_strnequal.3, curl_unescape.3, curl_url.3, curl_url_cleanup.3, curl_url_dup.3, curl_url_get.3, curl_url_set.3, curl_url_strerror.3, curl_version.3, curl_version_info.3, curl_ws_meta.3, curl_ws_recv.3, curl_ws_send.3, libcurl-easy.3, libcurl-env.3, libcurl-env-dbg.3, libcurl-errors.3, libcurl-multi.3, libcurl-security.3, libcurl-share.3, libcurl-symbols.3, libcurl-thread.3, libcurl-tutorial.3, libcurl-url.3, libcurl-ws.3, libcurl.3
+[569/570] Building CXX object CMakeFiles\BOOK_TO_GAME.dir\src\main.cpp.obj
+FAILED: [code=2] CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.obj 
+C:\PROGRA~1\MICROS~2\18\ENTERP~1\VC\Tools\MSVC\1451~1.362\bin\Hostx64\x64\cl.exe  /nologo /TP -DCURL_STATICLIB -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\vc\include -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2\include -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_mixer -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_ttf -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_net -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\build\external\src\SDL2\include -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\build\external\src\SDL2\include\SDL2 -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\build\external\src\SDL2\include-config-release\SDL2 -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_image\include -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\SDL2_mixer\include -ID:\a\BOOK_TO_GAME\BOOK_TO_GAME\external\src\curl\include /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17 /showIncludes /FoCMakeFiles\BOOK_TO_GAME.dir\src\main.cpp.obj /FdCMakeFiles\BOOK_TO_GAME.dir\ /FS -c D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\modelapi.h(91): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\modelapi.h(589): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\modelapi.h(642): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\modelapi.h(1897): error C2589: '(': illegal token on right side of '::'
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(242): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(510): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1555): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1556): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1600): error C2589: '(': illegal token on right side of '::'
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1601): error C2589: '(': illegal token on right side of '::'
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1602): error C2589: '(': illegal token on right side of '::'
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1603): error C2589: '(': illegal token on right side of '::'
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(1861): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(2116): error C2589: '(': illegal token on right side of '::'
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(2748): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(3365): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(3526): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(3658): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(3666): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(3673): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(3844): warning C4244: 'initializing': conversion from 'double' to 'Uint8', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(4023): warning C4244: 'initializing': conversion from 'double' to 'Uint8', possible loss of data
+D:\a\BOOK_TO_GAME\BOOK_TO_GAME\src\main.cpp(4152): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+ninja: build stopped: subcommand failed.
