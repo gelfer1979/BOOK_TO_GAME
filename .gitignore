@@ -1,9 +1,6 @@
 # CMake Build outputs
 /build/
 
-# External third-party dependencies (downloaded via setup.py)
-/external/
-
 # VS Code temporary files
 .vscode/ipch/
 .vscode/chrome-debug-profile.json
