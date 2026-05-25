@@ -40,13 +40,18 @@ jobs:
     - name: Configure CMake (Linux)
       if: matrix.os == 'ubuntu-22.04'
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
-          -DSDL2_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2 \
-          -DSDL2_image_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_image \
-          -DSDL2_mixer_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_mixer \
-          -DSDL2_net_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_net \
-          -DSDL2_ttf_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2_ttf || \
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+        mkdir -p cmake
+        echo "find_package(PkgConfig REQUIRED)" > cmake/FindSDL2_image.cmake
+        echo "pkg_check_modules(SDL2_IMAGE REQUIRED sdl2_image)" >> cmake/FindSDL2_image.cmake
+        echo "add_library(SDL2_image::SDL2_image INTERFACE IMPORTED)" >> cmake/FindSDL2_image.cmake
+        echo "target_include_directories(SDL2_image::SDL2_image INTERFACE \${SDL2_IMAGE_INCLUDE_DIRS})" >> cmake/FindSDL2_image.cmake
+        echo "target_link_libraries(SDL2_image::SDL2_image INTERFACE \${SDL2_IMAGE_LIBRARIES})" >> cmake/FindSDL2_image.cmake
+        
+        cp cmake/FindSDL2_image.cmake cmake/FindSDL2_mixer.cmake && sed -i 's/image/mixer/g' cmake/FindSDL2_mixer.cmake && sed -i 's/IMAGE/MIXER/g' cmake/FindSDL2_mixer.cmake
+        cp cmake/FindSDL2_image.cmake cmake/FindSDL2_net.cmake && sed -i 's/image/net/g' cmake/FindSDL2_net.cmake && sed -i 's/IMAGE/NET/g' cmake/FindSDL2_net.cmake
+        cp cmake/FindSDL2_image.cmake cmake/FindSDL2_ttf.cmake && sed -i 's/image/ttf/g' cmake/FindSDL2_ttf.cmake && sed -i 's/IMAGE/TTF/g' cmake/FindSDL2_ttf.cmake
+
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_MODULE_PATH="${{ github.workspace }}/cmake"
 
     - name: Configure CMake (macOS)
       if: matrix.os == 'macos-14'
@@ -54,9 +59,10 @@ jobs:
 
     - name: Configure CMake (Windows)
       if: matrix.os == 'windows-2022'
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows
+      # Добавляем -DCOMPILE_DEFINITIONS=NOMINMAX, чтобы отключить ломающие макросы в Windows.h
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_CXX_FLAGS="/DNOMINMAX"
 
-    # --- ШАГ 3: Компиляция проекта (Исправленный кроссплатформенный шаг) ---
+    # --- ШАГ 3: Компиляция проекта ---
     - name: Build Project
       run: cmake --build build --config Release --parallel
 
