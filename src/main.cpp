@@ -3669,9 +3669,12 @@ void MainIteration() {
             state.mutex.unlock();
         }
     } else {
-        // Draw elegant centered startup cards (made taller to accommodate language selection)
+        // Draw elegant centered startup cards (made taller to accommodate language selection and error messages)
         int cardW = 600;
         int cardH = 440;
+        if (!state.fileLoadError.empty()) {
+            cardH = 490;
+        }
         int cardX = (WINDOW_WIDTH - cardW) / 2;
         int cardY = (WINDOW_HEIGHT - cardH) / 2;
         
@@ -3760,9 +3763,14 @@ void MainIteration() {
             std::string dropHint = IsRussianLanguage(state.gameLanguage) ? "[ Перетащите файл книги в окно ]" : "[ Drag & drop book file anywhere ]";
             RenderText(state.renderer.get(), state.fontSmallUI.get(), dropHint, WINDOW_WIDTH / 2, cardY + 235, SDL_Color{ 120, 120, 150, 255 }, true);
             
-            // Error handling (shifted down)
+            // Error handling (wrapped and shifted down to fit beautifully inside the card)
             if (!state.fileLoadError.empty()) {
-                RenderText(state.renderer.get(), state.fontUI.get(), state.fileLoadError, WINDOW_WIDTH / 2, cardY + 360, SDL_Color{ 255, 80, 80, 255 }, true);
+                std::vector<std::string> errLines = WrapText(state.fontSmallUI.get(), state.fileLoadError, cardW - 60);
+                int errY = cardY + 360;
+                for (const auto& line : errLines) {
+                    RenderText(state.renderer.get(), state.fontSmallUI.get(), line, WINDOW_WIDTH / 2, errY, SDL_Color{ 255, 80, 80, 255 }, true);
+                    errY += 18;
+                }
             }
         }
         
