@@ -1933,6 +1933,7 @@ void InitAdventureSetup(const std::string& filePath) {
     
     // Spawn background thread to generate 5 tailored genres close to the original book
     state.setupDynamicGenres.clear();
+#ifndef __EMSCRIPTEN__
     std::thread([actualFilePath]() {
         // Read first 1000 characters from raw book to extract theme/setting
         std::ifstream file(actualFilePath);
@@ -2007,6 +2008,7 @@ void InitAdventureSetup(const std::string& filePath) {
             state.mutex.unlock();
         }
     }).detach();
+#endif
 
     TriggerSetupStep(0);
 }
@@ -2024,6 +2026,88 @@ void StartBookGeneration(const std::string& filePath) {
     std::string fidelityWishes = state.chosenFidelityText;
     std::string customWishes = state.chosenCustomWishesText;
     
+#ifdef __EMSCRIPTEN__
+    // WebAssembly synchronous execution to avoid thread spawning crash
+    {
+        int maxBookAttempts = state.bookRetries;
+        if (maxBookAttempts < 1) maxBookAttempts = 1;
+        
+        bool overallSuccess = false;
+        std::string finalErrStr = "";
+        
+        for (int attempt = 1; attempt <= maxBookAttempts; ++attempt) {
+            std::string errStr = "";
+            bool ok = false;
+            
+            auto progressCallback = [&attempt, maxBookAttempts](int progress, const std::string& status) {
+                std::string currentStatus = status;
+                if (attempt > 1) {
+                    currentStatus = "[" + std::to_string(attempt) + "/" + std::to_string(maxBookAttempts) + "] " + currentStatus;
+                }
+                state.mutex.lock();
+                state.generationProgress = progress;
+                state.generationStatus = currentStatus;
+                state.mutex.unlock();
+            };
+            
+            std::string outError = "";
+            ok = CreateBookFromTxt(state.modelState, state.aiClient.get(), filePath, state.gameLanguage, lengthWishes, genreWishes, fidelityWishes, customWishes, outError, progressCallback);
+            errStr = outError;
+            
+            if (ok) {
+                overallSuccess = true;
+                break;
+            } else {
+                finalErrStr = errStr;
+                std::cout << "[Book Gen Retry] Attempt " << attempt << " failed. Error: " << errStr << std::endl;
+            }
+        }
+        
+        if (overallSuccess) {
+            std::remove("save.json");
+            std::remove("../save.json");
+            bool loadConfigOk = LoadBookConfig("book.json");
+            
+            state.mutex.lock();
+            state.modelState.currentChapter = 1;
+            state.modelState.chapterSummaries.clear();
+            state.modelState.gameOver = false;
+            state.modelState.pendingNextChapter = -1;
+            state.modelState.messages.clear();
+            state.modelState.activeChoices.clear();
+            state.uiMessages.clear();
+            state.uiActiveChoices.clear();
+            state.appState = APP_STATE_GAMEPLAY;
+            state.mutex.unlock();
+            
+            std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
+            state.mutex.lock();
+            std::vector<std::string> options = ExtractAndStripOptions(startQ);
+            if (options.empty()) {
+                options = { IsRussianLanguage(state.gameLanguage) ? "Продолжить историю" : "Continue story" };
+            }
+            std::string perfectStart = ReconstructPerfectAiResponse(startQ, options);
+            
+            ChatMessageData aiMsg;
+            aiMsg.sender = "AI";
+            aiMsg.text = perfectStart;
+            state.modelState.messages.push_back(aiMsg);
+            state.modelState.activeChoices = options;
+            
+            UpdateSystemPrompt(state.modelState, state.aiClient.get());
+            SyncModelToUi();
+            state.mutex.unlock();
+            
+            SaveGame();
+        } else {
+            std::string defaultErr = GetUiText("err_ai_gen");
+            state.mutex.lock();
+            state.fileLoadError = finalErrStr.empty() ? defaultErr : finalErrStr;
+            state.appState = APP_STATE_ENTER_TXT_PATH;
+            state.mutex.unlock();
+        }
+    }
+#else
     std::thread([filePath, lengthWishes, genreWishes, fidelityWishes, customWishes]() {
         int maxBookAttempts = state.bookRetries;
         if (maxBookAttempts < 1) maxBookAttempts = 1;
@@ -2188,6 +2272,7 @@ void StartBookGeneration(const std::string& filePath) {
             state.mutex.unlock();
         }
     }).detach();
+#endif
 }
 
 // Detached Asynchronous Thread Safe API Queries
