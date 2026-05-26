@@ -2035,9 +2035,11 @@ void InitAdventureSetup(const std::string& filePath) {
                              "Genre5";
         
         std::string genresText = client->ask(prompt);
+        std::cout << "[Setup Genres Thread] Raw AI Excerpt response:\n" << genresText << "\n[Setup Genres End of Raw Response]" << std::endl;
         
         // 0. Preprocess raw AI response using the dedicated genrePreprocessingPipeline!
         PreprocessRawAiResponse(genresText, sep, state.modelState.genrePreprocessingPipeline);
+        std::cout << "[Setup Genres Thread] Preprocessed response:\n" << genresText << "\n[Setup Genres End of Preprocessed Response]" << std::endl;
         
         std::vector<std::string> parsedGenres;
         std::stringstream ss(genresText);
@@ -2046,10 +2048,13 @@ void InitAdventureSetup(const std::string& filePath) {
             line = Trim(line);
             if (line.empty()) continue;
             
-            // Skip structural lines consisting only of punctuation
+            // Skip markdown backticks
+            if (line.rfind("```", 0) == 0) continue;
+            
+            // Skip structural lines consisting only of punctuation (Cyrillic-safe)
             bool onlyPunct = true;
-            for (char c : line) {
-                if (std::isalnum((unsigned char)c)) {
+            for (unsigned char c : line) {
+                if (c >= 128 || ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))) {
                     onlyPunct = false;
                     break;
                 }
