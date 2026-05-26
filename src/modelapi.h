@@ -1425,6 +1425,16 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
             optLine = Trim(optLine);
             if (optLine.empty()) continue;
             
+            // Skip stray JSON structural bracket/comma/quote lines
+            bool onlyPunct = true;
+            for (char c : optLine) {
+                if (c != '[' && c != ']' && c != '{' && c != '}' && c != ',' && c != '"' && c != '\'' && c != ' ' && c != '\t') {
+                    onlyPunct = false;
+                    break;
+                }
+            }
+            if (onlyPunct) continue;
+            
             // Strip leading bullet markers
             while (!optLine.empty() && (optLine[0] == '-' || optLine[0] == '*' || optLine[0] == '+' || optLine[0] == ' ')) {
                 optLine = optLine.substr(1);
