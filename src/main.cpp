@@ -2046,46 +2046,7 @@ void InitAdventureSetup(const std::string& filePath) {
             line = Trim(line);
             if (line.empty()) continue;
             
-            // Trim quotes, commas, brackets from the genre line
-            bool cleaned = true;
-            while (cleaned) {
-                cleaned = false;
-                std::string trimmed = Trim(line);
-                if (trimmed.empty()) break;
-                
-                // Remove trailing comma
-                if (trimmed.back() == ',') {
-                    trimmed.pop_back();
-                    cleaned = true;
-                }
-                // Remove trailing/leading braces/brackets
-                if (!trimmed.empty() && (trimmed.back() == ']' || trimmed.back() == '}' || trimmed.back() == '[' || trimmed.back() == '{')) {
-                    trimmed.pop_back();
-                    cleaned = true;
-                }
-                if (!trimmed.empty() && (trimmed.front() == '[' || trimmed.front() == '{' || trimmed.front() == ']' || trimmed.front() == '}')) {
-                    trimmed.erase(trimmed.begin());
-                    cleaned = true;
-                }
-                // Remove surrounding quotes
-                trimmed = Trim(trimmed);
-                if (trimmed.length() >= 2 && trimmed.front() == '"' && trimmed.back() == '"') {
-                    trimmed = trimmed.substr(1, trimmed.length() - 2);
-                    cleaned = true;
-                }
-                if (trimmed.length() >= 2 && trimmed.front() == '\'' && trimmed.back() == '\'') {
-                    trimmed = trimmed.substr(1, trimmed.length() - 2);
-                    cleaned = true;
-                }
-                if (cleaned) {
-                    line = trimmed;
-                }
-            }
-            
-            line = Trim(line);
-            if (line.empty()) continue;
-            
-            // Skip structural lines consisting only of punctuation or JSON keys
+            // Skip structural lines consisting only of punctuation
             bool onlyPunct = true;
             for (char c : line) {
                 if (std::isalnum((unsigned char)c)) {

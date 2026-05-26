@@ -151,6 +151,21 @@
             "target": "genre:"
         },
         {
+            "action": "replace",
+            "replacement": "",
+            "target": ","
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\""
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "'"
+        },
+        {
             "action": "remove_chars",
             "target": "{}[]"
         }
