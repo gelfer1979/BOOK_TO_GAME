@@ -1,4 +1,7 @@
 #pragma once
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 #ifdef _WIN32
 #ifndef NOMINMAX
@@ -157,8 +160,160 @@ public:
 
 #ifdef __EMSCRIPTEN__
     std::string ask(const std::string& question, const std::string& language = "English") override {
-        // Return a friendly offline warning message under WebAssembly due to browser CORS and synchronous network call restrictions
-        return "Error: AI API calls are disabled in the web version due to browser CORS policies. Please use the Desktop/Mobile builds to play with live AI generation.";
+        // Construct formatting based on custom format configuration
+        std::string jsonPayload;
+        if (format_ == "gemini") {
+            // Google Gemini request body format
+            nlohmann::json requestBody;
+            requestBody["contents"] = nlohmann::json::array();
+            nlohmann::json part;
+            part["text"] = question;
+            nlohmann::json content;
+            content["parts"] = nlohmann::json::array({part});
+            requestBody["contents"].push_back(content);
+            
+            if (!systemPrompt_.empty()) {
+                nlohmann::json sysInst;
+                nlohmann::json sysPart;
+                sysPart["text"] = systemPrompt_;
+                sysInst["parts"] = nlohmann::json::array({sysPart});
+                requestBody["systemInstruction"] = sysInst;
+            }
+
+            nlohmann::json safetySettings = nlohmann::json::array({
+                {{"category", "HARM_CATEGORY_HARASSMENT"}, {"threshold", "BLOCK_NONE"}},
+                {{"category", "HARM_CATEGORY_HATE_SPEECH"}, {"threshold", "BLOCK_NONE"}},
+                {{"category", "HARM_CATEGORY_SEXUALLY_EXPLICIT"}, {"threshold", "BLOCK_NONE"}},
+                {{"category", "HARM_CATEGORY_DANGEROUS_CONTENT"}, {"threshold", "BLOCK_NONE"}}
+            });
+            requestBody["safetySettings"] = safetySettings;
+
+            nlohmann::json genConfig;
+            genConfig["responseMimeType"] = "application/json";
+            requestBody["generationConfig"] = genConfig;
+            
+            jsonPayload = requestBody.dump();
+        } else {
+            // Default OpenAI-compatible format
+            nlohmann::json requestBody;
+            requestBody["model"] = modelName_;
+            requestBody["messages"] = nlohmann::json::array();
+            if (!systemPrompt_.empty()) {
+                requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
+            }
+            requestBody["messages"].push_back({{"role", "user"}, {"content", question}});
+            requestBody["temperature"] = 0.7;
+            jsonPayload = requestBody.dump();
+        }
+
+        // Perform synchronous XHR in JavaScript
+        char* responsePtr = nullptr;
+        int responseCode = 0;
+        
+        EM_ASM({
+            var url = UTF8ToString($0);
+            var payload = UTF8ToString($1);
+            var apiKey = UTF8ToString($2);
+            var format = UTF8ToString($3);
+            var pResponseOut = $4;
+            var pResponseCodeOut = $5;
+            
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, false); // SYNCHRONOUS
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                if (apiKey) {
+                    if (format === "gemini") {
+                        xhr.setRequestHeader("x-goog-api-key", apiKey);
+                    } else {
+                        xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
+                    }
+                }
+                xhr.send(payload);
+                
+                HEAP32[pResponseCodeOut >> 2] = xhr.status;
+                var responseText = xhr.responseText || "";
+                var lengthBytes = lengthBytesUTF8(responseText) + 1;
+                var stringOnWasmHeap = _malloc(lengthBytes);
+                stringToUTF8(responseText, stringOnWasmHeap, lengthBytes);
+                HEAP32[pResponseOut >> 2] = stringOnWasmHeap;
+            } catch (err) {
+                HEAP32[pResponseCodeOut >> 2] = 0;
+                var errText = "Error: " + err.message;
+                var lengthBytes = lengthBytesUTF8(errText) + 1;
+                var stringOnWasmHeap = _malloc(lengthBytes);
+                stringToUTF8(errText, stringOnWasmHeap, lengthBytes);
+                HEAP32[pResponseOut >> 2] = stringOnWasmHeap;
+            }
+        }, baseUrl_.c_str(), jsonPayload.c_str(), apiKey_.c_str(), format_.c_str(), &responsePtr, &responseCode);
+        
+        std::string readBuffer;
+        if (responsePtr != nullptr) {
+            readBuffer = std::string(responsePtr);
+            free(responsePtr);
+        }
+        
+        if (responseCode == 401) {
+            return "Error 401: Unauthorized. Check API key.";
+        } else if (responseCode == 429) {
+            return "Error 429: Too Many Requests. Rate limit exceeded.";
+        } else if (responseCode != 200) {
+            if (!readBuffer.empty() && readBuffer.find("Error") != std::string::npos) {
+                return readBuffer;
+            }
+            return "Error: API returned status code " + std::to_string(responseCode);
+        }
+
+        // Parse format-specific response
+        try {
+            nlohmann::json responseJson = nlohmann::json::parse(readBuffer);
+            std::string aiResponse;
+            
+            if (format_ == "gemini") {
+                if (responseJson.contains("candidates") && !responseJson["candidates"].empty() &&
+                    responseJson["candidates"][0].contains("content") &&
+                    responseJson["candidates"][0]["content"].contains("parts") &&
+                    !responseJson["candidates"][0]["content"]["parts"].empty() &&
+                    responseJson["candidates"][0]["content"]["parts"][0].contains("text")) {
+                    
+                    aiResponse = responseJson["candidates"][0]["content"]["parts"][0]["text"].get<std::string>();
+                } else {
+                    bool blocked = false;
+                    if (responseJson.contains("promptFeedback") && responseJson["promptFeedback"].contains("blockReason")) {
+                        blocked = true;
+                    } else if (responseJson.contains("candidates") && !responseJson["candidates"].empty()) {
+                        std::string finishReason = responseJson["candidates"][0].value("finishReason", "");
+                        if (finishReason == "SAFETY" || finishReason == "RECITATION" || finishReason == "OTHER") {
+                            blocked = true;
+                        }
+                    }
+                    
+                    if (blocked) {
+                        bool isEn = (language == "English" || language == "en" || language == "EN");
+                        if (isEn) {
+                            aiResponse = "Error: The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.";
+                        } else {
+                            aiResponse = "Ошибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                        }
+                    } else {
+                        aiResponse = "Error: Invalid Gemini response format.";
+                    }
+                }
+            } else {
+                if (responseJson.contains("choices") && !responseJson["choices"].empty() &&
+                    responseJson["choices"][0].contains("message") &&
+                    responseJson["choices"][0]["message"].contains("content")) {
+                    
+                    aiResponse = responseJson["choices"][0]["message"]["content"].get<std::string>();
+                } else {
+                    aiResponse = "Error: Invalid OpenAI response format.";
+                }
+            }
+            
+            return aiResponse;
+        } catch (const std::exception& e) {
+            return "Error: Failed to parse API response JSON.";
+        }
     }
 #else
     std::string ask(const std::string& question, const std::string& language = "English") override {
@@ -385,8 +540,178 @@ public:
 
 #ifdef __EMSCRIPTEN__
     std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) override {
-        // Return a friendly offline warning message under WebAssembly due to browser CORS and synchronous network call restrictions
-        return "Error: AI API calls are disabled in the web version due to browser CORS policies. Please use the Desktop/Mobile builds to play with live AI generation.";
+        // Construct formatting based on custom format configuration
+        std::string jsonPayload;
+        if (format_ == "gemini") {
+            // Google Gemini request body format
+            nlohmann::json requestBody;
+            nlohmann::json contents = nlohmann::json::array();
+            
+            for (const auto& msg : history) {
+                std::string role = (msg.sender == "User") ? "user" : "model";
+                if (!contents.empty() && contents.back()["role"] == role) {
+                    std::string existingText = contents.back()["parts"][0]["text"].get<std::string>();
+                    contents.back()["parts"][0]["text"] = existingText + "\n\n" + msg.text;
+                } else {
+                    contents.push_back({
+                        {"role", role},
+                        {"parts", nlohmann::json::array({{{"text", msg.text}}})}
+                    });
+                }
+            }
+            requestBody["contents"] = contents;
+            
+            if (!systemPrompt_.empty()) {
+                nlohmann::json sysInst;
+                nlohmann::json sysPart;
+                sysPart["text"] = systemPrompt_;
+                sysInst["parts"] = nlohmann::json::array({sysPart});
+                requestBody["systemInstruction"] = sysInst;
+            }
+
+            nlohmann::json safetySettings = nlohmann::json::array({
+                {{"category", "HARM_CATEGORY_HARASSMENT"}, {"threshold", "BLOCK_NONE"}},
+                {{"category", "HARM_CATEGORY_HATE_SPEECH"}, {"threshold", "BLOCK_NONE"}},
+                {{"category", "HARM_CATEGORY_SEXUALLY_EXPLICIT"}, {"threshold", "BLOCK_NONE"}},
+                {{"category", "HARM_CATEGORY_DANGEROUS_CONTENT"}, {"threshold", "BLOCK_NONE"}}
+            });
+            requestBody["safetySettings"] = safetySettings;
+
+            nlohmann::json genConfig;
+            genConfig["responseMimeType"] = "application/json";
+            requestBody["generationConfig"] = genConfig;
+            
+            jsonPayload = requestBody.dump();
+        } else {
+            // Default OpenAI-compatible format
+            nlohmann::json requestBody;
+            requestBody["model"] = modelName_;
+            requestBody["messages"] = nlohmann::json::array();
+            if (!systemPrompt_.empty()) {
+                requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
+            }
+            
+            for (const auto& msg : history) {
+                std::string role = (msg.sender == "User") ? "user" : "assistant";
+                if (!requestBody["messages"].empty() && requestBody["messages"].back()["role"] == role) {
+                    std::string existingText = requestBody["messages"].back()["content"].get<std::string>();
+                    requestBody["messages"].back()["content"] = existingText + "\n\n" + msg.text;
+                } else {
+                    requestBody["messages"].push_back({{"role", role}, {"content", msg.text}});
+                }
+            }
+            requestBody["temperature"] = 0.7;
+            jsonPayload = requestBody.dump();
+        }
+
+        // Perform synchronous XHR in JavaScript
+        char* responsePtr = nullptr;
+        int responseCode = 0;
+        
+        EM_ASM({
+            var url = UTF8ToString($0);
+            var payload = UTF8ToString($1);
+            var apiKey = UTF8ToString($2);
+            var format = UTF8ToString($3);
+            var pResponseOut = $4;
+            var pResponseCodeOut = $5;
+            
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, false); // SYNCHRONOUS
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                if (apiKey) {
+                    if (format === "gemini") {
+                        xhr.setRequestHeader("x-goog-api-key", apiKey);
+                    } else {
+                        xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
+                    }
+                }
+                xhr.send(payload);
+                
+                HEAP32[pResponseCodeOut >> 2] = xhr.status;
+                var responseText = xhr.responseText || "";
+                var lengthBytes = lengthBytesUTF8(responseText) + 1;
+                var stringOnWasmHeap = _malloc(lengthBytes);
+                stringToUTF8(responseText, stringOnWasmHeap, lengthBytes);
+                HEAP32[pResponseOut >> 2] = stringOnWasmHeap;
+            } catch (err) {
+                HEAP32[pResponseCodeOut >> 2] = 0;
+                var errText = "Error: " + err.message;
+                var lengthBytes = lengthBytesUTF8(errText) + 1;
+                var stringOnWasmHeap = _malloc(lengthBytes);
+                stringToUTF8(errText, stringOnWasmHeap, lengthBytes);
+                HEAP32[pResponseOut >> 2] = stringOnWasmHeap;
+            }
+        }, baseUrl_.c_str(), jsonPayload.c_str(), apiKey_.c_str(), format_.c_str(), &responsePtr, &responseCode);
+        
+        std::string readBuffer;
+        if (responsePtr != nullptr) {
+            readBuffer = std::string(responsePtr);
+            free(responsePtr);
+        }
+        
+        if (responseCode == 401) {
+            return "Error 401: Unauthorized. Check API key.";
+        } else if (responseCode == 429) {
+            return "Error 429: Too Many Requests. Rate limit exceeded.";
+        } else if (responseCode != 200) {
+            if (!readBuffer.empty() && readBuffer.find("Error") != std::string::npos) {
+                return readBuffer;
+            }
+            return "Error: API returned status code " + std::to_string(responseCode);
+        }
+
+        // Parse format-specific response
+        try {
+            nlohmann::json responseJson = nlohmann::json::parse(readBuffer);
+            std::string aiResponse;
+            
+            if (format_ == "gemini") {
+                if (responseJson.contains("candidates") && !responseJson["candidates"].empty() &&
+                    responseJson["candidates"][0].contains("content") &&
+                    responseJson["candidates"][0]["content"].contains("parts") &&
+                    !responseJson["candidates"][0]["content"]["parts"].empty() &&
+                    responseJson["candidates"][0]["content"]["parts"][0].contains("text")) {
+                    
+                    aiResponse = responseJson["candidates"][0]["content"]["parts"][0]["text"].get<std::string>();
+                } else {
+                    bool blocked = false;
+                    if (responseJson.contains("promptFeedback") && responseJson["promptFeedback"].contains("blockReason")) {
+                        blocked = true;
+                    } else if (responseJson.contains("candidates") && !responseJson["candidates"].empty()) {
+                        std::string finishReason = responseJson["candidates"][0].value("finishReason", "");
+                        if (finishReason == "SAFETY" || finishReason == "RECITATION" || finishReason == "OTHER") {
+                            blocked = true;
+                        }
+                    }
+                    
+                    if (blocked) {
+                        bool isEn = (language == "English" || language == "en" || language == "EN");
+                        if (isEn) {
+                            aiResponse = "Error: The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.";
+                        } else {
+                            aiResponse = "Ошибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                        }
+                    } else {
+                        aiResponse = "Error: Invalid Gemini response format.";
+                    }
+                }
+            } else {
+                if (responseJson.contains("choices") && !responseJson["choices"].empty() &&
+                    responseJson["choices"][0].contains("message") &&
+                    responseJson["choices"][0]["message"].contains("content")) {
+                    
+                    aiResponse = responseJson["choices"][0]["message"]["content"].get<std::string>();
+                } else {
+                    aiResponse = "Error: Invalid OpenAI response format.";
+                }
+            }
+            
+            return aiResponse;
+        } catch (const std::exception& e) {
+            return "Error: Failed to parse API response JSON.";
+        }
     }
 #else
     std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) override {
