@@ -1425,6 +1425,20 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
             optLine = Trim(optLine);
             if (optLine.empty()) continue;
             
+            // Skip structural JSON properties or tag lines
+            std::string lowerLine = ToLower(optLine);
+            if (lowerLine.find("chapter_transition") != std::string::npos ||
+                lowerLine.find("next_chapter") != std::string::npos ||
+                lowerLine.find("nextchapter") != std::string::npos ||
+                lowerLine.find("player_dead") != std::string::npos ||
+                lowerLine.find("game_over") != std::string::npos ||
+                lowerLine.find("choices_split") != std::string::npos ||
+                lowerLine.find("choicesseparator") != std::string::npos ||
+                (lowerLine.find("chapter") != std::string::npos && (lowerLine.find("[") != std::string::npos || lowerLine.find("]") != std::string::npos)) ||
+                (lowerLine.find("dead") != std::string::npos && (lowerLine.find("[") != std::string::npos || lowerLine.find("]") != std::string::npos))) {
+                continue;
+            }
+            
             // Skip stray JSON structural bracket/comma/quote lines
             bool onlyPunct = true;
             for (char c : optLine) {

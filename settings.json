@@ -1,45 +1,125 @@
 {
-    "AIModel": "ai_lmstudio.json",
+    "AIModel": "ai_gemini.json",
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "Russian",
     "bookRetries": 3,
     "choicesSeparator": "\u001f",
-    "playerDead": "[dead]",
-    "nextChapter": "[chapter]",
     "fontSizeOffset": 4,
-    "maxRetries": 3,
-    "maxTurnsForce": 10,
-    "retryDelayMs": 1000,
-    "preprocessingPipeline": [
-        { "action": "replace", "target": "\\n", "replacement": "\n" },
-        { "action": "replace", "target": "\"narrative\":", "replacement": "" },
-        { "action": "replace", "target": "\"narrative\" :", "replacement": "" },
-        { "action": "replace", "target": "\"options\":", "replacement": "choicesSeparator" },
-        { "action": "replace", "target": "\"choices\":", "replacement": "choicesSeparator" },
-        { "action": "replace", "target": "\"options\" :", "replacement": "choicesSeparator" },
-        { "action": "replace", "target": "\"choices\" :", "replacement": "choicesSeparator" },
-        
-        { "action": "replace", "target": "[dead ]", "replacement": "[dead]" },
-        { "action": "replace", "target": "[ dead]", "replacement": "[dead]" },
-        { "action": "replace", "target": "[death]", "replacement": "[dead]" },
-        { "action": "replace", "target": "[game_over]", "replacement": "[dead]" },
-        { "action": "replace", "target": "[player_dead]", "replacement": "[dead]" },
-        { "action": "replace", "target": "<player_dead/>", "replacement": "[dead]" },
-        
-        { "action": "replace", "target": "[chapter ]", "replacement": "[chapter]" },
-        { "action": "replace", "target": "[ chapter]", "replacement": "[chapter]" },
-        { "action": "replace", "target": "[next_chapter]", "replacement": "[chapter]" },
-        { "action": "replace", "target": "[nextchapter]", "replacement": "[chapter]" },
-        { "action": "replace", "target": "<next_chapter>", "replacement": "[chapter]" },
-        { "action": "replace", "target": "</next_chapter>", "replacement": "" },
-        { "action": "replace", "target": "[/next_chapter]", "replacement": "" },
-        
-        { "action": "remove_chars", "target": "{}" }
-    ],
     "formatReminder": [
         "[REMINDER: Use the exact output format from your system prompt: narrative text first, then '\u001f', then 2-4 choices each on its own line '- ']"
     ],
+    "maxRetries": 3,
+    "maxTurnsForce": 10,
+    "nextChapter": "[chapter]",
+    "playerDead": "[dead]",
+    "preprocessingPipeline": [
+        {
+            "action": "replace",
+            "replacement": "\n",
+            "target": "\\n"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"narrative\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"narrative\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"options\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"choices\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"options\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"choices\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[dead ]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[ dead]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[death]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[game_over]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[player_dead]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "<player_dead/>"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[chapter ]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[ chapter]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[next_chapter]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[nextchapter]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "<next_chapter>"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "</next_chapter>"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "[/next_chapter]"
+        },
+        {
+            "action": "remove_chars",
+            "target": "{}"
+        }
+    ],
+    "retryDelayMs": 1000,
     "systemPrompt": [
         "You are a text adventure narrator. Narrate in the user's language. Be concise (1-2 short paragraphs). Advance the plot every turn — no loops or repetition.",
         "",

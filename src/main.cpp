@@ -2895,18 +2895,55 @@ void ConsumeApiResponse() {
         // Check for tags and strip them in a robust loop
         bool isDead = false;
         
-        // 1. Check for playerDead tag
+        // 1. Robust Player Dead Detection
+        std::vector<std::string> deathKeywords = {
+            "player_dead",
+            "playerdead",
+            "game_over",
+            "gameover"
+        };
         if (!state.modelState.playerDead.empty()) {
-            size_t deadPos = fullResponse.find(state.modelState.playerDead);
-            while (deadPos != std::string::npos) {
-                if (!state.ignoreTags) {
-                    isDead = true;
-                    std::cout << "[ConsumeApiResponse] Found death tag: " << state.modelState.playerDead << std::endl;
-                }
-                fullResponse.erase(deadPos, state.modelState.playerDead.length());
-                deadPos = fullResponse.find(state.modelState.playerDead);
+            std::string configured = ToLower(state.modelState.playerDead);
+            if (std::find(deathKeywords.begin(), deathKeywords.end(), configured) == deathKeywords.end()) {
+                deathKeywords.push_back(configured);
             }
         }
+        
+        std::string lowerResponse = ToLower(fullResponse);
+        for (const auto& keyword : deathKeywords) {
+            size_t pos = lowerResponse.find(keyword);
+            while (pos != std::string::npos) {
+                if (!state.ignoreTags) {
+                    isDead = true;
+                    std::cout << "[ConsumeApiResponse] Robustly found death tag: " << keyword << std::endl;
+                }
+                
+                // Erase keyword and any trailing colon, quotes, spaces, commas, brackets, or "true"/"1" value
+                size_t eraseEnd = pos + keyword.length();
+                while (eraseEnd < fullResponse.length()) {
+                    char c = fullResponse[eraseEnd];
+                    if (c == ' ' || c == '\t' || c == '\r' || c == '\n' || 
+                        c == ':' || c == '=' || c == '"' || c == '\'' || 
+                        c == ',' || c == ']' || c == '}' || c == '>') {
+                        eraseEnd++;
+                    } else {
+                        // Check for boolean value "true" or "1"
+                        std::string remaining = ToLower(fullResponse.substr(eraseEnd, 10));
+                        if (remaining.rfind("true", 0) == 0) {
+                            eraseEnd += 4;
+                        } else if (remaining.rfind("1", 0) == 0) {
+                            eraseEnd += 1;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                fullResponse.erase(pos, eraseEnd - pos);
+                lowerResponse = ToLower(fullResponse);
+                pos = lowerResponse.find(keyword);
+            }
+        }
+
         // Fallback checks for standard legacy death tags in case of no pipeline match
         size_t legacyDead = fullResponse.find("<player_dead/>");
         while (legacyDead != std::string::npos) {
@@ -2921,44 +2958,91 @@ void ConsumeApiResponse() {
             legacyDead = fullResponse.find("[player_dead]");
         }
         
-        // 2. Check for nextChapter tag
+        // 2. Robust Next Chapter Detection
         int nextChapter = -1;
+        std::vector<std::string> transitionKeywords = {
+            "chapter_transition",
+            "next_chapter",
+            "nextchapter",
+            "[chapter]"
+        };
+        // Add the configured nextChapter tag to the keywords list if not already present
         if (!state.modelState.nextChapter.empty()) {
-            size_t nextPos = fullResponse.find(state.modelState.nextChapter);
-            while (nextPos != std::string::npos) {
-                size_t numStart = nextPos + state.modelState.nextChapter.length();
-                size_t numEnd = numStart;
-                while (numEnd < fullResponse.length() && std::isdigit((unsigned char)fullResponse[numEnd])) {
-                    numEnd++;
+            std::string configured = ToLower(state.modelState.nextChapter);
+            if (std::find(transitionKeywords.begin(), transitionKeywords.end(), configured) == transitionKeywords.end()) {
+                transitionKeywords.push_back(configured);
+            }
+        }
+
+        lowerResponse = ToLower(fullResponse);
+        for (const auto& keyword : transitionKeywords) {
+            size_t pos = lowerResponse.find(keyword);
+            while (pos != std::string::npos) {
+                // Look ahead for the first digit after the keyword
+                size_t numStart = pos + keyword.length();
+                size_t scanPos = numStart;
+                bool foundDigit = false;
+                
+                // Skip punctuation, spaces, quotes, brackets, colons, equal signs
+                while (scanPos < fullResponse.length()) {
+                    char c = fullResponse[scanPos];
+                    if (std::isdigit((unsigned char)c)) {
+                        foundDigit = true;
+                        numStart = scanPos;
+                        break;
+                    }
+                    if (c != ' ' && c != '\t' && c != '\r' && c != '\n' && 
+                        c != '"' && c != '\'' && c != ':' && c != '=' && 
+                        c != '[' && c != ']' && c != '{' && c != '}' && 
+                        c != ',' && c != '-' && c != '/' && c != '<' && c != '>') {
+                        break;
+                    }
+                    scanPos++;
                 }
-                if (numEnd > numStart) {
+                
+                if (foundDigit) {
+                    size_t numEnd = numStart;
+                    while (numEnd < fullResponse.length() && std::isdigit((unsigned char)fullResponse[numEnd])) {
+                        numEnd++;
+                    }
+                    
                     if (!state.ignoreTags && nextChapter == -1) {
                         std::string chNumStr = fullResponse.substr(numStart, numEnd - numStart);
                         try {
                             nextChapter = std::stoi(chNumStr);
-                            std::cout << "[ConsumeApiResponse] Found nextChapter tag: " << state.modelState.nextChapter << " with chapter number: " << nextChapter << std::endl;
+                            std::cout << "[ConsumeApiResponse] Robustly found next chapter number: " << nextChapter << " using keyword: " << keyword << std::endl;
                         } catch (...) {}
                     }
                     
-                    // Determine how much of the tag structure to erase
-                    size_t eraseLen = numEnd - nextPos;
-                    // If there's a trailing bracket ']' or a closing tag like '[/chapter]' after the number, erase it too!
-                    std::string afterNum = fullResponse.substr(numEnd, 30);
-                    if (!afterNum.empty() && afterNum[0] == ']') {
-                        eraseLen += 1;
-                    } else {
-                        // Check if it matches closing tag equivalent, e.g. "[/chapter]" for "[chapter]"
-                        std::string closingTag = "[/" + state.modelState.nextChapter.substr(1);
-                        if (afterNum.rfind(closingTag, 0) == 0) {
-                            eraseLen += closingTag.length();
+                    // Determine end of sequence to erase
+                    size_t eraseEnd = numEnd;
+                    // Skip trailing quotes, brackets, commas, or closing tags after the digit
+                    while (eraseEnd < fullResponse.length()) {
+                        char c = fullResponse[eraseEnd];
+                        if (c == '"' || c == '\'' || c == ']' || c == '}' || c == ',' || c == '>' || c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+                            eraseEnd++;
+                        } else {
+                            // Check for closing tags like "[/chapter]" or "</next_chapter>" or "</chapter_transition>"
+                            std::string remaining = ToLower(fullResponse.substr(eraseEnd, 40));
+                            if (remaining.rfind("[/chapter]", 0) == 0) {
+                                eraseEnd += 10;
+                            } else if (remaining.rfind("</next_chapter>", 0) == 0) {
+                                eraseEnd += 15;
+                            } else if (remaining.rfind("</chapter_transition>", 0) == 0) {
+                                eraseEnd += 21;
+                            } else {
+                                break;
+                            }
                         }
                     }
-                    fullResponse.erase(nextPos, eraseLen);
+                    
+                    fullResponse.erase(pos, eraseEnd - pos);
                 } else {
-                    // Erase just the empty/malformed tag prefix
-                    fullResponse.erase(nextPos, state.modelState.nextChapter.length());
+                    fullResponse.erase(pos, keyword.length());
                 }
-                nextPos = fullResponse.find(state.modelState.nextChapter);
+                
+                lowerResponse = ToLower(fullResponse);
+                pos = lowerResponse.find(keyword);
             }
         }
         
