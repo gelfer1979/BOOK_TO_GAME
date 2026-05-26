@@ -1,5 +1,6 @@
 # CMake Build outputs
 /build/
+/build_web/
 
 # VS Code temporary files
 .vscode/ipch/

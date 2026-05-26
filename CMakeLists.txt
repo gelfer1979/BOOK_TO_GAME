@@ -42,12 +42,8 @@ if(EMSCRIPTEN)
     # Set the target extension for running in a web browser
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
     
-    # Define CURL_STATICLIB
-    target_compile_definitions(${PROJECT_NAME} PRIVATE CURL_STATICLIB)
-    
-    # Add curl compiler options for WebAssembly
+    # Add compiler options for WebAssembly
     target_compile_options(${PROJECT_NAME} PRIVATE
-        "-s" "USE_CURL=1"
         "-s" "USE_SDL=2"
         "-s" "USE_SDL_IMAGE=2"
         "-s" "USE_SDL_MIXER=2"
@@ -62,7 +58,6 @@ if(EMSCRIPTEN)
         "-s" "USE_SDL_MIXER=2"
         "-s" "USE_SDL_TTF=2"
         "-s" "USE_SDL_NET=2"
-        "-s" "USE_CURL=1"
         "-s" "ALLOW_MEMORY_GROWTH=1"
         "-s" "INITIAL_MEMORY=67108864"
         "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"

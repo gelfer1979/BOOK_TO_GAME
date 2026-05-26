@@ -20,7 +20,9 @@
 #include <algorithm>
 #include <cstdint>
 #include <functional>
+#ifndef __EMSCRIPTEN__
 #include <curl/curl.h>
+#endif
 #include <nlohmann/json.hpp>
 #include <filesystem>
 #include "book_converter.h"
@@ -153,6 +155,12 @@ public:
         systemPrompt_ = prompt;
     }
 
+#ifdef __EMSCRIPTEN__
+    std::string ask(const std::string& question, const std::string& language = "English") override {
+        // Return a friendly offline warning message under WebAssembly due to browser CORS and synchronous network call restrictions
+        return "Error: AI API calls are disabled in the web version due to browser CORS policies. Please use the Desktop/Mobile builds to play with live AI generation.";
+    }
+#else
     std::string ask(const std::string& question, const std::string& language = "English") override {
         int attempt = 0;
         int delayMs = retryDelayMs_;
@@ -358,7 +366,7 @@ public:
                         
                         aiResponse = responseJson["choices"][0]["message"]["content"].get<std::string>();
                     } else {
-                        std::cerr << "[API Response] Invalid OpenAI response structure: " << readBuffer << std::endl;
+                        std::cerr << "[API Response] Invalid OpenAI response format: " << readBuffer << std::endl;
                         aiResponse = "Error: Invalid OpenAI response format.";
                     }
                 }
@@ -372,9 +380,15 @@ public:
                 curl_easy_cleanup(curl);
                 return "Error: Failed to parse API response JSON.";
             }
-        }
     }
+#endif
 
+#ifdef __EMSCRIPTEN__
+    std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) override {
+        // Return a friendly offline warning message under WebAssembly due to browser CORS and synchronous network call restrictions
+        return "Error: AI API calls are disabled in the web version due to browser CORS policies. Please use the Desktop/Mobile builds to play with live AI generation.";
+    }
+#else
     std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) override {
         int attempt = 0;
         int delayMs = retryDelayMs_;
@@ -610,8 +624,8 @@ public:
                 curl_easy_cleanup(curl);
                 return "Error: Failed to parse API response JSON.";
             }
-        }
     }
+#endif
 
     void setRetrySettings(int maxRetries, int retryDelayMs) {
         if (maxRetries >= 0) maxRetries_ = maxRetries;
