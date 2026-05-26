@@ -1,0 +1,335 @@
+Downloading https://services.gradle.org/distributions/gradle-8.7-bin.zip
+............10%.............20%.............30%.............40%............50%.............60%.............70%.............80%.............90%............100%
+
+Welcome to Gradle 8.7!
+
+Here are the highlights of this release:
+ - Compiling and testing with Java 22
+ - Cacheable Groovy script compilation
+ - New methods in lazy collection properties
+
+For more details see https://docs.gradle.org/8.7/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Configure project :app
+Warning: Errors during XML parse:
+Warning: https://dl.google.com/android/repository/sys-img/android-automotive/sys-img2-4.xml parsing problem. unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: Additionally, the fallback loader failed to parse the XML.
+Warning: Failed to fetch URL https://dl.google.com/android/repository/sys-img/android-automotive-distantdisplay/sys-img2-4.xml/sys-img.xml, reason: File not found
+Warning: Errors during XML parse:
+Warning: https://dl.google.com/android/repository/sys-img/android-automotive-distantdisplay/sys-img2-4.xml parsing problem. unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: Additionally, the fallback loader failed to parse the XML.
+Warning: Failed to fetch URL https://dl.google.com/android/repository/sys-img/android-wear-cn/sys-img2-4.xml/sys-img.xml, reason: File not found
+Warning: Errors during XML parse:
+Warning: https://dl.google.com/android/repository/sys-img/android-wear-cn/sys-img2-4.xml parsing problem. unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: Additionally, the fallback loader failed to parse the XML.
+Warning: Failed to fetch URL https://dl.google.com/android/repository/sys-img/android-desktop/sys-img2-4.xml/sys-img.xml, reason: File not found
+Warning: Errors during XML parse:
+Warning: https://dl.google.com/android/repository/sys-img/android-desktop/sys-img2-4.xml parsing problem. unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: Additionally, the fallback loader failed to parse the XML.
+Warning: Failed to fetch URL https://dl.google.com/android/repository/sys-img/google_atd/sys-img2-4.xml/sys-img.xml, reason: File not found
+Warning: Errors during XML parse:
+Warning: https://dl.google.com/android/repository/sys-img/google_atd/sys-img2-4.xml parsing problem. unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"abi"). Expected elements are <{}vendor>,<{}translatedAbis>,<{}abis>,<{}codename>,<{}base-extension>,<{}api-level>,<{}extension-level>,<{}tag>
+Warning: Additionally, the fallback loader failed to parse the XML.
+Warning: Failed to fetch URL https://dl.google.com/android/repository/sys-img/google-tv/sys-img2-4.xml/sys-img.xml, reason: File not found
+Warning: Errors during XML parse:
+Warning: https://dl.google.com/android/repository/sys-img/google-tv/sys-img2-4.xml parsing problem. Errors limit exceeded. To receive all errors set com.sun.xml.bind logger to FINEST level.
+Warning: javax.xml.bind.UnmarshalException: Errors limit exceeded. To receive all errors set com.sun.xml.bind logger to FINEST level.
+Warning: Additionally, the fallback loader failed to parse the XML.
+Checking the license for package NDK (Side by side) 25.2.9519653 in /usr/local/lib/android/sdk/licenses
+License for package NDK (Side by side) 25.2.9519653 accepted.
+Preparing "Install NDK (Side by side) 25.2.9519653 v.25.2.9519653".
+"Install NDK (Side by side) 25.2.9519653 v.25.2.9519653" ready.
+Installing NDK (Side by side) 25.2.9519653 in /usr/local/lib/android/sdk/ndk/25.2.9519653
+"Install NDK (Side by side) 25.2.9519653 v.25.2.9519653" complete.
+"Install NDK (Side by side) 25.2.9519653 v.25.2.9519653" finished.
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:javaPreCompileRelease
+> Task :app:generateReleaseResValues
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:parseReleaseLocalResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:mergeReleaseResources
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:extractProguardFiles
+> Task :app:processReleaseManifestForPackage
+> Task :app:processReleaseResources
+
+> Task :app:configureCMakeRelWithDebInfo[arm64-v8a]
+Checking the license for package CMake 3.22.1 in /usr/local/lib/android/sdk/licenses
+License for package CMake 3.22.1 accepted.
+Preparing "Install CMake 3.22.1 v.3.22.1".
+"Install CMake 3.22.1 v.3.22.1" ready.
+Installing CMake 3.22.1 in /usr/local/lib/android/sdk/cmake/3.22.1
+"Install CMake 3.22.1 v.3.22.1" complete.
+"Install CMake 3.22.1 v.3.22.1" finished.
+
+> Task :app:compileReleaseJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :app:generateReleaseLintVitalReportModel
+Generating lint files for backported methods only (compile API B)
+
+> Task :app:buildCMakeRelWithDebInfo[arm64-v8a][main]
+C/C++: ninja: Entering directory `/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a'
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz/miniz_zip.c:189:9: warning: Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files. [-W#pragma-messages]
+C/C++: #pragma message("Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.")
+C/C++:         ^
+C/C++: 1 warning generated.
+C/C++: /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DCURL_STATICLIB -Dmain_EXPORTS -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_mixer -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_net -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/pugixml/src -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a/external/src/SDL2/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a/external/src/SDL2/include/SDL2 -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a/external/src/SDL2/include-config-relwithdebinfo/SDL2 -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_mixer/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O2 -g -DNDEBUG -fPIC -std=gnu++17 -MD -MT CMakeFiles/main.dir/src/main.cpp.o -MF CMakeFiles/main.dir/src/main.cpp.o.d -o CMakeFiles/main.dir/src/main.cpp.o -c /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4861:7: error: expected '}'
+C/C++: #endif
+C/C++:       ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:56:36: note: to match this '{'
+C/C++: class AskAiExternal : public AskAi {
+C/C++:                                    ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:76:21: error: use of undeclared identifier 'baseUrl_'
+C/C++:                     baseUrl_ = j["baseUrl"].get<std::string>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:79:21: error: use of undeclared identifier 'modelName_'
+C/C++:                     modelName_ = j["modelName"].get<std::string>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:82:21: error: use of undeclared identifier 'apiKey_'
+C/C++:                     apiKey_ = j["apiKey"].get<std::string>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:85:21: error: use of undeclared identifier 'apiKeyEnvVar_'
+C/C++:                     apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:88:21: error: use of undeclared identifier 'format_'
+C/C++:                     format_ = j["format"].get<std::string>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:91:21: error: use of undeclared identifier 'maxRetries_'
+C/C++:                     maxRetries_ = j["maxRetries"].get<int>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:94:21: error: use of undeclared identifier 'retryDelayMs_'
+C/C++:                     retryDelayMs_ = j["retryDelayMs"].get<int>();
+C/C++:                     ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:98:55: error: use of undeclared identifier 'baseUrl_'
+C/C++:                 std::cout << "[Config] Base URL: " << baseUrl_ << ", Format: " << format_ << std::endl;
+C/C++:                                                       ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:98:83: error: use of undeclared identifier 'format_'
+C/C++:                 std::cout << "[Config] Base URL: " << baseUrl_ << ", Format: " << format_ << std::endl;
+C/C++:                                                                                   ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:107:13: error: use of undeclared identifier 'baseUrl_'
+C/C++:         if (baseUrl_.empty() && configFilePath != "ai_gemini.json") {
+C/C++:             ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:120:25: error: use of undeclared identifier 'baseUrl_'
+C/C++:                         baseUrl_ = j["baseUrl"].get<std::string>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:123:25: error: use of undeclared identifier 'modelName_'
+C/C++:                         modelName_ = j["modelName"].get<std::string>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:126:25: error: use of undeclared identifier 'apiKey_'
+C/C++:                         apiKey_ = j["apiKey"].get<std::string>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:129:25: error: use of undeclared identifier 'apiKeyEnvVar_'
+C/C++:                         apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:132:25: error: use of undeclared identifier 'format_'
+C/C++:                         format_ = j["format"].get<std::string>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:135:25: error: use of undeclared identifier 'maxRetries_'
+C/C++:                         maxRetries_ = j["maxRetries"].get<int>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:138:25: error: use of undeclared identifier 'retryDelayMs_'
+C/C++:                         retryDelayMs_ = j["retryDelayMs"].get<int>();
+C/C++:                         ^
+C/C++: /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:148:14: error: use of undeclared identifier 'apiKeyEnvVar_'
+C/C++:         if (!apiKeyEnvVar_.empty()) {
+C/C++:              ^
+C/C++: fatal error: too many errors emitted, stopping now [-ferror-limit=]
+C/C++: 20 errors generated.
+
+> Task :app:buildCMakeRelWithDebInfo[arm64-v8a][main] FAILED
+> Task :app:lintVitalAnalyzeRelease
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:buildCMakeRelWithDebInfo[arm64-v8a][main]'.
+> com.android.ide.common.process.ProcessException: ninja: Entering directory `/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a'
+  [1/542] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o
+  [2/542] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o
+  [3/542] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o
+  [4/542] Generating include/SDL2/SDL.h
+  [5/542] Generating include/SDL2/SDL_assert.h
+  [6/542] Generating include/SDL2/SDL_atomic.h
+  [7/542] Generating include/SDL2/SDL_audio.h
+  [8/542] Generating include/SDL2/SDL_bits.h
+  [9/542] Generating include/SDL2/SDL_blendmode.h
+  [10/542] Generating include/SDL2/SDL_clipboard.h
+  [11/542] Generating include/SDL2/SDL_copying.h
+  [12/542] Generating include/SDL2/SDL_cpuinfo.h
+  [13/542] Generating include/SDL2/SDL_egl.h
+  [14/542] Generating include/SDL2/SDL_endian.h
+  [15/542] Generating include/SDL2/SDL_error.h
+  [16/542] Generating include/SDL2/SDL_events.h
+  [17/542] Generating include/SDL2/SDL_filesystem.h
+  [18/542] Generating include/SDL2/SDL_gesture.h
+  [19/542] Generating include/SDL2/SDL_gamecontroller.h
+  [20/542] Generating include/SDL2/SDL_guid.h
+  [21/542] Generating include/SDL2/SDL_haptic.h
+  [22/542] Generating include/SDL2/SDL_hidapi.h
+  [23/542] Generating include/SDL2/SDL_hints.h
+  [24/542] Generating include/SDL2/SDL_joystick.h
+  [25/542] Generating include/SDL2/SDL_keyboard.h
+  [26/542] Generating include/SDL2/SDL_keycode.h
+  [27/542] Generating include/SDL2/SDL_loadso.h
+  [28/542] Generating include/SDL2/SDL_locale.h
+  [29/542] Generating include/SDL2/SDL_log.h
+  [30/542] Generating include/SDL2/SDL_main.h
+  [31/542] Generating include/SDL2/SDL_messagebox.h
+  [32/542] Generating include/SDL2/SDL_metal.h
+  [33/542] Generating include/SDL2/SDL_misc.h
+  [34/542] Generating include/SDL2/SDL_mouse.h
+  [35/542] Generating include/SDL2/SDL_mutex.h
+  [36/542] Generating include/SDL2/SDL_name.h
+  [37/542] Generating include/SDL2/SDL_opengl.h
+  [38/542] Generating include/SDL2/SDL_opengles.h
+  [39/542] Generating include/SDL2/SDL_opengl_glext.h
+  [40/542] Generating include/SDL2/SDL_opengles2.h
+  [41/542] Generating include/SDL2/SDL_pixels.h
+  [42/542] Generating include/SDL2/SDL_opengles2_gl2.h
+  [43/542] Generating include/SDL2/SDL_opengles2_gl2ext.h
+  [44/542] Generating include/SDL2/SDL_opengles2_gl2platform.h
+  [45/542] Generating include/SDL2/SDL_opengles2_khrplatform.h
+  [46/542] Generating include/SDL2/SDL_platform.h
+  [47/542] Generating include/SDL2/SDL_power.h
+  [48/542] Generating include/SDL2/SDL_quit.h
+  [49/542] Generating include/SDL2/SDL_rect.h
+  [50/542] Generating include/SDL2/SDL_render.h
+  [51/542] Generating include/SDL2/SDL_rwops.h
+  [52/542] Generating include/SDL2/SDL_scancode.h
+  [53/542] Generating include/SDL2/SDL_sensor.h
+  [54/542] Generating include/SDL2/SDL_shape.h
+  [55/542] Generating include/SDL2/SDL_stdinc.h
+  [56/542] Generating include/SDL2/SDL_surface.h
+  [57/542] Generating include/SDL2/SDL_system.h
+  [58/542] Generating include/SDL2/SDL_syswm.h
+  [59/542] Generating include/SDL2/SDL_test.h
+  [60/542] Generating include/SDL2/SDL_test_crc32.h
+  [61/542] Generating include/SDL2/SDL_test_assert.h
+  [62/542] Generating include/SDL2/SDL_test_common.h
+  [63/542] Generating include/SDL2/SDL_test_compare.h
+  [64/542] Generating include/SDL2/SDL_test_font.h
+  [65/542] Generating include/SDL2/SDL_test_log.h
+  [66/542] Generating include/SDL2/SDL_test_fuzzer.h
+  [67/542] Generating include/SDL2/SDL_test_harness.h
+  [68/542] Generating include/SDL2/SDL_test_images.h
+  [69/542] Generating include/SDL2/SDL_test_md5.h
+  [70/542] Generating include/SDL2/SDL_thread.h
+  [71/542] Generating include/SDL2/SDL_test_memory.h
+  [72/542] Generating include/SDL2/SDL_test_random.h
+  [73/542] Generating include/SDL2/SDL_timer.h
+  [74/542] Generating include/SDL2/SDL_touch.h
+  [75/542] Generating include/SDL2/SDL_types.h
+  [76/542] Generating include/SDL2/SDL_version.h
+  [77/542] Generating include/SDL2/SDL_video.h
+  [78/542] Generating include/SDL2/SDL_vulkan.h
+  [79/542] Generating include/SDL2/begin_code.h
+  [80/542] Generating include/SDL2/close_code.h
+  [81/542] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_dropevents.c.o
+  [82/542] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz/miniz_zip.c:189:9: warning: Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files. [-W#pragma-messages]
+  #pragma message("Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.")
+          ^
+  1 warning generated.
+  [83/542] Linking C static library libbook_miniz.a
+  [84/542] Building CXX object CMakeFiles/main.dir/src/main.cpp.o
+  FAILED: CMakeFiles/main.dir/src/main.cpp.o 
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DCURL_STATICLIB -Dmain_EXPORTS -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_mixer -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_net -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/pugixml/src -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a/external/src/SDL2/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a/external/src/SDL2/include/SDL2 -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a/external/src/SDL2/include-config-relwithdebinfo/SDL2 -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_mixer/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O2 -g -DNDEBUG -fPIC -std=gnu++17 -MD -MT CMakeFiles/main.dir/src/main.cpp.o -MF CMakeFiles/main.dir/src/main.cpp.o.d -o CMakeFiles/main.dir/src/main.cpp.o -c /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4861:7: error: expected '}'
+  #endif
+        ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:56:36: note: to match this '{'
+  class AskAiExternal : public AskAi {
+                                     ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:76:21: error: use of undeclared identifier 'baseUrl_'
+                      baseUrl_ = j["baseUrl"].get<std::string>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:79:21: error: use of undeclared identifier 'modelName_'
+                      modelName_ = j["modelName"].get<std::string>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:82:21: error: use of undeclared identifier 'apiKey_'
+                      apiKey_ = j["apiKey"].get<std::string>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:85:21: error: use of undeclared identifier 'apiKeyEnvVar_'
+                      apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:88:21: error: use of undeclared identifier 'format_'
+                      format_ = j["format"].get<std::string>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:91:21: error: use of undeclared identifier 'maxRetries_'
+                      maxRetries_ = j["maxRetries"].get<int>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:94:21: error: use of undeclared identifier 'retryDelayMs_'
+                      retryDelayMs_ = j["retryDelayMs"].get<int>();
+                      ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:98:55: error: use of undeclared identifier 'baseUrl_'
+                  std::cout << "[Config] Base URL: " << baseUrl_ << ", Format: " << format_ << std::endl;
+                                                        ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:98:83: error: use of undeclared identifier 'format_'
+                  std::cout << "[Config] Base URL: " << baseUrl_ << ", Format: " << format_ << std::endl;
+                                                                                    ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:107:13: error: use of undeclared identifier 'baseUrl_'
+          if (baseUrl_.empty() && configFilePath != "ai_gemini.json") {
+              ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:120:25: error: use of undeclared identifier 'baseUrl_'
+                          baseUrl_ = j["baseUrl"].get<std::string>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:123:25: error: use of undeclared identifier 'modelName_'
+                          modelName_ = j["modelName"].get<std::string>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:126:25: error: use of undeclared identifier 'apiKey_'
+                          apiKey_ = j["apiKey"].get<std::string>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:129:25: error: use of undeclared identifier 'apiKeyEnvVar_'
+                          apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:132:25: error: use of undeclared identifier 'format_'
+                          format_ = j["format"].get<std::string>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:135:25: error: use of undeclared identifier 'maxRetries_'
+                          maxRetries_ = j["maxRetries"].get<int>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:138:25: error: use of undeclared identifier 'retryDelayMs_'
+                          retryDelayMs_ = j["retryDelayMs"].get<int>();
+                          ^
+  /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:148:14: error: use of undeclared identifier 'apiKeyEnvVar_'
+          if (!apiKeyEnvVar_.empty()) {
+               ^
+  fatal error: too many errors emitted, stopping now [-ferror-limit=]
+  20 errors generated.
+  [85/542] Building CXX object CMakeFiles/main.dir/src/book_converter.cpp.o
+  [86/542] Building CXX object external/src/pugixml/CMakeFiles/pugixml-static.dir/src/pugixml.cpp.o
+  ninja: build stopped: subcommand failed.
+  
+  C++ build system [build] failed while executing:
+      /usr/local/lib/android/sdk/cmake/3.22.1/bin/ninja \
+        -C \
+        /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/1l4d1q5i/arm64-v8a \
+        main
+    from /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/platforms/android/app
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 54s
+20 actionable tasks: 20 executed
