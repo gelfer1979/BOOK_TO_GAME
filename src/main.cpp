@@ -1566,8 +1566,13 @@ void OpenWebFileDialog() {
                     try {
                         FS.writeFile(path, data);
                         console.log('[Web File] Successfully loaded ' + filename + ' (' + data.length + ' bytes) into VFS at ' + path);
-                        // Call C++ handler to load the book
-                        Module.ccall('TriggerBookLoad', null, ['string'], [path]);
+                        
+                        // Call C++ handler directly using WASM heap allocation
+                        var lengthBytes = lengthBytesUTF8(path) + 1;
+                        var stringOnWasmHeap = _malloc(lengthBytes);
+                        stringToUTF8(path, stringOnWasmHeap, lengthBytes);
+                        _TriggerBookLoad(stringOnWasmHeap);
+                        _free(stringOnWasmHeap);
                     } catch (err) {
                         console.error('[Web File] Failed to write file: ', err);
                     }
@@ -3181,23 +3186,31 @@ void MainIteration() {
                            my >= state.pasteBtnRect.y && my <= (state.pasteBtnRect.y + state.pasteBtnRect.h)) {
 #ifdef __EMSCRIPTEN__
                     EM_ASM({
+                        var setInputText = function(text) {
+                            if (!text) return;
+                            var lengthBytes = lengthBytesUTF8(text) + 1;
+                            var stringOnWasmHeap = _malloc(lengthBytes);
+                            stringToUTF8(text, stringOnWasmHeap, lengthBytes);
+                            _SetInputText(stringOnWasmHeap);
+                            _free(stringOnWasmHeap);
+                        };
+
                         if (navigator.clipboard && navigator.clipboard.readText) {
                             navigator.clipboard.readText().then(function(text) {
-                                // Call C++ handler to set state.inputText
-                                Module.ccall('SetInputText', null, ['string'], [text]);
+                                setInputText(text);
                             }).catch(function(err) {
                                 console.error('Failed to read clipboard: ', err);
                                 // Fallback to standard prompt if blocked/denied
                                 var text = prompt("Paste your API key here:");
                                 if (text) {
-                                    Module.ccall('SetInputText', null, ['string'], [text]);
+                                    setInputText(text);
                                 }
                             });
                         } else {
                             // Fallback to standard prompt dialog if clipboard API is not available
                             var text = prompt("Paste your API key here:");
                             if (text) {
-                                Module.ccall('SetInputText', null, ['string'], [text]);
+                                setInputText(text);
                             }
                         }
                     });
