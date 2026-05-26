@@ -1,0 +1,976 @@
+[1/588] Generating include/SDL2/SDL_assert.h
+[2/588] Generating include/SDL2/SDL.h
+[3/588] Generating include/SDL2/SDL_atomic.h
+[4/588] Generating include/SDL2/SDL_audio.h
+[5/588] Generating include/SDL2/SDL_blendmode.h
+[6/588] Generating include/SDL2/SDL_clipboard.h
+[7/588] Generating include/SDL2/SDL_bits.h
+[8/588] Generating include/SDL2/SDL_copying.h
+[9/588] Generating include/SDL2/SDL_cpuinfo.h
+[10/588] Generating include/SDL2/SDL_egl.h
+[11/588] Generating include/SDL2/SDL_endian.h
+[12/588] Generating include/SDL2/SDL_error.h
+[13/588] Generating include/SDL2/SDL_events.h
+[14/588] Generating include/SDL2/SDL_filesystem.h
+[15/588] Generating include/SDL2/SDL_gesture.h
+[16/588] Generating include/SDL2/SDL_gamecontroller.h
+[17/588] Generating include/SDL2/SDL_guid.h
+[18/588] Generating include/SDL2/SDL_hidapi.h
+[19/588] Generating include/SDL2/SDL_haptic.h
+[20/588] Generating include/SDL2/SDL_hints.h
+[21/588] Generating include/SDL2/SDL_joystick.h
+[22/588] Generating include/SDL2/SDL_keyboard.h
+[23/588] Generating include/SDL2/SDL_keycode.h
+[24/588] Generating include/SDL2/SDL_loadso.h
+[25/588] Generating include/SDL2/SDL_locale.h
+[26/588] Generating include/SDL2/SDL_log.h
+[27/588] Generating include/SDL2/SDL_main.h
+[28/588] Generating include/SDL2/SDL_messagebox.h
+[29/588] Generating include/SDL2/SDL_misc.h
+[30/588] Generating include/SDL2/SDL_metal.h
+[31/588] Generating include/SDL2/SDL_mouse.h
+[32/588] Generating include/SDL2/SDL_mutex.h
+[33/588] Generating include/SDL2/SDL_opengl.h
+[34/588] Generating include/SDL2/SDL_name.h
+[35/588] Generating include/SDL2/SDL_opengl_glext.h
+[36/588] Generating include/SDL2/SDL_opengles2.h
+[37/588] Generating include/SDL2/SDL_opengles.h
+[38/588] Generating include/SDL2/SDL_opengles2_gl2.h
+[39/588] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[40/588] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[41/588] Generating include/SDL2/SDL_pixels.h
+[42/588] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[43/588] Generating include/SDL2/SDL_platform.h
+[44/588] Generating include/SDL2/SDL_quit.h
+[45/588] Generating include/SDL2/SDL_power.h
+[46/588] Generating include/SDL2/SDL_rect.h
+[47/588] Generating include/SDL2/SDL_rwops.h
+[48/588] Generating include/SDL2/SDL_render.h
+[49/588] Generating include/SDL2/SDL_scancode.h
+[50/588] Generating include/SDL2/SDL_shape.h
+[51/588] Generating include/SDL2/SDL_sensor.h
+[52/588] Generating include/SDL2/SDL_stdinc.h
+[53/588] Generating include/SDL2/SDL_surface.h
+[54/588] Generating include/SDL2/SDL_system.h
+[55/588] Generating include/SDL2/SDL_test.h
+[56/588] Generating include/SDL2/SDL_syswm.h
+[57/588] Generating include/SDL2/SDL_test_assert.h
+[58/588] Generating include/SDL2/SDL_test_common.h
+[59/588] Generating include/SDL2/SDL_test_compare.h
+[60/588] Generating include/SDL2/SDL_test_fuzzer.h
+[61/588] Generating include/SDL2/SDL_test_font.h
+[62/588] Generating include/SDL2/SDL_test_crc32.h
+[63/588] Generating include/SDL2/SDL_test_log.h
+[64/588] Generating include/SDL2/SDL_test_harness.h
+[65/588] Generating include/SDL2/SDL_test_images.h
+[66/588] Generating include/SDL2/SDL_test_memory.h
+[67/588] Generating include/SDL2/SDL_test_md5.h
+[68/588] Generating include/SDL2/SDL_test_random.h
+[69/588] Generating include/SDL2/SDL_thread.h
+[70/588] Generating include/SDL2/SDL_timer.h
+[71/588] Generating include/SDL2/SDL_touch.h
+[72/588] Generating include/SDL2/SDL_types.h
+[73/588] Generating include/SDL2/SDL_version.h
+[74/588] Generating include/SDL2/SDL_video.h
+[75/588] Generating include/SDL2/SDL_vulkan.h
+[76/588] Generating include/SDL2/begin_code.h
+[77/588] Generating include/SDL2/close_code.h
+[78/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL.c.o
+[79/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_assert.c.o
+[80/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_dataqueue.c.o
+[81/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_error.c.o
+[82/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_guid.c.o
+[83/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_hints.c.o
+[84/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[85/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_log.c.o
+[86/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_list.c.o
+[87/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/SDL_utils.c.o
+[88/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[89/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/atomic/SDL_spinlock.c.o
+[90/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/atomic/SDL_atomic.c.o
+[91/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiodev.c.o
+[92/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audio.c.o
+[93/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_mixer.c.o
+[94/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiotypecvt.c.o
+[95/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiocvt.c.o
+[96/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/SDL_wave.c.o
+[97/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_clipboardevents.c.o
+[98/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_displayevents.c.o
+[99/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/cpuinfo/SDL_cpuinfo.c.o
+[100/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_dropevents.c.o
+[101/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_gesture.c.o
+[102/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_keyboard.c.o
+[103/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_keysym_to_scancode.c.o
+[104/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_events.c.o
+[105/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_quit.c.o
+[106/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_scancode_tables.c.o
+[107/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_mouse.c.o
+[108/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_windowevents.c.o
+[109/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/SDL_touch.c.o
+[110/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/events/imKStoUCS.c.o
+[111/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/file/SDL_rwops.c.o
+[112/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/haptic/SDL_haptic.c.o
+[113/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/hidapi/SDL_hidapi.c.o
+[114/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/dynapi/SDL_dynapi.c.o
+[115/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_steam_virtual_gamepad.c.o
+[116/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/controller_type.c.o
+[117/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_gamecontroller.c.o
+[118/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_atan2.c.o
+[119/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_exp.c.o
+[120/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_fmod.c.o
+[121/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_log10.c.o
+[122/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_log.c.o
+[123/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_pow.c.o
+[124/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_rem_pio2.c.o
+[125/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_cos.c.o
+[126/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/e_sqrt.c.o
+[127/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_sin.c.o
+[128/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_tan.c.o
+[129/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/k_rem_pio2.c.o
+[130/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_copysign.c.o
+[131/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_atan.c.o
+[132/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_cos.c.o
+[133/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_fabs.c.o
+[134/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/SDL_joystick.c.o
+[135/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_scalbn.c.o
+[136/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_floor.c.o
+[137/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_sin.c.o
+[138/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/libm/s_tan.c.o
+[139/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/locale/SDL_locale.c.o
+[140/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/misc/SDL_url.c.o
+[141/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_d3dmath.c.o
+[142/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/power/SDL_power.c.o
+[143/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_render_d3d.c.o
+[144/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_shaders_d3d.c.o
+[145/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_render_d3d11.c.o
+[146/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_shaders_d3d11.c.o
+[147/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_yuv_sw.c.o
+[148/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_render_d3d12.c.o
+[149/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_render_gl.c.o
+[150/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.o
+[151/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_shaders_gl.c.o
+[152/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles/SDL_render_gles.c.o
+[153/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_shaders_gles2.c.o
+[154/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/ps2/SDL_render_ps2.c.o
+[155/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/psp/SDL_render_psp.c.o
+[156/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_render_gles2.c.o
+[157/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/SDL_render.c.o
+[158/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendpoint.c.o
+[159/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendfillrect.c.o
+[160/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawline.c.o
+[161/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawpoint.c.o
+[162/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendline.c.o
+[163/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_rotate.c.o
+[164/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm.c.o
+[165/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_render_sw.c.o
+[166/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.o
+[167/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.o
+[168/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc16.c.o
+[169/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc32.c.o
+[170/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_getenv.c.o
+[171/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_iconv.c.o
+[172/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_malloc.c.o
+[173/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_mslibc.c.o
+[174/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_qsort.c.o
+[175/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/sensor/SDL_sensor.c.o
+[176/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/render/software/SDL_triangle.c.o
+[177/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_stdlib.c.o
+[178/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_strtokr.c.o
+[179/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_string.c.o
+[180/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/SDL_thread.c.o
+[181/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/timer/SDL_timer.c.o
+[182/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit.c.o
+[183/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_0.c.o
+[184/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_RLEaccel.c.o
+[185/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_1.c.o
+[186/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_A.c.o
+[187/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_copy.c.o
+[188/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_N.c.o
+[189/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_slow.c.o
+[190/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_clipboard.c.o
+[191/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_egl.c.o
+[192/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_bmp.c.o
+[193/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_fillrect.c.o
+[194/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_rect.c.o
+[195/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_pixels.c.o
+[196/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_shape.c.o
+[197/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_auto.c.o
+[198/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_stretch.c.o
+[199/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_vulkan_utils.c.o
+[200/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_surface.c.o
+[201/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.o
+[202/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_video.c.o
+[203/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.o
+[204/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/SDL_yuv.c.o
+[205/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/dummy/SDL_dummyaudio.c.o
+[206/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/disk/SDL_diskaudio.c.o
+[207/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/loadso/dlopen/SDL_sysloadso.c.o
+[208/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.o
+[209/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullevents.c.o
+[210/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullframebuffer.c.o
+[211/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/virtual/SDL_virtualjoystick.c.o
+[212/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenevents.c.o
+[213/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenframebuffer.c.o
+[214/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenopengles.c.o
+[215/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenwindow.c.o
+[216/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenvideo.c.o
+[217/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullvideo.c.o
+[218/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/pulseaudio/SDL_pulseaudio.c.o
+[219/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/alsa/SDL_alsa_audio.c.o
+[220/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11clipboard.c.o
+[221/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/audio/dsp/SDL_dspaudio.c.o
+[222/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11dyn.c.o
+[223/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11framebuffer.c.o
+[224/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11events.c.o
+[225/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11keyboard.c.o
+[226/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11modes.c.o
+[227/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11mouse.c.o
+[228/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11opengl.c.o
+[229/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11opengles.c.o
+[230/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11shape.c.o
+[231/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11touch.c.o
+[232/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11messagebox.c.o
+[233/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11vulkan.c.o
+[234/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11xfixes.c.o
+[235/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11video.c.o
+[236/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11xinput2.c.o
+[237/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/core/unix/SDL_poll.c.o
+[238/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/edid-parse.c.o
+[239/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/haptic/linux/SDL_syshaptic.c.o
+[240/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/video/x11/SDL_x11window.c.o
+[241/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/core/linux/SDL_evdev_capabilities.c.o
+[242/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/core/linux/SDL_threadprio.c.o
+[243/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/core/linux/SDL_sandbox.c.o
+[244/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_combined.c.o
+[245/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/core/linux/SDL_evdev_kbd.c.o
+[246/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/core/linux/SDL_evdev.c.o
+[247/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.o
+[248/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.o
+[249/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.o
+[250/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.o
+[251/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.o
+[252/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.o
+[253/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.o
+[254/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_shield.c.o
+[255/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.o
+[256/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.o
+[257/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.o
+[258/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.o
+[259/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.o
+[260/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_switch.c.o
+[261/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.o
+[262/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/steam/SDL_steamcontroller.c.o
+[263/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapijoystick.c.o
+[264/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_systhread.c.o
+[265/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_sysmutex.c.o
+[266/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_systls.c.o
+[267/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_syscond.c.o
+[268/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/thread/pthread/SDL_syssem.c.o
+[269/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/misc/unix/SDL_sysurl.c.o
+[270/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/locale/unix/SDL_syslocale.c.o
+[271/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/power/linux/SDL_syspower.c.o
+[272/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/filesystem/unix/SDL_sysfilesystem.c.o
+[273/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/sensor/dummy/SDL_dummysensor.c.o
+[274/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[275/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/timer/unix/SDL_systimer.c.o
+[276/588] Building C object external/src/SDL2/CMakeFiles/SDL2-static.dir/src/joystick/linux/SDL_sysjoystick.c.o
+[277/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[278/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[279/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[280/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[281/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[282/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[283/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[284/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[285/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[286/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[287/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[288/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[289/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[290/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[291/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[292/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[293/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[294/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[295/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[296/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[297/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[298/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+[299/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[300/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[301/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[302/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[303/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[304/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[305/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[306/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[307/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[308/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[309/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[310/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[311/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[312/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[313/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[314/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[315/588] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o
+[316/588] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o
+[317/588] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o
+[318/588] Building C object external/src/SDL2_ttf/external/freetype/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[319/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/buffer.c.o
+[320/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/compression.c.o
+[321/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/debug.c.o
+[322/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/index.c.o
+[323/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/memory.c.o
+[324/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/meta.c.o
+[325/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/parse_rawml.c.o
+[326/588] Building C object CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o
+[327/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/read.c.o
+[328/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/structure.c.o
+[329/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/write.c.o
+[330/588] Building C object external/src/libmobi/src/CMakeFiles/mobi.dir/util.c.o
+[331/588] Building C object external/src/SDL2/CMakeFiles/SDL2main.dir/src/main/dummy/SDL_dummy_main.c.o
+[332/588] Linking C static library external/src/SDL2/libSDL2.a
+[333/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG.c.o
+[334/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_WIC.c.o
+[335/588] Building C object external/src/libmobi/src/CMakeFiles/miniz.dir/miniz.c.o
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/libmobi/src/miniz.c:933: warning: "NDEBUG" redefined
+  933 | #define NDEBUG
+      | 
+<command-line>: note: this is the location of the previous definition
+[336/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_avif.c.o
+[337/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_bmp.c.o
+[338/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_gif.c.o
+[339/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_jpg.c.o
+[340/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_jxl.c.o
+[341/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_lbm.c.o
+[342/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_pcx.c.o
+[343/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_png.c.o
+[344/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_pnm.c.o
+[345/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_qoi.c.o
+[346/588] Building CXX object external/src/pugixml/CMakeFiles/pugixml-static.dir/src/pugixml.cpp.o
+[347/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_tga.c.o
+[348/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_svg.c.o
+[349/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_tif.c.o
+[350/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_webp.c.o
+[351/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_xcf.c.o
+[352/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_stb.c.o
+[353/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/load_aiff.c.o
+[354/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_xpm.c.o
+[355/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/load_voc.c.o
+[356/588] Building C object external/src/SDL2_image/CMakeFiles/SDL2_image.dir/src/IMG_xv.c.o
+[357/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_drflac.c.o
+[358/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_flac.c.o
+[359/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_fluidsynth.c.o
+[360/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_gme.c.o
+[361/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_cmd.c.o
+[362/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_minimp3.c.o
+[363/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_modplug.c.o
+[364/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_mpg123.c.o
+[365/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_nativemidi.c.o
+[366/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_ogg.c.o
+[367/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_opus.c.o
+[368/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_timidity.c.o
+[369/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/mp3utils.c.o
+[370/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_wavpack.c.o
+[371/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_xmp.c.o
+[372/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_wav.c.o
+[373/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/effect_stereoreverse.c.o
+[374/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/effects_internal.c.o
+[375/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/effect_position.c.o
+[376/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/music.c.o
+[377/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/utils.c.o
+[378/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/mixer.c.o
+[379/588] Linking C static library external/src/SDL2_ttf/external/freetype/libfreetype.a
+[380/588] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnet.c.o
+[381/588] Building C object external/src/SDL2_mixer/CMakeFiles/SDL2_mixer.dir/src/codecs/music_ogg_stb.c.o
+[382/588] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnetselect.c.o
+[383/588] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnetTCP.c.o
+[384/588] Generating CURLINFO_ACTIVESOCKET.3, CURLINFO_APPCONNECT_TIME.3, CURLINFO_APPCONNECT_TIME_T.3, CURLINFO_CAINFO.3, CURLINFO_CAPATH.3, CURLINFO_CERTINFO.3, CURLINFO_CONDITION_UNMET.3, CURLINFO_CONNECT_TIME.3, CURLINFO_CONNECT_TIME_T.3, CURLINFO_CONN_ID.3, CURLINFO_CONTENT_LENGTH_DOWNLOAD.3, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T.3, CURLINFO_CONTENT_LENGTH_UPLOAD.3, CURLINFO_CONTENT_LENGTH_UPLOAD_T.3, CURLINFO_CONTENT_TYPE.3, CURLINFO_COOKIELIST.3, CURLINFO_EFFECTIVE_METHOD.3, CURLINFO_EFFECTIVE_URL.3, CURLINFO_FILETIME.3, CURLINFO_FILETIME_T.3, CURLINFO_FTP_ENTRY_PATH.3, CURLINFO_HEADER_SIZE.3, CURLINFO_HTTP_CONNECTCODE.3, CURLINFO_HTTP_VERSION.3, CURLINFO_HTTPAUTH_AVAIL.3, CURLINFO_LASTSOCKET.3, CURLINFO_LOCAL_IP.3, CURLINFO_LOCAL_PORT.3, CURLINFO_NAMELOOKUP_TIME.3, CURLINFO_NAMELOOKUP_TIME_T.3, CURLINFO_NUM_CONNECTS.3, CURLINFO_OS_ERRNO.3, CURLINFO_PRETRANSFER_TIME.3, CURLINFO_PRETRANSFER_TIME_T.3, CURLINFO_PRIMARY_IP.3, CURLINFO_PRIMARY_PORT.3, CURLINFO_PRIVATE.3, CURLINFO_PROTOCOL.3, CURLINFO_PROXY_ERROR.3, CURLINFO_PROXY_SSL_VERIFYRESULT.3, CURLINFO_PROXYAUTH_AVAIL.3, CURLINFO_QUEUE_TIME_T.3, CURLINFO_REDIRECT_COUNT.3, CURLINFO_REDIRECT_TIME.3, CURLINFO_REDIRECT_TIME_T.3, CURLINFO_REDIRECT_URL.3, CURLINFO_REFERER.3, CURLINFO_REQUEST_SIZE.3, CURLINFO_RESPONSE_CODE.3, CURLINFO_RETRY_AFTER.3, CURLINFO_RTSP_CLIENT_CSEQ.3, CURLINFO_RTSP_CSEQ_RECV.3, CURLINFO_RTSP_SERVER_CSEQ.3, CURLINFO_RTSP_SESSION_ID.3, CURLINFO_SCHEME.3, CURLINFO_SIZE_DOWNLOAD.3, CURLINFO_SIZE_DOWNLOAD_T.3, CURLINFO_SIZE_UPLOAD.3, CURLINFO_SIZE_UPLOAD_T.3, CURLINFO_SPEED_DOWNLOAD.3, CURLINFO_SPEED_DOWNLOAD_T.3, CURLINFO_SPEED_UPLOAD.3, CURLINFO_SPEED_UPLOAD_T.3, CURLINFO_SSL_ENGINES.3, CURLINFO_SSL_VERIFYRESULT.3, CURLINFO_STARTTRANSFER_TIME.3, CURLINFO_STARTTRANSFER_TIME_T.3, CURLINFO_TLS_SESSION.3, CURLINFO_TLS_SSL_PTR.3, CURLINFO_TOTAL_TIME.3, CURLINFO_TOTAL_TIME_T.3, CURLINFO_USED_PROXY.3, CURLINFO_XFER_ID.3, CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE.3, CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE.3, CURLMOPT_MAX_CONCURRENT_STREAMS.3, CURLMOPT_MAX_HOST_CONNECTIONS.3, CURLMOPT_MAX_PIPELINE_LENGTH.3, CURLMOPT_MAX_TOTAL_CONNECTIONS.3, CURLMOPT_MAXCONNECTS.3, CURLMOPT_PIPELINING.3, CURLMOPT_PIPELINING_SERVER_BL.3, CURLMOPT_PIPELINING_SITE_BL.3, CURLMOPT_PUSHDATA.3, CURLMOPT_PUSHFUNCTION.3, CURLMOPT_SOCKETDATA.3, CURLMOPT_SOCKETFUNCTION.3, CURLMOPT_TIMERDATA.3, CURLMOPT_TIMERFUNCTION.3, CURLOPT_ABSTRACT_UNIX_SOCKET.3, CURLOPT_ACCEPT_ENCODING.3, CURLOPT_ACCEPTTIMEOUT_MS.3, CURLOPT_ADDRESS_SCOPE.3, CURLOPT_ALTSVC.3, CURLOPT_ALTSVC_CTRL.3, CURLOPT_APPEND.3, CURLOPT_AUTOREFERER.3, CURLOPT_AWS_SIGV4.3, CURLOPT_BUFFERSIZE.3, CURLOPT_CAINFO.3, CURLOPT_CAINFO_BLOB.3, CURLOPT_CAPATH.3, CURLOPT_CA_CACHE_TIMEOUT.3, CURLOPT_CERTINFO.3, CURLOPT_CHUNK_BGN_FUNCTION.3, CURLOPT_CHUNK_DATA.3, CURLOPT_CHUNK_END_FUNCTION.3, CURLOPT_CLOSESOCKETDATA.3, CURLOPT_CLOSESOCKETFUNCTION.3, CURLOPT_CONNECT_ONLY.3, CURLOPT_CONNECT_TO.3, CURLOPT_CONNECTTIMEOUT.3, CURLOPT_CONNECTTIMEOUT_MS.3, CURLOPT_CONV_FROM_NETWORK_FUNCTION.3, CURLOPT_CONV_FROM_UTF8_FUNCTION.3, CURLOPT_CONV_TO_NETWORK_FUNCTION.3, CURLOPT_COOKIE.3, CURLOPT_COOKIEFILE.3, CURLOPT_COOKIEJAR.3, CURLOPT_COOKIELIST.3, CURLOPT_COOKIESESSION.3, CURLOPT_COPYPOSTFIELDS.3, CURLOPT_CRLF.3, CURLOPT_CRLFILE.3, CURLOPT_CURLU.3, CURLOPT_CUSTOMREQUEST.3, CURLOPT_DEBUGDATA.3, CURLOPT_DEBUGFUNCTION.3, CURLOPT_DEFAULT_PROTOCOL.3, CURLOPT_DIRLISTONLY.3, CURLOPT_DISALLOW_USERNAME_IN_URL.3, CURLOPT_DNS_CACHE_TIMEOUT.3, CURLOPT_DNS_INTERFACE.3, CURLOPT_DNS_LOCAL_IP4.3, CURLOPT_DNS_LOCAL_IP6.3, CURLOPT_DNS_SERVERS.3, CURLOPT_DNS_SHUFFLE_ADDRESSES.3, CURLOPT_DNS_USE_GLOBAL_CACHE.3, CURLOPT_DOH_SSL_VERIFYHOST.3, CURLOPT_DOH_SSL_VERIFYPEER.3, CURLOPT_DOH_SSL_VERIFYSTATUS.3, CURLOPT_DOH_URL.3, CURLOPT_ECH.3, CURLOPT_EGDSOCKET.3, CURLOPT_ERRORBUFFER.3, CURLOPT_EXPECT_100_TIMEOUT_MS.3, CURLOPT_FAILONERROR.3, CURLOPT_FILETIME.3, CURLOPT_FNMATCH_DATA.3, CURLOPT_FNMATCH_FUNCTION.3, CURLOPT_FOLLOWLOCATION.3, CURLOPT_FORBID_REUSE.3, CURLOPT_FRESH_CONNECT.3, CURLOPT_FTP_ACCOUNT.3, CURLOPT_FTP_ALTERNATIVE_TO_USER.3, CURLOPT_FTP_CREATE_MISSING_DIRS.3, CURLOPT_FTP_FILEMETHOD.3, CURLOPT_FTP_SKIP_PASV_IP.3, CURLOPT_FTP_SSL_CCC.3, CURLOPT_FTP_USE_EPRT.3, CURLOPT_FTP_USE_EPSV.3, CURLOPT_FTP_USE_PRET.3, CURLOPT_FTPPORT.3, CURLOPT_FTPSSLAUTH.3, CURLOPT_GSSAPI_DELEGATION.3, CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS.3, CURLOPT_HAPROXYPROTOCOL.3, CURLOPT_HAPROXY_CLIENT_IP.3, CURLOPT_HEADER.3, CURLOPT_HEADERDATA.3, CURLOPT_HEADERFUNCTION.3, CURLOPT_HEADEROPT.3, CURLOPT_HSTS.3, CURLOPT_HSTS_CTRL.3, CURLOPT_HSTSREADDATA.3, CURLOPT_HSTSREADFUNCTION.3, CURLOPT_HSTSWRITEDATA.3, CURLOPT_HSTSWRITEFUNCTION.3, CURLOPT_HTTP09_ALLOWED.3, CURLOPT_HTTP200ALIASES.3, CURLOPT_HTTP_CONTENT_DECODING.3, CURLOPT_HTTP_TRANSFER_DECODING.3, CURLOPT_HTTP_VERSION.3, CURLOPT_HTTPAUTH.3, CURLOPT_HTTPGET.3, CURLOPT_HTTPHEADER.3, CURLOPT_HTTPPOST.3, CURLOPT_HTTPPROXYTUNNEL.3, CURLOPT_IGNORE_CONTENT_LENGTH.3, CURLOPT_INFILESIZE.3, CURLOPT_INFILESIZE_LARGE.3, CURLOPT_INTERFACE.3, CURLOPT_INTERLEAVEDATA.3, CURLOPT_INTERLEAVEFUNCTION.3, CURLOPT_IOCTLDATA.3, CURLOPT_IOCTLFUNCTION.3, CURLOPT_IPRESOLVE.3, CURLOPT_ISSUERCERT.3, CURLOPT_ISSUERCERT_BLOB.3, CURLOPT_KEEP_SENDING_ON_ERROR.3, CURLOPT_KEYPASSWD.3, CURLOPT_KRBLEVEL.3, CURLOPT_LOCALPORT.3, CURLOPT_LOCALPORTRANGE.3, CURLOPT_LOGIN_OPTIONS.3, CURLOPT_LOW_SPEED_LIMIT.3, CURLOPT_LOW_SPEED_TIME.3, CURLOPT_MAIL_AUTH.3, CURLOPT_MAIL_FROM.3, CURLOPT_MAIL_RCPT.3, CURLOPT_MAIL_RCPT_ALLOWFAILS.3, CURLOPT_MAX_RECV_SPEED_LARGE.3, CURLOPT_MAX_SEND_SPEED_LARGE.3, CURLOPT_MAXAGE_CONN.3, CURLOPT_MAXCONNECTS.3, CURLOPT_MAXFILESIZE.3, CURLOPT_MAXFILESIZE_LARGE.3, CURLOPT_MAXLIFETIME_CONN.3, CURLOPT_MAXREDIRS.3, CURLOPT_MIME_OPTIONS.3, CURLOPT_MIMEPOST.3, CURLOPT_NETRC.3, CURLOPT_NETRC_FILE.3, CURLOPT_NEW_DIRECTORY_PERMS.3, CURLOPT_NEW_FILE_PERMS.3, CURLOPT_NOBODY.3, CURLOPT_NOPROGRESS.3, CURLOPT_NOPROXY.3, CURLOPT_NOSIGNAL.3, CURLOPT_OPENSOCKETDATA.3, CURLOPT_OPENSOCKETFUNCTION.3, CURLOPT_PASSWORD.3, CURLOPT_PATH_AS_IS.3, CURLOPT_PINNEDPUBLICKEY.3, CURLOPT_PIPEWAIT.3, CURLOPT_PORT.3, CURLOPT_POST.3, CURLOPT_POSTFIELDS.3, CURLOPT_POSTFIELDSIZE.3, CURLOPT_POSTFIELDSIZE_LARGE.3, CURLOPT_POSTQUOTE.3, CURLOPT_POSTREDIR.3, CURLOPT_PRE_PROXY.3, CURLOPT_PREQUOTE.3, CURLOPT_PREREQDATA.3, CURLOPT_PREREQFUNCTION.3, CURLOPT_PRIVATE.3, CURLOPT_PROGRESSDATA.3, CURLOPT_PROGRESSFUNCTION.3, CURLOPT_PROTOCOLS.3, CURLOPT_PROTOCOLS_STR.3, CURLOPT_PROXY.3, CURLOPT_PROXY_CAINFO.3, CURLOPT_PROXY_CAINFO_BLOB.3, CURLOPT_PROXY_CAPATH.3, CURLOPT_PROXY_CRLFILE.3, CURLOPT_PROXY_ISSUERCERT.3, CURLOPT_PROXY_ISSUERCERT_BLOB.3, CURLOPT_PROXY_KEYPASSWD.3, CURLOPT_PROXY_PINNEDPUBLICKEY.3, CURLOPT_PROXY_SERVICE_NAME.3, CURLOPT_PROXY_SSL_CIPHER_LIST.3, CURLOPT_PROXY_SSL_OPTIONS.3, CURLOPT_PROXY_SSL_VERIFYHOST.3, CURLOPT_PROXY_SSL_VERIFYPEER.3, CURLOPT_PROXY_SSLCERT.3, CURLOPT_PROXY_SSLCERT_BLOB.3, CURLOPT_PROXY_SSLCERTTYPE.3, CURLOPT_PROXY_SSLKEY.3, CURLOPT_PROXY_SSLKEY_BLOB.3, CURLOPT_PROXY_SSLKEYTYPE.3, CURLOPT_PROXY_SSLVERSION.3, CURLOPT_PROXY_TLS13_CIPHERS.3, CURLOPT_PROXY_TLSAUTH_PASSWORD.3, CURLOPT_PROXY_TLSAUTH_TYPE.3, CURLOPT_PROXY_TLSAUTH_USERNAME.3, CURLOPT_PROXY_TRANSFER_MODE.3, CURLOPT_PROXYAUTH.3, CURLOPT_PROXYHEADER.3, CURLOPT_PROXYPASSWORD.3, CURLOPT_PROXYPORT.3, CURLOPT_PROXYTYPE.3, CURLOPT_PROXYUSERNAME.3, CURLOPT_PROXYUSERPWD.3, CURLOPT_PUT.3, CURLOPT_QUICK_EXIT.3, CURLOPT_QUOTE.3, CURLOPT_RANDOM_FILE.3, CURLOPT_RANGE.3, CURLOPT_READDATA.3, CURLOPT_READFUNCTION.3, CURLOPT_REDIR_PROTOCOLS.3, CURLOPT_REDIR_PROTOCOLS_STR.3, CURLOPT_REFERER.3, CURLOPT_REQUEST_TARGET.3, CURLOPT_RESOLVE.3, CURLOPT_RESOLVER_START_DATA.3, CURLOPT_RESOLVER_START_FUNCTION.3, CURLOPT_RESUME_FROM.3, CURLOPT_RESUME_FROM_LARGE.3, CURLOPT_RTSP_CLIENT_CSEQ.3, CURLOPT_RTSP_REQUEST.3, CURLOPT_RTSP_SERVER_CSEQ.3, CURLOPT_RTSP_SESSION_ID.3, CURLOPT_RTSP_STREAM_URI.3, CURLOPT_RTSP_TRANSPORT.3, CURLOPT_SASL_AUTHZID.3, CURLOPT_SASL_IR.3, CURLOPT_SEEKDATA.3, CURLOPT_SEEKFUNCTION.3, CURLOPT_SERVER_RESPONSE_TIMEOUT.3, CURLOPT_SERVER_RESPONSE_TIMEOUT_MS.3, CURLOPT_SERVICE_NAME.3, CURLOPT_SHARE.3, CURLOPT_SOCKOPTDATA.3, CURLOPT_SOCKOPTFUNCTION.3, CURLOPT_SOCKS5_AUTH.3, CURLOPT_SOCKS5_GSSAPI_NEC.3, CURLOPT_SOCKS5_GSSAPI_SERVICE.3, CURLOPT_SSH_AUTH_TYPES.3, CURLOPT_SSH_COMPRESSION.3, CURLOPT_SSH_HOSTKEYDATA.3, CURLOPT_SSH_HOSTKEYFUNCTION.3, CURLOPT_SSH_HOST_PUBLIC_KEY_MD5.3, CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256.3, CURLOPT_SSH_KEYDATA.3, CURLOPT_SSH_KEYFUNCTION.3, CURLOPT_SSH_KNOWNHOSTS.3, CURLOPT_SSH_PRIVATE_KEYFILE.3, CURLOPT_SSH_PUBLIC_KEYFILE.3, CURLOPT_SSL_CIPHER_LIST.3, CURLOPT_SSL_CTX_DATA.3, CURLOPT_SSL_CTX_FUNCTION.3, CURLOPT_SSL_EC_CURVES.3, CURLOPT_SSL_ENABLE_ALPN.3, CURLOPT_SSL_ENABLE_NPN.3, CURLOPT_SSL_FALSESTART.3, CURLOPT_SSL_OPTIONS.3, CURLOPT_SSL_SESSIONID_CACHE.3, CURLOPT_SSL_VERIFYHOST.3, CURLOPT_SSL_VERIFYPEER.3, CURLOPT_SSL_VERIFYSTATUS.3, CURLOPT_SSLCERT.3, CURLOPT_SSLCERT_BLOB.3, CURLOPT_SSLCERTTYPE.3, CURLOPT_SSLENGINE.3, CURLOPT_SSLENGINE_DEFAULT.3, CURLOPT_SSLKEY.3, CURLOPT_SSLKEY_BLOB.3, CURLOPT_SSLKEYTYPE.3, CURLOPT_SSLVERSION.3, CURLOPT_STDERR.3, CURLOPT_STREAM_DEPENDS.3, CURLOPT_STREAM_DEPENDS_E.3, CURLOPT_STREAM_WEIGHT.3, CURLOPT_SUPPRESS_CONNECT_HEADERS.3, CURLOPT_TCP_FASTOPEN.3, CURLOPT_TCP_KEEPALIVE.3, CURLOPT_TCP_KEEPIDLE.3, CURLOPT_TCP_KEEPINTVL.3, CURLOPT_TCP_NODELAY.3, CURLOPT_TELNETOPTIONS.3, CURLOPT_TFTP_BLKSIZE.3, CURLOPT_TFTP_NO_OPTIONS.3, CURLOPT_TIMECONDITION.3, CURLOPT_TIMEOUT.3, CURLOPT_TIMEOUT_MS.3, CURLOPT_TIMEVALUE.3, CURLOPT_TIMEVALUE_LARGE.3, CURLOPT_TLS13_CIPHERS.3, CURLOPT_TLSAUTH_PASSWORD.3, CURLOPT_TLSAUTH_TYPE.3, CURLOPT_TLSAUTH_USERNAME.3, CURLOPT_TRAILERDATA.3, CURLOPT_TRAILERFUNCTION.3, CURLOPT_TRANSFER_ENCODING.3, CURLOPT_TRANSFERTEXT.3, CURLOPT_UNIX_SOCKET_PATH.3, CURLOPT_UNRESTRICTED_AUTH.3, CURLOPT_UPKEEP_INTERVAL_MS.3, CURLOPT_UPLOAD.3, CURLOPT_UPLOAD_BUFFERSIZE.3, CURLOPT_URL.3, CURLOPT_USE_SSL.3, CURLOPT_USERAGENT.3, CURLOPT_USERNAME.3, CURLOPT_USERPWD.3, CURLOPT_VERBOSE.3, CURLOPT_WILDCARDMATCH.3, CURLOPT_WRITEDATA.3, CURLOPT_WRITEFUNCTION.3, CURLOPT_WS_OPTIONS.3, CURLOPT_XFERINFODATA.3, CURLOPT_XFERINFOFUNCTION.3, CURLOPT_XOAUTH2_BEARER.3, CURLSHOPT_LOCKFUNC.3, CURLSHOPT_SHARE.3, CURLSHOPT_UNLOCKFUNC.3, CURLSHOPT_UNSHARE.3, CURLSHOPT_USERDATA.3
+[385/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/altsvc.c.o
+[386/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/amigaos.c.o
+[387/588] Building C object external/src/SDL2_net/CMakeFiles/SDL2_net.dir/SDLnetUDP.c.o
+[388/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/asyn-ares.c.o
+[389/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/asyn-thread.c.o
+[390/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/base64.c.o
+[391/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/bufref.c.o
+[392/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/bufq.c.o
+[393/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/c-hyper.c.o
+[394/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-h2-proxy.c.o
+[395/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-haproxy.c.o
+[396/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-h1-proxy.c.o
+[397/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-https-connect.c.o
+[398/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cf-socket.c.o
+[399/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/conncache.c.o
+[400/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cfilters.c.o
+[401/588] Building C object external/src/SDL2_ttf/CMakeFiles/SDL2_ttf.dir/SDL_ttf.c.o
+[402/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/connect.c.o
+[403/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/content_encoding.c.o
+[404/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_addrinfo.c.o
+[405/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_des.c.o
+[406/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_fnmatch.c.o
+[407/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_endian.c.o
+[408/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_get_line.c.o
+[409/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_gethostname.c.o
+[410/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_gssapi.c.o
+[411/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_multibyte.c.o
+[412/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cookie.c.o
+[413/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_memrchr.c.o
+[414/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_range.c.o
+[415/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_path.c.o
+[416/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_rtmp.c.o
+[417/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_sasl.c.o
+[418/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_sspi.c.o
+[419/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_ntlm_core.c.o
+[420/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_threads.c.o
+[421/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_sha512_256.c.o
+[422/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/dict.c.o
+[423/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/curl_trc.c.o
+[424/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/cw-out.c.o
+[425/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/dynbuf.c.o
+[426/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/dynhds.c.o
+[427/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/easygetopt.c.o
+[428/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/easyoptions.c.o
+[429/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/doh.c.o
+[430/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/easy.c.o
+[431/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/file.c.o
+[432/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/fileinfo.c.o
+[433/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/escape.c.o
+[434/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ftp.c.o
+[435/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/fopen.c.o
+[436/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ftplistparser.c.o
+[437/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/formdata.c.o
+[438/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/getenv.c.o
+[439/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/gopher.c.o
+[440/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/getinfo.c.o
+[441/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hmac.c.o
+[442/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostasyn.c.o
+[443/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hash.c.o
+[444/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostip4.c.o
+[445/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/headers.c.o
+[446/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostsyn.c.o
+[447/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostip6.c.o
+[448/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hostip.c.o
+[449/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/hsts.c.o
+[450/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http1.c.o
+[451/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http2.c.o
+[452/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_chunks.c.o
+[453/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_aws_sigv4.c.o
+[454/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_negotiate.c.o
+[455/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_digest.c.o
+[456/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_proxy.c.o
+[457/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/idn.c.o
+[458/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/if2ip.c.o
+[459/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http_ntlm.c.o
+[460/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/imap.c.o
+[461/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/http.c.o
+[462/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/inet_ntop.c.o
+[463/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/inet_pton.c.o
+[464/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ldap.c.o
+[465/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/krb5.c.o
+[466/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/macos.c.o
+[467/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/llist.c.o
+[468/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/memdebug.c.o
+[469/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/md4.c.o
+[470/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/md5.c.o
+[471/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/mqtt.c.o
+[472/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/mime.c.o
+[473/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/netrc.c.o
+[474/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/nonblock.c.o
+[475/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/mprintf.c.o
+[476/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/openldap.c.o
+[477/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/multi.c.o
+[478/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/noproxy.c.o
+[479/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/pingpong.c.o
+[480/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/pop3.c.o
+[481/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/parsedate.c.o
+[482/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/psl.c.o
+[483/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/rand.c.o
+[484/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/rename.c.o
+[485/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/rtsp.c.o
+[486/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/progress.c.o
+[487/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/request.c.o
+[488/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/select.c.o
+[489/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/sha256.c.o
+[490/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/share.c.o
+[491/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/slist.c.o
+[492/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/smb.c.o
+[493/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/smtp.c.o
+[494/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/sendf.c.o
+[495/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socketpair.c.o
+[496/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socks_gssapi.c.o
+[497/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socks_sspi.c.o
+[498/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/speedcheck.c.o
+[499/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/socks.c.o
+[500/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/splay.c.o
+[501/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strcase.c.o
+[502/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strdup.c.o
+[503/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strerror.c.o
+[504/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strtok.c.o
+[505/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/setopt.c.o
+[506/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/system_win32.c.o
+[507/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/strtoofft.c.o
+[508/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/telnet.c.o
+[509/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/timediff.c.o
+[510/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/tftp.c.o
+[511/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/timeval.c.o
+[512/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/transfer.c.o
+[513/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/version.c.o
+[514/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/version_win32.c.o
+[515/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/warnless.c.o
+[516/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/ws.c.o
+[517/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/urlapi.c.o
+[518/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/cleartext.c.o
+[519/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/cram.c.o
+[520/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/digest_sspi.c.o
+[521/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/url.c.o
+[522/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/gsasl.c.o
+[523/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/digest.c.o
+[524/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/krb5_gssapi.c.o
+[525/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/krb5_sspi.c.o
+[526/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/oauth2.c.o
+[527/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/ntlm_sspi.c.o
+[528/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/spnego_gssapi.c.o
+[529/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/spnego_sspi.c.o
+[530/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/bearssl.c.o
+[531/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/vauth.c.o
+[532/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vauth/ntlm.c.o
+[533/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/cipher_suite.c.o
+[534/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/gtls.c.o
+[535/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/mbedtls.c.o
+[536/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/hostcheck.c.o
+[537/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/mbedtls_threadlock.c.o
+[538/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/rustls.c.o
+[539/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/schannel.c.o
+[540/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/keylog.c.o
+[541/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/schannel_verify.c.o
+[542/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/sectransp.c.o
+[543/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/wolfssl.c.o
+[544/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/x509asn1.c.o
+[545/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_msh3.c.o
+[546/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_ngtcp2.c.o
+[547/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_osslq.c.o
+[548/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/curl_quiche.c.o
+[549/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/vquic.c.o
+[550/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vquic/vquic-tls.c.o
+[551/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vssh/libssh.c.o
+[552/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vssh/libssh2.c.o
+[553/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/vtls.c.o
+[554/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vssh/wolfssh.c.o
+[555/588] Building C object external/src/curl/lib/CMakeFiles/libcurl_static.dir/vtls/openssl.c.o
+[556/588] Linking C static library libbook_miniz.a
+[557/588] Linking CXX static library external/src/pugixml/libpugixml.a
+[558/588] Linking C static library external/src/libmobi/src/libmobi.a
+[559/588] Linking C static library external/src/SDL2/libSDL2main.a
+[560/588] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_assert.c.o
+[561/588] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_common.c.o
+[562/588] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_compare.c.o
+[563/588] Building CXX object CMakeFiles/BOOK_TO_GAME.dir/src/book_converter.cpp.o
+[564/588] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_crc32.c.o
+[565/588] Building CXX object CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o
+FAILED: [code=1] CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o 
+/usr/bin/c++ -DCURL_STATICLIB -DMOBI_SUPPORT -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_mixer -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_ttf -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_net -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/pugixml/src -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/miniz -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/libmobi/src -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/build/external/src/SDL2/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/build/external/src/SDL2/include/SDL2 -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/build/external/src/SDL2/include-config-release/SDL2 -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_image/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2_mixer/include -I/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include -O3 -DNDEBUG -std=gnu++17 -fPIE -MD -MT CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o -MF CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o.d -o CMakeFiles/BOOK_TO_GAME.dir/src/main.cpp.o -c /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4938:2: error: expected ‘}’ at end of input
+ 4938 | }
+      |  ^
+In file included from /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:33:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:56:36: note: to match this ‘{’
+   56 | class AskAiExternal : public AskAi {
+      |                                    ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h: In constructor ‘AskAiExternal::AskAiExternal(const std::string&)’:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:76:21: error: ‘baseUrl_’ was not declared in this scope
+   76 |                     baseUrl_ = j["baseUrl"].get<std::string>();
+      |                     ^~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:79:21: error: ‘modelName_’ was not declared in this scope
+   79 |                     modelName_ = j["modelName"].get<std::string>();
+      |                     ^~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:82:21: error: ‘apiKey_’ was not declared in this scope
+   82 |                     apiKey_ = j["apiKey"].get<std::string>();
+      |                     ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:85:21: error: ‘apiKeyEnvVar_’ was not declared in this scope
+   85 |                     apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+      |                     ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:88:21: error: ‘format_’ was not declared in this scope
+   88 |                     format_ = j["format"].get<std::string>();
+      |                     ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:91:21: error: ‘maxRetries_’ was not declared in this scope
+   91 |                     maxRetries_ = j["maxRetries"].get<int>();
+      |                     ^~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:94:21: error: ‘retryDelayMs_’ was not declared in this scope
+   94 |                     retryDelayMs_ = j["retryDelayMs"].get<int>();
+      |                     ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:98:55: error: ‘baseUrl_’ was not declared in this scope
+   98 |                 std::cout << "[Config] Base URL: " << baseUrl_ << ", Format: " << format_ << std::endl;
+      |                                                       ^~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:98:83: error: ‘format_’ was not declared in this scope
+   98 |                 std::cout << "[Config] Base URL: " << baseUrl_ << ", Format: " << format_ << std::endl;
+      |                                                                                   ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:107:13: error: ‘baseUrl_’ was not declared in this scope
+  107 |         if (baseUrl_.empty() && configFilePath != "ai_gemini.json") {
+      |             ^~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:123:25: error: ‘modelName_’ was not declared in this scope
+  123 |                         modelName_ = j["modelName"].get<std::string>();
+      |                         ^~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:126:25: error: ‘apiKey_’ was not declared in this scope
+  126 |                         apiKey_ = j["apiKey"].get<std::string>();
+      |                         ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:129:25: error: ‘apiKeyEnvVar_’ was not declared in this scope
+  129 |                         apiKeyEnvVar_ = j["apiKeyEnvVar"].get<std::string>();
+      |                         ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:132:25: error: ‘format_’ was not declared in this scope
+  132 |                         format_ = j["format"].get<std::string>();
+      |                         ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:135:25: error: ‘maxRetries_’ was not declared in this scope
+  135 |                         maxRetries_ = j["maxRetries"].get<int>();
+      |                         ^~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:138:25: error: ‘retryDelayMs_’ was not declared in this scope
+  138 |                         retryDelayMs_ = j["retryDelayMs"].get<int>();
+      |                         ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:148:14: error: ‘apiKeyEnvVar_’ was not declared in this scope
+  148 |         if (!apiKeyEnvVar_.empty()) {
+      |              ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:151:17: error: ‘apiKey_’ was not declared in this scope
+  151 |                 apiKey_ = std::string(envVal);
+      |                 ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h: In member function ‘virtual void AskAiExternal::setSystemPrompt(const std::string&)’:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:158:9: error: ‘systemPrompt_’ was not declared in this scope; did you mean ‘setSystemPrompt’?
+  158 |         systemPrompt_ = prompt;
+      |         ^~~~~~~~~~~~~
+      |         setSystemPrompt
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h: In member function ‘virtual std::string AskAiExternal::ask(const std::string&, const std::string&)’:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:321:23: error: ‘retryDelayMs_’ was not declared in this scope
+  321 |         int delayMs = retryDelayMs_;
+      |                       ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:336:17: error: ‘format_’ was not declared in this scope
+  336 |             if (format_ == "gemini") {
+      |                 ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:346:22: error: ‘systemPrompt_’ was not declared in this scope; did you mean ‘setSystemPrompt’?
+  346 |                 if (!systemPrompt_.empty()) {
+      |                      ^~~~~~~~~~~~~
+      |                      setSystemPrompt
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:370:40: error: ‘modelName_’ was not declared in this scope
+  370 |                 requestBody["model"] = modelName_;
+      |                                        ^~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:372:22: error: ‘systemPrompt_’ was not declared in this scope; did you mean ‘setSystemPrompt’?
+  372 |                 if (!systemPrompt_.empty()) {
+      |                      ^~~~~~~~~~~~~
+      |                      setSystemPrompt
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:373:54: error: no matching function for call to ‘nlohmann::json_abi_v3_12_0::basic_json<>::push_back(<brace-enclosed initializer list>)’
+  373 |                     requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:29:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23129:10: note: candidate: ‘void nlohmann::json_abi_v3_12_0::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass>::push_back(nlohmann::json_abi_v3_12_0::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass>&&) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::json_abi_v3_12_0::adl_serializer; BinaryType = std::vector<unsigned char>; CustomBaseClass = void]’
+23129 |     void push_back(basic_json&& val)
+      |          ^~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23129:33: note:   no known conversion for argument 1 from ‘<brace-enclosed initializer list>’ to ‘nlohmann::json_abi_v3_12_0::basic_json<>&&’
+23129 |     void push_back(basic_json&& val)
+      |                    ~~~~~~~~~~~~~^~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23162:10: note: candidate: ‘void nlohmann::json_abi_v3_12_0::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass>::push_back(const nlohmann::json_abi_v3_12_0::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass>&) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::json_abi_v3_12_0::adl_serializer; BinaryType = std::vector<unsigned char>; CustomBaseClass = void]’
+23162 |     void push_back(const basic_json& val)
+      |          ^~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23162:38: note:   no known conversion for argument 1 from ‘<brace-enclosed initializer list>’ to ‘const nlohmann::json_abi_v3_12_0::basic_json<>&’
+23162 |     void push_back(const basic_json& val)
+      |                    ~~~~~~~~~~~~~~~~~~^~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23194:10: note: candidate: ‘void nlohmann::json_abi_v3_12_0::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass>::push_back(const typename object_t::value_type&) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::json_abi_v3_12_0::adl_serializer; BinaryType = std::vector<unsigned char>; CustomBaseClass = void; typename object_t::value_type = std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_12_0::basic_json<> >; object_t = std::map<std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_12_0::basic_json<>, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_12_0::basic_json<> > > >]’
+23194 |     void push_back(const typename object_t::value_type& val)
+      |          ^~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23194:57: note:   no known conversion for argument 1 from ‘<brace-enclosed initializer list>’ to ‘const std::map<std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_12_0::basic_json<>, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_12_0::basic_json<> > > >::value_type&’ {aka ‘const std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_12_0::basic_json<> >&’}
+23194 |     void push_back(const typename object_t::value_type& val)
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23225:10: note: candidate: ‘void nlohmann::json_abi_v3_12_0::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass>::push_back(initializer_list_t) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::json_abi_v3_12_0::adl_serializer; BinaryType = std::vector<unsigned char>; CustomBaseClass = void; initializer_list_t = std::initializer_list<nlohmann::json_abi_v3_12_0::detail::json_ref<nlohmann::json_abi_v3_12_0::basic_json<> > >]’
+23225 |     void push_back(initializer_list_t init)
+      |          ^~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/vc/include/nlohmann/json.hpp:23225:39: note:   no known conversion for argument 1 from ‘<brace-enclosed initializer list>’ to ‘nlohmann::json_abi_v3_12_0::basic_json<>::initializer_list_t’ {aka ‘std::initializer_list<nlohmann::json_abi_v3_12_0::detail::json_ref<nlohmann::json_abi_v3_12_0::basic_json<> > >’}
+23225 |     void push_back(initializer_list_t init)
+      |                    ~~~~~~~~~~~~~~~~~~~^~~~
+In file included from /home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:27:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:381:49: error: ‘baseUrl_’ was not declared in this scope
+  381 |             curl_easy_setopt(curl, CURLOPT_URL, baseUrl_.c_str());
+      |                                                 ^~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include/curl/curl.h:3240:72: note: in definition of macro ‘curl_easy_setopt’
+ 3240 | #define curl_easy_setopt(handle,opt,param) curl_easy_setopt(handle,opt,param)
+      |                                                                        ^~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:387:66: error: ‘connectTimeout_’ was not declared in this scope
+  387 |             curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, (long)connectTimeout_);
+      |                                                                  ^~~~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include/curl/curl.h:3240:72: note: in definition of macro ‘curl_easy_setopt’
+ 3240 | #define curl_easy_setopt(handle,opt,param) curl_easy_setopt(handle,opt,param)
+      |                                                                        ^~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:388:59: error: ‘requestTimeout_’ was not declared in this scope
+  388 |             curl_easy_setopt(curl, CURLOPT_TIMEOUT, (long)requestTimeout_);
+      |                                                           ^~~~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include/curl/curl.h:3240:72: note: in definition of macro ‘curl_easy_setopt’
+ 3240 | #define curl_easy_setopt(handle,opt,param) curl_easy_setopt(handle,opt,param)
+      |                                                                        ^~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:391:59: error: ‘WriteCallback’ was not declared in this scope
+  391 |             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+      |                                                           ^~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/curl/include/curl/curl.h:3240:72: note: in definition of macro ‘curl_easy_setopt’
+ 3240 | #define curl_easy_setopt(handle,opt,param) curl_easy_setopt(handle,opt,param)
+      |                                                                        ^~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:398:18: error: ‘apiKey_’ was not declared in this scope
+  398 |             if (!apiKey_.empty()) {
+      |                  ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:399:21: error: ‘format_’ was not declared in this scope
+  399 |                 if (format_ == "gemini") {
+      |                     ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:418:32: error: ‘maxRetries_’ was not declared in this scope
+  418 |                 if (attempt <= maxRetries_) {
+      |                                ^~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:438:32: error: ‘maxRetries_’ was not declared in this scope
+  438 |                 if (attempt <= maxRetries_) {
+      |                                ^~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:469:21: error: ‘format_’ was not declared in this scope
+  469 |                 if (format_ == "gemini") {
+      |                     ^~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:717:108: error: a function-definition is not allowed here before ‘{’ token
+  717 |     std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) override {
+      |                                                                                                            ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1047:57: error: a function-definition is not allowed here before ‘{’ token
+ 1047 | inline int ParseChapterCount(const std::string& wishes) {
+      |                                                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1071:66: error: a function-definition is not allowed here before ‘{’ token
+ 1071 | inline std::vector<uint32_t> DecodeUTF8(const std::string& text) {
+      |                                                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1095:41: error: a function-definition is not allowed here before ‘{’ token
+ 1095 | inline bool IsRTLCodePoint(uint32_t cp) {
+      |                                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1104:54: error: a function-definition is not allowed here before ‘{’ token
+ 1104 | inline bool HasRTLCharacter(const std::string& text) {
+      |                                                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1114:50: error: a function-definition is not allowed here before ‘{’ token
+ 1114 | inline bool HasCyrillic(const std::string& text) {
+      |                                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1125:46: error: a function-definition is not allowed here before ‘{’ token
+ 1125 | inline void PopUTF8Character(std::string& s) {
+      |                                              ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1139:49: error: a function-definition is not allowed here before ‘{’ token
+ 1139 | inline std::string Trim(const std::string& str) {
+      |                                                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1148:43: error: a function-definition is not allowed here before ‘{’ token
+ 1148 | inline std::string ToLower(std::string s) {
+      |                                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1153:62: error: a function-definition is not allowed here before ‘{’ token
+ 1153 | inline std::string CleanTextForFont(const std::string& text) {
+      |                                                              ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1242:81: error: a function-definition is not allowed here before ‘{’ token
+ 1242 | inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) {
+      |                                                                                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1699:127: error: a function-definition is not allowed here before ‘{’ token
+ 1699 | inline std::string ReconstructPerfectAiResponse(const std::string& strippedResponse, const std::vector<std::string>& options) {
+      |                                                                                                                               ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1714:89: error: a function-definition is not allowed here before ‘{’ token
+ 1714 | inline void SaveGame(const GameState& state, const std::string& filename = "save.json") {
+      |                                                                                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1761:83: error: a function-definition is not allowed here before ‘{’ token
+ 1761 | inline bool LoadGame(GameState& state, const std::string& filename = "save.json") {
+      |                                                                                   ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1843:91: error: a function-definition is not allowed here before ‘{’ token
+ 1843 | inline std::string FormatPacingString(std::string str, int turns, int minVal, int maxVal) {
+      |                                                                                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1857:80: error: a function-definition is not allowed here before ‘{’ token
+ 1857 | inline std::string FormatRetryString(std::string str, int attempt, int maxVal) {
+      |                                                                                ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1868:66: error: a function-definition is not allowed here before ‘{’ token
+ 1868 | inline bool ContainsErrorCaseInsensitive(const std::string& str) {
+      |                                                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:1874:75: error: a function-definition is not allowed here before ‘{’ token
+ 1874 | inline void UpdateSystemPrompt(GameState& state, AskAiExternal* aiClient) {
+      |                                                                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:2041:68: error: a function-definition is not allowed here before ‘{’ token
+ 2041 | inline bool IsBookValid(const std::string& filename = "book.json") {
+      |                                                                    ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:2066:91: error: a function-definition is not allowed here before ‘{’ token
+ 2066 | inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& errorMsg) {
+      |                                                                                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:2096:3: error: a function-definition is not allowed here before ‘{’ token
+ 2096 | ) {
+      |   ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:194:22: error: a function-definition is not allowed here before ‘{’ token
+  194 | void SyncModelToUi() {
+      |                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:274:27: error: a function-definition is not allowed here before ‘{’ token
+  274 | void UpdateSystemPrompt() {
+      |                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:278:17: error: a function-definition is not allowed here before ‘{’ token
+  278 | void SaveGame() {
+      |                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:284:14: warning: empty parentheses were disambiguated as a function declaration [-Wvexing-parse]
+  284 | bool LoadGame() {
+      |              ^~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:284:14: note: remove parentheses to default-initialize a variable
+  284 | bool LoadGame() {
+      |              ^~
+      |              --
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:284:14: note: or replace parentheses with braces to value-initialize a variable
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:284:17: error: a function-definition is not allowed here before ‘{’ token
+  284 | bool LoadGame() {
+      |                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:295:64: error: a function-definition is not allowed here before ‘{’ token
+  295 | bool LoadBookConfig(const std::string& filename = "book.json") {
+      |                                                                ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:407:67: error: a function-definition is not allowed here before ‘{’ token
+  407 | void ConfigureFontLayout(TTF_Font* font, const std::string& text) {
+      |                                                                   ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:436:38: error: a function-definition is not allowed here before ‘{’ token
+  436 | void ResetFontLayout(TTF_Font* font) {
+      |                                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:442:62: error: a function-definition is not allowed here before ‘{’ token
+  442 | inline int SafeFontHeight(TTF_Font* font, int fallback = 16) {
+      |                                                              ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:446:82: error: a function-definition is not allowed here before ‘{’ token
+  446 | inline int SafeSizeUTF8(TTF_Font* font, const std::string& text, int* w, int* h) {
+      |                                                                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:456:134: error: a function-definition is not allowed here before ‘{’ token
+  456 | void RenderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int x, int y, SDL_Color color, bool center = false) {
+      |                                                                                                                                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:482:90: error: a function-definition is not allowed here before ‘{’ token
+  482 | std::vector<std::string> WrapText(TTF_Font* font, const std::string& text, int maxWidth) {
+      |                                                                                          ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:518:137: error: a function-definition is not allowed here before ‘{’ token
+  518 | std::vector<std::string> WrapTextDynamic(TTF_Font* font, const std::string& text, const std::vector<int>& lineWidths, int defaultWidth) {
+      |                                                                                                                                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:559:92: error: a function-definition is not allowed here before ‘{’ token
+  559 | void DrawFilledCircle(SDL_Renderer* renderer, int cx, int cy, int radius, SDL_Color color) {
+      |                                                                                            ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:572:92: error: a function-definition is not allowed here before ‘{’ token
+  572 | void DrawRoundedRect(SDL_Renderer* renderer, const SDL_Rect& rect, int r, SDL_Color color) {
+      |                                                                                            ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:602:56: error: a function-definition is not allowed here before ‘{’ token
+  602 | inline bool IsRussianLanguage(const std::string& lang) {
+      |                                                        ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:611:56: error: a function-definition is not allowed here before ‘{’ token
+  611 | inline bool IsEnglishLanguage(const std::string& lang) {
+      |                                                        ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:619:58: error: a function-definition is not allowed here before ‘{’ token
+  619 | inline bool IsUkrainianLanguage(const std::string& lang) {
+      |                                                          ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:627:53: error: a function-definition is not allowed here before ‘{’ token
+  627 | std::string GetStartPrompt(const std::string& lang) {
+      |                                                     ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:637:88: error: a function-definition is not allowed here before ‘{’ token
+  637 | std::string GetSummaryPrompt(const std::string& lang, const std::string& dialogueText) {
+      |                                                                                        ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:647:71: error: a function-definition is not allowed here before ‘{’ token
+  647 | std::string GetNextStartMsg(const std::string& lang, int nextChapter) {
+      |                                                                       ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:657:89: error: a function-definition is not allowed here before ‘{’ token
+  657 | std::string GetEpiloguePrompt(const std::string& lang, const std::string& allSummaries) {
+      |                                                                                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:668:66: error: a function-definition is not allowed here before ‘{’ token
+  668 | std::string GetNormalizedLanguageLocal(const std::string& input) {
+      |                                                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:755:61: error: a function-definition is not allowed here before ‘{’ token
+  755 | void SaveLanguageToSettings(const std::string& newLanguage) {
+      |                                                             ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:782:84: error: a function-definition is not allowed here before ‘{’ token
+  782 | void SaveApiKeyToModelJson(const std::string& filename, const std::string& apiKey) {
+      |                                                                                    ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:813:47: error: a function-definition is not allowed here before ‘{’ token
+  813 | void SaveFontSizeOffsetToSettings(int offset) {
+      |                                               ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:840:30: error: a function-definition is not allowed here before ‘{’ token
+  840 | void ScanAvailableAiModels() {
+      |                              ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:885:27: error: a function-definition is not allowed here before ‘{’ token
+  885 | void ScanAvailableBooks() {
+      |                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:938:65: error: a function-definition is not allowed here before ‘{’ token
+  938 | void ReloadSettingsAndReinit(const std::string& newAiModelFile) {
+      |                                                                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1007:57: error: a function-definition is not allowed here before ‘{’ token
+ 1007 | void ChangeGameLanguage(const std::string& newLanguage) {
+      |                                                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1103:30: error: a function-definition is not allowed here before ‘{’ token
+ 1103 | void TriggerUiLocalization() {
+      |                              ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1499:54: error: a function-definition is not allowed here before ‘{’ token
+ 1499 | inline std::string GetUiText(const std::string& key) {
+      |                                                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1648:31: warning: empty parentheses were disambiguated as a function declaration [-Wvexing-parse]
+ 1648 | std::string OpenFileDialogImpl() {
+      |                               ^~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1648:31: note: remove parentheses to default-initialize a variable
+ 1648 | std::string OpenFileDialogImpl() {
+      |                               ^~
+      |                               --
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1648:34: error: a function-definition is not allowed here before ‘{’ token
+ 1648 | std::string OpenFileDialogImpl() {
+      |                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1714:27: warning: empty parentheses were disambiguated as a function declaration [-Wvexing-parse]
+ 1714 | std::string OpenFileDialog() {
+      |                           ^~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1714:27: note: remove parentheses to default-initialize a variable
+ 1714 | std::string OpenFileDialog() {
+      |                           ^~
+      |                           --
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1714:30: error: a function-definition is not allowed here before ‘{’ token
+ 1714 | std::string OpenFileDialog() {
+      |                              ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1724:30: warning: empty parentheses were disambiguated as a function declaration [-Wvexing-parse]
+ 1724 | std::string GetSystemFontPath() {
+      |                              ^~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1724:30: note: remove parentheses to default-initialize a variable
+ 1724 | std::string GetSystemFontPath() {
+      |                              ^~
+      |                              --
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1724:33: error: a function-definition is not allowed here before ‘{’ token
+ 1724 | std::string GetSystemFontPath() {
+      |                                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1764:23: error: a function-definition is not allowed here before ‘{’ token
+ 1764 | void ApplyFontScale() {
+      |                       ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1784:50: error: a function-definition is not allowed here before ‘{’ token
+ 1784 | void AddArchitectBubble(const std::string& text) {
+      |                                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1791:33: error: a function-definition is not allowed here before ‘{’ token
+ 1791 | void TriggerSetupStep(int step) {
+      |                                 ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1847:55: error: a function-definition is not allowed here before ‘{’ token
+ 1847 | void SubmitSetupChoice(const std::string& choiceText) {
+      |                                                       ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1881:25: error: a function-definition is not allowed here before ‘{’ token
+ 1881 | void RestartAdventure() {
+      |                         ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1917:24: error: a function-definition is not allowed here before ‘{’ token
+ 1917 | void SubmitInputText() {
+      |                        ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:1941:54: error: a function-definition is not allowed here before ‘{’ token
+ 1941 | void InitAdventureSetup(const std::string& filePath) {
+      |                                                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:2075:55: error: a function-definition is not allowed here before ‘{’ token
+ 2075 | void StartBookGeneration(const std::string& filePath) {
+      |                                                       ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:2338:79: error: a function-definition is not allowed here before ‘{’ token
+ 2338 | void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
+      |                                                                               ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:2839:27: error: a function-definition is not allowed here before ‘{’ token
+ 2839 | void ConsumeApiResponse() {
+      |                           ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:3010:22: error: a function-definition is not allowed here before ‘{’ token
+ 3010 | void MainIteration() {
+      |                      ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4628:8: error: expected unqualified-id before string constant
+ 4628 | extern "C" int SDL_main(int argc, char* argv[]) {
+      |        ^~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4936:34: error: a function-definition is not allowed here before ‘{’ token
+ 4936 | int main(int argc, char* argv[]) {
+      |                                  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4938:2: error: expected ‘}’ at end of input
+ 4938 | }
+      |  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:319:100: note: to match this ‘{’
+  319 |     std::string ask(const std::string& question, const std::string& language = "English") override {
+      |                                                                                                    ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp: At global scope:
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/main.cpp:4938:2: error: expected unqualified-id at end of input
+ 4938 | }
+      |  ^
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:34:13: warning: inline function ‘void SaveBookErrorLog(const std::string&, const std::string&)’ used but never defined
+   34 | inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& errorMsg);
+      |             ^~~~~~~~~~~~~~~~
+/home/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/src/modelapi.h:35:20: warning: inline function ‘std::string Trim(const std::string&)’ used but never defined
+   35 | inline std::string Trim(const std::string& str);
+      |                    ^~~~
+[566/588] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_font.c.o
+[567/588] Building C object external/src/SDL2/CMakeFiles/SDL2_test.dir/src/test/SDL_test_fuzzer.c.o
+ninja: build stopped: subcommand failed.
