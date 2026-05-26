@@ -1529,8 +1529,63 @@ inline std::string GetUiText(const std::string& key) {
     return "";
 }
 
+#ifdef __EMSCRIPTEN__
+extern "C" {
+    EMSCRIPTEN_KEEPALIVE void TriggerBookLoad(const char* filePath) {
+        InitAdventureSetup(std::string(filePath));
+    }
+    
+    EMSCRIPTEN_KEEPALIVE void SetInputText(const char* text) {
+        state.inputText = std::string(text);
+    }
+}
+
+void OpenWebFileDialog() {
+    EM_ASM({
+        var fileInput = document.getElementById('web-file-input');
+        if (!fileInput) {
+            fileInput = document.createElement('input');
+            fileInput.id = 'web-file-input';
+            fileInput.type = 'file';
+            fileInput.accept = '.txt,.fb2,.epub,.docx';
+            fileInput.style.display = 'none';
+            document.body.appendChild(fileInput);
+            
+            fileInput.addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    var arrayBuffer = evt.target.result;
+                    var data = new Uint8Array(arrayBuffer);
+                    var filename = file.name;
+                    var path = '/' + filename;
+                    
+                    // Write to Emscripten Virtual Filesystem (VFS)
+                    try {
+                        FS.writeFile(path, data);
+                        console.log('[Web File] Successfully loaded ' + filename + ' (' + data.length + ' bytes) into VFS at ' + path);
+                        // Call C++ handler to load the book
+                        Module.ccall('TriggerBookLoad', null, ['string'], [path]);
+                    } catch (err) {
+                        console.error('[Web File] Failed to write file: ', err);
+                    }
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+        fileInput.value = "";
+        fileInput.click();
+    });
+}
+#endif
+
 std::string OpenFileDialogImpl() {
-#if defined(__ANDROID__) || defined(__IPHONEOS__) || defined(ANDROID) || defined(IOS)
+#ifdef __EMSCRIPTEN__
+    OpenWebFileDialog();
+    return "";
+#elif defined(__ANDROID__) || defined(__IPHONEOS__) || defined(ANDROID) || defined(IOS)
     // On mobile platforms, trigger the internal book scanner and selection screen
     ScanAvailableBooks();
     state.mutex.lock();
@@ -3124,6 +3179,29 @@ void MainIteration() {
                     state.inputText = "";
                 } else if (mx >= state.pasteBtnRect.x && mx <= (state.pasteBtnRect.x + state.pasteBtnRect.w) &&
                            my >= state.pasteBtnRect.y && my <= (state.pasteBtnRect.y + state.pasteBtnRect.h)) {
+#ifdef __EMSCRIPTEN__
+                    EM_ASM({
+                        if (navigator.clipboard && navigator.clipboard.readText) {
+                            navigator.clipboard.readText().then(function(text) {
+                                // Call C++ handler to set state.inputText
+                                Module.ccall('SetInputText', null, ['string'], [text]);
+                            }).catch(function(err) {
+                                console.error('Failed to read clipboard: ', err);
+                                // Fallback to standard prompt if blocked/denied
+                                var text = prompt("Paste your API key here:");
+                                if (text) {
+                                    Module.ccall('SetInputText', null, ['string'], [text]);
+                                }
+                            });
+                        } else {
+                            // Fallback to standard prompt dialog if clipboard API is not available
+                            var text = prompt("Paste your API key here:");
+                            if (text) {
+                                Module.ccall('SetInputText', null, ['string'], [text]);
+                            }
+                        }
+                    });
+#else
                     if (SDL_HasClipboardText()) {
                         char* clipText = SDL_GetClipboardText();
                         if (clipText) {
@@ -3131,6 +3209,7 @@ void MainIteration() {
                             SDL_free(clipText);
                         }
                     }
+#endif
                 } else if (mx >= state.confirmBtnRect.x && mx <= (state.confirmBtnRect.x + state.confirmBtnRect.w) &&
                            my >= state.confirmBtnRect.y && my <= (state.confirmBtnRect.y + state.confirmBtnRect.h)) {
                     SaveApiKeyToModelJson(state.selectedAiFilename, state.inputText);
