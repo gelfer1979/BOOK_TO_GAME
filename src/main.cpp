@@ -2136,6 +2136,8 @@ void StartBookGeneration(const std::string& filePath) {
             state.modelState.activeChoices.clear();
             state.uiMessages.clear();
             state.uiActiveChoices.clear();
+            state.scrollOffset = 0;
+            state.scrollToBottom = true;
             state.appState = APP_STATE_GAMEPLAY;
             state.mutex.unlock();
             
@@ -2301,6 +2303,8 @@ void StartBookGeneration(const std::string& filePath) {
             state.modelState.activeChoices.clear();
             state.uiMessages.clear();
             state.uiActiveChoices.clear();
+            state.scrollOffset = 0;
+            state.scrollToBottom = true;
             state.appState = APP_STATE_GAMEPLAY;
             state.mutex.unlock();
             
@@ -3164,6 +3168,8 @@ void MainIteration() {
             } else if (state.appState == APP_STATE_ASK_CONTINUE) {
                 SDL_Keycode sym = event.key.keysym.sym;
                 if (sym == SDLK_1 || sym == SDLK_y || sym == SDLK_RETURN) {
+                    state.scrollOffset = 0;
+                    state.scrollToBottom = true;
                     state.appState = APP_STATE_GAMEPLAY;
                     if (state.uiMessages.empty()) {
                         std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
@@ -3488,6 +3494,8 @@ void MainIteration() {
             if (state.appState == APP_STATE_ASK_CONTINUE) {
                 if (mx >= state.customBtnRect1.x && mx <= (state.customBtnRect1.x + state.customBtnRect1.w) &&
                     my >= state.customBtnRect1.y && my <= (state.customBtnRect1.y + state.customBtnRect1.h)) {
+                    state.scrollOffset = 0;
+                    state.scrollToBottom = true;
                     state.appState = APP_STATE_GAMEPLAY;
                     if (state.uiMessages.empty()) {
                         std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;

@@ -1244,98 +1244,69 @@ inline std::string CleanTextForFont(const std::string& text) {
 inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) {
     std::vector<std::string> options;
     
-    // 0. Simple vertical pipe '|' block separator (Foolproof format!)
-    if (options.empty()) {
-        std::vector<std::string> lines;
-        std::stringstream ss(aiResponse);
+    // 0. Robust vertical pipe '|' block separator (Universal format!)
+    size_t pipePos = aiResponse.find('|');
+    if (pipePos != std::string::npos) {
+        std::string narrativePart = aiResponse.substr(0, pipePos);
+        std::string optionsPart = aiResponse.substr(pipePos + 1);
+        
+        std::vector<std::string> tempOptions;
+        std::stringstream ss(optionsPart);
         std::string line;
         while (std::getline(ss, line)) {
-            lines.push_back(line);
-        }
-        
-        size_t pipeLineIdx = std::string::npos;
-        for (size_t i = 0; i < lines.size(); i++) {
-            std::string trimmed = Trim(lines[i]);
-            // Find a line that is EXACTLY "|" or starts with "|" followed by nothing or whitespace
-            if (trimmed == "|" || (trimmed.rfind("|", 0) == 0 && trimmed.length() == 1)) {
-                pipeLineIdx = i;
-                break;
-            }
-        }
-        
-        if (pipeLineIdx != std::string::npos) {
-            std::vector<std::string> tempOptions;
-            for (size_t i = pipeLineIdx + 1; i < lines.size(); i++) {
-                std::string optLine = Trim(lines[i]);
-                if (optLine.empty()) continue;
-                
-                // Strip standard leading list bullet markers:
-                // 1. Dash '- '
-                if (optLine.rfind("-", 0) == 0) {
-                    optLine = optLine.substr(1);
-                }
-                // 2. Asterisk '* '
-                else if (optLine.rfind("*", 0) == 0) {
-                    optLine = optLine.substr(1);
-                }
-                // 3. Plus '+ '
-                else if (optLine.rfind("+", 0) == 0) {
-                    optLine = optLine.substr(1);
-                }
-                
+            std::string optLine = Trim(line);
+            if (optLine.empty()) continue;
+            
+            // Strip leading vertical pipe or bullet markers
+            while (!optLine.empty() && (optLine[0] == '|' || optLine[0] == '-' || optLine[0] == '*' || optLine[0] == '+' || optLine[0] == ' ')) {
+                optLine = optLine.substr(1);
                 optLine = Trim(optLine);
-                
-                // 4. Strip alphabetical or numerical prefixes like 'A) ', '1. ', Cyrillic 'А) '
-                if (!optLine.empty()) {
-                    // Check if it starts with digit followed by . or )
-                    size_t digitLen = 0;
-                    while (digitLen < optLine.length() && std::isdigit((unsigned char)optLine[digitLen])) {
-                        digitLen++;
-                    }
-                    if (digitLen > 0 && digitLen < optLine.length()) {
-                        char delim = optLine[digitLen];
-                        if (delim == '.' || delim == ')') {
-                            optLine = optLine.substr(digitLen + 1);
-                            optLine = Trim(optLine);
-                        }
-                    }
-                    
-                    // Check if it starts with standard English letter followed by . or )
-                    if (optLine.length() >= 2) {
-                        char c = optLine[0];
-                        char delim = optLine[1];
-                        if (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) && (delim == '.' || delim == ')')) {
-                            optLine = optLine.substr(2);
-                            optLine = Trim(optLine);
-                        }
+            }
+            
+            // Strip alphabetical or numerical prefixes like 'A) ', '1. ', Cyrillic 'А) '
+            if (!optLine.empty()) {
+                // Check if it starts with digit followed by . or )
+                size_t digitLen = 0;
+                while (digitLen < optLine.length() && std::isdigit((unsigned char)optLine[digitLen])) {
+                    digitLen++;
+                }
+                if (digitLen > 0 && digitLen < optLine.length()) {
+                    char delim = optLine[digitLen];
+                    if (delim == '.' || delim == ')') {
+                        optLine = optLine.substr(digitLen + 1);
+                        optLine = Trim(optLine);
                     }
                 }
                 
-                if (!optLine.empty()) {
-                    tempOptions.push_back(CleanTextForFont(optLine));
+                // Check if it starts with standard English letter followed by . or )
+                if (optLine.length() >= 2) {
+                    char c = optLine[0];
+                    char delim = optLine[1];
+                    if (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) && (delim == '.' || delim == ')')) {
+                        optLine = optLine.substr(2);
+                        optLine = Trim(optLine);
+                    }
                 }
             }
             
-            if (tempOptions.size() >= 2) {
-                options = tempOptions;
-                
-                // Narrative is everything BEFORE the '|' separator line
-                std::string cleanedResponse = "";
-                for (size_t i = 0; i < pipeLineIdx; i++) {
-                    cleanedResponse += lines[i] + "\n";
-                }
-                aiResponse = Trim(cleanedResponse);
-                
-                // Clean trailing/leading newlines, spaces, and leftover characters
-                while (!aiResponse.empty() && (aiResponse.back() == '\n' || aiResponse.back() == '\r' || aiResponse.back() == ' ' || aiResponse.back() == '<' || aiResponse.back() == '[' || aiResponse.back() == '`')) {
-                    aiResponse.pop_back();
-                }
-                while (!aiResponse.empty() && (aiResponse.front() == '\n' || aiResponse.front() == '\r' || aiResponse.front() == ' ')) {
-                    aiResponse.erase(aiResponse.begin());
-                }
-                
-                return options;
+            if (!optLine.empty()) {
+                tempOptions.push_back(CleanTextForFont(optLine));
             }
+        }
+        
+        if (tempOptions.size() >= 2) {
+            options = tempOptions;
+            aiResponse = Trim(narrativePart);
+            
+            // Clean trailing/leading newlines, spaces, and leftover characters
+            while (!aiResponse.empty() && (aiResponse.back() == '\n' || aiResponse.back() == '\r' || aiResponse.back() == ' ' || aiResponse.back() == '<' || aiResponse.back() == '[' || aiResponse.back() == '`')) {
+                aiResponse.pop_back();
+            }
+            while (!aiResponse.empty() && (aiResponse.front() == '\n' || aiResponse.front() == '\r' || aiResponse.front() == ' ')) {
+                aiResponse.erase(aiResponse.begin());
+            }
+            
+            return options;
         }
     }
 
