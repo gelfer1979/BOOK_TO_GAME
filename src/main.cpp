@@ -439,6 +439,19 @@ void ResetFontLayout(TTF_Font* font) {
     TTF_SetFontScriptName(font, "Latn");
 }
 
+inline int SafeFontHeight(TTF_Font* font, int fallback = 16) {
+    return font ? TTF_FontHeight(font) : fallback;
+}
+
+inline int SafeSizeUTF8(TTF_Font* font, const std::string& text, int* w, int* h) {
+    if (!font) {
+        if (w) *w = text.length() * 8;
+        if (h) *h = 16;
+        return 0;
+    }
+    return TTF_SizeUTF8(font, text.c_str(), w, h);
+}
+
 // Layout-Aware Rendering and Text Wrapping
 void RenderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int x, int y, SDL_Color color, bool center = false) {
     if (!font || text.empty()) return;
@@ -3723,7 +3736,7 @@ void MainIteration() {
         SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
         
         int bubbleY = 42 + 20 - state.scrollOffset;
-        int lineH = TTF_FontHeight(state.fontMessage.get());
+        int lineH = SafeFontHeight(state.fontMessage.get(), 18);
         
         state.mutex.lock();
         for (const auto& msg : state.uiMessages) {
@@ -3764,7 +3777,7 @@ void MainIteration() {
         // Draw Victory block inside the scrollable chat feed if game is won
         state.victoryBtnRect = { 0, 0, 0, 0 };
         if (state.modelState.gameWon) {
-            int titleH = TTF_FontHeight(state.fontTitle.get());
+            int titleH = SafeFontHeight(state.fontTitle.get(), 24);
             int textY = bubbleY + 10;
             SDL_Color goldColor = { 255, 215, 0, 255 }; // Gold for victory!
             
@@ -3809,7 +3822,7 @@ void MainIteration() {
         // Draw Game Over block inside the scrollable chat feed if character dies
         state.deathBtnRect = { 0, 0, 0, 0 };
         if (state.modelState.gameOver) {
-            int titleH = TTF_FontHeight(state.fontTitle.get());
+            int titleH = SafeFontHeight(state.fontTitle.get(), 24);
             int textY = bubbleY + 10;
             SDL_Color redColor = { 255, 60, 60, 255 };
             
@@ -3872,12 +3885,12 @@ void MainIteration() {
             if (maxTitleW < 200) maxTitleW = 200;
             
             int tw = 0, th = 0;
-            TTF_SizeUTF8(state.fontUI.get(), headerTitle.c_str(), &tw, &th);
+            SafeSizeUTF8(state.fontUI.get(), headerTitle, &tw, &th);
             if (tw > maxTitleW) {
                 while (!headerTitle.empty() && tw > maxTitleW - 20) {
                     PopUTF8Character(headerTitle);
                     std::string testStr = headerTitle + "...";
-                    TTF_SizeUTF8(state.fontUI.get(), testStr.c_str(), &tw, &th);
+                    SafeSizeUTF8(state.fontUI.get(), testStr, &tw, &th);
                 }
                 headerTitle += "...";
             }
@@ -3900,7 +3913,7 @@ void MainIteration() {
         
         SDL_Color labelCol = { 150, 150, 180, 255 }; // Premium soft slate blue/gray
         int labelTw = 0, labelTh = 0;
-        TTF_SizeUTF8(state.fontSmallUI.get(), labelText.c_str(), &labelTw, &labelTh);
+        SafeSizeUTF8(state.fontSmallUI.get(), labelText, &labelTw, &labelTh);
         int labelX = (WINDOW_WIDTH - 160) - labelTw / 2;
         RenderText(state.renderer.get(), state.fontSmallUI.get(), labelText, labelX, 21, labelCol, true);
 
@@ -4011,13 +4024,13 @@ void MainIteration() {
                 std::vector<std::string> optLines = WrapText(state.fontUI.get(), displayText, opt.rect.w - 16);
                 
                 TTF_Font* chosenFont = state.fontUI.get();
-                int fontH = TTF_FontHeight(chosenFont);
+                int fontH = SafeFontHeight(chosenFont, 16);
                 
                 // If the text wrapped to more than 2 lines, fall back to fontSmallUI to prevent overflow!
                 if (optLines.size() > 2) {
                     optLines = WrapText(state.fontSmallUI.get(), displayText, opt.rect.w - 16);
                     chosenFont = state.fontSmallUI.get();
-                    fontH = TTF_FontHeight(chosenFont);
+                    fontH = SafeFontHeight(chosenFont, 13);
                 }
                 
                 int lineSpacing = 1;
@@ -4067,11 +4080,11 @@ void MainIteration() {
             // Render book title dynamically adapting to card width to prevent text overflow
             std::string displayTitle = state.modelState.bookTitle;
             int tw = 0, th = 0;
-            if (TTF_SizeUTF8(state.fontTitle.get(), displayTitle.c_str(), &tw, &th) == 0) {
+            if (SafeSizeUTF8(state.fontTitle.get(), displayTitle, &tw, &th) == 0) {
                 if (tw > cardW - 60) { // If it's wider than 540px
                     // Try with the UI font (which is smaller, 16px instead of 24px)
                     int tw2 = 0, th2 = 0;
-                    if (TTF_SizeUTF8(state.fontUI.get(), displayTitle.c_str(), &tw2, &th2) == 0 && tw2 <= cardW - 60) {
+                    if (SafeSizeUTF8(state.fontUI.get(), displayTitle, &tw2, &th2) == 0 && tw2 <= cardW - 60) {
                         RenderText(state.renderer.get(), state.fontUI.get(), displayTitle, WINDOW_WIDTH / 2, cardY + 115, SDL_Color{ 0, 255, 220, 255 }, true);
                     } else {
                         // Still too long. Truncate it character by character with "..."
@@ -4080,7 +4093,7 @@ void MainIteration() {
                             PopUTF8Character(truncated);
                             std::string testStr = truncated + "...";
                             int tw3 = 0, th3 = 0;
-                            if (TTF_SizeUTF8(state.fontUI.get(), testStr.c_str(), &tw3, &th3) == 0 && tw3 <= cardW - 60) {
+                            if (SafeSizeUTF8(state.fontUI.get(), testStr, &tw3, &th3) == 0 && tw3 <= cardW - 60) {
                                 displayTitle = testStr;
                                 break;
                             }
@@ -4538,7 +4551,7 @@ void MainIteration() {
         
         if (!state.inputText.empty()) {
             ConfigureFontLayout(state.fontUI.get(), state.inputText);
-            TTF_SizeUTF8(state.fontUI.get(), state.inputText.c_str(), &textW, &textH);
+            SafeSizeUTF8(state.fontUI.get(), state.inputText, &textW, &textH);
             ResetFontLayout(state.fontUI.get());
             
             if (textW > maxTextW) {
@@ -4557,7 +4570,7 @@ void MainIteration() {
                     std::string suffix = state.inputText.substr(last);
                     int sufW = 0, sufH = 0;
                     ConfigureFontLayout(state.fontUI.get(), suffix);
-                    TTF_SizeUTF8(state.fontUI.get(), suffix.c_str(), &sufW, &sufH);
+                    SafeSizeUTF8(state.fontUI.get(), suffix, &sufW, &sufH);
                     ResetFontLayout(state.fontUI.get());
                     
                     if (sufW > maxTextW) {
