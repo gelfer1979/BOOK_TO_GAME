@@ -2506,7 +2506,7 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
             
             // Append format reminder to non-epilogue chapter start queries
             if (!isVictory) {
-                nextStartMsg += "\n\nReminder: Narrative first, then \x1F, then 2-4 options each on a new line";
+                nextStartMsg += "\n\n[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character on its own line, then 2-4 choices each starting with '- ']";
             }
             
             std::string response;
@@ -2817,7 +2817,7 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     std::thread([queryCopy, historyCopy, langCopy, queryId]() {
 #endif
         // Append format reminder so the model doesn't forget structure mid-conversation
-        const std::string formatReminder = "\n\nReminder: Narrative first, then \x1F, then 2-4 options each on a new line";
+        const std::string formatReminder = "\n\n[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character on its own line, then 2-4 choices each starting with '- ']";
         std::string response;
         if (historyCopy.empty()) {
             response = state.aiClient->ask(queryCopy + formatReminder);
