@@ -4376,6 +4376,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     }
 #endif
     // Change working directory to executable path to resolve config files and assets on macOS / all platforms
+#ifndef __EMSCRIPTEN__
     char* basePath = SDL_GetBasePath();
     if (basePath) {
         try {
@@ -4384,6 +4385,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         } catch (...) {}
         SDL_free(basePath);
     }
+#endif
     // 1. Load settings.json configuration properties
     std::string aiModel = "ai_gemini.json";
     std::string systemPrompt = "";

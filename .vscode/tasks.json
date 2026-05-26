@@ -43,6 +43,17 @@
             "detail": "Compile project to WebAssembly using Emscripten SDK"
         },
         {
+            "label": "Preview WebAssembly Build",
+            "type": "shell",
+            "command": "python -m http.server 8000 --directory build_web",
+            "windows": {
+                "command": "python -m http.server 8000 --directory build_web"
+            },
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Host compiled WebAssembly build locally on http://localhost:8000/BOOK_TO_GAME.html"
+        },
+        {
             "label": "Build Android APK (Debug)",
             "type": "shell",
             "command": "cd platforms/android && ./gradlew assembleDebug",

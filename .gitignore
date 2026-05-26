@@ -39,3 +39,7 @@ Thumbs.db
 
 # Temporary download files
 external/temp_*/
+
+# Dynamically generated headers
+external/src/miniz/miniz_export.h
+

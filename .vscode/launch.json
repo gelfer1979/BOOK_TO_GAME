@@ -21,6 +21,13 @@
                 }
             ],
             "preLaunchTask": "CMake Build"
+        },
+        {
+            "name": "Launch Web Preview (Chrome)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8000/BOOK_TO_GAME.html",
+            "webRoot": "${workspaceFolder}/build_web"
         }
     ]
 }

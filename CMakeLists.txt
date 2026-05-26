@@ -7,17 +7,53 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add include directory for external headers like json.hpp and json_fwd.hpp.
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/external/vc/include")
 
+# pugixml (XML parser for fb2/epub/docx)
+set(PUGIXML_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+add_subdirectory(external/src/pugixml)
+
+# miniz (ZIP decompressor for epub/docx)
+# Built as 'book_miniz' to avoid target name clash with libmobi's internal 'miniz' OBJECT lib.
+# Generate miniz_export.h (normally produced by CMake's GenerateExportHeader) at configure time.
+file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/external/src/miniz/miniz_export.h"
+"/* miniz_export.h - generated for static build */\n"
+"#ifndef MINIZ_EXPORT_H\n"
+"#define MINIZ_EXPORT_H\n"
+"#define MINIZ_EXPORT\n"
+"#define MINIZ_NO_EXPORT\n"
+"#define MINIZ_DEPRECATED\n"
+"#define MINIZ_DEPRECATED_EXPORT\n"
+"#define MINIZ_DEPRECATED_NO_EXPORT\n"
+"#endif /* MINIZ_EXPORT_H */\n"
+)
+add_library(book_miniz STATIC
+    external/src/miniz/miniz.c
+    external/src/miniz/miniz_tdef.c
+    external/src/miniz/miniz_tinfl.c
+    external/src/miniz/miniz_zip.c
+)
+target_include_directories(book_miniz PUBLIC external/src/miniz)
+
 # 1. EMSCRIPTEN (WebAssembly) BUILD
 if(EMSCRIPTEN)
     message(STATUS "Configuring build for Emscripten (WebAssembly)...")
     
-    add_executable(${PROJECT_NAME} src/main.cpp)
+    add_executable(${PROJECT_NAME} src/main.cpp src/book_converter.cpp)
     
     # Set the target extension for running in a web browser
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
     
+    # Define CURL_STATICLIB
+    target_compile_definitions(${PROJECT_NAME} PRIVATE CURL_STATICLIB)
+    
     # Add curl compiler options for WebAssembly
-    target_compile_options(${PROJECT_NAME} PRIVATE "-s" "USE_CURL=1")
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        "-s" "USE_CURL=1"
+        "-s" "USE_SDL=2"
+        "-s" "USE_SDL_IMAGE=2"
+        "-s" "USE_SDL_MIXER=2"
+        "-s" "USE_SDL_TTF=2"
+        "-s" "USE_SDL_NET=2"
+    )
     
     # Emscripten port linking and asset preloading flags
     target_link_options(${PROJECT_NAME} PRIVATE
@@ -30,7 +66,28 @@ if(EMSCRIPTEN)
         "-s" "ALLOW_MEMORY_GROWTH=1"
         "-s" "INITIAL_MEMORY=67108864"
         "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/options.json@options.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_gemini.json@ai_gemini.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_chatgpt.json@ai_chatgpt.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_copilot.json@ai_copilot.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_deepseek.json@ai_deepseek.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_groq.json@ai_groq.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_llama.json@ai_llama.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_lmstudio.json@ai_lmstudio.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_openai.json@ai_openai.json"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_openrouter.json@ai_openrouter.json"
     )
+    
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        pugixml
+        book_miniz
+    )
+    
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        external/src/pugixml/src
+        external/src/miniz
+    )
+    
     return()
 endif()
 
@@ -85,31 +142,6 @@ else()
     set(CURL_USE_OPENSSL ON CACHE INTERNAL "")
 endif()
 
-# pugixml (XML parser for fb2/epub/docx)
-set(PUGIXML_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-add_subdirectory(external/src/pugixml)
-
-# miniz (ZIP decompressor for epub/docx)
-# Built as 'book_miniz' to avoid target name clash with libmobi's internal 'miniz' OBJECT lib.
-# Generate miniz_export.h (normally produced by CMake's GenerateExportHeader) at configure time.
-file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/external/src/miniz/miniz_export.h"
-"/* miniz_export.h - generated for static build */\n"
-"#ifndef MINIZ_EXPORT_H\n"
-"#define MINIZ_EXPORT_H\n"
-"#define MINIZ_EXPORT\n"
-"#define MINIZ_NO_EXPORT\n"
-"#define MINIZ_DEPRECATED\n"
-"#define MINIZ_DEPRECATED_EXPORT\n"
-"#define MINIZ_DEPRECATED_NO_EXPORT\n"
-"#endif /* MINIZ_EXPORT_H */\n"
-)
-add_library(book_miniz STATIC
-    external/src/miniz/miniz.c
-    external/src/miniz/miniz_tdef.c
-    external/src/miniz/miniz_tinfl.c
-    external/src/miniz/miniz_zip.c
-)
-target_include_directories(book_miniz PUBLIC external/src/miniz)
 
 # libmobi (MOBI/AZW reader) — skip on Android/iOS/Emscripten
 # libmobi will use its OWN bundled miniz (USE_MINIZ=ON) to avoid target conflicts

@@ -41,5 +41,5 @@ echo "NOTE: WebAssembly files cannot be opened directly from the disk due to COR
 echo "You must host them using a local web server."
 echo "To host it, run this command:"
 echo "  python3 -m http.server 8000 --directory build_web"
-echo "Then visit: http://localhost:8000/sdl2_template.html"
+echo "Then visit: http://localhost:8000/BOOK_TO_GAME.html"
 echo "====================================================="

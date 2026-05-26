@@ -40,5 +40,5 @@ Write-Host "IMPORTANT: WebAssembly files cannot be launched directly via double-
 Write-Host "You must launch a local web server to test the build." -ForegroundColor Yellow
 Write-Host "To start a quick server, execute:" -ForegroundColor Gray
 Write-Host "  python -m http.server 8000 --directory build_web" -ForegroundColor Cyan
-Write-Host "Then navigate in your browser to: http://localhost:8000/sdl2_template.html" -ForegroundColor Cyan
+Write-Host "Then navigate in your browser to: http://localhost:8000/BOOK_TO_GAME.html" -ForegroundColor Cyan
 Write-Host "=====================================================" -ForegroundColor Green

@@ -1,0 +1,36 @@
+name: WebAssembly Build (Emscripten)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-web:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Setup Emscripten SDK
+      uses: mymindstorm/setup-emsdk@v11
+      with:
+        version: 3.1.45
+
+    - name: Configure WebAssembly Build via CMake
+      run: |
+        emcmake cmake -B build_web -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build WebAssembly (Emscripten)
+      run: |
+        cmake --build build_web --config Release
+
+    - name: Upload WebAssembly Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: book-to-game-wasm-build
+        path: build_web/
