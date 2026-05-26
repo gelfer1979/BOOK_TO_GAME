@@ -1,5 +1,5 @@
 {
-    "AIModel": "ai_gemini.json",
+    "AIModel": "ai_lmstudio.json",
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "Russian",
@@ -8,6 +8,57 @@
     "fontSizeOffset": 4,
     "formatReminder": [
         "[REMINDER: Use the exact output format from your system prompt: narrative text first, then '\u001f', then 2-4 choices each on its own line '- ']"
+    ],
+    "genrePreprocessingPipeline": [
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genres\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genres\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genre\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genre\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "genres:"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "genre:"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": ","
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\""
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "'"
+        },
+        {
+            "action": "remove_chars",
+            "target": "{}[]"
+        }
     ],
     "maxRetries": 3,
     "maxTurnsForce": 10,
@@ -117,57 +168,6 @@
         {
             "action": "remove_chars",
             "target": "{}"
-        }
-    ],
-    "genrePreprocessingPipeline": [
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "\"genres\":"
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "\"genres\" :"
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "\"genre\":"
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "\"genre\" :"
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "genres:"
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "genre:"
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": ","
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "\""
-        },
-        {
-            "action": "replace",
-            "replacement": "",
-            "target": "'"
-        },
-        {
-            "action": "remove_chars",
-            "target": "{}[]"
         }
     ],
     "retryDelayMs": 1000,

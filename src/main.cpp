@@ -1996,9 +1996,13 @@ void InitAdventureSetup(const std::string& filePath) {
     state.setupDynamicGenres.clear();
 #ifndef __EMSCRIPTEN__
     std::thread([actualFilePath]() {
+        std::cout << "[Setup Genres Thread] Thread started! actualFilePath: \"" << actualFilePath << "\"" << std::endl;
         // Read first 1000 characters from raw book to extract theme/setting
         std::ifstream file(actualFilePath);
-        if (!file.is_open()) return;
+        if (!file.is_open()) {
+            std::cerr << "[Setup Genres Thread] Error: Could not open book file at: \"" << actualFilePath << "\"" << std::endl;
+            return;
+        }
         std::string sample;
         char buf[1000];
         file.read(buf, sizeof(buf));
@@ -2006,7 +2010,11 @@ void InitAdventureSetup(const std::string& filePath) {
         file.close();
         
         sample = Trim(sample);
-        if (sample.empty()) return;
+        if (sample.empty()) {
+            std::cerr << "[Setup Genres Thread] Error: Book excerpt sample is empty!" << std::endl;
+            return;
+        }
+        std::cout << "[Setup Genres Thread] Book excerpt successfully loaded! Excerpt length: " << sample.length() << " chars." << std::endl;
         
         std::string lang = "Russian";
         std::string sep = "\x1F";
@@ -2016,7 +2024,11 @@ void InitAdventureSetup(const std::string& filePath) {
         AskAi* client = state.aiClient.get();
         state.mutex.unlock();
         
-        if (!client) return;
+        if (!client) {
+            std::cerr << "[Setup Genres Thread] Error: state.aiClient is null!" << std::endl;
+            return;
+        }
+        std::cout << "[Setup Genres Thread] Querying AI model..." << std::endl;
         
         std::string prompt = "You are a literary assistant. Read the following book excerpt and determine the 5 most relevant subgenres or thematic settings for a text-based game based on this book.\n\n"
                              "--- BEGIN BOOK EXCERPT ---\n"
