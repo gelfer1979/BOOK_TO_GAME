@@ -4,10 +4,49 @@ echo "====================================================="
 echo "Building SDL2 WebAssembly Project via Emscripten..."
 echo "====================================================="
 
-if [ -z "$EMSDK" ]; then
-    echo "WARNING: EMSDK environment variable is not detected!"
-    echo "Please ensure Emscripten SDK is installed and activated (run 'source emsdk_env.sh')."
-    echo "Attempting build anyway..."
+if ! command -v emcmake &> /dev/null; then
+    echo "emcmake not found in PATH. Scanning common directories for Emscripten SDK..."
+    
+    emsdk_paths=(
+        "$EMSDK"
+        "/usr/local/emsdk"
+        "$HOME/emsdk"
+        "../emsdk"
+        "../../emsdk"
+        "/opt/emsdk"
+    )
+    
+    activated=false
+    for path in "${emsdk_paths[@]}"; do
+        if [ -n "$path" ] && [ -f "$path/emsdk_env.sh" ]; then
+            echo "Found Emscripten SDK at '$path'. Activating environment..."
+            # Source the activation script
+            source "$path/emsdk_env.sh"
+            
+            if command -v emcmake &> /dev/null; then
+                activated=true
+                break
+            fi
+        fi
+    done
+    
+    if [ "$activated" = false ]; then
+        echo "====================================================="
+        echo "ERROR: Emscripten SDK (emsdk) not found or not active!"
+        echo "====================================================="
+        echo "To compile the WebAssembly version, please install and activate EMSDK:"
+        echo "1. Clone the EMSDK repository:"
+        echo "   git clone https://github.com/emscripten-core/emsdk.git"
+        echo "2. Navigate into emsdk directory and install/activate:"
+        echo "   cd emsdk"
+        echo "   ./emsdk install 3.1.45"
+        echo "   ./emsdk activate 3.1.45"
+        echo "3. Activate environment variables in your current shell:"
+        echo "   source ./emsdk_env.sh"
+        echo "4. Rerun this build script!"
+        echo "====================================================="
+        exit 1
+    fi
 fi
 
 echo "1. Running Emcmake Configure..."
