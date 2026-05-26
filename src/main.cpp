@@ -3038,6 +3038,10 @@ void ConsumeApiResponse() {
                     
                     fullResponse.erase(pos, eraseEnd - pos);
                 } else {
+                    if (!state.ignoreTags && nextChapter == -1) {
+                        nextChapter = state.modelState.currentChapter + 1;
+                        std::cout << "[ConsumeApiResponse] Robustly found transition keyword '" << keyword << "' without digit. Falling back to next chapter: " << nextChapter << std::endl;
+                    }
                     fullResponse.erase(pos, keyword.length());
                 }
                 
