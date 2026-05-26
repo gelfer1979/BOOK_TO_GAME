@@ -2041,6 +2041,63 @@ void InitAdventureSetup(const std::string& filePath) {
             line = Trim(line);
             if (line.empty()) continue;
             
+            // Trim quotes, commas, brackets from the genre line
+            bool cleaned = true;
+            while (cleaned) {
+                cleaned = false;
+                std::string trimmed = Trim(line);
+                if (trimmed.empty()) break;
+                
+                // Remove trailing comma
+                if (trimmed.back() == ',') {
+                    trimmed.pop_back();
+                    cleaned = true;
+                }
+                // Remove trailing/leading braces/brackets
+                if (!trimmed.empty() && (trimmed.back() == ']' || trimmed.back() == '}' || trimmed.back() == '[' || trimmed.back() == '{')) {
+                    trimmed.pop_back();
+                    cleaned = true;
+                }
+                if (!trimmed.empty() && (trimmed.front() == '[' || trimmed.front() == '{' || trimmed.front() == ']' || trimmed.front() == '}')) {
+                    trimmed.erase(trimmed.begin());
+                    cleaned = true;
+                }
+                // Remove surrounding quotes
+                trimmed = Trim(trimmed);
+                if (trimmed.length() >= 2 && trimmed.front() == '"' && trimmed.back() == '"') {
+                    trimmed = trimmed.substr(1, trimmed.length() - 2);
+                    cleaned = true;
+                }
+                if (trimmed.length() >= 2 && trimmed.front() == '\'' && trimmed.back() == '\'') {
+                    trimmed = trimmed.substr(1, trimmed.length() - 2);
+                    cleaned = true;
+                }
+                if (cleaned) {
+                    line = trimmed;
+                }
+            }
+            
+            line = Trim(line);
+            if (line.empty()) continue;
+            
+            // Skip structural lines consisting only of punctuation or JSON keys
+            bool onlyPunct = true;
+            for (char c : line) {
+                if (std::isalnum((unsigned char)c)) {
+                    onlyPunct = false;
+                    break;
+                }
+            }
+            if (onlyPunct) continue;
+            
+            std::string lowerLine = ToLower(line);
+            if (lowerLine.find("genres") != std::string::npos || 
+                lowerLine.find("genre") != std::string::npos ||
+                lowerLine.find("excerpt") != std::string::npos ||
+                lowerLine.find("thematic") != std::string::npos) {
+                continue;
+            }
+            
             // Trim standard bullet/list prefixes
             if (line.size() > 2 && line[0] == '-' && line[1] == ' ') line = line.substr(2);
             else if (line.size() > 3 && std::isdigit(line[0]) && line[1] == '.' && line[2] == ' ') line = line.substr(3);
