@@ -1277,6 +1277,12 @@ inline void PreprocessRawAiResponse(std::string& aiResponse, const std::string& 
                 
                 // Replace marker with actual runtime separator if requested
                 size_t sepMarker;
+                while ((sepMarker = replacement.find("<choicesSeparator>")) != std::string::npos) {
+                    replacement.replace(sepMarker, 18, choicesSeparator);
+                }
+                while ((sepMarker = replacement.find("choicesSeparator")) != std::string::npos) {
+                    replacement.replace(sepMarker, 16, choicesSeparator);
+                }
                 while ((sepMarker = replacement.find("<separator>")) != std::string::npos) {
                     replacement.replace(sepMarker, 11, choicesSeparator);
                 }

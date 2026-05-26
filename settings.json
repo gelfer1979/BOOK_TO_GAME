@@ -13,10 +13,10 @@
         { "action": "replace", "target": "\\n", "replacement": "\n" },
         { "action": "replace", "target": "\"narrative\":", "replacement": "" },
         { "action": "replace", "target": "\"narrative\" :", "replacement": "" },
-        { "action": "replace", "target": "\"options\":", "replacement": "<separator>" },
-        { "action": "replace", "target": "\"choices\":", "replacement": "<separator>" },
-        { "action": "replace", "target": "\"options\" :", "replacement": "<separator>" },
-        { "action": "replace", "target": "\"choices\" :", "replacement": "<separator>" },
+        { "action": "replace", "target": "\"options\":", "replacement": "choicesSeparator" },
+        { "action": "replace", "target": "\"choices\":", "replacement": "choicesSeparator" },
+        { "action": "replace", "target": "\"options\" :", "replacement": "choicesSeparator" },
+        { "action": "replace", "target": "\"choices\" :", "replacement": "choicesSeparator" },
         { "action": "remove_chars", "target": "{}[]" }
     ],
     "formatReminder": [
