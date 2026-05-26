@@ -1063,6 +1063,15 @@ struct GameState {
         {"replace", "\"choices\" :", "<separator>"},
         {"remove_chars", "{}[]", ""}
     };
+    std::vector<PipelineStep> genrePreprocessingPipeline = {
+        {"replace", "\"genres\":", ""},
+        {"replace", "\"genres\" :", ""},
+        {"replace", "\"genre\":", ""},
+        {"replace", "\"genre\" :", ""},
+        {"replace", "genres:", ""},
+        {"replace", "genre:", ""},
+        {"remove_chars", "{}[]", ""}
+    };
 };
 
 // --- Helper Functions ---

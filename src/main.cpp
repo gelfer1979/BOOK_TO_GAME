@@ -2009,8 +2009,10 @@ void InitAdventureSetup(const std::string& filePath) {
         if (sample.empty()) return;
         
         std::string lang = "Russian";
+        std::string sep = "\x1F";
         state.mutex.lock();
         lang = state.gameLanguage;
+        sep = state.modelState.choicesSeparator;
         AskAi* client = state.aiClient.get();
         state.mutex.unlock();
         
@@ -2033,6 +2035,9 @@ void InitAdventureSetup(const std::string& filePath) {
                              "Genre5";
         
         std::string genresText = client->ask(prompt);
+        
+        // 0. Preprocess raw AI response using the dedicated genrePreprocessingPipeline!
+        PreprocessRawAiResponse(genresText, sep, state.modelState.genrePreprocessingPipeline);
         
         std::vector<std::string> parsedGenres;
         std::stringstream ss(genresText);
@@ -4967,6 +4972,24 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                             step.replacement = stepJson["replacement"].get<std::string>();
                         }
                         state.modelState.preprocessingPipeline.push_back(step);
+                    }
+                }
+            }
+            if (j.contains("genrePreprocessingPipeline") && j["genrePreprocessingPipeline"].is_array()) {
+                state.modelState.genrePreprocessingPipeline.clear();
+                for (const auto& stepJson : j["genrePreprocessingPipeline"]) {
+                    if (stepJson.is_object()) {
+                        PipelineStep step;
+                        if (stepJson.contains("action") && stepJson["action"].is_string()) {
+                            step.action = stepJson["action"].get<std::string>();
+                        }
+                        if (stepJson.contains("target") && stepJson["target"].is_string()) {
+                            step.target = stepJson["target"].get<std::string>();
+                        }
+                        if (stepJson.contains("replacement") && stepJson["replacement"].is_string()) {
+                            step.replacement = stepJson["replacement"].get<std::string>();
+                        }
+                        state.modelState.genrePreprocessingPipeline.push_back(step);
                     }
                 }
             }

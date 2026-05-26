@@ -119,6 +119,42 @@
             "target": "{}"
         }
     ],
+    "genrePreprocessingPipeline": [
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genres\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genres\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genre\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genre\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "genres:"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "genre:"
+        },
+        {
+            "action": "remove_chars",
+            "target": "{}[]"
+        }
+    ],
     "retryDelayMs": 1000,
     "systemPrompt": [
         "You are a text adventure narrator. Narrate in the user's language. Be concise (1-2 short paragraphs). Advance the plot every turn — no loops or repetition.",
