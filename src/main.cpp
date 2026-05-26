@@ -31,6 +31,9 @@
 #include <SDL2/SDL_net.h>
 
 #include "modelapi.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 enum AppState {
     APP_STATE_ASK_CONTINUE,
@@ -4641,10 +4644,14 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     UpdateSystemPrompt();
     
     // 7. Start main execution thread loop
+#ifdef __EMSCRIPTEN__
+    emscripten_set_main_loop(MainIteration, 0, 1);
+#else
     while (state.running) {
         MainIteration();
         SDL_Delay(1); // CPU throttle limiter
     }
+#endif
     
     // 8. Clean up resources and terminate safely
     SDL_StopTextInput();
