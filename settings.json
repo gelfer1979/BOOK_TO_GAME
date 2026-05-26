@@ -1,5 +1,5 @@
 {
-    "AIModel": "ai_lmstudio.json",
+    "AIModel": "ai_gemini.json",
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "Russian",
@@ -79,6 +79,11 @@
             "action": "replace",
             "replacement": "",
             "target": "\"narrative\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"story\" :"
         },
         {
             "action": "replace",
