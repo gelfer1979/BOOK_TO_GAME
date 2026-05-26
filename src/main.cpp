@@ -2504,6 +2504,11 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
                 std::cout << "[Transition Thread] Submitting starting query for Chapter " << nextChapter << std::endl;
             }
             
+            // Append format reminder to non-epilogue chapter start queries
+            if (!isVictory) {
+                nextStartMsg += "\n\nReminder: Narrative first, then \x1F, then 2-4 options each on a new line";
+            }
+            
             std::string response;
             int attemptStart = 0;
             while (attemptStart < maxAttempts) {
@@ -2811,11 +2816,18 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
 #else
     std::thread([queryCopy, historyCopy, langCopy, queryId]() {
 #endif
+        // Append format reminder so the model doesn't forget structure mid-conversation
+        const std::string formatReminder = "\n\nReminder: Narrative first, then \x1F, then 2-4 options each on a new line";
         std::string response;
         if (historyCopy.empty()) {
-            response = state.aiClient->ask(queryCopy);
+            response = state.aiClient->ask(queryCopy + formatReminder);
         } else {
-            response = state.aiClient->askChat(historyCopy, langCopy);
+            // Make a mutable local copy to append the reminder without affecting state
+            std::vector<ChatMessageData> historyWithReminder = historyCopy;
+            if (!historyWithReminder.empty() && historyWithReminder.back().sender == "User") {
+                historyWithReminder.back().text += formatReminder;
+            }
+            response = state.aiClient->askChat(historyWithReminder, langCopy);
         }
         
         state.mutex.lock();
