@@ -133,6 +133,7 @@ struct {
     SDL_Rect victoryBtnRect2 = {0, 0, 0, 0};
     SDL_Rect clearBtnRect = {0, 0, 0, 0};
     SDL_Rect confirmBtnRect = {0, 0, 0, 0};
+    SDL_Rect pasteBtnRect = {0, 0, 0, 0};
     std::vector<std::string> setupDynamicGenres;
     int maxRetries = 3;
     int bookRetries = 3;
@@ -3118,6 +3119,15 @@ void MainIteration() {
                 if (mx >= state.clearBtnRect.x && mx <= (state.clearBtnRect.x + state.clearBtnRect.w) &&
                     my >= state.clearBtnRect.y && my <= (state.clearBtnRect.y + state.clearBtnRect.h)) {
                     state.inputText = "";
+                } else if (mx >= state.pasteBtnRect.x && mx <= (state.pasteBtnRect.x + state.pasteBtnRect.w) &&
+                           my >= state.pasteBtnRect.y && my <= (state.pasteBtnRect.y + state.pasteBtnRect.h)) {
+                    if (SDL_HasClipboardText()) {
+                        char* clipText = SDL_GetClipboardText();
+                        if (clipText) {
+                            state.inputText = clipText;
+                            SDL_free(clipText);
+                        }
+                    }
                 } else if (mx >= state.confirmBtnRect.x && mx <= (state.confirmBtnRect.x + state.confirmBtnRect.w) &&
                            my >= state.confirmBtnRect.y && my <= (state.confirmBtnRect.y + state.confirmBtnRect.h)) {
                     SaveApiKeyToModelJson(state.selectedAiFilename, state.inputText);
@@ -4220,9 +4230,53 @@ void MainIteration() {
         RenderText(state.renderer.get(), state.fontUI.get(), ">", state.confirmBtnRect.x + state.confirmBtnRect.w / 2, state.confirmBtnRect.y + state.confirmBtnRect.h / 2, confirmTxtColor, true);
 
         // Input bar is shifted between the clear and confirm buttons
-        SDL_Rect inputBar = { 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 140, 40 };
+        SDL_Rect inputBar;
+        if (state.editingApiKey) {
+            // Define Paste button geometry (after input bar and before confirm button)
+            state.pasteBtnRect = { WINDOW_WIDTH - 110, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+            inputBar = { 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 190, 40 };
+        } else {
+            state.pasteBtnRect = { 0, 0, 0, 0 };
+            inputBar = { 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 140, 40 };
+        }
+
         SDL_Color inputBgColor = { 26, 26, 36, 255 };
         DrawRoundedRect(state.renderer.get(), inputBar, 8, inputBgColor);
+
+        // Draw Paste Button if in API Key entry state
+        if (state.editingApiKey) {
+            bool hoverPaste = (mx >= state.pasteBtnRect.x && mx <= state.pasteBtnRect.x + state.pasteBtnRect.w &&
+                               my >= state.pasteBtnRect.y && my <= state.pasteBtnRect.y + state.pasteBtnRect.h);
+            
+            SDL_Color pasteBgColor = hoverPaste ? SDL_Color{ 45, 45, 60, 255 } : SDL_Color{ 26, 26, 36, 255 };
+            DrawRoundedRect(state.renderer.get(), state.pasteBtnRect, 8, pasteBgColor);
+            
+            if (hoverPaste) {
+                SDL_SetRenderDrawColor(state.renderer.get(), 0, 255, 220, 255); // glowing bright cyan border on hover
+            } else {
+                SDL_SetRenderDrawColor(state.renderer.get(), 40, 40, 60, 255);
+            }
+            SDL_RenderDrawRect(state.renderer.get(), &state.pasteBtnRect);
+            
+            // Procedurally draw clipboard paste symbol
+            int px = state.pasteBtnRect.x;
+            int py = state.pasteBtnRect.y;
+            
+            // Clipboard board (dark grey)
+            SDL_Rect boardRect = { px + 12, py + 10, 16, 20 };
+            SDL_Color boardColor = { 100, 100, 120, 255 };
+            DrawRoundedRect(state.renderer.get(), boardRect, 3, boardColor);
+            
+            // Paper sheet (white/light grey)
+            SDL_Rect paperRect = { px + 15, py + 14, 10, 13 };
+            SDL_Color paperColor = hoverPaste ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 200, 200, 210, 255 };
+            DrawRoundedRect(state.renderer.get(), paperRect, 1, paperColor);
+            
+            // Metal clip at the top (Cyan highlight)
+            SDL_Rect clipRect = { px + 16, py + 8, 8, 4 };
+            SDL_Color clipColor = hoverPaste ? SDL_Color{ 0, 255, 220, 255 } : SDL_Color{ 0, 192, 255, 255 };
+            DrawRoundedRect(state.renderer.get(), clipRect, 1, clipColor);
+        }
         
         // Input border highlights cyan/purple during processing
         if (state.aiThinking) {
