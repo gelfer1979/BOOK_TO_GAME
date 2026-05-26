@@ -1240,8 +1240,14 @@ inline std::string CleanTextForFont(const std::string& text) {
     return result.substr(start, end - start);
 }
 
-// XML Options Parser & Dialogue Strip
 inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) {
+    // Normalize literal "\\n" escape sequences into actual newline control characters
+    size_t nPos = 0;
+    while ((nPos = aiResponse.find("\\n", nPos)) != std::string::npos) {
+        aiResponse.replace(nPos, 2, "\n");
+        nPos += 1;
+    }
+
     std::vector<std::string> options;
     
     // 0. Robust vertical pipe '|' block separator (Universal format!)
