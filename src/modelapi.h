@@ -34,6 +34,12 @@
 inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& errorMsg);
 inline std::string Trim(const std::string& str);
 
+struct PipelineStep {
+    std::string action;      // "replace", "remove_chars", "trim"
+    std::string target;      // target string or characters to remove
+    std::string replacement; // replacement string (for "replace")
+};
+
 // Pure UI-independent Chat Message representation
 struct ChatMessageData {
     std::string sender; // "User" or "AI"
@@ -1042,6 +1048,19 @@ struct GameState {
     std::string promptAiBookBlockHydration = "You are an AI interactive game book generator. Your task is to write detailed descriptions and objectives for a specific block of chapters in the game book outline...";
     std::string promptAiSummaryCompressor = "You are a professional editor. Your task is to combine and compress multiple sequential chapter summaries into a single, cohesive, and extremely concise paragraph (at most 3-4 sentences) that highlights the most important plot events, character progress, and key items discovered. Write strictly in the target language: '{language}'.";
     std::string uiChaptersRangeLabel = "Chapters {range}";
+    
+    // AI Preprocessing & Parsing settings
+    std::string choicesSeparator = "\x1F";
+    std::vector<PipelineStep> preprocessingPipeline = {
+        {"replace", "\\n", "\n"},
+        {"replace", "\"narrative\":", ""},
+        {"replace", "\"narrative\" :", ""},
+        {"replace", "\"options\":", "<separator>"},
+        {"replace", "\"choices\":", "<separator>"},
+        {"replace", "\"options\" :", "<separator>"},
+        {"replace", "\"choices\" :", "<separator>"},
+        {"remove_chars", "{}[]", ""}
+    };
 };
 
 // --- Helper Functions ---
@@ -1248,19 +1267,92 @@ inline std::string EraseAllSubstrings(std::string str, const std::string& sub) {
     return str;
 }
 
-inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) {
-    // Normalize literal "\\n" escape sequences into actual newline control characters
-    size_t nPos = 0;
-    while ((nPos = aiResponse.find("\\n", nPos)) != std::string::npos) {
-        aiResponse.replace(nPos, 2, "\n");
-        nPos += 1;
+inline void PreprocessRawAiResponse(std::string& aiResponse, const std::string& choicesSeparator = "\x1F", const std::vector<PipelineStep>& pipeline = {}) {
+    // If a custom pipeline is passed, execute it step-by-step
+    if (!pipeline.empty()) {
+        for (const auto& step : pipeline) {
+            if (step.action == "replace") {
+                std::string target = step.target;
+                std::string replacement = step.replacement;
+                
+                // Replace marker with actual runtime separator if requested
+                size_t sepMarker;
+                while ((sepMarker = replacement.find("<separator>")) != std::string::npos) {
+                    replacement.replace(sepMarker, 11, choicesSeparator);
+                }
+                
+                if (!target.empty()) {
+                    size_t pos = 0;
+                    while ((pos = aiResponse.find(target, pos)) != std::string::npos) {
+                        aiResponse.replace(pos, target.length(), replacement);
+                        pos += replacement.length();
+                    }
+                }
+            } else if (step.action == "remove_chars") {
+                // Remove all occurrences of any characters specified in target
+                aiResponse.erase(
+                    std::remove_if(aiResponse.begin(), aiResponse.end(), [&](char c) {
+                        return step.target.find(c) != std::string::npos;
+                    }),
+                    aiResponse.end()
+                );
+            } else if (step.action == "trim") {
+                aiResponse = Trim(aiResponse);
+            }
+        }
+    } else {
+        // Fallback/default hardcoded preprocessing if no pipeline is configured
+        // 1. Normalize escape sequences
+        size_t nPos = 0;
+        while ((nPos = aiResponse.find("\\n", nPos)) != std::string::npos) {
+            aiResponse.replace(nPos, 2, "\n");
+            nPos += 1;
+        }
+        
+        // 2. Preprocess JSON fragments if we detect curly brackets or JSON keys
+        if (aiResponse.find("{") != std::string::npos || aiResponse.find("\"narrative\"") != std::string::npos) {
+            // Clean up typical JSON properties
+            std::vector<std::pair<std::string, std::string>> defaults = {
+                {"\"narrative\":", ""},
+                {"\"narrative\" :", ""},
+                {"\"options\":", choicesSeparator},
+                {"\"choices\":", choicesSeparator},
+                {"\"options\" :", choicesSeparator},
+                {"\"choices\" :", choicesSeparator}
+            };
+            for (const auto& pair : defaults) {
+                size_t pos = 0;
+                while ((pos = aiResponse.find(pair.first, pos)) != std::string::npos) {
+                    aiResponse.replace(pos, pair.first.length(), pair.second);
+                    pos += pair.second.length();
+                }
+            }
+            
+            // Remove brackets
+            std::string removeChars = "{}[]";
+            aiResponse.erase(
+                std::remove_if(aiResponse.begin(), aiResponse.end(), [&](char c) {
+                    return removeChars.find(c) != std::string::npos;
+                }),
+                aiResponse.end()
+            );
+        }
     }
+}
+
+inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, const std::string& choicesSeparator = "\x1F", const std::vector<PipelineStep>& pipeline = {}) {
+    // 1. Run PreprocessRawAiResponse to clean up escape sequences and JSON-like malformations
+    PreprocessRawAiResponse(aiResponse, choicesSeparator, pipeline);
 
     std::vector<std::string> options;
     
     // 0. Universal choices split separator
-    size_t pipePos = aiResponse.find("\x1F");
-    size_t separatorLen = 1;
+    size_t pipePos = aiResponse.find(choicesSeparator);
+    size_t separatorLen = choicesSeparator.length();
+    if (pipePos == std::string::npos) {
+        pipePos = aiResponse.find("\x1F");
+        separatorLen = 1;
+    }
     if (pipePos == std::string::npos) {
         pipePos = aiResponse.find("[choices_split]");
         separatorLen = 15;
@@ -1279,11 +1371,13 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) 
         std::string optionsPart = aiResponse.substr(pipePos + separatorLen);
         
         // Remove all duplicate/subsequent separators to keep only the first one
+        narrativePart = EraseAllSubstrings(narrativePart, choicesSeparator);
         narrativePart = EraseAllSubstrings(narrativePart, "\x1F");
         narrativePart = EraseAllSubstrings(narrativePart, "[choices_split]");
         narrativePart = EraseAllSubstrings(narrativePart, "[choices]");
         narrativePart.erase(std::remove(narrativePart.begin(), narrativePart.end(), '|'), narrativePart.end());
         
+        optionsPart = EraseAllSubstrings(optionsPart, choicesSeparator);
         optionsPart = EraseAllSubstrings(optionsPart, "\x1F");
         optionsPart = EraseAllSubstrings(optionsPart, "[choices_split]");
         optionsPart = EraseAllSubstrings(optionsPart, "[choices]");
@@ -1294,6 +1388,33 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) 
         std::string line;
         while (std::getline(ss, line)) {
             std::string optLine = Trim(line);
+            if (optLine.empty()) continue;
+            
+            // Trim quotes, commas, and formatting characters from option lines (e.g. from JSON arrays)
+            bool cleaned = true;
+            while (cleaned) {
+                cleaned = false;
+                std::string trimmed = Trim(optLine);
+                if (trimmed.empty()) break;
+                
+                // Remove trailing comma
+                if (trimmed.back() == ',') {
+                    trimmed.pop_back();
+                    cleaned = true;
+                }
+                
+                // Remove surrounding quotes
+                trimmed = Trim(trimmed);
+                if (trimmed.length() >= 2 && trimmed.front() == '"' && trimmed.back() == '"') {
+                    trimmed = trimmed.substr(1, trimmed.length() - 2);
+                    cleaned = true;
+                }
+                
+                if (cleaned) {
+                    optLine = trimmed;
+                }
+            }
+            optLine = Trim(optLine);
             if (optLine.empty()) continue;
             
             // Strip leading bullet markers
@@ -1707,13 +1828,13 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) 
     return options;
 }
 
-inline std::string ReconstructPerfectAiResponse(const std::string& strippedResponse, const std::vector<std::string>& options) {
+inline std::string ReconstructPerfectAiResponse(const std::string& strippedResponse, const std::vector<std::string>& options, const std::string& choicesSeparator = "\x1F") {
     std::string result = strippedResponse;
     while (!result.empty() && (result.back() == '\n' || result.back() == '\r' || result.back() == ' ')) {
         result.pop_back();
     }
     if (!options.empty() && options[0] != "Продолжить историю" && options[0] != "Continue story" && options[0] != "Повторить запрос" && options[0] != "Repeat request") {
-        result += "\n\n\x1F\n";
+        result += "\n\n" + choicesSeparator + "\n";
         for (const auto& opt : options) {
             result += "- " + opt + "\n";
         }

@@ -86,7 +86,7 @@ struct {
     bool ignoreTags = false;
     std::string transitionPrefix = "Перейти к Главе ";
     std::string gameLanguage = "Russian";
-    std::string formatReminder = "[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character on its own line, then 2-4 choices each starting with '- ']";
+    std::string formatReminder = "[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character , then 2-4 choices each on its own line '- ']";
     
     // Startup State Variables
     AppState appState = APP_STATE_ASK_CONTINUE;
@@ -204,7 +204,7 @@ void SyncModelToUi() {
         // Strip options and other XML tags for clean UI display
         if (msg.sender == "AI") {
             std::string tempText = msg.text;
-            ExtractAndStripOptions(tempText);
+            ExtractAndStripOptions(tempText, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
             
             // Clean dead / next chapter tags
             size_t deadPos = tempText.find("<player_dead/>");
@@ -1895,13 +1895,13 @@ void RestartAdventure() {
     std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
     
     // Pre-parse the choices instantly on startup and set them up as active choices
-    std::vector<std::string> options = ExtractAndStripOptions(startQ);
+    std::vector<std::string> options = ExtractAndStripOptions(startQ, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
     if (options.empty()) {
         options = { IsRussianLanguage(state.gameLanguage) ? "Продолжить историю" : "Continue story" };
     }
     
     // Reconstruct perfect starting response as our very first chat message history
-    std::string perfectStart = ReconstructPerfectAiResponse(startQ, options);
+    std::string perfectStart = ReconstructPerfectAiResponse(startQ, options, state.modelState.choicesSeparator);
     
     ChatMessageData aiMsg;
     aiMsg.sender = "AI";
@@ -2145,11 +2145,11 @@ void StartBookGeneration(const std::string& filePath) {
             
             std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
             state.mutex.lock();
-            std::vector<std::string> options = ExtractAndStripOptions(startQ);
+            std::vector<std::string> options = ExtractAndStripOptions(startQ, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
             if (options.empty()) {
                 options = { IsRussianLanguage(state.gameLanguage) ? "Продолжить историю" : "Continue story" };
             }
-            std::string perfectStart = ReconstructPerfectAiResponse(startQ, options);
+            std::string perfectStart = ReconstructPerfectAiResponse(startQ, options, state.modelState.choicesSeparator);
             
             ChatMessageData aiMsg;
             aiMsg.sender = "AI";
@@ -2312,11 +2312,11 @@ void StartBookGeneration(const std::string& filePath) {
             
             std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
             state.mutex.lock();
-            std::vector<std::string> options = ExtractAndStripOptions(startQ);
+            std::vector<std::string> options = ExtractAndStripOptions(startQ, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
             if (options.empty()) {
                 options = { IsRussianLanguage(state.gameLanguage) ? "Продолжить историю" : "Continue story" };
             }
-            std::string perfectStart = ReconstructPerfectAiResponse(startQ, options);
+            std::string perfectStart = ReconstructPerfectAiResponse(startQ, options, state.modelState.choicesSeparator);
             
             ChatMessageData aiMsg;
             aiMsg.sender = "AI";
@@ -2748,9 +2748,9 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
             std::string rawResponse = response;
             std::vector<std::string> options;
             if (!isVictory) {
-                options = ExtractAndStripOptions(response);
+                options = ExtractAndStripOptions(response, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
                 if (!options.empty()) {
-                    rawResponse = ReconstructPerfectAiResponse(response, options);
+                    rawResponse = ReconstructPerfectAiResponse(response, options, state.modelState.choicesSeparator);
                 }
                 if (options.empty()) {
                     options.push_back("Продолжить историю");
@@ -2952,7 +2952,7 @@ void ConsumeApiResponse() {
         std::string rawResponse = fullResponse;
         
         // Strip XML choice tags and parse dynamic action cards
-        std::vector<std::string> options = ExtractAndStripOptions(fullResponse);
+        std::vector<std::string> options = ExtractAndStripOptions(fullResponse, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
         
         // Auto-retry if options count < 2 and it's not a terminal state (dead or transitioning)
         if (options.size() < 2 && !isDead && nextChapter == -1) {
@@ -2983,7 +2983,7 @@ void ConsumeApiResponse() {
         }
         
         // Reconstruct the perfect response in U+001F separator format for chat history
-        std::string perfectResponse = ReconstructPerfectAiResponse(fullResponse, options);
+        std::string perfectResponse = ReconstructPerfectAiResponse(fullResponse, options, state.modelState.choicesSeparator);
         
         std::cout << "[ConsumeApiResponse] Parsed options count: " << options.size() << std::endl;
         for (size_t i = 0; i < options.size(); i++) {
@@ -3226,11 +3226,11 @@ void MainIteration() {
                     if (state.uiMessages.empty()) {
                         std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
                         state.mutex.lock();
-                        std::vector<std::string> options = ExtractAndStripOptions(startQ);
+                        std::vector<std::string> options = ExtractAndStripOptions(startQ, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
                         if (options.empty()) {
                             options = { IsRussianLanguage(state.gameLanguage) ? "Продолжить историю" : "Continue story" };
                         }
-                        std::string perfectStart = ReconstructPerfectAiResponse(startQ, options);
+                        std::string perfectStart = ReconstructPerfectAiResponse(startQ, options, state.modelState.choicesSeparator);
                         
                         ChatMessageData aiMsg;
                         aiMsg.sender = "AI";
@@ -3552,11 +3552,11 @@ void MainIteration() {
                     if (state.uiMessages.empty()) {
                         std::string startQ = state.modelState.bookStartPrompt.empty() ? GetStartPrompt(state.gameLanguage) : state.modelState.bookStartPrompt;
                         state.mutex.lock();
-                        std::vector<std::string> options = ExtractAndStripOptions(startQ);
+                        std::vector<std::string> options = ExtractAndStripOptions(startQ, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
                         if (options.empty()) {
                             options = { IsRussianLanguage(state.gameLanguage) ? "Продолжить историю" : "Continue story" };
                         }
-                        std::string perfectStart = ReconstructPerfectAiResponse(startQ, options);
+                        std::string perfectStart = ReconstructPerfectAiResponse(startQ, options, state.modelState.choicesSeparator);
                         
                         ChatMessageData aiMsg;
                         aiMsg.sender = "AI";
@@ -4753,6 +4753,30 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                     if (line.is_string()) {
                         if (!state.formatReminder.empty()) state.formatReminder += "\n";
                         state.formatReminder += line.get<std::string>();
+                    }
+                }
+            }
+            if (j.contains("choicesSeparator") && j["choicesSeparator"].is_string()) {
+                std::string sep = j["choicesSeparator"].get<std::string>();
+                if (!sep.empty()) {
+                    state.modelState.choicesSeparator = sep;
+                }
+            }
+            if (j.contains("preprocessingPipeline") && j["preprocessingPipeline"].is_array()) {
+                state.modelState.preprocessingPipeline.clear();
+                for (const auto& stepJson : j["preprocessingPipeline"]) {
+                    if (stepJson.is_object()) {
+                        PipelineStep step;
+                        if (stepJson.contains("action") && stepJson["action"].is_string()) {
+                            step.action = stepJson["action"].get<std::string>();
+                        }
+                        if (stepJson.contains("target") && stepJson["target"].is_string()) {
+                            step.target = stepJson["target"].get<std::string>();
+                        }
+                        if (stepJson.contains("replacement") && stepJson["replacement"].is_string()) {
+                            step.replacement = stepJson["replacement"].get<std::string>();
+                        }
+                        state.modelState.preprocessingPipeline.push_back(step);
                     }
                 }
             }
