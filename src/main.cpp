@@ -189,6 +189,7 @@ void SubmitInputText();
 void RestartAdventure();
 void InitAdventureSetup(const std::string& filePath);
 void StartBookGeneration(const std::string& filePath);
+void ConsumeApiResponse();
 
 void SyncModelToUi() {
     // 1. Convert modelState.messages to uiMessages
@@ -1008,11 +1009,46 @@ void ChangeGameLanguage(const std::string& newLanguage) {
         UpdateSystemPrompt();
         TriggerUiLocalization();
     } else {
-        // Exotics / typos: Query the AI in background
+        // Exotics / typos: Query the AI
         state.mutex.lock();
         state.uiLocalized = false; // Show pulsing loader screen
         state.mutex.unlock();
         
+#ifdef __EMSCRIPTEN__
+        // WebAssembly synchronous execution to avoid thread spawning crash
+        {
+            state.aiClient->setSystemPrompt(state.modelState.promptAiLanguageNormalizer);
+            std::string prompt = "Normalize the following user input to a standard single-word English language name (e.g. 'Spanish', 'French', 'Kazakh', 'Hebrew'). Correct any typos. Respond with ONLY the standard language name. If the input matches no valid language, respond with 'Unknown'. Input: '" + trimmed + "'";
+            std::string aiResponse = state.aiClient->ask(prompt);
+            aiResponse = Trim(aiResponse);
+            
+            if (!aiResponse.empty() && (aiResponse.front() == '"' || aiResponse.front() == '\'')) {
+                aiResponse.erase(aiResponse.begin());
+            }
+            if (!aiResponse.empty() && (aiResponse.back() == '"' || aiResponse.back() == '\'')) {
+                aiResponse.pop_back();
+            }
+            aiResponse = Trim(aiResponse);
+            
+            if (aiResponse.empty() || aiResponse.find("Error") != std::string::npos || aiResponse == "Unknown" || aiResponse == "unknown") {
+                state.mutex.lock();
+                state.uiLocalized = true;
+                GameState tempState = state.modelState;
+                state.mutex.unlock();
+                UpdateSystemPrompt(tempState, state.aiClient.get());
+                std::cout << "[Config] AI returned Unknown/Error. Retaining previous active language: " << state.gameLanguage << std::endl;
+            } else {
+                state.mutex.lock();
+                state.gameLanguage = aiResponse;
+                state.modelState.gameLanguage = aiResponse;
+                state.mutex.unlock();
+                
+                SaveLanguageToSettings(aiResponse);
+                UpdateSystemPrompt();
+                TriggerUiLocalization();
+            }
+        }
+#else
         std::thread([trimmed]() {
             state.aiClient->setSystemPrompt(state.modelState.promptAiLanguageNormalizer);
             std::string prompt = "Normalize the following user input to a standard single-word English language name (e.g. 'Spanish', 'French', 'Kazakh', 'Hebrew'). Correct any typos. Respond with ONLY the standard language name. If the input matches no valid language, respond with 'Unknown'. Input: '" + trimmed + "'";
@@ -1047,6 +1083,7 @@ void ChangeGameLanguage(const std::string& newLanguage) {
             UpdateSystemPrompt();
             TriggerUiLocalization();
         }).detach();
+#endif
     }
 }
 
@@ -1201,7 +1238,11 @@ void TriggerUiLocalization() {
         return;
     }
     
+#ifdef __EMSCRIPTEN__
+    auto runLocalizer = [activeLang]() {
+#else
     std::thread([activeLang]() {
+#endif
         // AI query 1: Translate prefix
         state.aiClient->setSystemPrompt(state.modelState.promptAiTranslator);
         std::string prefixPrompt = "Translate the phrase 'Перейти к Главе ' into the active language of the game: '" + activeLang + "'. Return ONLY the translated phrase (e.g. 'Go to Chapter ' or 'Passer au Chapitre '). Keep the trailing space if appropriate.";
@@ -1434,7 +1475,12 @@ void TriggerUiLocalization() {
         
         UpdateSystemPrompt(tempState, state.aiClient.get());
         std::cout << "[Localization] Dynamic translation thread completed successfully for '" << activeLang << "'." << std::endl;
+#ifdef __EMSCRIPTEN__
+    };
+    runLocalizer();
+#else
     }).detach();
+#endif
 }
 
 inline std::string GetUiText(const std::string& key) {
@@ -2343,7 +2389,11 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
         state.mutex.unlock();
         
         // Launch background transition thread
+#ifdef __EMSCRIPTEN__
+        auto runTransition = [nextChapter, dialogueText, langCopy, isVictory, queryId]() {
+#else
         std::thread([nextChapter, dialogueText, langCopy, isVictory, queryId]() {
+#endif
             std::cout << "[Transition Thread] Starting summary request..." << std::endl;
             state.mutex.lock();
             if (queryId != state.currentQueryId) {
@@ -2703,7 +2753,12 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
                 UpdateSystemPrompt();
             }
             SaveGame();
+#ifdef __EMSCRIPTEN__
+        };
+        runTransition();
+#else
         }).detach();
+#endif
         return;
     }
     state.currentQueryId++;
@@ -2731,7 +2786,11 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     
     
     // Fire detaching query thread
+#ifdef __EMSCRIPTEN__
+    auto runQuery = [queryCopy, historyCopy, langCopy, queryId]() {
+#else
     std::thread([queryCopy, historyCopy, langCopy, queryId]() {
+#endif
         std::string response;
         if (historyCopy.empty()) {
             response = state.aiClient->ask(queryCopy);
@@ -2754,7 +2813,13 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
             state.responseReady = true;
         }
         state.mutex.unlock();
+#ifdef __EMSCRIPTEN__
+    };
+    runQuery();
+    ConsumeApiResponse();
+#else
     }).detach();
+#endif
 }
 
 // Background thread queue consumer
