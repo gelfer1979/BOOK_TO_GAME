@@ -35,6 +35,42 @@
 #include <emscripten.h>
 #endif
 
+// MultiBuffer redirects stream output to multiple stream buffers concurrently (e.g. console + file)
+class MultiBuffer : public std::streambuf {
+public:
+    MultiBuffer(std::streambuf* sb1, std::streambuf* sb2, std::streambuf* sb3 = nullptr) 
+        : sb1(sb1), sb2(sb2), sb3(sb3) {}
+protected:
+    virtual int overflow(int c) override {
+        if (c == EOF) {
+            return !EOF;
+        } else {
+            int r1 = sb1 ? sb1->sputc(c) : c;
+            int r2 = sb2 ? sb2->sputc(c) : c;
+            int r3 = sb3 ? sb3->sputc(c) : c;
+            return r1 == EOF || r2 == EOF || r3 == EOF ? EOF : c;
+        }
+    }
+    virtual int sync() override {
+        int r1 = sb1 ? sb1->pubsync() : 0;
+        int r2 = sb2 ? sb2->pubsync() : 0;
+        int r3 = sb3 ? sb3->pubsync() : 0;
+        return r1 == 0 && r2 == 0 && r3 == 0 ? 0 : -1;
+    }
+private:
+    std::streambuf* sb1;
+    std::streambuf* sb2;
+    std::streambuf* sb3;
+};
+
+static std::ofstream g_LogFile;
+static std::ofstream g_ParentLogFile;
+static MultiBuffer* g_CoutMultiBuf = nullptr;
+static MultiBuffer* g_CerrMultiBuf = nullptr;
+static std::streambuf* g_OrigCoutBuf = nullptr;
+static std::streambuf* g_OrigCerrBuf = nullptr;
+
+
 enum AppState {
     APP_STATE_ASK_CONTINUE,
     APP_STATE_ENTER_TXT_PATH,
@@ -4860,12 +4896,75 @@ void MainIteration() {
 // Explicit entry point with C linkage for static linking across all platforms
 extern "C" int SDL_main(int argc, char* argv[]) {
 #ifdef _WIN32
-    // Hide terminal/console window on startup
-    HWND hwnd = GetConsoleWindow();
-    if (hwnd) {
-        ShowWindow(hwnd, SW_HIDE);
+    bool showConsole = false;
+    for (int i = 1; i < argc; ++i) {
+        if (std::string(argv[i]) == "--console" || std::string(argv[i]) == "-c") {
+            showConsole = true;
+            break;
+        }
+    }
+
+    if (showConsole) {
+        // Attempt to attach to the terminal of the calling process (parent)
+        if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+            FILE* fDummy = nullptr;
+#ifdef _MSC_VER
+            freopen_s(&fDummy, "CONOUT$", "w", stdout);
+            freopen_s(&fDummy, "CONOUT$", "w", stderr);
+#else
+            std::freopen("CONOUT$", "w", stdout);
+            std::freopen("CONOUT$", "w", stderr);
+#endif
+            std::cout << "\n[Console] Attached to parent terminal successfully." << std::endl;
+        } else {
+            // Allocate a new console if we couldn't attach
+            if (AllocConsole()) {
+                FILE* fDummy = nullptr;
+#ifdef _MSC_VER
+                freopen_s(&fDummy, "CONOUT$", "w", stdout);
+                freopen_s(&fDummy, "CONOUT$", "w", stderr);
+#else
+                std::freopen("CONOUT$", "w", stdout);
+                std::freopen("CONOUT$", "w", stderr);
+#endif
+                std::cout << "[Console] Created new console window." << std::endl;
+            }
+        }
+    } else {
+        // Hide terminal/console window on startup
+        HWND hwnd = GetConsoleWindow();
+        if (hwnd) {
+            ShowWindow(hwnd, SW_HIDE);
+        }
     }
 #endif
+
+#ifndef __EMSCRIPTEN__
+    // 1. Initialize Log Files
+    g_LogFile.open("game_log.txt", std::ios::out | std::ios::trunc);
+    std::ifstream parentSettingsCheck("../settings.json");
+    if (parentSettingsCheck.is_open()) {
+        parentSettingsCheck.close();
+        g_ParentLogFile.open("../game_log.txt", std::ios::out | std::ios::trunc);
+    }
+
+    // 2. Redirect std::cout and std::cerr using MultiBuffer
+    g_OrigCoutBuf = std::cout.rdbuf();
+    g_OrigCerrBuf = std::cerr.rdbuf();
+    
+    std::streambuf* fileBuf1 = g_LogFile.is_open() ? g_LogFile.rdbuf() : nullptr;
+    std::streambuf* fileBuf2 = g_ParentLogFile.is_open() ? g_ParentLogFile.rdbuf() : nullptr;
+
+    if (fileBuf1 || fileBuf2) {
+        g_CoutMultiBuf = new MultiBuffer(g_OrigCoutBuf, fileBuf1, fileBuf2);
+        g_CerrMultiBuf = new MultiBuffer(g_OrigCerrBuf, fileBuf1, fileBuf2);
+        std::cout.rdbuf(g_CoutMultiBuf);
+        std::cerr.rdbuf(g_CerrMultiBuf);
+    }
+    
+    std::cout << "=== BOOK_TO_GAME Execution Started ===" << std::endl;
+#endif
+
     // Change working directory to executable path to resolve config files and assets on macOS / all platforms
 #ifndef __EMSCRIPTEN__
     char* basePath = SDL_GetBasePath();
@@ -5217,6 +5316,16 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     SDL_Quit();
     
     std::cout << "All BOOK_TO_GAME subsystems shut down cleanly!" << std::endl;
+
+#ifndef __EMSCRIPTEN__
+    if (g_OrigCoutBuf) std::cout.rdbuf(g_OrigCoutBuf);
+    if (g_OrigCerrBuf) std::cerr.rdbuf(g_OrigCerrBuf);
+    delete g_CoutMultiBuf;
+    delete g_CerrMultiBuf;
+    if (g_LogFile.is_open()) g_LogFile.close();
+    if (g_ParentLogFile.is_open()) g_ParentLogFile.close();
+#endif
+
     return 0;
 }
 
