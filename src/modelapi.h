@@ -1050,6 +1050,8 @@ struct GameState {
     std::string uiChaptersRangeLabel = "Chapters {range}";
     
     // AI Preprocessing & Parsing settings
+    std::string playerDead = "[dead]";
+    std::string nextChapter = "[chapter]";
     std::string choicesSeparator = "\x1F";
     std::vector<PipelineStep> preprocessingPipeline = {
         {"replace", "\\n", "\n"},
@@ -2087,7 +2089,7 @@ inline void UpdateSystemPrompt(GameState& state, AskAiExternal* aiClient) {
     }
     combinedPrompt += rule2;
     
-    combinedPrompt += "3. DEATH RULE: If the player makes a fatal mistake or chooses a deadly option, you MUST end the adventure. Describe their death and append '<player_dead/>' at the very end. DO NOT output any options or choices inside `<options>` when the player dies. Example: 'You died. <player_dead/>'\n";
+    combinedPrompt += "3. DEATH RULE: If the player makes a fatal mistake or chooses a deadly option, you MUST end the adventure. Describe their death and append '" + state.playerDead + "' at the very end. DO NOT output any options or choices when the player dies. Example: 'You died. " + state.playerDead + "'\n";
     
     std::string rule4 = state.promptAiRuleLanguageEnforcement;
     size_t langPos = rule4.find("{language}");

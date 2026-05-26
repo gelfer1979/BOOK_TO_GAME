@@ -2889,64 +2889,109 @@ void ConsumeApiResponse() {
         
         std::cout << "\n[API Response Received]\nRaw Response:\n" << fullResponse << "\n[End of Raw Response]\n" << std::endl;
         
+        // 0. Preprocess raw response to normalize typos, clean JSON fragments, etc.
+        PreprocessRawAiResponse(fullResponse, state.modelState.choicesSeparator, state.modelState.preprocessingPipeline);
+        
         // Check for tags and strip them in a robust loop
         bool isDead = false;
-        size_t deadPos = fullResponse.find("<player_dead/>");
-        while (deadPos != std::string::npos) {
-            if (!state.ignoreTags) {
-                isDead = true;
-                std::cout << "[ConsumeApiResponse] Found <player_dead/> tag!" << std::endl;
+        
+        // 1. Check for playerDead tag
+        if (!state.modelState.playerDead.empty()) {
+            size_t deadPos = fullResponse.find(state.modelState.playerDead);
+            while (deadPos != std::string::npos) {
+                if (!state.ignoreTags) {
+                    isDead = true;
+                    std::cout << "[ConsumeApiResponse] Found death tag: " << state.modelState.playerDead << std::endl;
+                }
+                fullResponse.erase(deadPos, state.modelState.playerDead.length());
+                deadPos = fullResponse.find(state.modelState.playerDead);
             }
-            fullResponse.erase(deadPos, 14);
-            deadPos = fullResponse.find("<player_dead/>");
         }
-        size_t deadPosSq = fullResponse.find("[player_dead]");
-        while (deadPosSq != std::string::npos) {
-            if (!state.ignoreTags) {
-                isDead = true;
-                std::cout << "[ConsumeApiResponse] Found [player_dead] tag!" << std::endl;
-            }
-            fullResponse.erase(deadPosSq, 13);
-            deadPosSq = fullResponse.find("[player_dead]");
+        // Fallback checks for standard legacy death tags in case of no pipeline match
+        size_t legacyDead = fullResponse.find("<player_dead/>");
+        while (legacyDead != std::string::npos) {
+            if (!state.ignoreTags) isDead = true;
+            fullResponse.erase(legacyDead, 14);
+            legacyDead = fullResponse.find("<player_dead/>");
+        }
+        legacyDead = fullResponse.find("[player_dead]");
+        while (legacyDead != std::string::npos) {
+            if (!state.ignoreTags) isDead = true;
+            fullResponse.erase(legacyDead, 13);
+            legacyDead = fullResponse.find("[player_dead]");
         }
         
+        // 2. Check for nextChapter tag
         int nextChapter = -1;
-        size_t nextPos = fullResponse.find("<next_chapter>");
-        while (nextPos != std::string::npos) {
-            size_t nextEndPos = fullResponse.find("</next_chapter>", nextPos);
-            if (nextEndPos != std::string::npos && nextEndPos > nextPos) {
-                if (!state.ignoreTags && nextChapter == -1) {
-                    std::string chNumStr = fullResponse.substr(nextPos + 14, nextEndPos - (nextPos + 14));
-                    try {
-                        nextChapter = std::stoi(chNumStr);
-                        std::cout << "[ConsumeApiResponse] Found <next_chapter> tag. Target Chapter: " << nextChapter << std::endl;
-                    } catch (...) {}
+        if (!state.modelState.nextChapter.empty()) {
+            size_t nextPos = fullResponse.find(state.modelState.nextChapter);
+            while (nextPos != std::string::npos) {
+                size_t numStart = nextPos + state.modelState.nextChapter.length();
+                size_t numEnd = numStart;
+                while (numEnd < fullResponse.length() && std::isdigit((unsigned char)fullResponse[numEnd])) {
+                    numEnd++;
                 }
-                fullResponse.erase(nextPos, (nextEndPos + 15) - nextPos);
-            } else {
-                fullResponse.erase(nextPos);
-                break;
+                if (numEnd > numStart) {
+                    if (!state.ignoreTags && nextChapter == -1) {
+                        std::string chNumStr = fullResponse.substr(numStart, numEnd - numStart);
+                        try {
+                            nextChapter = std::stoi(chNumStr);
+                            std::cout << "[ConsumeApiResponse] Found nextChapter tag: " << state.modelState.nextChapter << " with chapter number: " << nextChapter << std::endl;
+                        } catch (...) {}
+                    }
+                    
+                    // Determine how much of the tag structure to erase
+                    size_t eraseLen = numEnd - nextPos;
+                    // If there's a trailing bracket ']' or a closing tag like '[/chapter]' after the number, erase it too!
+                    std::string afterNum = fullResponse.substr(numEnd, 30);
+                    if (!afterNum.empty() && afterNum[0] == ']') {
+                        eraseLen += 1;
+                    } else {
+                        // Check if it matches closing tag equivalent, e.g. "[/chapter]" for "[chapter]"
+                        std::string closingTag = "[/" + state.modelState.nextChapter.substr(1);
+                        if (afterNum.rfind(closingTag, 0) == 0) {
+                            eraseLen += closingTag.length();
+                        }
+                    }
+                    fullResponse.erase(nextPos, eraseLen);
+                } else {
+                    // Erase just the empty/malformed tag prefix
+                    fullResponse.erase(nextPos, state.modelState.nextChapter.length());
+                }
+                nextPos = fullResponse.find(state.modelState.nextChapter);
             }
-            nextPos = fullResponse.find("<next_chapter>");
         }
         
-        size_t nextPosSq = fullResponse.find("[next_chapter]");
-        while (nextPosSq != std::string::npos) {
-            size_t nextEndPosSq = fullResponse.find("[/next_chapter]", nextPosSq);
-            if (nextEndPosSq != std::string::npos && nextEndPosSq > nextPosSq) {
+        // Fallback check for legacy next_chapter XML/Square bracket tags
+        size_t legacyNext = fullResponse.find("<next_chapter>");
+        while (legacyNext != std::string::npos) {
+            size_t legacyEnd = fullResponse.find("</next_chapter>", legacyNext);
+            if (legacyEnd != std::string::npos && legacyEnd > legacyNext) {
                 if (!state.ignoreTags && nextChapter == -1) {
-                    std::string chNumStr = fullResponse.substr(nextPosSq + 14, nextEndPosSq - (nextPosSq + 14));
-                    try {
-                        nextChapter = std::stoi(chNumStr);
-                        std::cout << "[ConsumeApiResponse] Found [next_chapter] tag. Target Chapter: " << nextChapter << std::endl;
-                    } catch (...) {}
+                    std::string chNumStr = fullResponse.substr(legacyNext + 14, legacyEnd - (legacyNext + 14));
+                    try { nextChapter = std::stoi(chNumStr); } catch (...) {}
                 }
-                fullResponse.erase(nextPosSq, (nextEndPosSq + 15) - nextPosSq);
+                fullResponse.erase(legacyNext, (legacyEnd + 15) - legacyNext);
             } else {
-                fullResponse.erase(nextPosSq);
+                fullResponse.erase(legacyNext);
                 break;
             }
-            nextPosSq = fullResponse.find("[next_chapter]");
+            legacyNext = fullResponse.find("<next_chapter>");
+        }
+        legacyNext = fullResponse.find("[next_chapter]");
+        while (legacyNext != std::string::npos) {
+            size_t legacyEnd = fullResponse.find("[/next_chapter]", legacyNext);
+            if (legacyEnd != std::string::npos && legacyEnd > legacyNext) {
+                if (!state.ignoreTags && nextChapter == -1) {
+                    std::string chNumStr = fullResponse.substr(legacyNext + 14, legacyEnd - (legacyNext + 14));
+                    try { nextChapter = std::stoi(chNumStr); } catch (...) {}
+                }
+                fullResponse.erase(legacyNext, (legacyEnd + 15) - legacyNext);
+            } else {
+                fullResponse.erase(legacyNext);
+                break;
+            }
+            legacyNext = fullResponse.find("[next_chapter]");
         }
         
         std::string rawResponse = fullResponse;
@@ -4779,6 +4824,12 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                         state.modelState.preprocessingPipeline.push_back(step);
                     }
                 }
+            }
+            if (j.contains("playerDead") && j["playerDead"].is_string()) {
+                state.modelState.playerDead = j["playerDead"].get<std::string>();
+            }
+            if (j.contains("nextChapter") && j["nextChapter"].is_string()) {
+                state.modelState.nextChapter = j["nextChapter"].get<std::string>();
             }
             if (j.contains("maxRetries") && j["maxRetries"].is_number()) {
                 maxRetries = j["maxRetries"].get<int>();
