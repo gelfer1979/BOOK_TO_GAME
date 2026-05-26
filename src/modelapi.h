@@ -535,6 +535,7 @@ public:
                 curl_easy_cleanup(curl);
                 return "Error: Failed to parse API response JSON.";
             }
+        }
     }
 #endif
 
@@ -949,6 +950,7 @@ public:
                 curl_easy_cleanup(curl);
                 return "Error: Failed to parse API response JSON.";
             }
+        }
     }
 #endif
 
