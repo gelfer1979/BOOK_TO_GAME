@@ -139,6 +139,7 @@ struct {
     SDL_Rect pasteBtnRect = {0, 0, 0, 0};
     std::vector<std::string> setupDynamicGenres;
     int maxRetries = 3;
+    int apiRetryCount = 0;
     int bookRetries = 3;
     int retryDelayMs = 1000;
     int connectTimeout = 5;
@@ -2782,6 +2783,8 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     uint64_t queryId = state.currentQueryId;
     state.modelState.lastQuery = queryCopy;
     if (showInChat && !isRetry) {
+        state.apiRetryCount = 0; // Reset retry counter on new manual player input!
+        
         // Add User query to Dialogue bubbles list
         ChatMessageData userMsg;
         userMsg.sender = "User";
@@ -2930,7 +2933,35 @@ void ConsumeApiResponse() {
         // Strip XML choice tags and parse dynamic action cards
         std::vector<std::string> options = ExtractAndStripOptions(fullResponse);
         
-        // Reconstruct the perfect response in '|' separator format for chat history
+        // Auto-retry if options count < 2 and it's not a terminal state (dead or transitioning)
+        if (options.size() < 2 && !isDead && nextChapter == -1) {
+            if (state.apiRetryCount < state.maxRetries) {
+                state.apiRetryCount++;
+                std::cout << "[ConsumeApiResponse] Choices count < 2 (found " << options.size() 
+                          << "). Retrying AI query automatically (attempt " << state.apiRetryCount 
+                          << " of " << state.maxRetries << ")..." << std::endl;
+                
+                // Clear state response ready and thinking state
+                state.responseReady = false;
+                state.aiThinking = false;
+                
+                std::string lastQuery = state.modelState.lastQuery;
+                state.mutex.unlock();
+                
+                // Trigger auto-retry without chat clutter
+                SubmitQuery(lastQuery, true, false);
+                return;
+            } else {
+                std::cout << "[ConsumeApiResponse] Max retries (" << state.maxRetries 
+                          << ") reached. Proceeding with fallback." << std::endl;
+                state.apiRetryCount = 0;
+            }
+        } else {
+            // Successfully parsed options (or dead/transitioning), reset retry count
+            state.apiRetryCount = 0;
+        }
+        
+        // Reconstruct the perfect response in U+001F separator format for chat history
         std::string perfectResponse = ReconstructPerfectAiResponse(fullResponse, options);
         
         std::cout << "[ConsumeApiResponse] Parsed options count: " << options.size() << std::endl;

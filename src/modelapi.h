@@ -1240,6 +1240,14 @@ inline std::string CleanTextForFont(const std::string& text) {
     return result.substr(start, end - start);
 }
 
+inline std::string EraseAllSubstrings(std::string str, const std::string& sub) {
+    size_t pos;
+    while ((pos = str.find(sub)) != std::string::npos) {
+        str.erase(pos, sub.length());
+    }
+    return str;
+}
+
 inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) {
     // Normalize literal "\\n" escape sequences into actual newline control characters
     size_t nPos = 0;
@@ -1250,11 +1258,36 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) 
 
     std::vector<std::string> options;
     
-    // 0. Robust vertical pipe '|' block separator (Universal format!)
-    size_t pipePos = aiResponse.find('|');
+    // 0. Universal choices split separator
+    size_t pipePos = aiResponse.find("\x1F");
+    size_t separatorLen = 1;
+    if (pipePos == std::string::npos) {
+        pipePos = aiResponse.find("[choices_split]");
+        separatorLen = 15;
+    }
+    if (pipePos == std::string::npos) {
+        pipePos = aiResponse.find("[choices]");
+        separatorLen = 9;
+    }
+    if (pipePos == std::string::npos) {
+        pipePos = aiResponse.find("|");
+        separatorLen = 1;
+    }
+    
     if (pipePos != std::string::npos) {
         std::string narrativePart = aiResponse.substr(0, pipePos);
-        std::string optionsPart = aiResponse.substr(pipePos + 1);
+        std::string optionsPart = aiResponse.substr(pipePos + separatorLen);
+        
+        // Remove all duplicate/subsequent separators to keep only the first one
+        narrativePart = EraseAllSubstrings(narrativePart, "\x1F");
+        narrativePart = EraseAllSubstrings(narrativePart, "[choices_split]");
+        narrativePart = EraseAllSubstrings(narrativePart, "[choices]");
+        narrativePart.erase(std::remove(narrativePart.begin(), narrativePart.end(), '|'), narrativePart.end());
+        
+        optionsPart = EraseAllSubstrings(optionsPart, "\x1F");
+        optionsPart = EraseAllSubstrings(optionsPart, "[choices_split]");
+        optionsPart = EraseAllSubstrings(optionsPart, "[choices]");
+        optionsPart.erase(std::remove(optionsPart.begin(), optionsPart.end(), '|'), optionsPart.end());
         
         std::vector<std::string> tempOptions;
         std::stringstream ss(optionsPart);
@@ -1263,8 +1296,8 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) 
             std::string optLine = Trim(line);
             if (optLine.empty()) continue;
             
-            // Strip leading vertical pipe or bullet markers
-            while (!optLine.empty() && (optLine[0] == '|' || optLine[0] == '-' || optLine[0] == '*' || optLine[0] == '+' || optLine[0] == ' ')) {
+            // Strip leading bullet markers
+            while (!optLine.empty() && (optLine[0] == '-' || optLine[0] == '*' || optLine[0] == '+' || optLine[0] == ' ')) {
                 optLine = optLine.substr(1);
                 optLine = Trim(optLine);
             }
@@ -1300,20 +1333,19 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse) 
             }
         }
         
-        if (tempOptions.size() >= 2) {
-            options = tempOptions;
-            aiResponse = Trim(narrativePart);
-            
-            // Clean trailing/leading newlines, spaces, and leftover characters
-            while (!aiResponse.empty() && (aiResponse.back() == '\n' || aiResponse.back() == '\r' || aiResponse.back() == ' ' || aiResponse.back() == '<' || aiResponse.back() == '[' || aiResponse.back() == '`')) {
-                aiResponse.pop_back();
-            }
-            while (!aiResponse.empty() && (aiResponse.front() == '\n' || aiResponse.front() == '\r' || aiResponse.front() == ' ')) {
-                aiResponse.erase(aiResponse.begin());
-            }
-            
-            return options;
+        // Always split and strip, without safety threshold guard
+        options = tempOptions;
+        aiResponse = Trim(narrativePart);
+        
+        // Clean trailing/leading newlines, spaces, and leftover characters
+        while (!aiResponse.empty() && (aiResponse.back() == '\n' || aiResponse.back() == '\r' || aiResponse.back() == ' ' || aiResponse.back() == '<' || aiResponse.back() == '[' || aiResponse.back() == '`')) {
+            aiResponse.pop_back();
         }
+        while (!aiResponse.empty() && (aiResponse.front() == '\n' || aiResponse.front() == '\r' || aiResponse.front() == ' ')) {
+            aiResponse.erase(aiResponse.begin());
+        }
+        
+        return options;
     }
 
     std::string lowerResponse = ToLower(aiResponse);
@@ -1681,7 +1713,7 @@ inline std::string ReconstructPerfectAiResponse(const std::string& strippedRespo
         result.pop_back();
     }
     if (!options.empty() && options[0] != "Продолжить историю" && options[0] != "Continue story" && options[0] != "Повторить запрос" && options[0] != "Repeat request") {
-        result += "\n\n|\n";
+        result += "\n\n\x1F\n";
         for (const auto& opt : options) {
             result += "- " + opt + "\n";
         }
