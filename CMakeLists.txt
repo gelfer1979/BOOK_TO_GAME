@@ -44,33 +44,33 @@ if(EMSCRIPTEN)
     
     # Add compiler options for WebAssembly
     target_compile_options(${PROJECT_NAME} PRIVATE
-        "-s" "USE_SDL=2"
-        "-s" "USE_SDL_IMAGE=2"
-        "-s" "USE_SDL_MIXER=2"
-        "-s" "USE_SDL_TTF=2"
-        "-s" "USE_SDL_NET=2"
+        "-sUSE_SDL=2"
+        "-sUSE_SDL_IMAGE=2"
+        "-sUSE_SDL_MIXER=2"
+        "-sUSE_SDL_TTF=2"
+        "-sUSE_SDL_NET=2"
     )
     
     # Emscripten port linking and asset preloading flags
     target_link_options(${PROJECT_NAME} PRIVATE
-        "-s" "USE_SDL=2"
-        "-s" "USE_SDL_IMAGE=2"
-        "-s" "USE_SDL_MIXER=2"
-        "-s" "USE_SDL_TTF=2"
-        "-s" "USE_SDL_NET=2"
-        "-s" "ALLOW_MEMORY_GROWTH=1"
-        "-s" "INITIAL_MEMORY=67108864"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/options.json@options.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_gemini.json@ai_gemini.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_chatgpt.json@ai_chatgpt.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_copilot.json@ai_copilot.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_deepseek.json@ai_deepseek.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_groq.json@ai_groq.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_llama.json@ai_llama.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_lmstudio.json@ai_lmstudio.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_openai.json@ai_openai.json"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/ai_openrouter.json@ai_openrouter.json"
+        "-sUSE_SDL=2"
+        "-sUSE_SDL_IMAGE=2"
+        "-sUSE_SDL_MIXER=2"
+        "-sUSE_SDL_TTF=2"
+        "-sUSE_SDL_NET=2"
+        "-sALLOW_MEMORY_GROWTH=1"
+        "-sINITIAL_MEMORY=67108864"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/options.json@options.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_gemini.json@ai_gemini.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_chatgpt.json@ai_chatgpt.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_copilot.json@ai_copilot.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_deepseek.json@ai_deepseek.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_groq.json@ai_groq.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_llama.json@ai_llama.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_lmstudio.json@ai_lmstudio.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_openai.json@ai_openai.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_openrouter.json@ai_openrouter.json"
     )
     
     target_link_libraries(${PROJECT_NAME} PRIVATE
