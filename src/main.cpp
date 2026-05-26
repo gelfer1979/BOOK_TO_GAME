@@ -2034,7 +2034,11 @@ void InitAdventureSetup(const std::string& filePath) {
     std::thread([actualFilePath]() {
         std::cout << "[Setup Genres Thread] Thread started! actualFilePath: \"" << actualFilePath << "\"" << std::endl;
         // Read first 1000 characters from raw book to extract theme/setting
+#ifdef _WIN32
+        std::ifstream file(std::filesystem::path(BookConverter::UTF8ToWide(actualFilePath)));
+#else
         std::ifstream file(actualFilePath);
+#endif
         if (!file.is_open()) {
             std::cerr << "[Setup Genres Thread] Error: Could not open book file at: \"" << actualFilePath << "\"" << std::endl;
             return;
