@@ -142,6 +142,8 @@ struct {
     std::vector<std::string> savedChoices;
     bool editingLanguage = false;
     std::string tempLanguageInput = "";
+    bool editingApiKey = false;
+    std::string selectedAiFilename = "";
     SDL_Rect langBtnRect = {0, 0, 0, 0};
     SDL_Rect fontIncBtnRect = {0, 0, 0, 0};
     SDL_Rect fontDecBtnRect = {0, 0, 0, 0};
@@ -759,6 +761,36 @@ void SaveLanguageToSettings(const std::string& newLanguage) {
     }
 }
 
+void SaveApiKeyToModelJson(const std::string& filename, const std::string& apiKey) {
+    if (filename.empty()) return;
+    nlohmann::json j;
+    std::string modelPath = filename;
+    std::ifstream inFile(modelPath);
+    if (!inFile.is_open()) {
+        modelPath = "../" + filename;
+        inFile.open(modelPath);
+    }
+    if (inFile.is_open()) {
+        try {
+            inFile >> j;
+        } catch (...) {
+            std::cerr << "[Config] Error parsing model file " << filename << " before save." << std::endl;
+        }
+        inFile.close();
+    }
+    
+    j["apiKey"] = apiKey;
+    
+    std::ofstream outFile(modelPath);
+    if (outFile.is_open()) {
+        outFile << j.dump(4);
+        outFile.close();
+        std::cout << "[Config] Saved API Key to model configuration '" << filename << "'" << std::endl;
+    } else {
+        std::cerr << "[Config] Failed to open model configuration '" << filename << "' for writing." << std::endl;
+    }
+}
+
 // Saves the dynamic font size offset (modifier) to settings.json so it persists across sessions
 void SaveFontSizeOffsetToSettings(int offset) {
     nlohmann::json j;
@@ -1271,7 +1303,12 @@ void TriggerUiLocalization() {
                                  "  \"pacing_rule_mid\": \"- The player has taken {turns} choices. You may now begin to guide the plot towards resolving the main objectives of this chapter.\\n- If the player's choices successfully resolve the objectives, you can conclude the chapter on this turn or the next.\",\n"
                                  "  \"pacing_rule_limit\": \"- The player has taken {turns} choices, reaching the chapter turn limit of {max}.\\n- You MUST resolve the main objectives of this chapter on this turn, narrate the transition to the next chapter, and append the '<next_chapter>' tag.\",\n"
                                  "  \"status_retry\": \"JSON parsing error. Retrying (attempt {attempt} of {max})...\",\n"
-                                 "  \"status_api_error\": \"Error: Failed to receive response from AI. Please check your connection.\"\n"
+                                 "  \"status_api_error\": \"Error: Failed to receive response from AI. Please check your connection.\",\n"
+                                 "  \"apikey_guide\": \"[ Use the bottom input line for API Key, Enter to confirm ]\",\n"
+                                 "  \"apikey_placeholder\": \"Type API Key...\",\n"
+                                 "  \"apikey_select_title\": \"SELECT AI MODEL\",\n"
+                                 "  \"apikey_select_prompt\": \"Select AI configuration for the game:\",\n"
+                                 "  \"apikey_back\": \"Back\"\n"
                                  "}";
         
         std::string jsonResp = "";
@@ -1478,6 +1515,12 @@ inline std::string GetUiText(const std::string& key) {
     if (key == "btn_restart_chapter") return "Restart chapter";
     if (key == "prompt_restart_chapter") return "Restart the current chapter from the beginning. Describe the surroundings and offer choice options.";
     if (key == "setup_back_to_step1") return "Back to Step 1";
+    
+    if (key == "apikey_guide") return "[ Use the bottom input line for API Key, Enter to confirm ]";
+    if (key == "apikey_placeholder") return "Type API Key...";
+    if (key == "apikey_select_title") return "SELECT AI MODEL";
+    if (key == "apikey_select_prompt") return "Select AI configuration for the game:";
+    if (key == "apikey_back") return "Back";
     
     return "";
 }
@@ -2739,7 +2782,7 @@ void ConsumeApiResponse() {
 // Main Frame Loop Execution
 void MainIteration() {
     // Ensure SDL text input state matches gameplay/editing requirements
-    bool wantTextInput = (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingBookPath);
+    bool wantTextInput = (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingBookPath || state.editingApiKey);
     if (wantTextInput && !SDL_IsTextInputActive()) {
         SDL_StartTextInput();
     } else if (!wantTextInput && SDL_IsTextInputActive()) {
@@ -2759,7 +2802,7 @@ void MainIteration() {
     // Dynamic Layout Sizing Properties
     int optionsAreaH = 0;
     int footerH = 0;
-    if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage) {
+    if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingApiKey) {
         if (!state.uiActiveChoices.empty()) {
             int n = state.uiActiveChoices.size();
             int cardH = 45;
@@ -2842,6 +2885,26 @@ void MainIteration() {
                     SDL_StopTextInput();
                 } else if (sym == SDLK_ESCAPE) {
                     state.editingLanguage = false;
+                    state.inputText = "";
+                    SDL_StopTextInput();
+                } else if (sym == SDLK_BACKSPACE) {
+                    PopUTF8Character(state.inputText);
+                }
+                // Bypass other hotkeys while in input mode
+                continue;
+            }
+
+            if (state.editingApiKey) {
+                SDL_Keycode sym = event.key.keysym.sym;
+                if (sym == SDLK_RETURN) {
+                    SaveApiKeyToModelJson(state.selectedAiFilename, state.inputText);
+                    ReloadSettingsAndReinit(state.selectedAiFilename);
+                    state.appState = state.previousAppState;
+                    state.editingApiKey = false;
+                    state.inputText = "";
+                    SDL_StopTextInput();
+                } else if (sym == SDLK_ESCAPE) {
+                    state.editingApiKey = false;
                     state.inputText = "";
                     SDL_StopTextInput();
                 } else if (sym == SDLK_BACKSPACE) {
@@ -2940,8 +3003,25 @@ void MainIteration() {
                 } else if (sym >= SDLK_1 && sym <= SDLK_9) {
                     int index = sym - SDLK_1;
                     if (index >= 0 && index < (int)state.availableAiModels.size()) {
-                        ReloadSettingsAndReinit(state.availableAiModels[index].filename);
-                        state.appState = state.previousAppState;
+                        state.selectedAiFilename = state.availableAiModels[index].filename;
+                        std::string existingKey = "";
+                        std::ifstream f(state.selectedAiFilename);
+                        if (!f.is_open()) {
+                            f.open("../" + state.selectedAiFilename);
+                        }
+                        if (f.is_open()) {
+                            try {
+                                nlohmann::json j;
+                                f >> j;
+                                if (j.contains("apiKey") && j["apiKey"].is_string()) {
+                                    existingKey = j["apiKey"].get<std::string>();
+                                }
+                            } catch (...) {}
+                            f.close();
+                        }
+                        state.editingApiKey = true;
+                        state.inputText = existingKey;
+                        SDL_StartTextInput();
                     }
                 }
             } else if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
@@ -2997,7 +3077,7 @@ void MainIteration() {
                 }
             }
         } else if (event.type == SDL_TEXTINPUT) {
-            if (state.editingLanguage) {
+            if (state.editingLanguage || state.editingApiKey) {
                 state.inputText += event.text.text;
             } else if (state.editingBookPath) {
                 state.bookPathInput += event.text.text;
@@ -3033,6 +3113,28 @@ void MainIteration() {
 
             int mx = event.button.x;
             int my = event.button.y;
+            
+            if (state.editingApiKey) {
+                if (mx >= state.clearBtnRect.x && mx <= (state.clearBtnRect.x + state.clearBtnRect.w) &&
+                    my >= state.clearBtnRect.y && my <= (state.clearBtnRect.y + state.clearBtnRect.h)) {
+                    state.inputText = "";
+                } else if (mx >= state.confirmBtnRect.x && mx <= (state.confirmBtnRect.x + state.confirmBtnRect.w) &&
+                           my >= state.confirmBtnRect.y && my <= (state.confirmBtnRect.y + state.confirmBtnRect.h)) {
+                    SaveApiKeyToModelJson(state.selectedAiFilename, state.inputText);
+                    ReloadSettingsAndReinit(state.selectedAiFilename);
+                    state.appState = state.previousAppState;
+                    state.editingApiKey = false;
+                    state.inputText = "";
+                    SDL_StopTextInput();
+                } else if (my >= WINDOW_HEIGHT - 60) {
+                    // Clicked inside the bottom bar, retain editing state
+                } else {
+                    state.editingApiKey = false;
+                    state.inputText = "";
+                    SDL_StopTextInput();
+                }
+                continue; // Skip screen specific actions
+            }
             
             if (state.appState == APP_STATE_ASK_CONTINUE || state.appState == APP_STATE_ENTER_TXT_PATH) {
                 if (mx >= state.langBtnRect.x && mx <= (state.langBtnRect.x + state.langBtnRect.w) &&
@@ -3080,8 +3182,25 @@ void MainIteration() {
                         SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.aiSelectScrollOffset, 500, 45 };
                         if (mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
                             my >= btnRect.y && my <= (btnRect.y + btnRect.h)) {
-                            ReloadSettingsAndReinit(state.availableAiModels[i].filename);
-                            state.appState = state.previousAppState;
+                            state.selectedAiFilename = state.availableAiModels[i].filename;
+                            std::string existingKey = "";
+                            std::ifstream f(state.selectedAiFilename);
+                            if (!f.is_open()) {
+                                f.open("../" + state.selectedAiFilename);
+                            }
+                            if (f.is_open()) {
+                                try {
+                                    nlohmann::json j;
+                                    f >> j;
+                                    if (j.contains("apiKey") && j["apiKey"].is_string()) {
+                                        existingKey = j["apiKey"].get<std::string>();
+                                    }
+                                } catch (...) {}
+                                f.close();
+                            }
+                            state.editingApiKey = true;
+                            state.inputText = existingKey;
+                            SDL_StartTextInput();
                             modelClicked = true;
                             break;
                         }
@@ -3838,8 +3957,8 @@ void MainIteration() {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 0, 255, 220, 180 }); // Cyan border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
             
-            std::string selectTitle = IsRussianLanguage(state.gameLanguage) ? "ВЫБОР МОДЕЛИ ИИ" : "SELECT AI MODEL";
-            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите конфигурацию ИИ для игры:" : "Select AI configuration for the game:";
+            std::string selectTitle = GetUiText("apikey_select_title");
+            std::string selectPrompt = GetUiText("apikey_select_prompt");
             
             RenderText(state.renderer.get(), state.fontTitle.get(), selectTitle, WINDOW_WIDTH / 2, cardY + 40, SDL_Color{ 255, 215, 0, 255 }, true);
             RenderText(state.renderer.get(), state.fontUI.get(), selectPrompt, WINDOW_WIDTH / 2, cardY + 85, SDL_Color{ 200, 200, 220, 255 }, true);
@@ -3868,8 +3987,11 @@ void MainIteration() {
                 SDL_Color btnCol = hovered ? SDL_Color{ 45, 98, 172, 255 } : SDL_Color{ 34, 34, 46, 255 };
                 SDL_Color textCol = hovered ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
                 
-                // Draw elegant golden outline for active choice
-                if (state.availableAiModels[i].filename == state.aiModelName) {
+                // Draw elegant outline for active choice or currently editing model
+                if (state.editingApiKey && state.availableAiModels[i].filename == state.selectedAiFilename) {
+                    SDL_Rect outlineRect = { btnRect.x - 2, btnRect.y - 2, btnRect.w + 4, btnRect.h + 4 };
+                    DrawRoundedRect(state.renderer.get(), outlineRect, 8, SDL_Color{ 0, 255, 220, 255 });
+                } else if (state.availableAiModels[i].filename == state.aiModelName) {
                     SDL_Rect outlineRect = { btnRect.x - 2, btnRect.y - 2, btnRect.w + 4, btnRect.h + 4 };
                     DrawRoundedRect(state.renderer.get(), outlineRect, 8, SDL_Color{ 255, 215, 0, 255 });
                 }
@@ -3900,8 +4022,17 @@ void MainIteration() {
             SDL_Color textColBack = hoveredBack ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 255, 100, 100, 255 };
             
             DrawRoundedRect(state.renderer.get(), backBtnRect, 8, backCol);
-            std::string backText = IsRussianLanguage(state.gameLanguage) ? "Назад" : "Back";
+            std::string backText = GetUiText("apikey_back");
             RenderText(state.renderer.get(), state.fontUI.get(), backText, backBtnRect.x + backBtnRect.w / 2, backBtnRect.y + backBtnRect.h / 2 + 8, textColBack, true);
+            
+            if (state.editingApiKey) {
+                Uint32 pulseTicks = SDL_GetTicks();
+                Uint8 alpha = 130 + 120 * (0.5 + 0.5 * sin(pulseTicks * 0.005));
+                SDL_Color guideColor = { 0, 255, 220, alpha };
+                
+                std::string guideText = GetUiText("apikey_guide");
+                RenderText(state.renderer.get(), state.fontSmallUI.get(), guideText, WINDOW_WIDTH / 2, cardY + cardH + 15, guideColor, true);
+            }
         } else if (state.appState == APP_STATE_SELECT_BOOK) {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 142, 60, 220, 180 }); // Purple border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
@@ -4039,7 +4170,7 @@ void MainIteration() {
     }
 
     // 6. Render glassmorphism footer input bar
-    if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage) {
+    if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingApiKey) {
         SDL_Rect footerBg = { 0, WINDOW_HEIGHT - footerH, WINDOW_WIDTH, footerH };
         SDL_SetRenderDrawColor(state.renderer.get(), 14, 14, 20, 255);
         SDL_RenderFillRect(state.renderer.get(), &footerBg);
@@ -4147,6 +4278,8 @@ void MainIteration() {
             std::string placeholder = GetUiText("setup_input_placeholder");
             if (state.editingLanguage) {
                 placeholder = GetUiText("lang_input_placeholder");
+            } else if (state.editingApiKey) {
+                placeholder = GetUiText("apikey_placeholder");
             } else if (state.appState == APP_STATE_GAMEPLAY) {
                 placeholder = state.aiThinking ? GetUiText("game_thinking_placeholder") : GetUiText("game_input_placeholder");
             }

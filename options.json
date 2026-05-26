@@ -62,7 +62,12 @@
         "status_api_error": "Ошибка: не удалось связаться с ИИ. Пожалуйста, проверьте соединение.",
         "status_retry": "Ошибка JSON. Повторная попытка (попытка {attempt} из {max})...",
         "status_validation": "Выполнение финальной проверки структуры...",
-        "victory_title": "ПОЗДРАВЛЯЕМ! ВЫ ЗАВЕРШИЛИ КНИГУ!"
+        "victory_title": "ПОЗДРАВЛЯЕМ! ВЫ ЗАВЕРШИЛИ КНИГУ!",
+        "apikey_guide": "[ Используйте строку ввода внизу для API Key, Enter для подтверждения ]",
+        "apikey_placeholder": "Введите API Key...",
+        "apikey_select_title": "ВЫБОР МОДЕЛИ ИИ",
+        "apikey_select_prompt": "Выберите конфигурацию ИИ для игры:",
+        "apikey_back": "Назад"
     },
     "transitionPrefix": "Перейти к главе",
     "pacing_forced_conclusion_prompt": "CRITICAL TURN LIMIT REACHED: You MUST conclude this chapter on this turn. Transition smoothly and append '[next_chapter]{next_chapter}[/next_chapter]' right after the options list.",
