@@ -2083,7 +2083,7 @@ inline void UpdateSystemPrompt(GameState& state, AskAiExternal* aiClient) {
     std::string rule2 = state.promptAiRuleChapterTransition;
     size_t ncPos = rule2.find("{next_chapter}");
     if (ncPos != std::string::npos) {
-        rule2.replace(ncPos, 14, "НОМЕР_СЛЕДУЮЩЕЙ_ГЛАВЫ");
+        rule2.replace(ncPos, 14, std::to_string(state.currentChapter + 1));
     }
     combinedPrompt += rule2;
     
