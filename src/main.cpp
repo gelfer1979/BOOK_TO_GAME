@@ -86,6 +86,7 @@ struct {
     bool ignoreTags = false;
     std::string transitionPrefix = "Перейти к Главе ";
     std::string gameLanguage = "Russian";
+    std::string formatReminder = "[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character on its own line, then 2-4 choices each starting with '- ']";
     
     // Startup State Variables
     AppState appState = APP_STATE_ASK_CONTINUE;
@@ -2505,8 +2506,8 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
             }
             
             // Append format reminder to non-epilogue chapter start queries
-            if (!isVictory) {
-                nextStartMsg += "\n\n[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character on its own line, then 2-4 choices each starting with '- ']";
+            if (!isVictory && !state.formatReminder.empty()) {
+                nextStartMsg += "\n\n" + state.formatReminder;
             }
             
             std::string response;
@@ -2817,17 +2818,25 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     std::thread([queryCopy, historyCopy, langCopy, queryId]() {
 #endif
         // Append format reminder so the model doesn't forget structure mid-conversation
-        const std::string formatReminder = "\n\n[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character on its own line, then 2-4 choices each starting with '- ']";
         std::string response;
-        if (historyCopy.empty()) {
-            response = state.aiClient->ask(queryCopy + formatReminder);
-        } else {
-            // Make a mutable local copy to append the reminder without affecting state
-            std::vector<ChatMessageData> historyWithReminder = historyCopy;
-            if (!historyWithReminder.empty() && historyWithReminder.back().sender == "User") {
-                historyWithReminder.back().text += formatReminder;
+        if (state.formatReminder.empty()) {
+            if (historyCopy.empty()) {
+                response = state.aiClient->ask(queryCopy);
+            } else {
+                response = state.aiClient->askChat(historyCopy, langCopy);
             }
-            response = state.aiClient->askChat(historyWithReminder, langCopy);
+        } else {
+            const std::string suffix = "\n\n" + state.formatReminder;
+            if (historyCopy.empty()) {
+                response = state.aiClient->ask(queryCopy + suffix);
+            } else {
+                // Make a mutable local copy to append the reminder without affecting state
+                std::vector<ChatMessageData> historyWithReminder = historyCopy;
+                if (!historyWithReminder.empty() && historyWithReminder.back().sender == "User") {
+                    historyWithReminder.back().text += suffix;
+                }
+                response = state.aiClient->askChat(historyWithReminder, langCopy);
+            }
         }
         
         state.mutex.lock();
@@ -4733,6 +4742,17 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                     if (line.is_string()) {
                         if (!systemPrompt.empty()) systemPrompt += "\n";
                         systemPrompt += line.get<std::string>();
+                    }
+                }
+            }
+            if (j.contains("formatReminder") && j["formatReminder"].is_string()) {
+                state.formatReminder = j["formatReminder"].get<std::string>();
+            } else if (j.contains("formatReminder") && j["formatReminder"].is_array()) {
+                state.formatReminder = "";
+                for (const auto& line : j["formatReminder"]) {
+                    if (line.is_string()) {
+                        if (!state.formatReminder.empty()) state.formatReminder += "\n";
+                        state.formatReminder += line.get<std::string>();
                     }
                 }
             }
