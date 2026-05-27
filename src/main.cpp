@@ -2130,7 +2130,8 @@ void InitAdventureSetup(const std::string& filePath) {
             if (!line.empty()) {
                 // Defensive guard: discard if it's a long sentence instead of a short genre label
                 int spaceCount = std::count(line.begin(), line.end(), ' ');
-                if (line.length() <= 35 && spaceCount <= 3) {
+                // Use DecodeUTF8 to check character-length instead of byte-length to support Russian and other multibyte languages
+                if (DecodeUTF8(line).size() <= 35 && spaceCount <= 3) {
                     parsedGenres.push_back(line);
                 }
             }
