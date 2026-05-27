@@ -24,9 +24,10 @@
             display: block;
             outline: none;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-            /* Keep original ratio or scale dynamically */
-            max-width: 100%;
-            max-height: 100%;
+            /* Scale to fit screen/iframe viewport perfectly keeping aspect ratio */
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
         }
         #loading {
             position: absolute;
