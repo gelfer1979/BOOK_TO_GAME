@@ -1,9 +1,9 @@
 {
     "activeChoices": [
-        "Discreetly pocket a small, unused component from the workbench as a souvenir",
-        "Ask Miryam if she knows where the machine's previous technician went",
-        "Leave immediately without saying a word, hoping to slip back into the shadows",
-        "Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered"
+        "Ask her about the syndicate brand on her wrist",
+        "Take the tokens and immediately head for the exit",
+        "Offer to disable the device completely for an even higher price",
+        "Advise her to hide before the patrol arrives"
     ],
     "chapterSummaries": [
         "1::{\n  \"summary\": \"Чтобы избежать личного риска, главный герой отправляет своего неопытного подмастерья Элиаса выполнить заказ, сопровождая его через опасные сектора Ашкелона. После успешного прохождения проверки стражи и бегства от подозрительных лиц в закусочной, игрок решает спрятаться, чтобы убедиться в отсутствии слежки перед завершением доставки. В инвентаре по-прежнему находится рюкзак с ценными платами и инструментами.\"\n}"
@@ -11,7 +11,7 @@
     "currentChapter": 2,
     "gameOver": false,
     "gameWon": false,
-    "lastQuery": "Быстро заменить сгоревшую деталь и уйти, притворившись, что ничего не заметили",
+    "lastQuery": "Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered",
     "messages": [
         {
             "sender": "AI",
@@ -24,6 +24,14 @@
         {
             "sender": "AI",
             "text": "\"You focus solely on the faulty steam-valve, suppressing your curiosity about the strange glowing chips. Your hands move with practiced, mechanical efficiency, replacing the damaged part while ignoring the erratic, data-heavy hum of the machine. Miryam watches you with narrow, anxious eyes, her silence heavy in the cramped room. As soon as the turbine stabilizes and the rhythmic clatter returns to a dull, manageable roar, you pack your heavy bag, anxious to vanish into the smog-filled streets before any watchers take notice of your presence. \",\n\n\u001f\n- Discreetly pocket a small, unused component from the workbench as a souvenir\n- Ask Miryam if she knows where the machine's previous technician went\n- Leave immediately without saying a word, hoping to slip back into the shadows\n- Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered\n"
+        },
+        {
+            "sender": "User",
+            "text": "Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered"
+        },
+        {
+            "sender": "AI",
+            "text": "\"Miryam’s face turns pale as you press her for extra coin, citing the excessive wear on your tools from her malfunctioning machine. She trembles, reaching into a hidden compartment under her desk and pulling out a handful of rusted gear-tokens. As she presses them into your palm, her fingers brush against yours, and you notice a brand—a small, jagged insignia of a local syndicate burned into her wrist. She leans in, whispering that the machine wasn't just broken; it was listening to her thoughts, and by fixing it, you have essentially signed her death warrant. The air in the room suddenly feels dense with the hum of a distant steam-siren, indicating that a patrol is nearby.\",\n\n\u001f\n- Ask her about the syndicate brand on her wrist\n- Take the tokens and immediately head for the exit\n- Offer to disable the device completely for an even higher price\n- Advise her to hide before the patrol arrives\n"
         }
     ],
     "pendingNextChapter": -1

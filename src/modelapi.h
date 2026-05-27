@@ -224,16 +224,20 @@ public:
             var pResponseOut = $4;
             var pResponseCodeOut = $5;
             
+            if (apiKey && format === "gemini") {
+                if (url.indexOf("?") === -1) {
+                    url += "?key=" + apiKey;
+                } else {
+                    url += "&key=" + apiKey;
+                }
+            }
+            
             try {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false); // SYNCHRONOUS
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                if (apiKey) {
-                    if (format === "gemini") {
-                        xhr.setRequestHeader("x-goog-api-key", apiKey);
-                    } else {
-                        xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
-                    }
+                if (apiKey && format !== "gemini") {
+                    xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
                 }
                 xhr.send(payload);
                 
@@ -623,16 +627,20 @@ public:
             var pResponseOut = $4;
             var pResponseCodeOut = $5;
             
+            if (apiKey && format === "gemini") {
+                if (url.indexOf("?") === -1) {
+                    url += "?key=" + apiKey;
+                } else {
+                    url += "&key=" + apiKey;
+                }
+            }
+            
             try {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false); // SYNCHRONOUS
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                if (apiKey) {
-                    if (format === "gemini") {
-                        xhr.setRequestHeader("x-goog-api-key", apiKey);
-                    } else {
-                        xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
-                    }
+                if (apiKey && format !== "gemini") {
+                    xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
                 }
                 xhr.send(payload);
                 
