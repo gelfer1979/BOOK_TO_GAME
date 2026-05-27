@@ -3867,8 +3867,6 @@ void MainIteration() {
                 if (mx >= state.homeBtnRect.x && mx <= (state.homeBtnRect.x + state.homeBtnRect.w) &&
                     my >= state.homeBtnRect.y && my <= (state.homeBtnRect.y + state.homeBtnRect.h)) {
                     state.mutex.lock();
-                    state.modelState.gameWon = false;
-                    state.modelState.gameOver = false;
                     
                     // Increment query ID to invalidate any background AI threads
                     state.currentQueryId++;
