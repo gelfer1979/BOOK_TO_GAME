@@ -2,10 +2,10 @@
     "AIModel": "ai_gemini.json",
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
-    "Language": "Russian",
+    "Language": "English",
     "bookRetries": 3,
     "choicesSeparator": "\u001f",
-    "fontSizeOffset": 4,
+    "fontSizeOffset": 6,
     "formatReminder": [
         "[REMINDER: Use the exact output format from your system prompt: narrative text first, then '\u001f', then 2-4 choices each on its own line '- ']"
     ],
@@ -69,6 +69,11 @@
             "action": "replace",
             "replacement": "\n",
             "target": "\\n"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"response\":"
         },
         {
             "action": "replace",
