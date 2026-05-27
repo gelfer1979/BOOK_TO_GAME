@@ -63,6 +63,7 @@ if(EMSCRIPTEN)
         "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/platforms/emscripten/shell.html"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/options.json@options.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/settings.json@settings.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_gemini.json@ai_gemini.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_chatgpt.json@ai_chatgpt.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_copilot.json@ai_copilot.json"

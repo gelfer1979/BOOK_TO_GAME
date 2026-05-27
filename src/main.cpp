@@ -120,8 +120,8 @@ struct {
     std::string inputText = "";
     bool aiThinking = false;
     bool ignoreTags = false;
-    std::string transitionPrefix = "Перейти к Главе ";
-    std::string gameLanguage = "Russian";
+    std::string transitionPrefix = "Go to Chapter ";
+    std::string gameLanguage = "English";
     std::string formatReminder = "[REMINDER: Use the exact output format from your system prompt: narrative text first, then the separator character , then 2-4 choices each on its own line '- ']";
     
     // Startup State Variables
