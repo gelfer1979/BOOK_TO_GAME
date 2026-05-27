@@ -4149,28 +4149,6 @@ void MainIteration() {
         SDL_SetRenderDrawColor(state.renderer.get(), 40, 40, 60, 255);
         SDL_RenderDrawLine(state.renderer.get(), 0, 41, WINDOW_WIDTH, 41);
         
-        // Render centered Book Title in header
-        if (!state.modelState.bookTitle.empty()) {
-            SDL_Color titleCol = { 200, 200, 220, 255 };
-            std::string headerTitle = state.modelState.bookTitle;
-            int maxTitleW = WINDOW_WIDTH - 300;
-            if (maxTitleW < 200) maxTitleW = 200;
-            
-            int tw = 0, th = 0;
-            SafeSizeUTF8(state.fontUI.get(), headerTitle, &tw, &th);
-            if (tw > maxTitleW) {
-                while (!headerTitle.empty() && tw > maxTitleW - 20) {
-                    PopUTF8Character(headerTitle);
-                    std::string testStr = headerTitle + "...";
-                    SafeSizeUTF8(state.fontUI.get(), testStr, &tw, &th);
-                }
-                headerTitle += "...";
-            }
-            
-            RenderText(state.renderer.get(), state.fontUI.get(), headerTitle, 
-                       WINDOW_WIDTH / 2, 21, titleCol, true);
-        }
-        
         // 1.5. Render "Chapter N of Y" or "Epilogue" next to the Home button
         std::string labelText = "";
         int currentChapter = state.modelState.currentChapter;
@@ -4188,6 +4166,35 @@ void MainIteration() {
         SafeSizeUTF8(state.fontSmallUI.get(), labelText, &labelTw, &labelTh);
         int labelX = (WINDOW_WIDTH - 160) - labelTw / 2;
         RenderText(state.renderer.get(), state.fontSmallUI.get(), labelText, labelX, 21, labelCol, true);
+
+        // Render Book Title in header left-aligned immediately after font buttons (ending at 76px)
+        if (!state.modelState.bookTitle.empty()) {
+            SDL_Color titleCol = { 200, 200, 220, 255 };
+            std::string headerTitle = state.modelState.bookTitle;
+            
+            // Starts at 90px (font buttons end at 76px + 14px padding)
+            // Left edge of Chapter label is labelX - labelTw / 2 = WINDOW_WIDTH - 160 - labelTw
+            // We want at least 20px padding before the Chapter label
+            int leftLimit = 90;
+            int rightLimit = (WINDOW_WIDTH - 160 - labelTw) - 20;
+            int maxTitleW = rightLimit - leftLimit;
+            if (maxTitleW < 100) maxTitleW = 100;
+            
+            int tw = 0, th = 0;
+            SafeSizeUTF8(state.fontUI.get(), headerTitle, &tw, &th);
+            if (tw > maxTitleW) {
+                while (!headerTitle.empty() && tw > maxTitleW - 20) {
+                    PopUTF8Character(headerTitle);
+                    std::string testStr = headerTitle + "...";
+                    SafeSizeUTF8(state.fontUI.get(), testStr, &tw, &th);
+                }
+                headerTitle += "...";
+            }
+            
+            // Render left-aligned, vertically centered at 21px
+            RenderText(state.renderer.get(), state.fontUI.get(), headerTitle, 
+                       leftLimit, 21 - th / 2, titleCol, false);
+        }
 
         // 1.8. Render font increase/decrease scaling buttons on top-left of header
         state.fontIncBtnRect = { 10, 6, 30, 30 };
