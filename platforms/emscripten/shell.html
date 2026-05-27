@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOK_TO_GAME</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0b0c10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        #canvas {
+            border: none;
+            background-color: #0b0c10;
+            display: block;
+            outline: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            /* Keep original ratio or scale dynamically */
+            max-width: 100%;
+            max-height: 100%;
+        }
+        #loading {
+            position: absolute;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #00c0ff;
+            text-transform: uppercase;
+            text-align: center;
+            animation: pulse 1.5s infinite ease-in-out;
+            z-index: 10;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">Загрузка игры...</div>
+    <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
+
+    <script>
+        var Module = {
+            preRun: [],
+            postRun: [],
+            print: (function() {
+                return function(text) {
+                    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                    console.log(text);
+                };
+            })(),
+            printErr: function(text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                console.error(text);
+            },
+            canvas: (function() {
+                var canvas = document.getElementById('canvas');
+                canvas.addEventListener("webglcontextlost", function(e) { 
+                    alert('WebGL context lost. Please reload the page.'); 
+                    e.preventDefault(); 
+                }, false);
+                return canvas;
+            })(),
+            setStatus: function(text) {
+                if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+                if (text === Module.setStatus.last.text) return;
+                var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+                var now = Date.now();
+                if (m && now - Module.setStatus.last.time < 30) return; // skip progress spam
+                Module.setStatus.last.time = now;
+                Module.setStatus.last.text = text;
+                
+                var loadingElement = document.getElementById('loading');
+                if (loadingElement) {
+                    if (text) {
+                        loadingElement.innerText = text;
+                    } else {
+                        loadingElement.style.display = 'none';
+                        document.getElementById('canvas').focus();
+                    }
+                }
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function(left) {
+                this.totalDependencies = Math.max(this.totalDependencies, left);
+                Module.setStatus(left ? 'Подготовка... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : '');
+            }
+        };
+        Module.setStatus('Загрузка модулей...');
+        window.onerror = function(event) {
+            Module.setStatus('Сбой загрузки, проверьте консоль JS');
+            Module.setStatus = function(text) {
+                if (text) Module.printErr('[post-exception status] ' + text);
+            };
+        };
+    </script>
+    {{{ SCRIPT }}}
+</body>
+</html>

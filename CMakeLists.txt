@@ -60,6 +60,7 @@ if(EMSCRIPTEN)
         "-sUSE_SDL_NET=2"
         "-sALLOW_MEMORY_GROWTH=1"
         "-sINITIAL_MEMORY=67108864"
+        "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/platforms/emscripten/shell.html"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/options.json@options.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_gemini.json@ai_gemini.json"
