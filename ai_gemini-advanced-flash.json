@@ -1,5 +1,5 @@
 {
-    "apiKey": "AIzaSyALyL5Ld_IdeFtsTP05ayr3IxQsy05s5HU",
+    "apiKey": "",
     "apiKeyEnvVar": "GEMINI_API_KEY",
     "baseUrl": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
     "format": "gemini",
