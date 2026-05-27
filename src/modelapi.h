@@ -232,6 +232,7 @@ public:
                 }
             }
             
+            console.log("[Wasm API] Sending POST request to:", url);
             try {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false); // SYNCHRONOUS
@@ -243,11 +244,15 @@ public:
                 
                 HEAP32[pResponseCodeOut >> 2] = xhr.status;
                 var responseText = xhr.responseText || "";
+                if (xhr.status !== 200) {
+                    console.error("[Wasm API] Error response from server (Status " + xhr.status + "):", responseText);
+                }
                 var lengthBytes = lengthBytesUTF8(responseText) + 1;
                 var stringOnWasmHeap = _malloc(lengthBytes);
                 stringToUTF8(responseText, stringOnWasmHeap, lengthBytes);
                 HEAP32[pResponseOut >> 2] = stringOnWasmHeap;
             } catch (err) {
+                console.error("[Wasm API] Exception occurred:", err.message);
                 HEAP32[pResponseCodeOut >> 2] = 0;
                 var errText = "Error: " + err.message;
                 var lengthBytes = lengthBytesUTF8(errText) + 1;
@@ -268,8 +273,16 @@ public:
         } else if (responseCode == 429) {
             return "Error 429: Too Many Requests. Rate limit exceeded.";
         } else if (responseCode != 200) {
-            if (!readBuffer.empty() && readBuffer.find("Error") != std::string::npos) {
-                return readBuffer;
+            if (!readBuffer.empty()) {
+                try {
+                    nlohmann::json errJ = nlohmann::json::parse(readBuffer);
+                    if (errJ.contains("error") && errJ["error"].contains("message")) {
+                        return "Error: " + errJ["error"]["message"].get<std::string>();
+                    }
+                } catch (...) {}
+                if (readBuffer.find("Error") != std::string::npos || readBuffer.find("error") != std::string::npos) {
+                    return readBuffer;
+                }
             }
             return "Error: API returned status code " + std::to_string(responseCode);
         }
@@ -635,6 +648,7 @@ public:
                 }
             }
             
+            console.log("[Wasm API] Sending POST request to:", url);
             try {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false); // SYNCHRONOUS
@@ -646,11 +660,15 @@ public:
                 
                 HEAP32[pResponseCodeOut >> 2] = xhr.status;
                 var responseText = xhr.responseText || "";
+                if (xhr.status !== 200) {
+                    console.error("[Wasm API] Error response from server (Status " + xhr.status + "):", responseText);
+                }
                 var lengthBytes = lengthBytesUTF8(responseText) + 1;
                 var stringOnWasmHeap = _malloc(lengthBytes);
                 stringToUTF8(responseText, stringOnWasmHeap, lengthBytes);
                 HEAP32[pResponseOut >> 2] = stringOnWasmHeap;
             } catch (err) {
+                console.error("[Wasm API] Exception occurred:", err.message);
                 HEAP32[pResponseCodeOut >> 2] = 0;
                 var errText = "Error: " + err.message;
                 var lengthBytes = lengthBytesUTF8(errText) + 1;
@@ -671,8 +689,16 @@ public:
         } else if (responseCode == 429) {
             return "Error 429: Too Many Requests. Rate limit exceeded.";
         } else if (responseCode != 200) {
-            if (!readBuffer.empty() && readBuffer.find("Error") != std::string::npos) {
-                return readBuffer;
+            if (!readBuffer.empty()) {
+                try {
+                    nlohmann::json errJ = nlohmann::json::parse(readBuffer);
+                    if (errJ.contains("error") && errJ["error"].contains("message")) {
+                        return "Error: " + errJ["error"]["message"].get<std::string>();
+                    }
+                } catch (...) {}
+                if (readBuffer.find("Error") != std::string::npos || readBuffer.find("error") != std::string::npos) {
+                    return readBuffer;
+                }
             }
             return "Error: API returned status code " + std::to_string(responseCode);
         }
