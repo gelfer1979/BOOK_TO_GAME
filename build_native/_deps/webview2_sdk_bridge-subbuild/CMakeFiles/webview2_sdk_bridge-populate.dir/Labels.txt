@@ -1,0 +1,14 @@
+# Target labels
+ webview2_sdk_bridge-populate
+# Source files and their labels
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/CMakeFiles/webview2_sdk_bridge-populate
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/CMakeFiles/webview2_sdk_bridge-populate.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/CMakeFiles/webview2_sdk_bridge-populate-complete.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-build.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-configure.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-download.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-install.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-mkdir.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-patch.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-test.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-update.rule

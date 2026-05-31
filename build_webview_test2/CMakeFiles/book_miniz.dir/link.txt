@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libbook_miniz.a CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.obj CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.obj CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.obj CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.obj
+C:\msys64\ucrt64\bin\ranlib.exe libbook_miniz.a

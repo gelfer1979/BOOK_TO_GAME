@@ -1,0 +1,25 @@
+{
+    "activeChoices": [
+        "Продолжить историю"
+    ],
+    "chapterSummaries": [],
+    "currentChapter": 1,
+    "gameOver": false,
+    "gameWon": false,
+    "lastQuery": "Continue story",
+    "messages": [
+        {
+            "sender": "AI",
+            "text": "You are Jonathan Harker, arriving at the Golden Krone Hotel in Bistritz. The innkeeper's wife has just pressed a cold, heavy crucifix into your palm, her eyes wide with terror. Outside, the carriage to the Borgo Pass waits in the biting wind. Your inventory contains: A journal, a map of Transylvania, and the crucifix. Do you heed the warnings of the locals and abandon the contract, or do you board the carriage to face the unknown darkness of the Count?"
+        },
+        {
+            "sender": "User",
+            "text": "Continue story"
+        },
+        {
+            "sender": "AI",
+            "text": "The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build.\n\nTo play this native build, please go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key."
+        }
+    ],
+    "pendingNextChapter": -1
+}

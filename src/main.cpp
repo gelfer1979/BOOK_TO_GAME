@@ -29,6 +29,11 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_net.h>
+#include <SDL2/SDL_system.h>
+
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+#include <unistd.h>
+#endif
 
 #include "modelapi.h"
 #ifdef __EMSCRIPTEN__
@@ -78,7 +83,8 @@ enum AppState {
     APP_STATE_AI_GENERATING,
     APP_STATE_GAMEPLAY,
     APP_STATE_SELECT_AI,
-    APP_STATE_SELECT_BOOK
+    APP_STATE_SELECT_BOOK,
+    APP_STATE_SELECT_LANGUAGE
 };
 
 // Default Window Dimensions
@@ -111,7 +117,7 @@ struct {
     
     // Core Model and AI Client
     GameState modelState;
-    std::unique_ptr<AskAiExternal> aiClient;
+    std::unique_ptr<AskAi> aiClient;
     
     // UI Layout Mappings
     std::vector<ChatMessage> uiMessages;
@@ -154,6 +160,10 @@ struct {
     UniqueFont fontMessage{nullptr, TTF_CloseFont};
     UniqueFont fontUI{nullptr, TTF_CloseFont};
     UniqueFont fontSmallUI{nullptr, TTF_CloseFont};
+    UniqueFont fontTitleScaled{nullptr, TTF_CloseFont};
+    UniqueFont fontUIScaled{nullptr, TTF_CloseFont};
+    UniqueFont fontSmallUIScaled{nullptr, TTF_CloseFont};
+    UniqueFont fontDeathBtn{nullptr, TTF_CloseFont};
     UniqueChunk soundEffect{nullptr, Mix_FreeChunk};
     bool mixOk = false;
     
@@ -179,8 +189,8 @@ struct {
     int apiRetryCount = 0;
     int bookRetries = 3;
     int retryDelayMs = 1000;
-    int connectTimeout = 5;
-    int requestTimeout = 15;
+    int connectTimeout = 15;
+    int requestTimeout = 45;
     std::vector<std::string> savedChoices;
     bool editingLanguage = false;
     std::string tempLanguageInput = "";
@@ -213,7 +223,74 @@ struct {
     std::string bookPathInput = "";
     SDL_Rect bookPathInputRect = {0, 0, 0, 0};
     SDL_Rect bookConfirmBtnRect = {0, 0, 0, 0};
+
+    struct NBookInfo {
+        std::string filename;
+        std::string path;
+        std::string displayName;
+        SDL_Rect rect;
+    };
+    std::vector<NBookInfo> availableNBooks;
+    
+    // Mobile scaling and debouncing additions
+    Uint32 lastClickTime = 0;
+    UniqueFont fontOptionUI{nullptr, TTF_CloseFont};
+    UniqueFont fontOptionSmallUI{nullptr, TTF_CloseFont};
+    
+    // Language selection screen additions
+    std::vector<std::string> availableLanguages = {
+        "English",
+        "Russian",
+        "Ukrainian",
+        "Hebrew",
+        "Spanish",
+        "French",
+        "German",
+        "Italian",
+        "Portuguese",
+        "Polish",
+        "Dutch",
+        "Turkish"
+    };
+    int langSelectScrollOffset = 0;
+    int langSelectMaxScroll = 0;
+    bool editingGameplayInput = false;
 } state;
+
+#if defined(__ANDROID__) || defined(__IPHONEOS__) || defined(IOS)
+inline bool IsMobile() { return true; }
+#else
+inline bool IsMobile() { return false; }
+#endif
+
+inline int LAYOUT_HEADER_H() {
+    return IsMobile() ? 142 : 42;
+}
+
+inline int LAYOUT_FOOTER_H() {
+    return IsMobile() ? 135 : 60;
+}
+
+inline int LAYOUT_CHOICE_H() {
+    return IsMobile() ? 220 : 45;
+}
+
+inline int LAYOUT_CHOICE_SPACING() {
+    return IsMobile() ? 18 : 8;
+}
+
+inline int LAYOUT_CARD_W() {
+    return IsMobile() ? 960 : 600;
+}
+
+inline int LAYOUT_CARD_H(AppState appState) {
+    if (appState == APP_STATE_ENTER_TXT_PATH || appState == APP_STATE_SELECT_BOOK || 
+        appState == APP_STATE_SELECT_AI || appState == APP_STATE_SELECT_LANGUAGE) {
+        return IsMobile() ? 850 : 490;
+    }
+    return IsMobile() ? 720 : 440;
+}
+
 
 // Forward Declarations
 std::vector<std::string> WrapText(TTF_Font* font, const std::string& text, int maxWidth);
@@ -228,6 +305,8 @@ void RestartAdventure();
 void InitAdventureSetup(const std::string& filePath);
 void StartBookGeneration(const std::string& filePath);
 void ConsumeApiResponse();
+void MainIteration();
+void ScanAvailableNBooks();
 
 void SyncModelToUi() {
     // 1. Convert modelState.messages to uiMessages
@@ -291,10 +370,10 @@ void SyncModelToUi() {
     int n = state.modelState.activeChoices.size();
     if (n > 6) n = 6;
     
-    int cardH = 45;
-    int verticalSpacing = 8;
+    int cardH = LAYOUT_CHOICE_H();
+    int verticalSpacing = LAYOUT_CHOICE_SPACING();
     int optionsAreaH = n * cardH + (n + 1) * verticalSpacing;
-    int footerH = 60;
+    int footerH = LAYOUT_FOOTER_H();
     int cardW = WINDOW_WIDTH - 40;
     int startX = 20;
     
@@ -811,9 +890,12 @@ void SaveLanguageToSettings(const std::string& newLanguage) {
     
     std::ofstream outFile(settingsPath);
     if (outFile.is_open()) {
-        outFile << j.dump(4);
+        std::string serialized = j.dump(4);
+        outFile << serialized;
         outFile.close();
         std::cout << "[Config] Saved new language '" << newLanguage << "' to " << settingsPath << std::endl;
+        EmscriptenSyncFS();
+        EmscriptenHostWrite(settingsPath, serialized);
     }
 }
 
@@ -839,9 +921,12 @@ void SaveApiKeyToModelJson(const std::string& filename, const std::string& apiKe
     
     std::ofstream outFile(modelPath);
     if (outFile.is_open()) {
-        outFile << j.dump(4);
+        std::string serialized = j.dump(4);
+        outFile << serialized;
         outFile.close();
         std::cout << "[Config] Saved API Key to model configuration '" << filename << "'" << std::endl;
+        EmscriptenSyncFS();
+        EmscriptenHostWrite(modelPath, serialized);
     } else {
         std::cerr << "[Config] Failed to open model configuration '" << filename << "' for writing." << std::endl;
     }
@@ -869,9 +954,12 @@ void SaveFontSizeOffsetToSettings(int offset) {
     
     std::ofstream outFile(settingsPath);
     if (outFile.is_open()) {
-        outFile << j.dump(4);
+        std::string serialized = j.dump(4);
+        outFile << serialized;
         outFile.close();
         std::cout << "[Config] Saved font size offset '" << offset << "' to " << settingsPath << std::endl;
+        EmscriptenSyncFS();
+        EmscriptenHostWrite(settingsPath, serialized);
     }
 }
 
@@ -917,6 +1005,20 @@ void ScanAvailableAiModels() {
             }
         }
     } catch (...) {}
+
+    // Ensure Puter is always first in the list
+    state.mutex.lock();
+    auto it = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
+        return info.filename == "ai_puter.json";
+    });
+    if (it != state.availableAiModels.end()) {
+        auto puterInfo = *it;
+        state.availableAiModels.erase(it);
+        state.availableAiModels.insert(state.availableAiModels.begin(), puterInfo);
+    } else {
+        state.availableAiModels.insert(state.availableAiModels.begin(), {"ai_puter.json", "Puter AI (gpt-4o-mini)"});
+    }
+    state.mutex.unlock();
 }
 
 // Scans local folders for potential adventure book text/JSON files
@@ -926,47 +1028,137 @@ void ScanAvailableBooks() {
     state.mutex.unlock();
     
     try {
+#if defined(__ANDROID__)
+        SDL_AndroidRequestPermission("android.permission.READ_EXTERNAL_STORAGE");
+        std::vector<std::string> searchPaths;
+        const char* extPath = SDL_AndroidGetExternalStoragePath();
+        if (extPath) {
+            std::string pathStr(extPath);
+            size_t idx = pathStr.find("/Android/data");
+            if (idx != std::string::npos) {
+                std::string sharedDownload = pathStr.substr(0, idx) + "/Download";
+                searchPaths.push_back(sharedDownload);
+                std::string sharedDownloads = pathStr.substr(0, idx) + "/Downloads";
+                searchPaths.push_back(sharedDownloads);
+            }
+        }
+        searchPaths.push_back("/storage/emulated/0/Download");
+        searchPaths.push_back("/storage/emulated/0/Downloads");
+        searchPaths.push_back("/sdcard/Download");
+        searchPaths.push_back("/sdcard/Downloads");
+#else
         std::vector<std::string> searchPaths = {".", "assets", "..", "../assets"};
+#endif
+        SDL_Log("[Scanner] Starting folder scan. Path count: %d", (int)searchPaths.size());
         for (const auto& path : searchPaths) {
-            if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
-                for (const auto& entry : std::filesystem::directory_iterator(path)) {
-                    if (entry.is_regular_file()) {
-                        std::string filename = entry.path().filename().string();
-                        std::string ext = entry.path().extension().string();
-                        
-                        // Convert to lowercase for checking extension
-                        std::string lowerExt = ext;
-                        std::transform(lowerExt.begin(), lowerExt.end(), lowerExt.begin(), ::tolower);
-                        
-                        if (BookConverter::IsSupportedBookFormat(lowerExt)) {
-                            // Skip system configuration, save games, and makefiles
-                            if (filename == "save.json" || filename == "settings.json" || 
-                                filename == "options.json" || filename == "book_error.txt" ||
-                                filename == "CMakeLists.txt" ||
-                                filename == "book.txt") {
-                                continue;
-                            }
-                            // Skip AI model files
-                            if (filename.rfind("ai_", 0) == 0 && lowerExt == ".json") {
-                                continue;
-                            }
-                            
-                            state.mutex.lock();
-                            bool duplicate = false;
-                            for (const auto& existing : state.availableBooks) {
-                                if (existing.filename == filename) {
-                                    duplicate = true;
-                                    break;
+            SDL_Log("[Scanner] Checking directory path: %s", path.c_str());
+            try {
+                if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
+                    SDL_Log("[Scanner] Directory exists and is valid: %s", path.c_str());
+                    try {
+                        for (const auto& entry : std::filesystem::directory_iterator(path)) {
+                            if (entry.is_regular_file()) {
+                                std::string filename = entry.path().filename().string();
+                                std::string ext = entry.path().extension().string();
+                                
+                                // Convert to lowercase for checking extension
+                                std::string lowerExt = ext;
+                                std::transform(lowerExt.begin(), lowerExt.end(), lowerExt.begin(), ::tolower);
+                                
+                                if (BookConverter::IsSupportedBookFormat(lowerExt)) {
+#if defined(__ANDROID__)
+                                    // Mobi is not supported on Android, so filter it out from listing completely
+                                    if (lowerExt == ".mobi") {
+                                        continue;
+                                    }
+#endif
+                                    // Skip system configuration, save games, and makefiles
+                                    if (filename == "save.json" || filename == "settings.json" || 
+                                        filename == "options.json" || filename == "book_error.txt" ||
+                                        filename == "CMakeLists.txt" ||
+                                        filename == "book.txt") {
+                                        continue;
+                                    }
+                                    // Skip AI model files
+                                    if (filename.rfind("ai_", 0) == 0 && lowerExt == ".json") {
+                                        continue;
+                                    }
+                                    
+                                    state.mutex.lock();
+                                    bool duplicate = false;
+                                    for (const auto& existing : state.availableBooks) {
+                                        if (existing.filename == filename) {
+                                            duplicate = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!duplicate) {
+                                        SDL_Log("[Scanner] Found book file: %s in %s", filename.c_str(), path.c_str());
+                                        state.availableBooks.push_back({filename, entry.path().string()});
+                                    }
+                                    state.mutex.unlock();
                                 }
                             }
-                            if (!duplicate) {
-                                state.availableBooks.push_back({filename, entry.path().string()});
+                        }
+                    } catch (const std::exception& ex) {
+                        SDL_Log("[Scanner] Error reading directory iterator for %s: %s", path.c_str(), ex.what());
+                    }
+                } else {
+                    SDL_Log("[Scanner] Directory does not exist or is not accessible: %s", path.c_str());
+                }
+            } catch (const std::exception& e) {
+                SDL_Log("[Scanner] Failed checking exists for: %s error: %s", path.c_str(), e.what());
+            }
+        }
+    } catch (const std::exception& ex) {
+        SDL_Log("[Scanner] General scanner error: %s", ex.what());
+    } catch (...) {
+        SDL_Log("[Scanner] Unknown scanner error!");
+    }
+}
+
+void ScanAvailableNBooks() {
+    state.mutex.lock();
+    state.availableNBooks.clear();
+    state.mutex.unlock();
+    
+    try {
+        std::vector<std::string> searchPaths = {".", "assets", "..", "../assets"};
+        for (const auto& path : searchPaths) {
+            try {
+                if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
+                    for (const auto& entry : std::filesystem::directory_iterator(path)) {
+                        if (entry.is_regular_file()) {
+                            std::string filename = entry.path().filename().string();
+                            std::string ext = entry.path().extension().string();
+                            
+                            std::string lowerExt = ext;
+                            std::transform(lowerExt.begin(), lowerExt.end(), lowerExt.begin(), ::tolower);
+                            
+                            // Check if starts with "nbook_" and ends with ".txt"
+                            if (filename.rfind("nbook_", 0) == 0 && lowerExt == ".txt") {
+                                std::string displayName = filename.substr(6); // strip "nbook_"
+                                if (displayName.length() > 4 && displayName.substr(displayName.length() - 4) == ".txt") {
+                                    displayName = displayName.substr(0, displayName.length() - 4); // strip ".txt"
+                                }
+                                
+                                state.mutex.lock();
+                                bool duplicate = false;
+                                for (const auto& existing : state.availableNBooks) {
+                                    if (existing.filename == filename) {
+                                        duplicate = true;
+                                        break;
+                                    }
+                                }
+                                if (!duplicate) {
+                                    state.availableNBooks.push_back({filename, entry.path().string(), displayName, {0, 0, 0, 0}});
+                                }
+                                state.mutex.unlock();
                             }
-                            state.mutex.unlock();
                         }
                     }
                 }
-            }
+            } catch (...) {}
         }
     } catch (...) {}
 }
@@ -998,17 +1190,20 @@ void ReloadSettingsAndReinit(const std::string& newAiModelFile) {
     j["AIModel"] = newAiModelFile;
     std::ofstream outFile(settingsPath);
     if (outFile.is_open()) {
-        outFile << j.dump(4);
+        std::string serialized = j.dump(4);
+        outFile << serialized;
         outFile.close();
         std::cout << "[Config] Saved new AIModel '" << newAiModelFile << "' to " << settingsPath << std::endl;
+        EmscriptenSyncFS();
+        EmscriptenHostWrite(settingsPath, serialized);
     }
     
     // 3. Reload settings parameters
     int maxRetries = 3;
     int bookRetries = 3;
     int retryDelayMs = 1000;
-    int connectTimeout = 5;
-    int requestTimeout = 15;
+    int connectTimeout = 15;
+    int requestTimeout = 45;
     
     if (j.contains("maxRetries") && j["maxRetries"].is_number()) {
         maxRetries = j["maxRetries"].get<int>();
@@ -1028,7 +1223,11 @@ void ReloadSettingsAndReinit(const std::string& newAiModelFile) {
     
     // 4. Re-instantiate AskAiExternal and configure it
     state.mutex.lock();
-    state.aiClient = std::make_unique<AskAiExternal>(newAiModelFile);
+    if (newAiModelFile == "ai_puter.json" || newAiModelFile == "../ai_puter.json") {
+        state.aiClient = std::make_unique<AskAiPuter>(newAiModelFile);
+    } else {
+        state.aiClient = std::make_unique<AskAiExternal>(newAiModelFile);
+    }
     state.aiClient->setRetrySettings(maxRetries, retryDelayMs);
     state.aiClient->setTimeoutSettings(connectTimeout, requestTimeout);
     state.maxRetries = maxRetries;
@@ -1143,12 +1342,125 @@ void TriggerUiLocalization() {
     std::string activeLang = state.gameLanguage;
     if (activeLang == "English") {
         state.transitionPrefix = "Go to Chapter ";
+        
+        // Restore C++ state.modelState fields to their English defaults
+        state.modelState.pacingForcedConclusionPrompt = "CRITICAL TURN LIMIT REACHED: You MUST conclude this chapter on this turn. Transition smoothly and append '<next_chapter>{next_chapter}</next_chapter>' right after the options tags.";
+        state.modelState.promptGameWorldHeader = "Game World:";
+        state.modelState.promptGameStateHeader = "Current Game State:";
+        state.modelState.promptCurrentChapterLabel = "Current Chapter: ";
+        state.modelState.promptPreviousChaptersHeader = "Brief history of previous chapters:";
+        state.modelState.promptChapterSummaryItem = "- Chapter {chapter}: {summary}\n";
+        state.modelState.promptChapterDetailsHeader = "Objectives and description of the current chapter (Chapter {chapter}: {title}):\n{description}\n";
+        state.modelState.promptAiRulesHeader = "AI GAMEPLAY RULES:";
+        state.modelState.promptAiRuleOptionsFormat = "1. OPTIONS FORMAT: At the end of every response, you MUST offer between 2 and 4 interactive choices wrapped strictly in XML-like tags using the following format: <options><option>First choice</option><option>Second choice</option></options>. Do not output choices in normal text or in any other format.\n";
+        state.modelState.promptAiRuleChapterTransition = "2. CHAPTER TRANSITION: When the player successfully resolves the objectives of the current chapter, you MUST append the '<next_chapter>{next_chapter}</next_chapter>' tag right after the closing </options> tag to transition to the next chapter.\n";
+        state.modelState.promptAiRuleLanguageEnforcement = "4. LANGUAGE ENFORCEMENT: All generated narration (story) and choices inside <option> tags MUST be strictly written in the target language: '{language}', regardless of the language of the source book lore or chapter plots.\n";
+        state.modelState.promptAiFinalChapterWarning = "IMPORTANT: This is the final chapter of the entire book! Resolve all major story conflicts, bring the plot to a grand finale and a satisfying logical conclusion of the entire book. After the </options> tags, you MUST append the transition tag to the epilogue: <next_chapter>{epilogue_chapter}</next_chapter>.\n";
+        state.modelState.promptAiEpilogueWriter = "You are a professional epilogue writer. Write a beautiful, brief, and satisfying final conclusion. Do NOT output any choices, options inside <options>, or XML tags. Respond strictly in the target language: '{language}'.";
+        state.modelState.promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST format the choices at the very end of startPrompt using <options><option>First choice</option><option>Second choice</option></options> tags in the target language. Example: 'Story narration.\\n\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}";
+        state.modelState.promptAiBookGenLength = "Generate a logical sequential series of chapters mapping out the story arc according to the user's custom length wishes: \"{wishes}\". Follow this number/range of chapters exactly.";
+        state.modelState.promptAiBookGenLengthDefault = "Generate between 3 and 5 logical sequential chapters mapping out the story arc.";
+        state.modelState.promptAiBookGenGenre = "\n- Genre and atmosphere constraint: \"{wishes}\". You MUST adapt the quest environment, vocabulary, tropes, and thematic elements to match this chosen genre/atmosphere.";
+        state.modelState.promptAiBookGenFidelity = "\n- Story progression rules: \"{wishes}\". If the user wants to follow the book's canon, recreate the main events. If they want a free alternative timeline, diverge dynamically and allow total narrative freedom based on the book's starting point.";
+        state.modelState.promptAiBookGenCustom = "\n- CRITICAL USER CUSTOM WISHES/PREFERENCES: \"{wishes}\". You MUST absolutely integrate these specific wishes, companions, items, mechanics, or starting conditions into the game's world description and chapter objective specifications.";
+        state.modelState.promptAiBookGenRules = "\nCRITICAL RULES:\n1. All narrative text in the generated JSON (title, world, plot descriptions, startPrompt) MUST be written strictly in the language: '{language}'.\n2. Your response must be ONLY valid JSON content. Do not include any explanations, markdown formatting, preamble, or extra text. Output only the pure JSON structure.\n\nStory text:\n{content}";
+        state.modelState.promptAiTranslator = "You are a professional translator. Respond ONLY with the requested translation, absolutely no conversational text, formatting, or XML/options tags.";
+        state.modelState.promptAiLocalizer = "You are a professional software localizer. Translate all values in the provided JSON to the requested language. Return ONLY valid JSON, with absolutely no markdown, comments, formatting, or options tags.";
+        state.modelState.promptAiSummarizer = "You are a professional summarizing assistant. Summarize the text as requested. Do NOT output any options tags, XML, or choice suggestions.";
+        state.modelState.promptAiLanguageNormalizer = "You are a standard language name normalizer. Return only the single-word English name of the language, with no other text, options, or tags.";
+        state.modelState.promptAiBookBlueprintGen = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game outline in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST include exactly between 2 and 4 choices at the very end of startPrompt using XML-like option tags in the target language. Example: 'Story narration.\\\\n\\\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}\n\n- Number of chapters constraint: generate exactly {total_chapters} logical sequential chapter titles outline matching the story arc.\n\nYour response must be ONLY valid JSON content. Output only the pure JSON structure.";
+        state.modelState.promptAiBookBlockHydration = "You are an AI interactive game book generator. Your task is to write detailed descriptions and objectives for a specific block of chapters in the game book outline. You are given the game world lore, the full list of planned chapter titles, and the detailed descriptions of the immediately preceding block of chapters for narrative continuity. You must output a JSON object containing the detailed description and objectives for each chapter in the requested block range. The output JSON MUST conform to the following schema:\n{\n    \"plot\": [\n        {\n            \"chapter\": [Chapter Number],\n            \"title\": \"[Chapter Title]\",\n            \"description\": \"[Detailed description of what the player must achieve in this chapter, characters to meet, items to find, and dangers to avoid. 2-3 sentences]\"\n        }\n    ]\n}\n\nGame World: {world}\n\nFull Chapter Outline: {outline}\n\nPrevious Block Details: {previous_details}\n\nYOUR TASK: Generate detailed descriptions strictly for chapters from {start_chapter} to {end_chapter}.\n\nCRITICAL RULES:\n1. All narration and descriptions inside JSON MUST be strictly written in the language: '{language}'.\n2. Your response must be ONLY valid JSON content. Output only the pure JSON structure.";
+        state.modelState.promptAiSummaryCompressor = "You are a professional editor. Your task is to combine and compress multiple sequential chapter summaries into a single, cohesive, and extremely concise paragraph (at most 3-4 sentences) that highlights the most important plot events, character progress, and key items discovered. Write strictly in the target language: '{language}'.";
+        state.modelState.uiChaptersRangeLabel = "Chapters {range}";
+        
         state.localizedUi.clear();
+        std::vector<std::string> keys = {
+            "apikey_back", "apikey_guide", "apikey_placeholder", "apikey_select_prompt", "apikey_select_title",
+            "book_detected", "btn_choose_another_book", "btn_force_next_chapter", "btn_go_to_epilogue",
+            "btn_home", "btn_no", "btn_restart_adventure", "btn_restart_chapter", "btn_select_file",
+            "btn_yes", "continue_title", "death_title", "err_ai_gen", "err_file_not_found",
+            "game_input_placeholder", "game_thinking_placeholder", "generating_desc", "generating_title",
+            "header_chapter", "header_epilogue", "header_of", "lang_input_placeholder", "load_prompt",
+            "load_title", "pacing_critical_title", "pacing_rule_early", "pacing_rule_limit", "pacing_rule_mid",
+            "pacing_turn_status", "prompt_restart_chapter", "setup_back_to_step1", "setup_fid_preset1",
+            "setup_fid_preset2", "setup_genre_preset1", "setup_genre_preset2", "setup_genre_preset3",
+            "setup_genre_preset4", "setup_genre_preset5", "setup_input_placeholder", "setup_len_preset1",
+            "setup_len_preset2", "setup_len_preset3", "setup_len_preset4", "setup_len_preset5",
+            "setup_step1_desc", "setup_step1_title", "setup_step2_desc", "setup_step2_title",
+            "setup_step3_desc", "setup_step3_title", "setup_step4_desc", "setup_step4_title",
+            "setup_welcome", "setup_wishes_done", "status_ai", "status_api_error", "status_chapters",
+            "status_done", "status_init", "status_retry", "status_validation", "victory_title"
+        };
+        for (const auto& k : keys) {
+            state.localizedUi[k] = GetUiText(k);
+        }
+        
         state.uiLocalized = true;
         GameState tempState = state.modelState;
+        
+        // Write the English options.json to disk without AI involvement
+        nlohmann::json cacheJson;
+        cacheJson["language"] = "English";
+        cacheJson["transitionPrefix"] = "Go to Chapter ";
+        cacheJson["pacing_forced_conclusion_prompt"] = state.modelState.pacingForcedConclusionPrompt;
+        cacheJson["prompt_game_world_header"] = state.modelState.promptGameWorldHeader;
+        cacheJson["prompt_game_state_header"] = state.modelState.promptGameStateHeader;
+        cacheJson["prompt_current_chapter_label"] = state.modelState.promptCurrentChapterLabel;
+        cacheJson["prompt_previous_chapters_header"] = state.modelState.promptPreviousChaptersHeader;
+        cacheJson["prompt_chapter_summary_item"] = state.modelState.promptChapterSummaryItem;
+        cacheJson["prompt_chapter_details_header"] = state.modelState.promptChapterDetailsHeader;
+        cacheJson["prompt_ai_rules_header"] = state.modelState.promptAiRulesHeader;
+        cacheJson["prompt_ai_rule_options_format"] = state.modelState.promptAiRuleOptionsFormat;
+        cacheJson["prompt_ai_rule_chapter_transition"] = state.modelState.promptAiRuleChapterTransition;
+        cacheJson["prompt_ai_rule_language_enforcement"] = state.modelState.promptAiRuleLanguageEnforcement;
+        cacheJson["prompt_ai_final_chapter_warning"] = state.modelState.promptAiFinalChapterWarning;
+        cacheJson["prompt_ai_epilogue_writer"] = state.modelState.promptAiEpilogueWriter;
+        cacheJson["prompt_ai_book_generator"] = state.modelState.promptAiBookGenerator;
+        cacheJson["prompt_ai_book_gen_length"] = state.modelState.promptAiBookGenLength;
+        cacheJson["prompt_ai_book_gen_length_default"] = state.modelState.promptAiBookGenLengthDefault;
+        cacheJson["prompt_ai_book_gen_genre"] = state.modelState.promptAiBookGenGenre;
+        cacheJson["prompt_ai_book_gen_fidelity"] = state.modelState.promptAiBookGenFidelity;
+        cacheJson["prompt_ai_book_gen_custom"] = state.modelState.promptAiBookGenCustom;
+        cacheJson["prompt_ai_book_gen_rules"] = state.modelState.promptAiBookGenRules;
+        cacheJson["prompt_ai_translator"] = state.modelState.promptAiTranslator;
+        cacheJson["prompt_ai_localizer"] = state.modelState.promptAiLocalizer;
+        cacheJson["prompt_ai_summarizer"] = state.modelState.promptAiSummarizer;
+        cacheJson["prompt_ai_language_normalizer"] = state.modelState.promptAiLanguageNormalizer;
+        cacheJson["prompt_ai_book_blueprint_gen"] = state.modelState.promptAiBookBlueprintGen;
+        cacheJson["prompt_ai_book_block_hydration"] = state.modelState.promptAiBookBlockHydration;
+        cacheJson["prompt_ai_summary_compressor"] = state.modelState.promptAiSummaryCompressor;
+        cacheJson["ui_chapters_range_label"] = state.modelState.uiChaptersRangeLabel;
+        
+        nlohmann::json phrasesObj = nlohmann::json::object();
+        for (const auto& pair : state.localizedUi) {
+            phrasesObj[pair.first] = pair.second;
+        }
+        cacheJson["phrases"] = phrasesObj;
         state.mutex.unlock();
         
         UpdateSystemPrompt(tempState, state.aiClient.get());
+        
+        std::ofstream cacheOut("options.json");
+        if (cacheOut.is_open()) {
+            std::string serialized = cacheJson.dump(4);
+            cacheOut << serialized;
+            cacheOut.close();
+            std::cout << "[Localization] Saved English translations to options.json cache." << std::endl;
+            EmscriptenSyncFS();
+            EmscriptenHostWrite("options.json", serialized);
+        }
+        
+        std::ifstream parentSettings("../settings.json");
+        if (parentSettings.is_open()) {
+            parentSettings.close();
+            std::ofstream parentCacheOut("../options.json");
+            if (parentCacheOut.is_open()) {
+                parentCacheOut << cacheJson.dump(4);
+                parentCacheOut.close();
+                std::cout << "[Localization] Saved synchronized options.json copy to parent directory." << std::endl;
+            }
+        }
+        
         std::cout << "[Localization] English language fast-path: UI localization configured instantly." << std::endl;
         return;
     }
@@ -1344,7 +1656,7 @@ void TriggerUiLocalization() {
                                  "  \"btn_no\": \"2. No, start a new book\",\n"
                                  "  \"load_title\": \"LOAD NEW BOOK\",\n"
                                  "  \"load_prompt\": \"Click below to select a book file, or drag-and-drop it:\",\n"
-                                 "  \"btn_select_file\": \"Choose Book File (.txt, .epub, .docx, .mobi, .fb2)\",\n"
+                                 "  \"btn_select_file\": \"Choose Book file\",\n"
                                  "  \"generating_title\": \"AI IS WEAVING THE GAME...\",\n"
                                  "  \"generating_desc\": \"Please wait. The AI is reading the text, creating chapters, and setting up the game world...\",\n"
                                  "  \"err_file_not_found\": \"Error: File not found or could not be opened!\",\n"
@@ -1507,9 +1819,12 @@ void TriggerUiLocalization() {
         // Write options.json to disk
         std::ofstream cacheOut("options.json");
         if (cacheOut.is_open()) {
-            cacheOut << cacheJson.dump(4);
+            std::string serialized = cacheJson.dump(4);
+            cacheOut << serialized;
             cacheOut.close();
             std::cout << "[Localization] Saved new translations to options.json cache." << std::endl;
+            EmscriptenSyncFS();
+            EmscriptenHostWrite("options.json", serialized);
         }
         
         // Keep parent copy synchronized
@@ -1568,7 +1883,7 @@ inline std::string GetUiText(const std::string& key) {
     if (key == "btn_no") return "2. No, start a new book";
     if (key == "load_title") return "LOAD NEW BOOK";
     if (key == "load_prompt") return "Click below to select a book file, or drag-and-drop it:";
-    if (key == "btn_select_file") return "Choose Book File (.txt, .epub, .docx, .mobi, .fb2)";
+    if (key == "btn_select_file") return "Choose Book file";
     if (key == "generating_title") return "AI IS WEAVING THE GAME...";
     if (key == "generating_desc") return "Please wait. The AI is reading the text, creating chapters, and setting up the game world...";
     if (key == "err_file_not_found") return "Error: File not found or could not be opened!";
@@ -1801,10 +2116,19 @@ std::string GetSystemFontPath() {
 
 void ApplyFontScale() {
     std::string fontPath = GetSystemFontPath();
-    int baseTitle = 24;
-    int baseMessage = 18;
-    int baseUI = 16;
-    int baseSmallUI = 13;
+    // Base font sizes reduced by 15%
+    int baseTitle = 20;
+    int baseMessage = 15;
+    int baseUI = 14;
+    int baseSmallUI = 11;
+    
+    if (IsMobile()) {
+        // Upper row is increased even more for clear readability on high-DPI mobile screens (reduced by 15%)
+        baseTitle = 58;
+        baseMessage = 46;
+        baseUI = 62;
+        baseSmallUI = 46;
+    }
     
     int titleSize = std::max(12, baseTitle + state.fontSizeOffset);
     int messageSize = std::max(10, baseMessage + state.fontSizeOffset);
@@ -1815,6 +2139,25 @@ void ApplyFontScale() {
     state.fontMessage.reset(TTF_OpenFont(fontPath.c_str(), messageSize));
     state.fontUI.reset(TTF_OpenFont(fontPath.c_str(), uiSize));
     state.fontSmallUI.reset(TTF_OpenFont(fontPath.c_str(), smallUiSize));
+    
+    // Scale all fonts on startup screens by 20%
+    int titleSizeScaled = std::max(10, (int)(titleSize * 0.8));
+    int uiSizeScaled = std::max(8, (int)(uiSize * 0.8));
+    int smallUiSizeScaled = std::max(6, (int)(smallUiSize * 0.8));
+    state.fontTitleScaled.reset(TTF_OpenFont(fontPath.c_str(), titleSizeScaled));
+    state.fontUIScaled.reset(TTF_OpenFont(fontPath.c_str(), uiSizeScaled));
+    state.fontSmallUIScaled.reset(TTF_OpenFont(fontPath.c_str(), smallUiSizeScaled));
+    
+    // Dedicated option fonts (2.5x larger on mobile to fit the enlarged 220px height buttons) (reduced by 15%)
+    int optionUiSize = IsMobile() ? std::max(16, 51 + state.fontSizeOffset) : uiSize;
+    int optionSmallUiSize = IsMobile() ? std::max(12, 41 + state.fontSizeOffset) : smallUiSize;
+    
+    state.fontOptionUI.reset(TTF_OpenFont(fontPath.c_str(), optionUiSize));
+    state.fontOptionSmallUI.reset(TTF_OpenFont(fontPath.c_str(), optionSmallUiSize));
+    
+    // Death button font size is doubled on both desktop and mobile (2x on mobile = 200)
+    int deathSize = IsMobile() ? std::max(20, 200 + state.fontSizeOffset) : std::max(10, 24 + state.fontSizeOffset);
+    state.fontDeathBtn.reset(TTF_OpenFont(fontPath.c_str(), deathSize));
     
     SyncModelToUi();
 }
@@ -1953,6 +2296,8 @@ void RestartAdventure() {
 }
 
 void SubmitInputText() {
+    state.editingGameplayInput = false;
+    SDL_StopTextInput();
     if (state.appState == APP_STATE_SETUP) {
         if (!state.inputText.empty()) {
             std::string inputVal = state.inputText;
@@ -1998,12 +2343,22 @@ void InitAdventureSetup(const std::string& filePath) {
         std::string ext = BookConverter::GetExt(filePath);
         if (ext != ".txt" && ext != ".json") {
             std::cout << "[BookConverter] Converting " << ext << " file: " << filePath << std::endl;
-            std::string tmpPath = BookConverter::ConvertBookToTempTxt(filePath);
+            std::string tempDir = "";
+#if defined(__ANDROID__)
+            const char* extStorage = SDL_AndroidGetExternalStoragePath();
+            if (extStorage) tempDir = extStorage;
+#endif
+            std::string tmpPath = BookConverter::ConvertBookToTempTxt(filePath, tempDir);
             if (!tmpPath.empty()) {
                 std::cout << "[BookConverter] Conversion successful -> " << tmpPath << std::endl;
                 actualFilePath = tmpPath;
             } else {
                 std::cerr << "[BookConverter] Conversion failed for: " << filePath << std::endl;
+                state.mutex.lock();
+                state.fileLoadError = "Failed to convert book. Format may be unsupported on Android.";
+                state.appState = APP_STATE_ENTER_TXT_PATH;
+                state.mutex.unlock();
+                return;
             }
         }
     }
@@ -2190,6 +2545,13 @@ void StartBookGeneration(const std::string& filePath) {
                 state.generationProgress = progress;
                 state.generationStatus = currentStatus;
                 state.mutex.unlock();
+                
+#ifdef __EMSCRIPTEN__
+                // Draw current frame and process events
+                MainIteration();
+                // Yield to the browser event loop for 1ms
+                emscripten_sleep(1);
+#endif
             };
             
             std::string outError = "";
@@ -2962,7 +3324,7 @@ void ConsumeApiResponse() {
             
             // Offer "Повторить запрос" retry card
             state.modelState.pendingNextChapter = -1;
-            state.modelState.activeChoices = { "Повторить запрос" };
+            state.modelState.activeChoices = { "Retry request" };
             SyncModelToUi();
             state.mutex.unlock();
             return;
@@ -3279,7 +3641,7 @@ void ConsumeApiResponse() {
 // Main Frame Loop Execution
 void MainIteration() {
     // Ensure SDL text input state matches gameplay/editing requirements
-    bool wantTextInput = (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingBookPath || state.editingApiKey);
+    bool wantTextInput = (state.editingLanguage || state.editingBookPath || state.editingApiKey || state.editingGameplayInput);
     if (wantTextInput && !SDL_IsTextInputActive()) {
         SDL_StartTextInput();
     } else if (!wantTextInput && SDL_IsTextInputActive()) {
@@ -3302,38 +3664,86 @@ void MainIteration() {
     if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage || state.editingApiKey) {
         if (!state.uiActiveChoices.empty()) {
             int n = state.uiActiveChoices.size();
-            int cardH = 45;
-            int verticalSpacing = 8;
+            int cardH = LAYOUT_CHOICE_H();
+            int verticalSpacing = LAYOUT_CHOICE_SPACING();
             optionsAreaH = n * cardH + (n + 1) * verticalSpacing;
         }
-        footerH = 60;
+        footerH = LAYOUT_FOOTER_H();
     }
     int headerH = 0;
     if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage) {
-        headerH = 42;
+        headerH = LAYOUT_HEADER_H();
     }
     int viewportH = WINDOW_HEIGHT - (optionsAreaH + footerH + headerH);
+    
+    static float lastFingerY = -1.0f;
+    static float fingerStartX = 0.0f;
+    static float fingerStartY = 0.0f;
+    static bool fingerIsDragging = false;
+    static Uint32 fingerDownTime = 0;
     
     // 2. Process keyboard & mouse inputs
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_FINGERDOWN) {
-            SDL_Event fakeMouseEvent = {};
-            fakeMouseEvent.type = SDL_MOUSEBUTTONDOWN;
-            fakeMouseEvent.button.button = SDL_BUTTON_LEFT;
-            fakeMouseEvent.button.state = SDL_PRESSED;
-            fakeMouseEvent.button.x = (int)(event.tfinger.x * WINDOW_WIDTH);
-            fakeMouseEvent.button.y = (int)(event.tfinger.y * WINDOW_HEIGHT);
-            SDL_PushEvent(&fakeMouseEvent);
+            lastFingerY = event.tfinger.y;
+            fingerStartX = event.tfinger.x;
+            fingerStartY = event.tfinger.y;
+            fingerIsDragging = false;
+            fingerDownTime = SDL_GetTicks();
             continue;
         } else if (event.type == SDL_FINGERUP) {
-            SDL_Event fakeMouseEvent = {};
-            fakeMouseEvent.type = SDL_MOUSEBUTTONUP;
-            fakeMouseEvent.button.button = SDL_BUTTON_LEFT;
-            fakeMouseEvent.button.state = SDL_RELEASED;
-            fakeMouseEvent.button.x = (int)(event.tfinger.x * WINDOW_WIDTH);
-            fakeMouseEvent.button.y = (int)(event.tfinger.y * WINDOW_HEIGHT);
-            SDL_PushEvent(&fakeMouseEvent);
+            lastFingerY = -1.0f;
+            Uint32 duration = SDL_GetTicks() - fingerDownTime;
+            if (!fingerIsDragging && duration < 350) {
+                SDL_Event fakeMouseDown = {};
+                fakeMouseDown.type = SDL_MOUSEBUTTONDOWN;
+                fakeMouseDown.button.button = SDL_BUTTON_LEFT;
+                fakeMouseDown.button.state = SDL_PRESSED;
+                fakeMouseDown.button.x = (int)(event.tfinger.x * WINDOW_WIDTH);
+                fakeMouseDown.button.y = (int)(event.tfinger.y * WINDOW_HEIGHT);
+                SDL_PushEvent(&fakeMouseDown);
+                
+                SDL_Event fakeMouseUp = {};
+                fakeMouseUp.type = SDL_MOUSEBUTTONUP;
+                fakeMouseUp.button.button = SDL_BUTTON_LEFT;
+                fakeMouseUp.button.state = SDL_RELEASED;
+                fakeMouseUp.button.x = (int)(event.tfinger.x * WINDOW_WIDTH);
+                fakeMouseUp.button.y = (int)(event.tfinger.y * WINDOW_HEIGHT);
+                SDL_PushEvent(&fakeMouseUp);
+            }
+            continue;
+        } else if (event.type == SDL_FINGERMOTION) {
+            float dx = event.tfinger.x - fingerStartX;
+            float dy = event.tfinger.y - fingerStartY;
+            if (std::abs(dx) > 0.025f || std::abs(dy) > 0.025f) {
+                fingerIsDragging = true;
+            }
+            
+            if (lastFingerY >= 0.0f) {
+                float fdy = (event.tfinger.y - lastFingerY) * WINDOW_HEIGHT;
+                int dragDelta = (int)fdy;
+                if (dragDelta != 0) {
+                    if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
+                        state.scrollOffset -= dragDelta;
+                        if (state.scrollOffset < 0) state.scrollOffset = 0;
+                        if (state.scrollOffset > state.maxScrollOffset) state.scrollOffset = state.maxScrollOffset;
+                    } else if (state.appState == APP_STATE_SELECT_AI) {
+                        state.aiSelectScrollOffset -= dragDelta;
+                        if (state.aiSelectScrollOffset < 0) state.aiSelectScrollOffset = 0;
+                        if (state.aiSelectScrollOffset > state.aiSelectMaxScroll) state.aiSelectScrollOffset = state.aiSelectMaxScroll;
+                    } else if (state.appState == APP_STATE_SELECT_BOOK) {
+                        state.bookSelectScrollOffset -= dragDelta;
+                        if (state.bookSelectScrollOffset < 0) state.bookSelectScrollOffset = 0;
+                        if (state.bookSelectScrollOffset > state.bookSelectMaxScroll) state.bookSelectScrollOffset = state.bookSelectMaxScroll;
+                    } else if (state.appState == APP_STATE_SELECT_LANGUAGE) {
+                        state.langSelectScrollOffset -= dragDelta;
+                        if (state.langSelectScrollOffset < 0) state.langSelectScrollOffset = 0;
+                        if (state.langSelectScrollOffset > state.langSelectMaxScroll) state.langSelectScrollOffset = state.langSelectMaxScroll;
+                    }
+                    lastFingerY = event.tfinger.y;
+                }
+            }
             continue;
         }
         
@@ -3346,7 +3756,7 @@ void MainIteration() {
                 SDL_RenderSetLogicalSize(state.renderer.get(), WINDOW_WIDTH, WINDOW_HEIGHT);
                 int hH = 0;
                 if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP || state.editingLanguage) {
-                    hH = 42;
+                    hH = LAYOUT_HEADER_H();
                 }
                 viewportH = WINDOW_HEIGHT - (optionsAreaH + footerH + hH);
                 state.mutex.lock();
@@ -3601,8 +4011,19 @@ void MainIteration() {
                 state.bookSelectScrollOffset -= event.wheel.y * 25;
                 if (state.bookSelectScrollOffset < 0) state.bookSelectScrollOffset = 0;
                 if (state.bookSelectScrollOffset > state.bookSelectMaxScroll) state.bookSelectScrollOffset = state.bookSelectMaxScroll;
+            } else if (state.appState == APP_STATE_SELECT_LANGUAGE) {
+                // Smooth vertical select language scrollbox
+                state.langSelectScrollOffset -= event.wheel.y * 25;
+                if (state.langSelectScrollOffset < 0) state.langSelectScrollOffset = 0;
+                if (state.langSelectScrollOffset > state.langSelectMaxScroll) state.langSelectScrollOffset = state.langSelectMaxScroll;
             }
         } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+            Uint32 now = SDL_GetTicks();
+            if (now - state.lastClickTime < 300) { // 300 ms debounce to prevent mobile click-through
+                continue;
+            }
+            state.lastClickTime = now;
+            
             state.mutex.lock();
             bool isLoc = !state.uiLocalized;
             state.mutex.unlock();
@@ -3679,9 +4100,9 @@ void MainIteration() {
             if (state.appState == APP_STATE_ASK_CONTINUE || state.appState == APP_STATE_ENTER_TXT_PATH) {
                 if (mx >= state.langBtnRect.x && mx <= (state.langBtnRect.x + state.langBtnRect.w) &&
                     my >= state.langBtnRect.y && my <= (state.langBtnRect.y + state.langBtnRect.h)) {
-                    state.editingLanguage = true;
-                    state.inputText = state.gameLanguage;
-                    SDL_StartTextInput();
+                    state.previousAppState = state.appState;
+                    state.appState = APP_STATE_SELECT_LANGUAGE;
+                    state.langSelectScrollOffset = 0;
                     continue; // Skip screen specific actions
                 } else if (mx >= state.aiBtnRect.x && mx <= (state.aiBtnRect.x + state.aiBtnRect.w) &&
                            my >= state.aiBtnRect.y && my <= (state.aiBtnRect.y + state.aiBtnRect.h)) {
@@ -3709,46 +4130,83 @@ void MainIteration() {
                     continue; // Skip other actions while editing/just finished
                 }
             } else if (state.appState == APP_STATE_SELECT_AI) {
-                int cardW = 600;
-                int cardH = 440;
+                int cardW = LAYOUT_CARD_W();
+                int cardH = LAYOUT_CARD_H(state.appState);
                 int cardX = (WINDOW_WIDTH - cardW) / 2;
                 int cardY = (WINDOW_HEIGHT - cardH) / 2;
-                int startBtnY = cardY + 130;
-                int btnSpacing = 55;
+                
+                int startBtnY = IsMobile() ? cardY + 220 : cardY + 130;
+                int btnSpacing = IsMobile() ? 120 : 55;
+                int btnW = IsMobile() ? 820 : 500;
+                int btnH = IsMobile() ? 100 : 45;
+                int btnX = IsMobile() ? cardX + 70 : cardX + 50;
                 
                 bool modelClicked = false;
-                if (my >= cardY + 130 && my <= cardY + 340) {
+                if (my >= cardY + (IsMobile() ? 220 : 130) && my <= cardY + (IsMobile() ? 620 : 340)) {
                     for (size_t i = 0; i < state.availableAiModels.size(); i++) {
-                        SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.aiSelectScrollOffset, 500, 45 };
+                        SDL_Rect btnRect = { btnX, startBtnY + (int)i * btnSpacing - state.aiSelectScrollOffset, btnW, btnH };
                         if (mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
                             my >= btnRect.y && my <= (btnRect.y + btnRect.h)) {
                             state.selectedAiFilename = state.availableAiModels[i].filename;
-                            std::string existingKey = "";
-                            std::ifstream f(state.selectedAiFilename);
-                            if (!f.is_open()) {
-                                f.open("../" + state.selectedAiFilename);
-                            }
-                            if (f.is_open()) {
-                                try {
-                                    nlohmann::json j;
-                                    f >> j;
-                                    if (j.contains("apiKey") && j["apiKey"].is_string()) {
-                                        existingKey = j["apiKey"].get<std::string>();
+                            if (IsMobile()) {
+                                std::string apiKey = "";
+                                if (SDL_HasClipboardText()) {
+                                    char* clip = SDL_GetClipboardText();
+                                    if (clip) {
+                                        apiKey = Trim(std::string(clip));
+                                        SDL_free(clip);
                                     }
-                                } catch (...) {}
-                                f.close();
+                                }
+                                if (apiKey.empty()) {
+                                    std::ifstream f(state.selectedAiFilename);
+                                    if (!f.is_open()) {
+                                        f.open("../" + state.selectedAiFilename);
+                                    }
+                                    if (f.is_open()) {
+                                        try {
+                                            nlohmann::json j;
+                                            f >> j;
+                                            if (j.contains("apiKey") && j["apiKey"].is_string()) {
+                                                apiKey = j["apiKey"].get<std::string>();
+                                            }
+                                        } catch (...) {}
+                                        f.close();
+                                    }
+                                } else {
+                                    SaveApiKeyToModelJson(state.selectedAiFilename, apiKey);
+                                }
+                                ReloadSettingsAndReinit(state.selectedAiFilename);
+                                state.appState = state.previousAppState;
+                                modelClicked = true;
+                                break;
+                            } else {
+                                std::string existingKey = "";
+                                std::ifstream f(state.selectedAiFilename);
+                                if (!f.is_open()) {
+                                    f.open("../" + state.selectedAiFilename);
+                                }
+                                if (f.is_open()) {
+                                    try {
+                                        nlohmann::json j;
+                                        f >> j;
+                                        if (j.contains("apiKey") && j["apiKey"].is_string()) {
+                                            existingKey = j["apiKey"].get<std::string>();
+                                        }
+                                    } catch (...) {}
+                                    f.close();
+                                }
+                                state.editingApiKey = true;
+                                state.inputText = existingKey;
+                                SDL_StartTextInput();
+                                modelClicked = true;
+                                break;
                             }
-                            state.editingApiKey = true;
-                            state.inputText = existingKey;
-                            SDL_StartTextInput();
-                            modelClicked = true;
-                            break;
                         }
                     }
                 }
                 
                 if (!modelClicked) {
-                    SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
+                    SDL_Rect backBtnRect = { btnX, IsMobile() ? cardY + 680 : cardY + 365, btnW, btnH };
                     if (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
                         my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h)) {
                         state.appState = state.previousAppState;
@@ -3801,6 +4259,7 @@ void MainIteration() {
                     state.uiMessages.clear();
                     state.uiActiveChoices.clear();
                     state.mutex.unlock();
+                    ScanAvailableNBooks();
                     state.appState = APP_STATE_ENTER_TXT_PATH;
                 }
             } else if (state.appState == APP_STATE_ENTER_TXT_PATH) {
@@ -3811,28 +4270,74 @@ void MainIteration() {
                     if (!path.empty()) {
                         InitAdventureSetup(path);
                     }
+                } else {
+                    for (size_t i = 0; i < state.availableNBooks.size(); i++) {
+                        const auto& rect = state.availableNBooks[i].rect;
+                        if (mx >= rect.x && mx <= (rect.x + rect.w) &&
+                            my >= rect.y && my <= (rect.y + rect.h)) {
+                            InitAdventureSetup(state.availableNBooks[i].path);
+                            break;
+                        }
+                    }
                 }
             } else if (state.appState == APP_STATE_SELECT_BOOK) {
-                int cardX = WINDOW_WIDTH / 2 - 300;
-                int cardY = WINDOW_HEIGHT / 2 - 220;
+                int cardW = LAYOUT_CARD_W();
+                int cardH = LAYOUT_CARD_H(state.appState);
+                int cardX = (WINDOW_WIDTH - cardW) / 2;
+                int cardY = (WINDOW_HEIGHT - cardH) / 2;
+                
+                int btnW = IsMobile() ? 820 : 500;
+                int btnH = IsMobile() ? 100 : 45;
+                int btnX = IsMobile() ? cardX + 70 : cardX + 50;
+                int startBtnY = IsMobile() ? cardY + 220 : cardY + 130;
+                int btnSpacing = IsMobile() ? 120 : 55;
                 
                 // Back button click
-                SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
+                SDL_Rect backBtnRect = { btnX, IsMobile() ? cardY + 680 : cardY + 365, btnW, btnH };
                 if (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
                     my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h)) {
+                    ScanAvailableNBooks();
                     state.appState = APP_STATE_ENTER_TXT_PATH;
                 }
                 
                 // Scrollable book buttons click
-                int startBtnY = cardY + 130;
-                int btnSpacing = 55;
                 for (size_t i = 0; i < state.availableBooks.size(); i++) {
-                    SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.bookSelectScrollOffset, 500, 45 };
-                    if (my >= cardY + 130 && my <= cardY + 340 &&
+                    SDL_Rect btnRect = { btnX, startBtnY + (int)i * btnSpacing - state.bookSelectScrollOffset, btnW, btnH };
+                    if (my >= cardY + (IsMobile() ? 220 : 130) && my <= cardY + (IsMobile() ? 620 : 340) &&
                         mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
                         my >= btnRect.y && my <= (btnRect.y + btnRect.h)) {
                         std::string path = state.availableBooks[i].path;
                         InitAdventureSetup(path);
+                        break;
+                    }
+                }
+            } else if (state.appState == APP_STATE_SELECT_LANGUAGE) {
+                int cardW = LAYOUT_CARD_W();
+                int cardH = LAYOUT_CARD_H(state.appState);
+                int cardX = (WINDOW_WIDTH - cardW) / 2;
+                int cardY = (WINDOW_HEIGHT - cardH) / 2;
+                
+                int btnW = IsMobile() ? 820 : 500;
+                int btnH = IsMobile() ? 100 : 45;
+                int btnX = IsMobile() ? cardX + 70 : cardX + 50;
+                int startBtnY = IsMobile() ? cardY + 220 : cardY + 130;
+                int btnSpacing = IsMobile() ? 120 : 55;
+                
+                // Back button click
+                SDL_Rect backBtnRect = { btnX, IsMobile() ? cardY + 680 : cardY + 365, btnW, btnH };
+                if (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
+                    my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h)) {
+                    state.appState = state.previousAppState;
+                }
+                
+                // Scrollable language buttons click
+                for (size_t i = 0; i < state.availableLanguages.size(); i++) {
+                    SDL_Rect btnRect = { btnX, startBtnY + (int)i * btnSpacing - state.langSelectScrollOffset, btnW, btnH };
+                    if (my >= cardY + (IsMobile() ? 220 : 130) && my <= cardY + (IsMobile() ? 620 : 340) &&
+                        mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
+                        my >= btnRect.y && my <= (btnRect.y + btnRect.h)) {
+                        ChangeGameLanguage(state.availableLanguages[i]);
+                        state.appState = state.previousAppState;
                         break;
                     }
                 }
@@ -3903,16 +4408,18 @@ void MainIteration() {
                     if (IsBookValid("book.json")) {
                         state.appState = APP_STATE_ASK_CONTINUE;
                     } else {
+                        ScanAvailableNBooks();
                         state.appState = APP_STATE_ENTER_TXT_PATH;
                     }
                     continue; // Skip further event processing
                 }
 
+                headerH = LAYOUT_HEADER_H();
                 if (state.modelState.gameWon) {
-                    if (my >= 42 && mx >= state.victoryBtnRect.x && mx <= (state.victoryBtnRect.x + state.victoryBtnRect.w) &&
+                    if (my >= headerH && mx >= state.victoryBtnRect.x && mx <= (state.victoryBtnRect.x + state.victoryBtnRect.w) &&
                         my >= state.victoryBtnRect.y && my <= (state.victoryBtnRect.y + state.victoryBtnRect.h)) {
                         RestartAdventure();
-                    } else if (my >= 42 && mx >= state.victoryBtnRect2.x && mx <= (state.victoryBtnRect2.x + state.victoryBtnRect2.w) &&
+                    } else if (my >= headerH && mx >= state.victoryBtnRect2.x && mx <= (state.victoryBtnRect2.x + state.victoryBtnRect2.w) &&
                                my >= state.victoryBtnRect2.y && my <= (state.victoryBtnRect2.y + state.victoryBtnRect2.h)) {
                         std::remove("save.json");
                         std::remove("../save.json");
@@ -3926,10 +4433,11 @@ void MainIteration() {
                         state.uiMessages.clear();
                         state.uiActiveChoices.clear();
                         state.mutex.unlock();
+                        ScanAvailableNBooks();
                         state.appState = APP_STATE_ENTER_TXT_PATH;
                     }
                 } else if (state.modelState.gameOver) {
-                    if (my >= 42 && mx >= state.deathBtnRect.x && mx <= (state.deathBtnRect.x + state.deathBtnRect.w) &&
+                    if (my >= headerH && mx >= state.deathBtnRect.x && mx <= (state.deathBtnRect.x + state.deathBtnRect.w) &&
                         my >= state.deathBtnRect.y && my <= (state.deathBtnRect.y + state.deathBtnRect.h)) {
                         state.modelState.gameOver = false;
                         state.modelState.messages.clear();
@@ -3947,7 +4455,19 @@ void MainIteration() {
                                my >= state.confirmBtnRect.y && my <= (state.confirmBtnRect.y + state.confirmBtnRect.h)) {
                         SubmitInputText();
                     } else {
-                        // Check dynamic card hitboxes
+                        // Check if they clicked inside the text input bar
+                        int footerH = LAYOUT_FOOTER_H();
+                        int barLeft = 70;
+                        int barWidth = state.editingApiKey ? WINDOW_WIDTH - 190 : WINDOW_WIDTH - 140;
+                        if (mx >= barLeft && mx <= (barLeft + barWidth) &&
+                            my >= (WINDOW_HEIGHT - footerH + 10) && my <= (WINDOW_HEIGHT - footerH + 50)) {
+                            state.editingGameplayInput = true;
+                            SDL_StartTextInput();
+                        } else {
+                            state.editingGameplayInput = false;
+                            SDL_StopTextInput();
+                            
+                            // Check dynamic card hitboxes
                         state.mutex.lock();
                         bool cardClicked = false;
                         std::string clickedText = "";
@@ -3988,26 +4508,29 @@ void MainIteration() {
             }
         }
     }
+}
     
     // 3. Clear canvas with dark slate blue HSL background
     SDL_SetRenderDrawColor(state.renderer.get(), 18, 18, 26, 255);
     SDL_RenderClear(state.renderer.get());
     
+    headerH = LAYOUT_HEADER_H();
+    
     // Render Neon blue layout guidelines
     SDL_SetRenderDrawColor(state.renderer.get(), 0, 192, 255, 12);
     for (int x = 0; x < WINDOW_WIDTH; x += 40) {
-        SDL_RenderDrawLine(state.renderer.get(), x, 42, x, 42 + viewportH);
+        SDL_RenderDrawLine(state.renderer.get(), x, headerH, x, headerH + viewportH);
     }
-    for (int y = 42; y < 42 + viewportH; y += 40) {
+    for (int y = headerH; y < headerH + viewportH; y += 40) {
         SDL_RenderDrawLine(state.renderer.get(), 0, y, WINDOW_WIDTH, y);
     }
     
     if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
         // 4. Render Scrollable dialogue bubbles
-        SDL_Rect clipRect = { 0, 42, WINDOW_WIDTH, viewportH };
+        SDL_Rect clipRect = { 0, headerH, WINDOW_WIDTH, viewportH };
         SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
         
-        int bubbleY = 42 + 20 - state.scrollOffset;
+        int bubbleY = headerH + 20 - state.scrollOffset;
         int lineH = SafeFontHeight(state.fontMessage.get(), 18);
         
         state.mutex.lock();
@@ -4066,12 +4589,12 @@ void MainIteration() {
             SDL_GetMouseState(&mx, &my);
             
             bool hovered1 = false;
-            if (my >= 42 && my < 42 + viewportH) {
+            if (my >= headerH && my < headerH + viewportH) {
                 hovered1 = (mx >= btnRect1.x && mx <= (btnRect1.x + btnRect1.w) &&
                             my >= btnRect1.y && my <= (btnRect1.y + btnRect1.h));
             }
             bool hovered2 = false;
-            if (my >= 42 && my < 42 + viewportH) {
+            if (my >= headerH && my < headerH + viewportH) {
                 hovered2 = (mx >= btnRect2.x && mx <= (btnRect2.x + btnRect2.w) &&
                             my >= btnRect2.y && my <= (btnRect2.y + btnRect2.h));
             }
@@ -4103,14 +4626,14 @@ void MainIteration() {
             
             textY += titleH + 15;
             
-            // Dynamic retry button below the header
-            SDL_Rect btnRect = { WINDOW_WIDTH / 2 - 180, textY, 360, 48 };
+             // Dynamic retry button below the header (doubled height 192 and slightly wider 760 on mobile)
+            SDL_Rect btnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH / 2 - 380, textY, 760, 192 } : SDL_Rect{ WINDOW_WIDTH / 2 - 180, textY, 360, 48 };
             state.deathBtnRect = btnRect;
             
             int mx, my;
             SDL_GetMouseState(&mx, &my);
             bool hovered = false;
-            if (my >= 42 && my < 42 + viewportH) {
+            if (my >= headerH && my < headerH + viewportH) {
                 hovered = (mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
                            my >= btnRect.y && my <= (btnRect.y + btnRect.h));
             }
@@ -4119,13 +4642,13 @@ void MainIteration() {
             SDL_Color txtColor = hovered ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 255, 150, 150, 255 };
             
             DrawRoundedRect(state.renderer.get(), btnRect, 8, cardColor);
-            RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("btn_restart_chapter"), btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, txtColor, true);
+            RenderText(state.renderer.get(), state.fontDeathBtn.get(), GetUiText("btn_restart_chapter"), btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + (IsMobile() ? 24 : 8), txtColor, true);
             
             bubbleY += titleH + 15 + btnRect.h + 25;
         }
         
         // Update maximum vertical offset scroll bounds
-        int totalContentHeight = bubbleY + state.scrollOffset - 62;
+        int totalContentHeight = bubbleY + state.scrollOffset - (headerH + 20);
         if (totalContentHeight > viewportH) {
             state.maxScrollOffset = totalContentHeight - viewportH;
         } else {
@@ -4141,15 +4664,16 @@ void MainIteration() {
         SDL_RenderSetClipRect(state.renderer.get(), nullptr);
 
         // 1. Render Top Header bar background
-        SDL_Rect headerBg = { 0, 0, WINDOW_WIDTH, 42 };
+        headerH = LAYOUT_HEADER_H();
+        SDL_Rect headerBg = { 0, 0, WINDOW_WIDTH, headerH };
         SDL_SetRenderDrawColor(state.renderer.get(), 20, 20, 28, 255);
         SDL_RenderFillRect(state.renderer.get(), &headerBg);
         
         // Render subtle bottom border for the header
         SDL_SetRenderDrawColor(state.renderer.get(), 40, 40, 60, 255);
-        SDL_RenderDrawLine(state.renderer.get(), 0, 41, WINDOW_WIDTH, 41);
+        SDL_RenderDrawLine(state.renderer.get(), 0, headerH - 1, WINDOW_WIDTH, headerH - 1);
         
-        // 1.5. Render "Chapter N of Y" or "Epilogue" next to the Home button
+        // 1.5. Render "Chapter N of Y" or "Epilogue" left-aligned at same x coordinate of removed book title
         std::string labelText = "";
         int currentChapter = state.modelState.currentChapter;
         int totalChapters = state.modelState.chapters.size();
@@ -4164,41 +4688,14 @@ void MainIteration() {
         SDL_Color labelCol = { 150, 150, 180, 255 }; // Premium soft slate blue/gray
         int labelTw = 0, labelTh = 0;
         SafeSizeUTF8(state.fontSmallUI.get(), labelText, &labelTw, &labelTh);
-        int labelX = (WINDOW_WIDTH - 160) - labelTw / 2;
-        RenderText(state.renderer.get(), state.fontSmallUI.get(), labelText, labelX, 21, labelCol, true);
-
-        // Render Book Title in header left-aligned immediately after font buttons (ending at 76px)
-        if (!state.modelState.bookTitle.empty()) {
-            SDL_Color titleCol = { 200, 200, 220, 255 };
-            std::string headerTitle = state.modelState.bookTitle;
-            
-            // Starts at 90px (font buttons end at 76px + 14px padding)
-            // Left edge of Chapter label is labelX - labelTw / 2 = WINDOW_WIDTH - 160 - labelTw
-            // We want at least 20px padding before the Chapter label
-            int leftLimit = 90;
-            int rightLimit = (WINDOW_WIDTH - 160 - labelTw) - 20;
-            int maxTitleW = rightLimit - leftLimit;
-            if (maxTitleW < 100) maxTitleW = 100;
-            
-            int tw = 0, th = 0;
-            SafeSizeUTF8(state.fontUI.get(), headerTitle, &tw, &th);
-            if (tw > maxTitleW) {
-                while (!headerTitle.empty() && tw > maxTitleW - 20) {
-                    PopUTF8Character(headerTitle);
-                    std::string testStr = headerTitle + "...";
-                    SafeSizeUTF8(state.fontUI.get(), testStr, &tw, &th);
-                }
-                headerTitle += "...";
-            }
-            
-            // Render left-aligned, vertically centered at 21px
-            RenderText(state.renderer.get(), state.fontUI.get(), headerTitle, 
-                       leftLimit, 21 - th / 2, titleCol, false);
-        }
+        
+        int headerCenterY = headerH / 2;
+        int leftLimit = IsMobile() ? 275 : 90;
+        RenderText(state.renderer.get(), state.fontSmallUI.get(), labelText, leftLimit, headerCenterY - labelTh / 2, labelCol, false);
 
         // 1.8. Render font increase/decrease scaling buttons on top-left of header
-        state.fontIncBtnRect = { 10, 6, 30, 30 };
-        state.fontDecBtnRect = { 46, 6, 30, 30 };
+        state.fontIncBtnRect = IsMobile() ? SDL_Rect{ 33, 20, 102, 102 } : SDL_Rect{ 10, 6, 30, 30 };
+        state.fontDecBtnRect = IsMobile() ? SDL_Rect{ 153, 20, 102, 102 } : SDL_Rect{ 46, 6, 30, 30 };
         
         int mx, my;
         SDL_GetMouseState(&mx, &my);
@@ -4240,7 +4737,7 @@ void MainIteration() {
                    decTxtCol, true);
 
         // 2. Render Home / Main Menu button at top-right
-        state.homeBtnRect = { WINDOW_WIDTH - 140, 6, 120, 30 };
+        state.homeBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 438, 20, 405, 102 } : SDL_Rect{ WINDOW_WIDTH - 140, 6, 120, 30 };
         SDL_GetMouseState(&mx, &my);
         bool hoverHome = (mx >= state.homeBtnRect.x && mx <= state.homeBtnRect.x + state.homeBtnRect.w &&
                           my >= state.homeBtnRect.y && my <= state.homeBtnRect.y + state.homeBtnRect.h);
@@ -4258,7 +4755,7 @@ void MainIteration() {
         
         RenderText(state.renderer.get(), state.fontSmallUI.get(), GetUiText("btn_home"), 
                    state.homeBtnRect.x + state.homeBtnRect.w / 2, 
-                   state.homeBtnRect.y + state.homeBtnRect.h / 2 + 4, 
+                   state.homeBtnRect.y + state.homeBtnRect.h / 2 + (IsMobile() ? 6 : 4), 
                    homeTxtCol, true);
         
         // 3. Render dynamic scrolls bar indicator if overflowed
@@ -4266,9 +4763,9 @@ void MainIteration() {
             int barH = viewportH - 40;
             int scrollBarH = (viewportH * barH) / totalContentHeight;
             if (scrollBarH < 20) scrollBarH = 20;
-            int scrollBarY = 62 + (state.scrollOffset * (barH - scrollBarH)) / state.maxScrollOffset;
+            int scrollBarY = headerH + 20 + (state.scrollOffset * (barH - scrollBarH)) / state.maxScrollOffset;
             
-            SDL_Rect barBg = { WINDOW_WIDTH - 8, 62, 4, barH };
+            SDL_Rect barBg = { WINDOW_WIDTH - 8, headerH + 20, 4, barH };
             SDL_SetRenderDrawColor(state.renderer.get(), 30, 30, 40, 100);
             SDL_RenderFillRect(state.renderer.get(), &barBg);
             
@@ -4279,7 +4776,7 @@ void MainIteration() {
         
         // 5. Render dynamic choice cards shelf
         if (optionsAreaH > 0) {
-            SDL_Rect shelfBg = { 0, 42 + viewportH, WINDOW_WIDTH, optionsAreaH };
+            SDL_Rect shelfBg = { 0, headerH + viewportH, WINDOW_WIDTH, optionsAreaH };
             SDL_SetRenderDrawColor(state.renderer.get(), 24, 24, 34, 255);
             SDL_RenderFillRect(state.renderer.get(), &shelfBg);
             
@@ -4289,9 +4786,12 @@ void MainIteration() {
             for (int i = 0; i < (int)state.uiActiveChoices.size(); i++) {
                 const auto& opt = state.uiActiveChoices[i];
                 
-                // Hover highlight check
-                bool hovered = (mx >= opt.rect.x && mx <= (opt.rect.x + opt.rect.w) &&
-                                my >= opt.rect.y && my <= (opt.rect.y + opt.rect.h));
+                // Hover highlight check (disabled on mobile touchscreen to prevent stuck selection colors)
+                bool hovered = false;
+                if (!IsMobile()) {
+                    hovered = (mx >= opt.rect.x && mx <= (opt.rect.x + opt.rect.w) &&
+                               my >= opt.rect.y && my <= (opt.rect.y + opt.rect.h));
+                }
                 
                 SDL_Color cardColor = hovered ? SDL_Color{ 45, 98, 172, 255 } : SDL_Color{ 34, 34, 46, 255 };
                 SDL_Color txtColor = hovered ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
@@ -4300,15 +4800,15 @@ void MainIteration() {
                 
                 // Wrap and render the option text prefixing it with the index number
                 std::string displayText = std::to_string(i + 1) + ". " + opt.text;
-                std::vector<std::string> optLines = WrapText(state.fontUI.get(), displayText, opt.rect.w - 16);
+                std::vector<std::string> optLines = WrapText(state.fontOptionUI.get(), displayText, opt.rect.w - 16);
                 
-                TTF_Font* chosenFont = state.fontUI.get();
+                TTF_Font* chosenFont = state.fontOptionUI.get();
                 int fontH = SafeFontHeight(chosenFont, 16);
                 
-                // If the text wrapped to more than 2 lines, fall back to fontSmallUI to prevent overflow!
+                // If the text wrapped to more than 2 lines, fall back to fontOptionSmallUI to prevent overflow!
                 if (optLines.size() > 2) {
-                    optLines = WrapText(state.fontSmallUI.get(), displayText, opt.rect.w - 16);
-                    chosenFont = state.fontSmallUI.get();
+                    optLines = WrapText(state.fontOptionSmallUI.get(), displayText, opt.rect.w - 16);
+                    chosenFont = state.fontOptionSmallUI.get();
                     fontH = SafeFontHeight(chosenFont, 13);
                 }
                 
@@ -4336,11 +4836,8 @@ void MainIteration() {
         }
     } else {
         // Draw elegant centered startup cards (made taller to accommodate language selection and error messages)
-        int cardW = 600;
-        int cardH = 440;
-        if (!state.fileLoadError.empty()) {
-            cardH = 490;
-        }
+        int cardW = LAYOUT_CARD_W();
+        int cardH = LAYOUT_CARD_H(state.appState);
         int cardX = (WINDOW_WIDTH - cardW) / 2;
         int cardY = (WINDOW_HEIGHT - cardH) / 2;
         
@@ -4350,21 +4847,35 @@ void MainIteration() {
         int mx, my;
         SDL_GetMouseState(&mx, &my);
         
+        TTF_Font* fontTitleActive = state.fontTitle.get();
+        TTF_Font* fontUIActive = state.fontUI.get();
+        TTF_Font* fontSmallUIActive = state.fontSmallUI.get();
+        
+        if (IsMobile() && (state.appState == APP_STATE_ASK_CONTINUE || 
+            state.appState == APP_STATE_ENTER_TXT_PATH || 
+            state.appState == APP_STATE_SELECT_BOOK ||
+            state.appState == APP_STATE_SELECT_AI ||
+            state.appState == APP_STATE_SELECT_LANGUAGE)) {
+            fontTitleActive = state.fontTitleScaled.get();
+            fontUIActive = state.fontUIScaled.get();
+            fontSmallUIActive = state.fontSmallUIScaled.get();
+        }
+        
         if (state.appState == APP_STATE_ASK_CONTINUE) {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 0, 192, 255, 180 }); // Cyan border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
             
-            RenderText(state.renderer.get(), state.fontTitle.get(), GetUiText("continue_title"), WINDOW_WIDTH / 2, cardY + 40, SDL_Color{ 255, 215, 0, 255 }, true);
-            RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("book_detected"), WINDOW_WIDTH / 2, cardY + 85, SDL_Color{ 200, 200, 220, 255 }, true);
+            RenderText(state.renderer.get(), fontTitleActive, GetUiText("continue_title"), WINDOW_WIDTH / 2, cardY + (IsMobile() ? 60 : 40), SDL_Color{ 255, 215, 0, 255 }, true);
+            RenderText(state.renderer.get(), fontUIActive, GetUiText("book_detected"), WINDOW_WIDTH / 2, cardY + (IsMobile() ? 128 : 85), SDL_Color{ 200, 200, 220, 255 }, true);
             // Render book title dynamically adapting to card width to prevent text overflow
             std::string displayTitle = state.modelState.bookTitle;
             int tw = 0, th = 0;
-            if (SafeSizeUTF8(state.fontTitle.get(), displayTitle, &tw, &th) == 0) {
-                if (tw > cardW - 60) { // If it's wider than 540px
-                    // Try with the UI font (which is smaller, 16px instead of 24px)
+            if (SafeSizeUTF8(fontTitleActive, displayTitle, &tw, &th) == 0) {
+                if (tw > cardW - 60) { // If it's wider than 540px (desktop) or 840px (mobile)
+                    // Try with the UI font (which is smaller)
                     int tw2 = 0, th2 = 0;
-                    if (SafeSizeUTF8(state.fontUI.get(), displayTitle, &tw2, &th2) == 0 && tw2 <= cardW - 60) {
-                        RenderText(state.renderer.get(), state.fontUI.get(), displayTitle, WINDOW_WIDTH / 2, cardY + 115, SDL_Color{ 0, 255, 220, 255 }, true);
+                    if (SafeSizeUTF8(fontUIActive, displayTitle, &tw2, &th2) == 0 && tw2 <= cardW - 60) {
+                        RenderText(state.renderer.get(), fontUIActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
                     } else {
                         // Still too long. Truncate it character by character with "..."
                         std::string truncated = displayTitle;
@@ -4372,23 +4883,23 @@ void MainIteration() {
                             PopUTF8Character(truncated);
                             std::string testStr = truncated + "...";
                             int tw3 = 0, th3 = 0;
-                            if (SafeSizeUTF8(state.fontUI.get(), testStr, &tw3, &th3) == 0 && tw3 <= cardW - 60) {
+                            if (SafeSizeUTF8(fontUIActive, testStr, &tw3, &th3) == 0 && tw3 <= cardW - 60) {
                                 displayTitle = testStr;
                                 break;
                             }
                         }
-                        RenderText(state.renderer.get(), state.fontUI.get(), displayTitle, WINDOW_WIDTH / 2, cardY + 115, SDL_Color{ 0, 255, 220, 255 }, true);
+                        RenderText(state.renderer.get(), fontUIActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
                     }
                 } else {
-                    RenderText(state.renderer.get(), state.fontTitle.get(), displayTitle, WINDOW_WIDTH / 2, cardY + 115, SDL_Color{ 0, 255, 220, 255 }, true);
+                    RenderText(state.renderer.get(), fontTitleActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
                 }
             } else {
-                RenderText(state.renderer.get(), state.fontTitle.get(), displayTitle, WINDOW_WIDTH / 2, cardY + 115, SDL_Color{ 0, 255, 220, 255 }, true);
+                RenderText(state.renderer.get(), fontTitleActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
             }
             
             // Buttons shifted slightly upwards to fit the bottom selector
-            state.customBtnRect1 = { cardX + 50, cardY + 170, 500, 45 };
-            state.customBtnRect2 = { cardX + 50, cardY + 230, 500, 45 };
+            state.customBtnRect1 = IsMobile() ? SDL_Rect{ cardX + 70, cardY + 270, 820, 100 } : SDL_Rect{ cardX + 50, cardY + 170, 500, 45 };
+            state.customBtnRect2 = IsMobile() ? SDL_Rect{ cardX + 70, cardY + 395, 820, 100 } : SDL_Rect{ cardX + 50, cardY + 230, 500, 45 };
             
             bool hoveredYes = (mx >= state.customBtnRect1.x && mx <= (state.customBtnRect1.x + state.customBtnRect1.w) &&
                                my >= state.customBtnRect1.y && my <= (state.customBtnRect1.y + state.customBtnRect1.h));
@@ -4404,18 +4915,17 @@ void MainIteration() {
             DrawRoundedRect(state.renderer.get(), state.customBtnRect1, 8, colorYes);
             DrawRoundedRect(state.renderer.get(), state.customBtnRect2, 8, colorNo);
             
-            RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("btn_yes"), state.customBtnRect1.x + state.customBtnRect1.w / 2, state.customBtnRect1.y + state.customBtnRect1.h / 2 + 8, textColYes, true);
-            RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("btn_no"), state.customBtnRect2.x + state.customBtnRect2.w / 2, state.customBtnRect2.y + state.customBtnRect2.h / 2 + 8, textColNo, true);
+            RenderText(state.renderer.get(), fontUIActive, GetUiText("btn_yes"), state.customBtnRect1.x + state.customBtnRect1.w / 2, state.customBtnRect1.y + state.customBtnRect1.h / 2 + 8, textColYes, true);
+            RenderText(state.renderer.get(), fontUIActive, GetUiText("btn_no"), state.customBtnRect2.x + state.customBtnRect2.w / 2, state.customBtnRect2.y + state.customBtnRect2.h / 2 + 8, textColNo, true);
             
         } else if (state.appState == APP_STATE_ENTER_TXT_PATH) {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 142, 60, 220, 180 }); // Purple border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
             
-            RenderText(state.renderer.get(), state.fontTitle.get(), GetUiText("load_title"), WINDOW_WIDTH / 2, cardY + 40, SDL_Color{ 255, 80, 180, 255 }, true);
-            RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("load_prompt"), WINDOW_WIDTH / 2, cardY + 90, SDL_Color{ 200, 200, 220, 255 }, true);
+            RenderText(state.renderer.get(), fontTitleActive, GetUiText("load_title"), WINDOW_WIDTH / 2, cardY + (IsMobile() ? 60 : 40), SDL_Color{ 255, 80, 180, 255 }, true);
             
             // Choose file button (slightly shorter height to be sleek)
-            state.customBtnRect2 = { cardX + 100, cardY + 150, 400, 55 };
+            state.customBtnRect2 = IsMobile() ? SDL_Rect{ cardX + 70, cardY + 270, 820, 110 } : SDL_Rect{ cardX + 100, cardY + 130, 400, 55 };
             bool hoveredBtn = (mx >= state.customBtnRect2.x && mx <= (state.customBtnRect2.x + state.customBtnRect2.w) &&
                                my >= state.customBtnRect2.y && my <= (state.customBtnRect2.y + state.customBtnRect2.h));
             
@@ -4423,27 +4933,51 @@ void MainIteration() {
             SDL_Color textColBtn = hoveredBtn ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
             
             DrawRoundedRect(state.renderer.get(), state.customBtnRect2, 8, colorBtn);
-            RenderText(state.renderer.get(), state.fontUI.get(), GetUiText("btn_select_file"), state.customBtnRect2.x + state.customBtnRect2.w / 2, state.customBtnRect2.y + state.customBtnRect2.h / 2 + 8, textColBtn, true);
+            RenderText(state.renderer.get(), fontUIActive, GetUiText("btn_select_file"), state.customBtnRect2.x + state.customBtnRect2.w / 2, state.customBtnRect2.y + state.customBtnRect2.h / 2 + 8, textColBtn, true);
             
-            // Drag & drop hint
-            std::string dropHint = IsRussianLanguage(state.gameLanguage) ? "[ Перетащите файл книги в окно ]" : "[ Drag & drop book file anywhere ]";
-            RenderText(state.renderer.get(), state.fontSmallUI.get(), dropHint, WINDOW_WIDTH / 2, cardY + 235, SDL_Color{ 120, 120, 150, 255 }, true);
+            // Render NBook buttons dynamically under the "Choose File" button
+            int nbookCount = state.availableNBooks.size();
+            int nbookStartY = IsMobile() ? cardY + 400 : cardY + 200;
+            int nbookBtnH = IsMobile() ? 80 : 35;
+            int nbookSpacing = IsMobile() ? 20 : 8;
+            for (int i = 0; i < nbookCount; i++) {
+                state.availableNBooks[i].rect = IsMobile() ? SDL_Rect{ cardX + 70, nbookStartY + i * (nbookBtnH + nbookSpacing), 820, nbookBtnH }
+                                                           : SDL_Rect{ cardX + 100, nbookStartY + i * (nbookBtnH + nbookSpacing), 400, nbookBtnH };
+                
+                const auto& rect = state.availableNBooks[i].rect;
+                bool hoveredN = (mx >= rect.x && mx <= (rect.x + rect.w) &&
+                                 my >= rect.y && my <= (rect.y + rect.h));
+                
+                SDL_Color colorN = hoveredN ? SDL_Color{ 45, 172, 98, 255 } : SDL_Color{ 34, 46, 34, 255 };
+                SDL_Color textColN = hoveredN ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 100, 255, 100, 255 };
+                
+                DrawRoundedRect(state.renderer.get(), rect, 8, colorN);
+                RenderText(state.renderer.get(), fontUIActive, state.availableNBooks[i].displayName, rect.x + rect.w / 2, rect.y + rect.h / 2 + (IsMobile() ? 12 : 6), textColN, true);
+            }
+            
+            int nbooksTotalH = nbookCount * (nbookBtnH + nbookSpacing);
             
             // Error handling (wrapped and shifted down to fit beautifully inside the card)
             if (!state.fileLoadError.empty()) {
-                std::vector<std::string> errLines = WrapText(state.fontSmallUI.get(), state.fileLoadError, cardW - 60);
-                int errY = cardY + 360;
+                std::vector<std::string> errLines = WrapText(fontSmallUIActive, state.fileLoadError, cardW - 60);
+                int errY = nbookCount > 0 ? nbookStartY + nbooksTotalH + (IsMobile() ? 30 : 15) : cardY + (IsMobile() ? 440 : 235);
                 for (const auto& line : errLines) {
-                    RenderText(state.renderer.get(), state.fontSmallUI.get(), line, WINDOW_WIDTH / 2, errY, SDL_Color{ 255, 80, 80, 255 }, true);
-                    errY += 18;
+                    RenderText(state.renderer.get(), fontSmallUIActive, line, WINDOW_WIDTH / 2, errY, SDL_Color{ 255, 80, 80, 255 }, true);
+                    errY += IsMobile() ? 30 : 18;
                 }
             }
         }
         
         // Draw elegant inline language and AI selector bars side-by-side at the bottom of startup cards
         if (state.appState == APP_STATE_ASK_CONTINUE || state.appState == APP_STATE_ENTER_TXT_PATH) {
-            state.langBtnRect = { cardX + 50, cardY + 300, 240, 45 };
-            state.aiBtnRect = { cardX + 310, cardY + 300, 240, 45 };
+            int btnY;
+            if (state.appState == APP_STATE_ENTER_TXT_PATH) {
+                btnY = IsMobile() ? cardY + 730 : cardY + 435;
+            } else {
+                btnY = IsMobile() ? cardY + 540 : cardY + 300;
+            }
+            state.langBtnRect = IsMobile() ? SDL_Rect{ cardX + 70, btnY, 400, 100 } : SDL_Rect{ cardX + 50, btnY, 240, 45 };
+            state.aiBtnRect = IsMobile() ? SDL_Rect{ cardX + 490, btnY, 400, 100 } : SDL_Rect{ cardX + 310, btnY, 240, 45 };
             
             bool hoveredLang = (mx >= state.langBtnRect.x && mx <= (state.langBtnRect.x + state.langBtnRect.w) &&
                                 my >= state.langBtnRect.y && my <= (state.langBtnRect.y + state.langBtnRect.h));
@@ -4460,14 +4994,14 @@ void MainIteration() {
                 DrawRoundedRect(state.renderer.get(), state.langBtnRect, 7, bgCol);
                 
                 std::string btnText = GetUiText("lang_btn_prefix") + state.gameLanguage;
-                RenderText(state.renderer.get(), state.fontUI.get(), btnText, state.langBtnRect.x + state.langBtnRect.w / 2, state.langBtnRect.y + state.langBtnRect.h / 2 + 8, SDL_Color{ 255, 255, 255, 255 }, true);
+                RenderText(state.renderer.get(), fontUIActive, btnText, state.langBtnRect.x + state.langBtnRect.w / 2, state.langBtnRect.y + state.langBtnRect.h / 2 + 8, SDL_Color{ 255, 255, 255, 255 }, true);
             } else {
                 DrawRoundedRect(state.renderer.get(), state.langBtnRect, 8, SDL_Color{ 0, 255, 220, 255 });
                 SDL_Rect innerInput = { state.langBtnRect.x + 2, state.langBtnRect.y + 2, state.langBtnRect.w - 4, state.langBtnRect.h - 4 };
                 DrawRoundedRect(state.renderer.get(), innerInput, 7, SDL_Color{ 10, 10, 15, 255 });
                 
                 std::string btnText = GetUiText("lang_btn_prefix") + state.inputText;
-                RenderText(state.renderer.get(), state.fontUI.get(), btnText, state.langBtnRect.x + state.langBtnRect.w / 2, state.langBtnRect.y + state.langBtnRect.h / 2 + 8, SDL_Color{ 0, 255, 220, 255 }, true);
+                RenderText(state.renderer.get(), fontUIActive, btnText, state.langBtnRect.x + state.langBtnRect.w / 2, state.langBtnRect.y + state.langBtnRect.h / 2 + 8, SDL_Color{ 0, 255, 220, 255 }, true);
                 
                 Uint32 pulseTicks = SDL_GetTicks();
                 Uint8 alpha = 130 + 120 * (0.5 + 0.5 * sin(pulseTicks * 0.005));
@@ -4479,7 +5013,8 @@ void MainIteration() {
                 } else if (IsUkrainianLanguage(state.gameLanguage)) {
                     guideText = "[ Використовуйте рядок введення внизу, Esc для скасування ]";
                 }
-                RenderText(state.renderer.get(), state.fontSmallUI.get(), guideText, WINDOW_WIDTH / 2, state.langBtnRect.y + state.langBtnRect.h + 12, guideColor, true);
+                int guideY = IsMobile() ? state.langBtnRect.y - 35 : state.langBtnRect.y - 20;
+                RenderText(state.renderer.get(), fontSmallUIActive, guideText, WINDOW_WIDTH / 2, guideY, guideColor, true);
             }
             
             // Render AI Selector Button
@@ -4499,7 +5034,7 @@ void MainIteration() {
             }
             
             std::string aiBtnText = "AI: " + aiDisplay;
-            RenderText(state.renderer.get(), state.fontUI.get(), aiBtnText, state.aiBtnRect.x + state.aiBtnRect.w / 2, state.aiBtnRect.y + state.aiBtnRect.h / 2 + 8, SDL_Color{ 255, 255, 255, 255 }, true);
+            RenderText(state.renderer.get(), fontUIActive, aiBtnText, state.aiBtnRect.x + state.aiBtnRect.w / 2, state.aiBtnRect.y + state.aiBtnRect.h / 2 + 8, SDL_Color{ 255, 255, 255, 255 }, true);
         } else if (state.appState == APP_STATE_SELECT_AI) {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 0, 255, 220, 180 }); // Cyan border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
@@ -4507,12 +5042,15 @@ void MainIteration() {
             std::string selectTitle = GetUiText("apikey_select_title");
             std::string selectPrompt = GetUiText("apikey_select_prompt");
             
-            RenderText(state.renderer.get(), state.fontTitle.get(), selectTitle, WINDOW_WIDTH / 2, cardY + 40, SDL_Color{ 255, 215, 0, 255 }, true);
-            RenderText(state.renderer.get(), state.fontUI.get(), selectPrompt, WINDOW_WIDTH / 2, cardY + 85, SDL_Color{ 200, 200, 220, 255 }, true);
+            RenderText(state.renderer.get(), fontTitleActive, selectTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 60 : 40), SDL_Color{ 255, 215, 0, 255 }, true);
+            RenderText(state.renderer.get(), fontUIActive, selectPrompt, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 128 : 85), SDL_Color{ 200, 200, 220, 255 }, true);
             
-            int startBtnY = cardY + 130;
-            int btnSpacing = 55;
-            int listH = 210;
+            int btnW = IsMobile() ? 820 : 500;
+            int btnH = IsMobile() ? 100 : 45;
+            int btnX = IsMobile() ? cardX + 70 : cardX + 50;
+            int startBtnY = IsMobile() ? cardY + 220 : cardY + 130;
+            int btnSpacing = IsMobile() ? 120 : 55;
+            int listH = IsMobile() ? 400 : 210;
             
             // Calculate max scroll dynamically
             int totalListH = (int)state.availableAiModels.size() * btnSpacing - 10;
@@ -4522,12 +5060,12 @@ void MainIteration() {
             }
             
             // Set clipping rectangle to allow clean scrolling inside card bounds
-            SDL_Rect clipRect = { cardX + 20, cardY + 130, cardW - 40, listH };
+            SDL_Rect clipRect = { cardX + 20, startBtnY, cardW - 40, listH };
             SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
             
             for (size_t i = 0; i < state.availableAiModels.size(); i++) {
-                SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.aiSelectScrollOffset, 500, 45 };
-                bool hovered = (my >= cardY + 130 && my <= cardY + 340 &&
+                SDL_Rect btnRect = { btnX, startBtnY + (int)i * btnSpacing - state.aiSelectScrollOffset, btnW, btnH };
+                bool hovered = (my >= cardY + (IsMobile() ? 220 : 130) && my <= cardY + (IsMobile() ? 620 : 340) &&
                                 mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
                                 my >= btnRect.y && my <= (btnRect.y + btnRect.h));
                                 
@@ -4546,7 +5084,7 @@ void MainIteration() {
                 DrawRoundedRect(state.renderer.get(), btnRect, 8, btnCol);
                 
                 std::string btnText = std::to_string(i + 1) + ". " + state.availableAiModels[i].modelName + " (" + state.availableAiModels[i].filename + ")";
-                RenderText(state.renderer.get(), state.fontUI.get(), btnText, btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, textCol, true);
+                RenderText(state.renderer.get(), fontUIActive, btnText, btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, textCol, true);
             }
             
             // Clear clipping rectangle to allow rendering buttons outside of it
@@ -4556,13 +5094,13 @@ void MainIteration() {
             if (state.aiSelectMaxScroll > 0) {
                 int scrollBarW = 4;
                 int scrollBarH = (listH * listH) / totalListH;
-                int scrollBarY = cardY + 130 + (state.aiSelectScrollOffset * (listH - scrollBarH)) / state.aiSelectMaxScroll;
+                int scrollBarY = startBtnY + (state.aiSelectScrollOffset * (listH - scrollBarH)) / state.aiSelectMaxScroll;
                 SDL_Rect scrollBar = { cardX + cardW - 15, scrollBarY, scrollBarW, scrollBarH };
                 DrawRoundedRect(state.renderer.get(), scrollBar, 2, SDL_Color{ 0, 192, 255, 180 }); // Cyan scrollbar
             }
             
             // Draw elegant red Back button positioned statically at the bottom
-            SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
+            SDL_Rect backBtnRect = { btnX, IsMobile() ? cardY + 680 : cardY + 365, btnW, btnH };
             bool hoveredBack = (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
                                 my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h));
             SDL_Color backCol = hoveredBack ? SDL_Color{ 172, 45, 98, 255 } : SDL_Color{ 34, 34, 46, 255 };
@@ -4570,7 +5108,7 @@ void MainIteration() {
             
             DrawRoundedRect(state.renderer.get(), backBtnRect, 8, backCol);
             std::string backText = GetUiText("apikey_back");
-            RenderText(state.renderer.get(), state.fontUI.get(), backText, backBtnRect.x + backBtnRect.w / 2, backBtnRect.y + backBtnRect.h / 2 + 8, textColBack, true);
+            RenderText(state.renderer.get(), fontUIActive, backText, backBtnRect.x + backBtnRect.w / 2, backBtnRect.y + backBtnRect.h / 2 + 8, textColBack, true);
             
             if (state.editingApiKey) {
                 Uint32 pulseTicks = SDL_GetTicks();
@@ -4578,21 +5116,24 @@ void MainIteration() {
                 SDL_Color guideColor = { 0, 255, 220, alpha };
                 
                 std::string guideText = GetUiText("apikey_guide");
-                RenderText(state.renderer.get(), state.fontSmallUI.get(), guideText, WINDOW_WIDTH / 2, cardY + cardH + 15, guideColor, true);
+                RenderText(state.renderer.get(), fontSmallUIActive, guideText, WINDOW_WIDTH / 2, cardY + cardH + 15, guideColor, true);
             }
         } else if (state.appState == APP_STATE_SELECT_BOOK) {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 142, 60, 220, 180 }); // Purple border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
             
             std::string selectTitle = IsRussianLanguage(state.gameLanguage) ? "ВЫБОР КНИГИ" : "SELECT BOOK FILE";
-            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите книгу (.txt или .json) для начала приключения:" : "Select a book file (.txt or .json) to start your adventure:";
+            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите книгу" : "Select a book file";
             
-            RenderText(state.renderer.get(), state.fontTitle.get(), selectTitle, WINDOW_WIDTH / 2, cardY + 40, SDL_Color{ 255, 80, 180, 255 }, true);
-            RenderText(state.renderer.get(), state.fontUI.get(), selectPrompt, WINDOW_WIDTH / 2, cardY + 85, SDL_Color{ 200, 200, 220, 255 }, true);
+            RenderText(state.renderer.get(), fontTitleActive, selectTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 60 : 40), SDL_Color{ 255, 80, 180, 255 }, true);
+            RenderText(state.renderer.get(), fontUIActive, selectPrompt, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 128 : 85), SDL_Color{ 200, 200, 220, 255 }, true);
             
-            int startBtnY = cardY + 130;
-            int btnSpacing = 55;
-            int listH = 210;
+            int btnW = IsMobile() ? 820 : 500;
+            int btnH = IsMobile() ? 100 : 45;
+            int btnX = IsMobile() ? cardX + 70 : cardX + 50;
+            int startBtnY = IsMobile() ? cardY + 220 : cardY + 130;
+            int btnSpacing = IsMobile() ? 120 : 55;
+            int listH = IsMobile() ? 400 : 210;
             
             // Calculate max scroll dynamically
             int totalListH = (int)state.availableBooks.size() * btnSpacing - 10;
@@ -4602,15 +5143,15 @@ void MainIteration() {
             }
             
             // Set clipping rectangle to allow clean scrolling inside card bounds
-            SDL_Rect clipRect = { cardX + 20, cardY + 130, cardW - 40, listH };
+            SDL_Rect clipRect = { cardX + 20, startBtnY, cardW - 40, listH };
             SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
             
             if (state.availableBooks.empty()) {
-                RenderText(state.renderer.get(), state.fontUI.get(), "[ No compatible books found in local directory ]", WINDOW_WIDTH / 2, cardY + 180, SDL_Color{ 120, 120, 150, 255 }, true);
+                RenderText(state.renderer.get(), fontUIActive, "[ No compatible books found in local directory ]", WINDOW_WIDTH / 2, cardY + (IsMobile() ? 320 : 180), SDL_Color{ 120, 120, 150, 255 }, true);
             } else {
                 for (size_t i = 0; i < state.availableBooks.size(); i++) {
-                    SDL_Rect btnRect = { cardX + 50, startBtnY + (int)i * btnSpacing - state.bookSelectScrollOffset, 500, 45 };
-                    bool hovered = (my >= cardY + 130 && my <= cardY + 340 &&
+                    SDL_Rect btnRect = { btnX, startBtnY + (int)i * btnSpacing - state.bookSelectScrollOffset, btnW, btnH };
+                    bool hovered = (my >= cardY + (IsMobile() ? 220 : 130) && my <= cardY + (IsMobile() ? 620 : 340) &&
                                     mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
                                     my >= btnRect.y && my <= (btnRect.y + btnRect.h));
                                     
@@ -4620,7 +5161,7 @@ void MainIteration() {
                     DrawRoundedRect(state.renderer.get(), btnRect, 8, btnCol);
                     
                     std::string btnText = std::to_string(i + 1) + ". " + state.availableBooks[i].filename;
-                    RenderText(state.renderer.get(), state.fontUI.get(), btnText, btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, textCol, true);
+                    RenderText(state.renderer.get(), fontUIActive, btnText, btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, textCol, true);
                 }
             }
             
@@ -4631,13 +5172,98 @@ void MainIteration() {
             if (state.bookSelectMaxScroll > 0) {
                 int scrollBarW = 4;
                 int scrollBarH = (listH * listH) / totalListH;
-                int scrollBarY = cardY + 130 + (state.bookSelectScrollOffset * (listH - scrollBarH)) / state.bookSelectMaxScroll;
+                int scrollBarY = startBtnY + (state.bookSelectScrollOffset * (listH - scrollBarH)) / state.bookSelectMaxScroll;
                 SDL_Rect scrollBar = { cardX + cardW - 15, scrollBarY, scrollBarW, scrollBarH };
                 DrawRoundedRect(state.renderer.get(), scrollBar, 2, SDL_Color{ 255, 80, 180, 180 }); // Purple scrollbar
             }
             
             // Draw elegant red Back button positioned statically at the bottom
-            SDL_Rect backBtnRect = { cardX + 50, cardY + 365, 500, 45 };
+            SDL_Rect backBtnRect = { btnX, IsMobile() ? cardY + 680 : cardY + 365, btnW, btnH };
+            bool hoveredBack = (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
+                                my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h));
+                                
+            SDL_Color backCol = hoveredBack ? SDL_Color{ 172, 45, 98, 255 } : SDL_Color{ 34, 34, 46, 255 };
+            SDL_Color textColBack = hoveredBack ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 255, 100, 100, 255 };
+            
+            DrawRoundedRect(state.renderer.get(), backBtnRect, 8, backCol);
+            std::string backText = IsRussianLanguage(state.gameLanguage) ? "Назад" : "Back";
+            RenderText(state.renderer.get(), state.fontUI.get(), backText, backBtnRect.x + backBtnRect.w / 2, backBtnRect.y + backBtnRect.h / 2 + 8, textColBack, true);
+        } else if (state.appState == APP_STATE_SELECT_LANGUAGE) {
+            DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 0, 192, 255, 180 }); // Cyan border
+            DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
+            
+            std::string selectTitle = IsRussianLanguage(state.gameLanguage) ? "ВЫБОР ЯЗЫКА" : "SELECT LANGUAGE";
+            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите язык для ведения истории и интерфейса:" : "Select the target language for story and interface:";
+            
+            RenderText(state.renderer.get(), state.fontTitle.get(), selectTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 60 : 40), SDL_Color{ 255, 215, 0, 255 }, true);
+            RenderText(state.renderer.get(), state.fontUI.get(), selectPrompt, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 128 : 85), SDL_Color{ 200, 200, 220, 255 }, true);
+            
+            int btnW = IsMobile() ? 820 : 500;
+            int btnH = IsMobile() ? 100 : 45;
+            int btnX = IsMobile() ? cardX + 70 : cardX + 50;
+            int startBtnY = IsMobile() ? cardY + 220 : cardY + 130;
+            int btnSpacing = IsMobile() ? 120 : 55;
+            int listH = IsMobile() ? 400 : 210;
+            
+            // Calculate max scroll dynamically
+            int totalListH = (int)state.availableLanguages.size() * btnSpacing - 10;
+            state.langSelectMaxScroll = totalListH > listH ? totalListH - listH : 0;
+            if (state.langSelectScrollOffset > state.langSelectMaxScroll) {
+                state.langSelectScrollOffset = state.langSelectMaxScroll;
+            }
+            
+            // Set clipping rectangle to allow clean scrolling inside card bounds
+            SDL_Rect clipRect = { cardX + 20, startBtnY, cardW - 40, listH };
+            SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
+            
+            for (size_t i = 0; i < state.availableLanguages.size(); i++) {
+                SDL_Rect btnRect = { btnX, startBtnY + (int)i * btnSpacing - state.langSelectScrollOffset, btnW, btnH };
+                bool hovered = (my >= cardY + (IsMobile() ? 220 : 130) && my <= cardY + (IsMobile() ? 620 : 340) &&
+                                mx >= btnRect.x && mx <= (btnRect.x + btnRect.w) &&
+                                my >= btnRect.y && my <= (btnRect.y + btnRect.h));
+                                
+                SDL_Color btnCol = hovered ? SDL_Color{ 45, 98, 172, 255 } : SDL_Color{ 34, 34, 46, 255 };
+                SDL_Color textCol = hovered ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 0, 192, 255, 255 };
+                
+                // Draw elegant outline for currently active language
+                if (state.availableLanguages[i] == state.gameLanguage) {
+                    SDL_Rect outlineRect = { btnRect.x - 2, btnRect.y - 2, btnRect.w + 4, btnRect.h + 4 };
+                    DrawRoundedRect(state.renderer.get(), outlineRect, 8, SDL_Color{ 255, 215, 0, 255 }); // Gold outline
+                }
+                
+                DrawRoundedRect(state.renderer.get(), btnRect, 8, btnCol);
+                
+                std::string btnText = state.availableLanguages[i];
+                if (btnText == "Russian") btnText = "Русский (Russian)";
+                else if (btnText == "English") btnText = "English";
+                else if (btnText == "Ukrainian") btnText = "Українська (Ukrainian)";
+                else if (btnText == "Hebrew") btnText = "עברית (Hebrew)";
+                else if (btnText == "Spanish") btnText = "Español (Spanish)";
+                else if (btnText == "French") btnText = "Français (French)";
+                else if (btnText == "German") btnText = "Deutsch (German)";
+                else if (btnText == "Italian") btnText = "Italiano (Italian)";
+                else if (btnText == "Portuguese") btnText = "Português (Portuguese)";
+                else if (btnText == "Polish") btnText = "Polski (Polish)";
+                else if (btnText == "Dutch") btnText = "Nederlands (Dutch)";
+                else if (btnText == "Turkish") btnText = "Türkçe (Turkish)";
+                
+                RenderText(state.renderer.get(), state.fontUI.get(), btnText, btnRect.x + btnRect.w / 2, btnRect.y + btnRect.h / 2 + 8, textCol, true);
+            }
+            
+            // Clear clipping rectangle
+            SDL_RenderSetClipRect(state.renderer.get(), nullptr);
+            
+            // Render premium scrollbar indicator
+            if (state.langSelectMaxScroll > 0) {
+                int scrollBarW = 4;
+                int scrollBarH = (listH * listH) / totalListH;
+                int scrollBarY = startBtnY + (state.langSelectScrollOffset * (listH - scrollBarH)) / state.langSelectMaxScroll;
+                SDL_Rect scrollBar = { cardX + cardW - 15, scrollBarY, scrollBarW, scrollBarH };
+                DrawRoundedRect(state.renderer.get(), scrollBar, 2, SDL_Color{ 0, 192, 255, 180 }); // Cyan scrollbar
+            }
+            
+            // Draw elegant Back button positioned statically at the bottom
+            SDL_Rect backBtnRect = { btnX, IsMobile() ? cardY + 680 : cardY + 365, btnW, btnH };
             bool hoveredBack = (mx >= backBtnRect.x && mx <= (backBtnRect.x + backBtnRect.w) &&
                                 my >= backBtnRect.y && my <= (backBtnRect.y + backBtnRect.h));
                                 
@@ -4689,30 +5315,40 @@ void MainIteration() {
             DrawRoundedRect(state.renderer.get(), borderRect, 12, SDL_Color{ 0, 192, 255, 180 }); // Cyan border
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
             
-            RenderText(state.renderer.get(), state.fontTitle.get(), GetUiText("generating_title"), WINDOW_WIDTH / 2, cardY + 60, SDL_Color{ 0, 255, 220, 255 }, true);
+            int titleY = IsMobile() ? (cardY + 80) : (cardY + 45);
+            RenderText(state.renderer.get(), state.fontTitleScaled.get(), GetUiText("generating_title"), WINDOW_WIDTH / 2, titleY, SDL_Color{ 0, 255, 220, 255 }, true);
             
-            // Wrap and render the long description text nicely
-            std::vector<std::string> descLines = WrapText(state.fontUI.get(), GetUiText("generating_desc"), 520);
-            int descY = cardY + 110;
+            // Wrap and render the long description text nicely using scaled down UI font to fit
+            int descWrapW = IsMobile() ? (cardW - 120) : 520;
+            int descLineSpacing = IsMobile() ? 52 : 22;
+            std::vector<std::string> descLines = WrapText(state.fontUIScaled.get(), GetUiText("generating_desc"), descWrapW);
+            int descY = IsMobile() ? (cardY + 175) : (cardY + 95);
             for (const auto& line : descLines) {
-                RenderText(state.renderer.get(), state.fontUI.get(), line, WINDOW_WIDTH / 2, descY, SDL_Color{ 180, 180, 200, 255 }, true);
-                descY += 22;
+                RenderText(state.renderer.get(), state.fontUIScaled.get(), line, WINDOW_WIDTH / 2, descY, SDL_Color{ 180, 180, 200, 255 }, true);
+                descY += descLineSpacing;
             }
             
-            // Progress Bar
-            SDL_Rect barOutline = { cardX + 48, cardY + 198, 504, 24 };
-            SDL_Rect barBg = { cardX + 50, cardY + 200, 500, 20 };
-            SDL_Rect barFill = { cardX + 50, cardY + 200, (int)(500 * (state.generationProgress / 100.0)), 20 };
+            // Progress Bar (centered dynamically)
+            int barW = IsMobile() ? (cardW - 160) : 500;
+            int barH = IsMobile() ? 30 : 20;
+            int barX = cardX + (cardW - barW) / 2;
+            int barY = IsMobile() ? (cardY + 450) : (cardY + 215);
+            
+            SDL_Rect barOutline = { barX - 2, barY - 2, barW + 4, barH + 4 };
+            SDL_Rect barBg = { barX, barY, barW, barH };
+            SDL_Rect barFill = { barX, barY, (int)(barW * (state.generationProgress / 100.0)), barH };
             
             DrawRoundedRect(state.renderer.get(), barOutline, 6, SDL_Color{ 0, 192, 255, 150 });
             DrawRoundedRect(state.renderer.get(), barBg, 4, SDL_Color{ 24, 24, 34, 255 });
             DrawRoundedRect(state.renderer.get(), barFill, 4, SDL_Color{ 0, 255, 150, 255 }); // glowing green-cyan progress
             
-            // Percentage
-            RenderText(state.renderer.get(), state.fontUI.get(), std::to_string(state.generationProgress) + "%", WINDOW_WIDTH / 2, cardY + 185, SDL_Color{ 255, 255, 255, 255 }, true);
+            // Percentage (above progress bar)
+            int pctY = IsMobile() ? (cardY + 410) : (cardY + 185);
+            RenderText(state.renderer.get(), state.fontUIScaled.get(), std::to_string(state.generationProgress) + "%", WINDOW_WIDTH / 2, pctY, SDL_Color{ 255, 255, 255, 255 }, true);
             
-            // Status
-            RenderText(state.renderer.get(), state.fontUI.get(), state.generationStatus, WINDOW_WIDTH / 2, cardY + 250, SDL_Color{ 255, 215, 0, 255 }, true);
+            // Status (below progress bar, beautifully aligned)
+            int statusY = IsMobile() ? (cardY + 560) : (cardY + 280);
+            RenderText(state.renderer.get(), state.fontUIScaled.get(), state.generationStatus, WINDOW_WIDTH / 2, statusY, SDL_Color{ 255, 215, 0, 255 }, true);
         }
     }
 
@@ -4723,7 +5359,7 @@ void MainIteration() {
         SDL_RenderFillRect(state.renderer.get(), &footerBg);
         
         // Define clear button geometry
-        state.clearBtnRect = { 20, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+        state.clearBtnRect = IsMobile() ? SDL_Rect{ 20, WINDOW_HEIGHT - footerH + 37, 60, 60 } : SDL_Rect{ 20, WINDOW_HEIGHT - footerH + 10, 40, 40 };
         
         // Handle clear button hover styling
         int mx, my;
@@ -4746,7 +5382,7 @@ void MainIteration() {
         RenderText(state.renderer.get(), state.fontUI.get(), "X", state.clearBtnRect.x + state.clearBtnRect.w / 2, state.clearBtnRect.y + state.clearBtnRect.h / 2, clearTxtColor, true);
 
         // Define confirm button geometry (right edge has same padding as clear button on the left)
-        state.confirmBtnRect = { WINDOW_WIDTH - 60, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+        state.confirmBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 80, WINDOW_HEIGHT - footerH + 37, 60, 60 } : SDL_Rect{ WINDOW_WIDTH - 60, WINDOW_HEIGHT - footerH + 10, 40, 40 };
         
         // Handle confirm button hover styling
         bool hoverConfirm = (mx >= state.confirmBtnRect.x && mx <= state.confirmBtnRect.x + state.confirmBtnRect.w &&
@@ -4770,11 +5406,11 @@ void MainIteration() {
         SDL_Rect inputBar;
         if (state.editingApiKey) {
             // Define Paste button geometry (after input bar and before confirm button)
-            state.pasteBtnRect = { WINDOW_WIDTH - 110, WINDOW_HEIGHT - footerH + 10, 40, 40 };
-            inputBar = { 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 190, 40 };
+            state.pasteBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 150, WINDOW_HEIGHT - footerH + 37, 60, 60 } : SDL_Rect{ WINDOW_WIDTH - 110, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+            inputBar = IsMobile() ? SDL_Rect{ 90, WINDOW_HEIGHT - footerH + 37, WINDOW_WIDTH - 250, 60 } : SDL_Rect{ 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 190, 40 };
         } else {
             state.pasteBtnRect = { 0, 0, 0, 0 };
-            inputBar = { 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 140, 40 };
+            inputBar = IsMobile() ? SDL_Rect{ 90, WINDOW_HEIGHT - footerH + 37, WINDOW_WIDTH - 180, 60 } : SDL_Rect{ 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 140, 40 };
         }
 
         SDL_Color inputBgColor = { 26, 26, 36, 255 };
@@ -4800,17 +5436,17 @@ void MainIteration() {
             int py = state.pasteBtnRect.y;
             
             // Clipboard board (dark grey)
-            SDL_Rect boardRect = { px + 12, py + 10, 16, 20 };
+            SDL_Rect boardRect = IsMobile() ? SDL_Rect{ px + 18, py + 15, 24, 30 } : SDL_Rect{ px + 12, py + 10, 16, 20 };
             SDL_Color boardColor = { 100, 100, 120, 255 };
             DrawRoundedRect(state.renderer.get(), boardRect, 3, boardColor);
             
             // Paper sheet (white/light grey)
-            SDL_Rect paperRect = { px + 15, py + 14, 10, 13 };
+            SDL_Rect paperRect = IsMobile() ? SDL_Rect{ px + 22, py + 21, 15, 19 } : SDL_Rect{ px + 15, py + 14, 10, 13 };
             SDL_Color paperColor = hoverPaste ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 200, 200, 210, 255 };
             DrawRoundedRect(state.renderer.get(), paperRect, 1, paperColor);
             
             // Metal clip at the top (Cyan highlight)
-            SDL_Rect clipRect = { px + 16, py + 8, 8, 4 };
+            SDL_Rect clipRect = IsMobile() ? SDL_Rect{ px + 24, py + 12, 12, 6 } : SDL_Rect{ px + 16, py + 8, 8, 4 };
             SDL_Color clipColor = hoverPaste ? SDL_Color{ 0, 255, 220, 255 } : SDL_Color{ 0, 192, 255, 255 };
             DrawRoundedRect(state.renderer.get(), clipRect, 1, clipColor);
         }
@@ -4864,20 +5500,10 @@ void MainIteration() {
         }
         
         // Draw input content or standard placeholder
-        if (state.inputText.empty()) {
-            SDL_Color holderColor = { 100, 100, 120, 255 };
-            std::string placeholder = GetUiText("setup_input_placeholder");
-            if (state.editingLanguage) {
-                placeholder = GetUiText("lang_input_placeholder");
-            } else if (state.editingApiKey) {
-                placeholder = GetUiText("apikey_placeholder");
-            } else if (state.appState == APP_STATE_GAMEPLAY) {
-                placeholder = state.aiThinking ? GetUiText("game_thinking_placeholder") : GetUiText("game_input_placeholder");
-            }
-            RenderText(state.renderer.get(), state.fontUI.get(), placeholder, inputBar.x + 12, inputBar.y + 10, holderColor);
-        } else {
+        int textOffsetY = IsMobile() ? 5 : 10;
+        if (!state.inputText.empty()) {
             SDL_Color txtColor = { 255, 255, 255, 255 };
-            RenderText(state.renderer.get(), state.fontUI.get(), visibleText, inputBar.x + 12, inputBar.y + 10, txtColor);
+            RenderText(state.renderer.get(), state.fontUI.get(), visibleText, inputBar.x + 12, inputBar.y + textOffsetY, txtColor);
         }
         
         // Draw pulsing vertical text cursor
@@ -4887,7 +5513,7 @@ void MainIteration() {
                 cursorX = inputBar.x + inputBar.w - 12;
             }
             
-            SDL_Rect textCursor = { cursorX, inputBar.y + 10, 2, 20 };
+            SDL_Rect textCursor = { cursorX, inputBar.y + textOffsetY, 2, IsMobile() ? 30 : 20 };
             SDL_SetRenderDrawColor(state.renderer.get(), 0, 192, 255, 255);
             SDL_RenderFillRect(state.renderer.get(), &textCursor);
         }
@@ -4986,14 +5612,189 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         SDL_free(basePath);
     }
 #endif
+
+#if defined(__ANDROID__)
+    const char* internalPath = SDL_AndroidGetInternalStoragePath();
+    if (internalPath) {
+        try {
+            std::filesystem::create_directories(internalPath);
+        } catch (...) {
+            std::cerr << "[Android] Failed to create internal storage directories: " << internalPath << std::endl;
+        }
+        
+        try {
+            std::filesystem::current_path(internalPath);
+            std::cout << "[Android] Changed process working directory to internal storage: " << internalPath << std::endl;
+        } catch (...) {
+            std::cerr << "[Android] Failed to change current path to internal storage" << std::endl;
+        }
+        
+        // POSIX chdir is necessary for relative standard library file streams to resolve correctly on Android
+        if (chdir(internalPath) == 0) {
+            std::cout << "[Android] POSIX chdir succeeded to internal storage: " << internalPath << std::endl;
+        } else {
+            std::cerr << "[Android] POSIX chdir failed to internal storage" << std::endl;
+        }
+        
+        // Create internal assets directory
+        try {
+            std::filesystem::create_directories(std::string(internalPath) + "/assets");
+        } catch (...) {
+            std::cerr << "[Android] Failed to create internal assets directory" << std::endl;
+        }
+
+        // Copy files from assets to internal storage if missing/updated
+        const std::vector<std::pair<std::string, std::string>> assetsToCopy = {
+            {"book.json", "book.json"},
+            {"settings.json", "settings.json"},
+            {"options.json", "options.json"},
+            {"cacert.pem", "cacert.pem"},
+            {"ai_chatgpt.json", "ai_chatgpt.json"},
+            {"ai_copilot.json", "ai_copilot.json"},
+            {"ai_deepseek.json", "ai_deepseek.json"},
+            {"ai_gemini-advanced-flash.json", "ai_gemini-advanced-flash.json"},
+            {"ai_gemini.json", "ai_gemini.json"},
+            {"ai_puter.json", "ai_puter.json"},
+            {"ai_groq.json", "ai_groq.json"},
+            {"ai_llama.json", "ai_llama.json"},
+            {"ai_lmstudio.json", "ai_lmstudio.json"},
+            {"ai_openai.json", "ai_openai.json"},
+            {"ai_openrouter.json", "ai_openrouter.json"},
+            {"font.ttf", "assets/font.ttf"},
+            {"sound.wav", "assets/sound.wav"},
+            {"logo.png", "assets/logo.png"}
+        };
+        for (const auto& assetPair : assetsToCopy) {
+            const std::string& srcName = assetPair.first;
+            const std::string& destName = assetPair.second;
+            
+            // Do not overwrite existing user configuration files (settings.json and ai_*.json) to preserve saved settings & API keys
+            if ((destName == "settings.json" || destName.rfind("ai_", 0) == 0) && std::filesystem::exists(destName)) {
+                std::cout << "[Android] Configuration file " << destName << " already exists, skipping copy to prevent overwriting settings/API keys." << std::endl;
+                continue;
+            }
+            
+            SDL_RWops* src = SDL_RWFromFile(srcName.c_str(), "rb");
+            if (src) {
+                Sint64 size = SDL_RWsize(src);
+                if (size > 0) {
+                    std::vector<char> buffer(size);
+                    SDL_RWread(src, buffer.data(), 1, size);
+                    SDL_RWclose(src);
+                    
+                    std::ofstream dest(destName, std::ios::binary);
+                    if (dest.is_open()) {
+                        dest.write(buffer.data(), size);
+                        dest.close();
+                        std::cout << "[Android] Successfully copied asset: " << srcName << " to internal storage at " << destName << "." << std::endl;
+                    }
+                } else {
+                    SDL_RWclose(src);
+                }
+            } else {
+                std::cerr << "[Android] Failed to open asset from APK: " << srcName << std::endl;
+            }
+        }
+        
+        if (!std::filesystem::exists("save.json")) {
+            SDL_RWops* src = SDL_RWFromFile("save.json", "rb");
+            if (src) {
+                Sint64 size = SDL_RWsize(src);
+                if (size > 0) {
+                    std::vector<char> buffer(size);
+                    SDL_RWread(src, buffer.data(), 1, size);
+                    SDL_RWclose(src);
+                    
+                    std::ofstream dest("save.json", std::ios::binary);
+                    if (dest.is_open()) {
+                        dest.write(buffer.data(), size);
+                        dest.close();
+                        std::cout << "[Android] Successfully copied initial save.json to internal storage." << std::endl;
+        }
+    }
+#elif defined(__EMSCRIPTEN__)
+    const char* internalPath = "/offline";
+    try {
+        std::filesystem::create_directories(internalPath);
+    } catch (...) {
+        std::cerr << "[Emscripten] Failed to create /offline directory" << std::endl;
+    }
+    
+    if (chdir(internalPath) == 0) {
+        std::cout << "[Emscripten] POSIX chdir succeeded to persistent storage: " << internalPath << std::endl;
+    } else {
+        std::cerr << "[Emscripten] POSIX chdir failed to persistent storage" << std::endl;
+    }
+    
+    // Create assets directory
+    try {
+        std::filesystem::create_directories("assets");
+    } catch (...) {
+        std::cerr << "[Emscripten] Failed to create internal assets directory" << std::endl;
+    }
+
+    // Copy files from MEMFS root to /offline if missing
+    const std::vector<std::pair<std::string, std::string>> emscriptenFilesToCopy = {
+        {"/book.json", "book.json"},
+        {"/settings.json", "settings.json"},
+        {"/options.json", "options.json"},
+        {"/cacert.pem", "cacert.pem"},
+        {"/ai_chatgpt.json", "ai_chatgpt.json"},
+        {"/ai_copilot.json", "ai_copilot.json"},
+        {"/ai_deepseek.json", "ai_deepseek.json"},
+        {"/ai_gemini-advanced-flash.json", "ai_gemini-advanced-flash.json"},
+        {"/ai_gemini.json", "ai_gemini.json"},
+        {"/ai_puter.json", "ai_puter.json"},
+        {"/ai_groq.json", "ai_groq.json"},
+        {"/ai_llama.json", "ai_llama.json"},
+        {"/ai_lmstudio.json", "ai_lmstudio.json"},
+        {"/ai_openai.json", "ai_openai.json"},
+        {"/ai_openrouter.json", "ai_openrouter.json"},
+        {"/assets/font.ttf", "assets/font.ttf"},
+        {"/assets/sound.wav", "assets/sound.wav"},
+        {"/assets/logo.png", "assets/logo.png"}
+    };
+    for (const auto& assetPair : emscriptenFilesToCopy) {
+        const std::string& srcName = assetPair.first;
+        const std::string& destName = assetPair.second;
+        
+        // Do not overwrite existing configuration, save, or options files to preserve user modifications
+        if ((destName == "settings.json" || destName.rfind("ai_", 0) == 0 || destName == "save.json" || destName == "options.json") && std::filesystem::exists(destName)) {
+            std::cout << "[Emscripten] Configuration/Save file " << destName << " already exists, skipping copy." << std::endl;
+            continue;
+        }
+        
+        SDL_RWops* src = SDL_RWFromFile(srcName.c_str(), "rb");
+        if (src) {
+            Sint64 size = SDL_RWsize(src);
+            if (size > 0) {
+                std::vector<char> buffer(size);
+                SDL_RWread(src, buffer.data(), 1, size);
+                SDL_RWclose(src);
+                
+                std::ofstream dest(destName, std::ios::binary);
+                if (dest.is_open()) {
+                    dest.write(buffer.data(), size);
+                    dest.close();
+                    std::cout << "[Emscripten] Successfully copied asset: " << srcName << " to persistent storage at " << destName << "." << std::endl;
+                }
+            } else {
+                SDL_RWclose(src);
+            }
+        } else {
+            std::cerr << "[Emscripten] Failed to open asset from virtual ROM: " << srcName << std::endl;
+        }
+    }
+#endif
+
     // 1. Load settings.json configuration properties
-    std::string aiModel = "ai_gemini.json";
+    std::string aiModel = "ai_puter.json";
     std::string systemPrompt = "";
     int maxRetries = 3;
     int bookRetries = 3;
     int retryDelayMs = 1000;
-    int connectTimeout = 5;
-    int requestTimeout = 15;
+    int connectTimeout = 15;
+    int requestTimeout = 45;
     int maxTurnsForce = 10;
     std::ifstream file("settings.json");
     if (!file.is_open()) {
@@ -5206,7 +6007,11 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     state.modelState.maxTurnsForce = maxTurnsForce;
     
     // Instanciate external AI API client
-    state.aiClient = std::make_unique<AskAiExternal>(aiModel);
+    if (aiModel == "ai_puter.json" || aiModel == "../ai_puter.json") {
+        state.aiClient = std::make_unique<AskAiPuter>(aiModel);
+    } else {
+        state.aiClient = std::make_unique<AskAiExternal>(aiModel);
+    }
     state.aiModelName = aiModel;
     state.aiClient->setRetrySettings(maxRetries, retryDelayMs);
     state.aiClient->setTimeoutSettings(connectTimeout, requestTimeout);
@@ -5249,6 +6054,16 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         SDL_Quit();
         return -1;
     }
+    
+#if defined(__ANDROID__) || defined(__IPHONEOS__) || defined(IOS)
+    SDL_GetWindowSize(state.window.get(), &WINDOW_WIDTH, &WINDOW_HEIGHT);
+    std::cout << "[Mobile] Native window resolution detected: " << WINDOW_WIDTH << "x" << WINDOW_HEIGHT << std::endl;
+#endif
+
+#if defined(__ANDROID__)
+    std::cout << "[Android] Proactively requesting storage permission at startup..." << std::endl;
+    SDL_AndroidRequestPermission("android.permission.READ_EXTERNAL_STORAGE");
+#endif
     
     // 4. Create hardware-accelerated renderer
     state.renderer.reset(SDL_CreateRenderer(state.window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
@@ -5294,9 +6109,11 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         loaded = LoadGame(); // Loads save game if it exists
         state.appState = APP_STATE_ASK_CONTINUE;
     } else {
+        ScanAvailableNBooks();
         state.appState = APP_STATE_ENTER_TXT_PATH;
     }
     
+    ScanAvailableAiModels();
     UpdateSystemPrompt();
     
     // 7. Start main execution thread loop
@@ -5315,6 +6132,12 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     state.fontMessage.reset();
     state.fontUI.reset();
     state.fontSmallUI.reset();
+    state.fontTitleScaled.reset();
+    state.fontUIScaled.reset();
+    state.fontSmallUIScaled.reset();
+    state.fontOptionUI.reset();
+    state.fontOptionSmallUI.reset();
+    state.fontDeathBtn.reset();
     state.soundEffect.reset();
     state.renderer.reset();
     state.window.reset();

@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/CMakeFiles/webview2_sdk-populate"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/CMakeFiles/webview2_sdk-populate.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/CMakeFiles/webview2_sdk-populate-complete.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-build.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-configure.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-download.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-install.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-patch.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-test.rule"
+		},
+		{
+			"file" : "C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"webview2_sdk-populate"
+		],
+		"name" : "webview2_sdk-populate"
+	}
+}

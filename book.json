@@ -2,21 +2,41 @@
     "plot": [
         {
             "chapter": 1,
-            "description": "Ариэль должен начать свой рабочий день, снарядив свой тяжелый рюкзак необходимыми запчастями и совершив утомительный переход через раскаленный город к клиенту. Цель — найти баланс между необходимостью заработать и растущим желанием бросить всё.",
-            "title": "Груз прошлого"
+            "description": "Players begin their journey in Woking, observing a mysterious meteor shower that leads to the discovery of a Martian cylinder. They must gather information from local astronomers and scientists like Ogilvy and Henderson and explore the surrounding fields. Critical decisions involve whether to inform the authorities or to investigate the cylinder on their own. Players may encounter curious onlookers, manage their fear, and deal with the panic as they try to uncover what lies inside the cylinder. The dangers grow as the cylinder begins to open, hinting at the terrifying Martians within.",
+            "title": "The Falling Star"
         },
         {
             "chapter": 2,
-            "description": "Во время работы у клиентки Мирьям Ариэль сталкивается с необычной поломкой, которая намекает на более глубокий заговор в энергетической инфраструктуре города. Ему предстоит решить, стоит ли просто починить устройство или копнуть глубже, рискуя своей безопасностью.",
-            "title": "Сбой в системе"
+            "description": "Continuing the narrative, players must handle the chaos following the opening of the cylinder as the first Martian emerges. The chapter revolves around escaping the devastating heat-ray unleashed on the crowd and finding a way to safety. Players can choose to assist others in their flight or prioritize their survival. They will gather essential items to help with their escape, like food and medical supplies, while learning about the Martians' destructive capabilities.",
+            "title": "First Contact"
         },
         {
             "chapter": 3,
-            "description": "Финальный путь домой превращается в испытание на выносливость. Ариэль должен решить, останется ли он винтиком в системе или найдет способ окончательно вырваться из круга бесконечных ремонтов, совершив решающий шаг к свободе.",
-            "title": "Механическое возмездие"
+            "description": "This chapter places players in a militarily occupied Woking, where they must navigate the town amid rising tension from military forces preparing to confront the Martians. Players will be tasked with making alliances, gathering intelligence about Martian movements, and determining the best path for escape or resistance. The landscape is littered with the remnants of battle and panic, and players must avoid Martian patrols while seeking refuge in a local inn or amongst the ruins of homes.",
+            "title": "Under Siege"
+        },
+        {
+            "chapter": 4,
+            "description": "As urban chaos unfolds, players must help families evacuated from their homes. The story focuses on finding safe passage away from Woking amid the Martians' siege. Players must decide whether to embark on an organized military evacuation or risk crossing paths with Martian war machines. Key choices involve rescuing individuals in distress and deciding what supplies to carry. Each decision has consequences that impact the survival of characters involved.",
+            "title": "The Great Retreat"
+        },
+        {
+            "chapter": 5,
+            "description": "Now far from Woking, players face the ruins of destroyed cities where the Martian red weed spreads. They encounter other survivors and must decide whether to join forces or pursue solitary survival. The eerie landscape filled with abandoned homes thrusts players into moral dilemmas—will they hoard supplies for themselves or share with others in need? Players will witness the impact of the Martian invasion on human life and develop strategies to evade Martians while scavenging for food.",
+            "title": "Darkness and Despair"
+        },
+        {
+            "chapter": 6,
+            "description": "Discover advanced Martian war machines while exploring the outskirts of London. With new intel about the enemy's weaknesses becoming available, players must strategize an offensive—either sabotaging machines or launching attacks against Martian positions. The chapter focuses on stealth and creativity as players gather resources and decide how best to respond when facing the fearsome tripods. Choices can lead to multiple outcomes, affecting the level of devastation or resistance encountered.",
+            "title": "The Martian Machines"
+        },
+        {
+            "chapter": 7,
+            "description": "In a final confrontation, players must either band together with other survivors for one last stand against the Martians or execute an escape strategy to save as many lives as possible. The climax involves intense conflict, the propagation of hope, and the pivotal discoveries that lead to the Martians' downfall. As the battle rages, players navigate between frantic escapes and bold counterattacks, ultimately determining the fate of humanity in this desperate fight for survival.",
+            "title": "The Last Stand"
         }
     ],
-    "startPrompt": "Утренний зной Ашкелона уже пробивается сквозь шторы. Ваш рюкзак, набитый тяжелыми платами, видеокартами и инструментами, кажется неподъемным, а старый телефон снова вибрирует, настойчиво требуя внимания. Вы чувствуете каждую мышцу своего тела под грузом накопленной усталости. Нужно решить, как провести этот день, чтобы хоть немного приблизить свою мечту о тишине.\n\n\u001f\n- Принять заказ от Мирьям, несмотря на жару, и попытаться заработать на новую запчасть.\n- Проигнорировать сообщение, сбросить рюкзак и попытаться продать часть инструментов на черном рынке, чтобы уйти на заслуженный покой раньше.\n- Попытаться перехитрить систему, отправив вместо себя знакомого подмастерье и отдав ему часть прибыли за риск.",
-    "title": "Хроники последнего мастера: Ашкелонский дизель",
-    "world": "Действие разворачивается в антиутопическом Ашкелоне, где технологии прошлого века тесно переплелись с грубым дизельпанк-бытом. Город превратился в выжженную солнцем индустриальную пустыню, окутанную смогом и шумом постоянно работающих паровых турбин и поршневых генераторов. В мире, где цифровые технологии считаются магическим атавизмом, редкие специалисты по ремонту вычислительных систем — «техно-парии» — вынуждены перемещаться через раскаленные кварталы, обвешанные тяжелыми рюкзаками с запчастями, подобно вьючным животным эпохи ранней индустриализации.\n\nОбщество разделено на тех, кто жаждет стабильной работы своих паровых вычислителей, и тех, кто мечтает об окончательном отключении от этого безумного механизма. Власть принадлежит торговым картелям и владельцам энергетических сетей, а простые работяги, вроде Ариэля, являются лишь смазкой в этой огромной, ржавеющей машине, медленно перемалывающей человеческие судьбы под палящим хамсином."
+    "startPrompt": "You awaken to the serene yet eerie atmosphere of Woking, unaware that humanity is about to face its darkest hour. The sky is filled with meteors, and an ominous cylinder has crashed nearby. You find yourself drawn to it, sensing that the fate of the world may hinge on your actions. Your first decision could define your path: will you investigate the cylinder, or seek out the local astronomer, Ogilvy?\n\n<options><option>Investigate the cylinder</option><option>Seek out Ogilvy</option></options>",
+    "title": "Invasion of the Martians",
+    "world": "Set in the late 19th century, the world of this adventure game is one of impending doom as Martians from the cold, distant planet of Mars begin their invasion of Earth. With humanity oblivious to the threats from above, Martian scouts utilize advanced technology to plan their conquest, bringing chaos to the once-peaceful towns of England. Earth is depicted as lush and vibrant, filled with ordinary lives, yet now it becomes a battlefield where survival is paramount. Various factions emerge, from scientists trying to understand the Martians to military forces scrambling to defend humanity against an unrelenting foe, plunging society into turmoil.\n\nAs the Martians execute their invasion using fearsome heat-rays and biological warfare, meteoric cylinders become the harbingers of destruction. Players must navigate through this chaos, making crucial decisions to avoid Martian detection, communicate with others, and gather resources to fight back. The rules of this world are simple: trust no Martian, survive at all costs, and utilize wit and courage to forge alliances or face the wrath of extraterrestrial beings intent on exterminating humankind."
 }

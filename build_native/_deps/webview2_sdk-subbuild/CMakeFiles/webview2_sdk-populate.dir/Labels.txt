@@ -1,0 +1,14 @@
+# Target labels
+ webview2_sdk-populate
+# Source files and their labels
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/CMakeFiles/webview2_sdk-populate
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/CMakeFiles/webview2_sdk-populate.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/CMakeFiles/webview2_sdk-populate-complete.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-build.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-configure.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-download.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-install.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-mkdir.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-patch.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-test.rule
+C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk-subbuild/webview2_sdk-populate-prefix/src/webview2_sdk-populate-stamp/webview2_sdk-populate-update.rule

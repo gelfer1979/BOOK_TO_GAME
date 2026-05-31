@@ -1,0 +1,188 @@
+{
+  "buildFiles": [
+    "C:\\games\\BOOK_TO_GAME\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\CurlSymbolHiding.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\FindLibPSL.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\FindMbedTLS.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\Macros.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\OtherTests.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\PickyWarnings.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMake\\Utilities.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\lib\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\curl\\lib\\curl_config.h.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\3rdparty\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\3rdparty\\everest\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\3rdparty\\p256-m\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\framework\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\include\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\library\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\mbedtls\\pkgconfig\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\pugixml\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\pugixml\\scripts\\pugixml-config.cmake.in",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\cmake\\CheckCPUArchitecture.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\cmake\\macros.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\cmake\\sdlchecks.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\cmake\\sdlfind.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\cmake\\sdlplatform.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\cmake_uninstall.cmake.in",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\include\\SDL_config.h.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2\\include\\SDL_revision.h.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_image\\cmake\\PrivateSdlFunctions.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_image\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_mixer\\cmake\\PkgConfigHelper.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_mixer\\cmake\\PrivateSdlFunctions.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_mixer\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_net\\cmake\\PrivateSdlFunctions.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_net\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_ttf\\cmake\\PrivateSdlFunctions.cmake",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_ttf\\CMakeLists.txt",
+    "C:\\games\\BOOK_TO_GAME\\external\\src\\SDL2_ttf\\external\\freetype\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "SDL2_mixer::@e52443e1913250127460": {
+      "artifactName": "SDL2_mixer",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2_mixer\\libSDL2_mixer.a",
+      "runtimeFiles": []
+    },
+    "main::@6890427a1f51a3e7e1df": {
+      "artifactName": "main",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\build\\intermediates\\cxx\\Debug\\5k4jt3w4\\obj\\armeabi-v7a\\libmain.so",
+      "runtimeFiles": []
+    },
+    "mbedcrypto::@e8431c56b1010b32abba": {
+      "artifactName": "mbedcrypto",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\mbedtls\\library\\libmbedcrypto.a",
+      "runtimeFiles": []
+    },
+    "p256m::@f88269df745c2727947a": {
+      "artifactName": "p256m",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\mbedtls\\3rdparty\\p256-m\\libp256m.a",
+      "runtimeFiles": []
+    },
+    "sdl_headers_copy::@a79358cd36900c097e78": {
+      "artifactName": "sdl_headers_copy",
+      "abi": "armeabi-v7a",
+      "runtimeFiles": []
+    },
+    "SDL2_ttf::@d8d20a632b588d635050": {
+      "artifactName": "SDL2_ttf",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2_ttf\\libSDL2_ttf.a",
+      "runtimeFiles": []
+    },
+    "SDL2-static::@a79358cd36900c097e78": {
+      "artifactName": "SDL2-static",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2\\libSDL2.a",
+      "runtimeFiles": []
+    },
+    "SDL2_net::@dd2bba72e96a1970270a": {
+      "artifactName": "SDL2_net",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2_net\\libSDL2_net.a",
+      "runtimeFiles": []
+    },
+    "mbedtls::@e8431c56b1010b32abba": {
+      "artifactName": "mbedtls",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\mbedtls\\library\\libmbedtls.a",
+      "runtimeFiles": []
+    },
+    "everest::@0179ad70c2c5d44eeeb3": {
+      "artifactName": "everest",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\mbedtls\\3rdparty\\everest\\libeverest.a",
+      "runtimeFiles": []
+    },
+    "SDL2_image::@268d60a6bad752bd6682": {
+      "artifactName": "SDL2_image",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2_image\\libSDL2_image.a",
+      "runtimeFiles": []
+    },
+    "freetype::@44851b3c0ce20b9a0f95": {
+      "artifactName": "freetype",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2_ttf\\external\\freetype\\libfreetyped.a",
+      "runtimeFiles": []
+    },
+    "SDL2_test::@a79358cd36900c097e78": {
+      "artifactName": "SDL2_test",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2\\libSDL2_test.a",
+      "runtimeFiles": []
+    },
+    "NativeWebViewWrapper::@6890427a1f51a3e7e1df": {
+      "artifactName": "NativeWebViewWrapper",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\build\\intermediates\\cxx\\Debug\\5k4jt3w4\\obj\\armeabi-v7a\\NativeWebViewWrapper",
+      "runtimeFiles": []
+    },
+    "apidoc::@bad483ceb08dd3701253": {
+      "artifactName": "apidoc",
+      "abi": "armeabi-v7a",
+      "runtimeFiles": []
+    },
+    "SDL2main::@a79358cd36900c097e78": {
+      "artifactName": "SDL2main",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\SDL2\\libSDL2main.a",
+      "runtimeFiles": []
+    },
+    "pugixml-static::@2a51ceecac855e4800ad": {
+      "artifactName": "pugixml-static",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\pugixml\\libpugixml.a",
+      "runtimeFiles": []
+    },
+    "libcurl_static::@3e9b93e5b7cc751973fd": {
+      "artifactName": "libcurl_static",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\curl\\lib\\libcurl-d.a",
+      "runtimeFiles": []
+    },
+    "uninstall::@a79358cd36900c097e78": {
+      "artifactName": "uninstall",
+      "abi": "armeabi-v7a",
+      "runtimeFiles": []
+    },
+    "mbedx509::@e8431c56b1010b32abba": {
+      "artifactName": "mbedx509",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\external\\src\\mbedtls\\library\\libmbedx509.a",
+      "runtimeFiles": []
+    },
+    "book_miniz::@6890427a1f51a3e7e1df": {
+      "artifactName": "book_miniz",
+      "abi": "armeabi-v7a",
+      "output": "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\.cxx\\Debug\\5k4jt3w4\\armeabi-v7a\\libbook_miniz.a",
+      "runtimeFiles": []
+    },
+    "lib::@e8431c56b1010b32abba": {
+      "artifactName": "lib",
+      "abi": "armeabi-v7a",
+      "runtimeFiles": []
+    }
+  }
+}

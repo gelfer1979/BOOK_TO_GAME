@@ -46,6 +46,29 @@
             100% { opacity: 0.3; }
         }
     </style>
+    <script>
+        // Spoof file:/// protocol to bypass Puter.js security checks in native application WebViews
+        if (window.location.protocol === 'file:') {
+            const fakeLocation = new Proxy(window.location, {
+                get(target, prop) {
+                    if (prop === 'protocol') return 'https:';
+                    if (prop === 'origin') return 'https://booktogame.local';
+                    const val = target[prop];
+                    return typeof val === 'function' ? val.bind(target) : val;
+                }
+            });
+            try {
+                Object.defineProperty(globalThis, 'location', {
+                    value: fakeLocation,
+                    configurable: true,
+                    enumerable: true
+                });
+            } catch (e) {
+                console.warn("[Puter Spoof] Failed to define globalThis.location:", e);
+            }
+        }
+    </script>
+    <script src="https://js.puter.com/v2/"></script>
 </head>
 <body>
     <div id="loading">Загрузка игры...</div>
@@ -53,7 +76,26 @@
 
     <script>
         var Module = {
-            preRun: [],
+            preRun: [
+                function() {
+                    addRunDependency('syncfs');
+                    try {
+                        FS.mkdir('/offline');
+                        FS.mount(IDBFS, {}, '/offline');
+                        console.log('[IDBFS] Mounted IndexedDB at /offline');
+                    } catch(e) {
+                        console.error('[IDBFS] Failed to mount IndexedDB:', e);
+                    }
+                    FS.syncfs(true, function(err) {
+                        if (err) {
+                            console.error('[IDBFS] Failed to syncfs (read):', err);
+                        } else {
+                            console.log('[IDBFS] Successfully synchronized IndexedDB to MEMFS');
+                        }
+                        removeRunDependency('syncfs');
+                    });
+                }
+            ],
             postRun: [],
             print: (function() {
                 return function(text) {

@@ -56,20 +56,45 @@
         {
             "label": "Build Android APK (Debug)",
             "type": "shell",
-            "command": "cd platforms/android && ./gradlew assembleDebug",
+            "command": "cd platforms/android; ./gradlew assembleDebug",
             "windows": {
-                "command": "cd platforms/android && gradlew.bat assembleDebug"
+                "command": "Set-Location platforms/android; & ./gradlew.bat assembleDebug"
             },
             "group": "none",
             "problemMatcher": [],
             "detail": "Compile Android project and generate Debug APK"
         },
         {
+            "label": "Install Android APK & Grant Permissions",
+            "type": "shell",
+            "command": "adb install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk && adb shell pm grant com.example.booktogame android.permission.READ_EXTERNAL_STORAGE && adb shell appops set --uid com.example.booktogame MANAGE_EXTERNAL_STORAGE allow",
+            "windows": {
+                "command": "adb install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk; adb shell pm grant com.example.booktogame android.permission.READ_EXTERNAL_STORAGE; adb shell appops set --uid com.example.booktogame MANAGE_EXTERNAL_STORAGE allow"
+            },
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Install debug APK and automatically grant storage + all-files access permissions"
+        },
+        {
+            "label": "Run Android App (with Permissions)",
+            "type": "shell",
+            "command": "adb install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk && adb shell pm grant com.example.booktogame android.permission.READ_EXTERNAL_STORAGE && adb shell appops set --uid com.example.booktogame MANAGE_EXTERNAL_STORAGE allow && adb shell am start -n com.example.booktogame/org.libsdl.app.SDLActivity",
+            "windows": {
+                "command": "adb install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk; adb shell pm grant com.example.booktogame android.permission.READ_EXTERNAL_STORAGE; adb shell appops set --uid com.example.booktogame MANAGE_EXTERNAL_STORAGE allow; adb shell am start -n com.example.booktogame/org.libsdl.app.SDLActivity"
+            },
+            "dependsOn": [
+                "Build Android APK (Debug)"
+            ],
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Build APK, install it, grant all storage permissions, and start the app on device/emulator"
+        },
+        {
             "label": "Build Linux (Release)",
             "type": "shell",
             "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
             "windows": {
-                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build"
+                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release; cmake --build build"
             },
             "group": "none",
             "problemMatcher": [],
@@ -88,11 +113,25 @@
             "type": "shell",
             "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
             "windows": {
-                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build"
+                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release; cmake --build build"
             },
             "group": "none",
             "problemMatcher": [],
             "detail": "Compile project for macOS (requires Homebrew SDL2 dependencies)"
+        },
+        {
+            "label": "Build Book Summarizer",
+            "type": "shell",
+            "command": "cmake --build build --target book_summarizer --config Release",
+            "windows": {
+                "command": "cmake --build build --target book_summarizer --config Release"
+            },
+            "group": "none",
+            "dependsOn": [
+                "CMake Configure"
+            ],
+            "problemMatcher": "$msCompile",
+            "detail": "Compile the standalone book_summarizer console utility"
         }
     ]
 }

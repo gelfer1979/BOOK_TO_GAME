@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "external/src/mbedtls/3rdparty",
+		"source" : "external/src/mbedtls/3rdparty"
+	}
+}

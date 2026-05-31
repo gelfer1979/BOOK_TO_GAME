@@ -244,8 +244,8 @@ if(CURL_ENABLE_EXPORT_TARGET)
     )
   endif()
 
-  export(TARGETS ${libcurl_export}
-         FILE ${PROJECT_BINARY_DIR}/libcurl-target.cmake
-         NAMESPACE ${PROJECT_NAME}::
-  )
+#  export(TARGETS ${libcurl_export}
+#         FILE ${PROJECT_BINARY_DIR}/libcurl-target.cmake
+#         NAMESPACE ${PROJECT_NAME}::
+#  )
 endif()

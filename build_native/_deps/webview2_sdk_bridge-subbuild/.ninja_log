@@ -1,0 +1,21 @@
+# ninja log v7
+1	26	8019543118717582	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-mkdir	601e93d566bb6a2f
+1	26	8019543118717582	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-mkdir	601e93d566bb6a2f
+27	922	8019543127679195	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-download	597998730ace1b1b
+27	922	8019543127679195	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-download	597998730ace1b1b
+923	948	8019543127937744	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-update	219dbd64597b0dd
+923	948	8019543127937744	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-update	219dbd64597b0dd
+948	974	8019543128194759	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-patch	bb06995df71dbd1d
+948	974	8019543128194759	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-patch	bb06995df71dbd1d
+974	997	8019543128434829	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-configure	40aaa8640b5fa6e9
+974	997	8019543128434829	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-configure	40aaa8640b5fa6e9
+997	1021	8019543128667930	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-build	e38439991a1492d1
+997	1021	8019543128667930	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-build	e38439991a1492d1
+1021	1045	8019543128914323	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-install	9011d1257109fd96
+1021	1045	8019543128914323	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-install	9011d1257109fd96
+1045	1070	8019543129149519	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-test	44ea0dc4e1da3a60
+1045	1070	8019543129149519	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-test	44ea0dc4e1da3a60
+1070	1103	8019543129487911	CMakeFiles/webview2_sdk_bridge-populate-complete	53338775d0c77d5
+1070	1103	8019543129487911	webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-done	53338775d0c77d5
+1070	1103	8019543129487911	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/CMakeFiles/webview2_sdk_bridge-populate-complete	53338775d0c77d5
+1070	1103	8019543129487911	C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/webview2_sdk_bridge-populate-prefix/src/webview2_sdk_bridge-populate-stamp/webview2_sdk_bridge-populate-done	53338775d0c77d5

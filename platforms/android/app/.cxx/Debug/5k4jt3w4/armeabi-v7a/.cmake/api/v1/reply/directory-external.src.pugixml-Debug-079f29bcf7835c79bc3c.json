@@ -1,0 +1,123 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"external/src/pugixml/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 277,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 286,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 290,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 295,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 298,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Development",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"external/src/pugixml/libpugixml.a"
+			],
+			"targetId" : "pugixml-static::@2a51ceecac855e4800ad",
+			"targetIndex" : 19,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Development",
+			"destination" : "lib/cmake/pugixml",
+			"exportName" : "pugixml-targets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "pugixml::@2a51ceecac855e4800ad",
+					"index" : 0
+				},
+				{
+					"id" : "pugixml-static::@2a51ceecac855e4800ad",
+					"index" : 19
+				}
+			],
+			"paths" : 
+			[
+				"external/src/pugixml/CMakeFiles/Export/lib/cmake/pugixml/pugixml-targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Development",
+			"destination" : "lib/cmake/pugixml",
+			"paths" : 
+			[
+				"platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/pugixml/pugixml-config-version.cmake",
+				"platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/pugixml/pugixml-config.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Development",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/pugixml/pugixml.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Development",
+			"destination" : "include",
+			"paths" : 
+			[
+				"external/src/pugixml/src/pugiconfig.hpp",
+				"external/src/pugixml/src/pugixml.hpp"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "external/src/pugixml",
+		"source" : "external/src/pugixml"
+	}
+}

@@ -636,14 +636,24 @@ std::string ConvertBookToText(const std::string& filePath) {
     return "";
 }
 
-std::string ConvertBookToTempTxt(const std::string& filePath) {
+std::string ConvertBookToTempTxt(const std::string& filePath, const std::string& tempDir) {
     std::string text = ConvertBookToText(filePath);
     if (text.empty()) return "";
 
     std::string tmpPath = "book.txt";
+    if (!tempDir.empty()) {
+        tmpPath = tempDir;
+        if (tmpPath.back() != '/' && tmpPath.back() != '\\') tmpPath += "/";
+        tmpPath += "book.txt";
+    }
+
     if (!WriteTextFile(tmpPath, text)) {
-        tmpPath = "../book.txt";
-        if (!WriteTextFile(tmpPath, text)) return "";
+        if (tempDir.empty()) {
+            tmpPath = "../book.txt";
+            if (!WriteTextFile(tmpPath, text)) return "";
+        } else {
+            return "";
+        }
     }
     return tmpPath;
 }

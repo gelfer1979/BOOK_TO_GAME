@@ -1,0 +1,430 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/build/intermediates/cxx/Debug/5k4jt3w4/obj/armeabi-v7a/libmain.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"target_compile_definitions",
+			"include_directories",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 192,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 218,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 237,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 241,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 205,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 8,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 245,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -std=c++17 -fno-limit-debug-info  -fPIC"
+				},
+				{
+					"fragment" : "-std=gnu++17"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 5,
+					"define" : "CURL_STATICLIB"
+				},
+				{
+					"define" : "main_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 6,
+					"path" : "C:/games/BOOK_TO_GAME/external/vc/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2_image"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2_mixer"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2_ttf"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2_net"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/pugixml/src"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/miniz"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2/include/SDL2"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2/include-config-debug/SDL2"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2_image/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/SDL2_mixer/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/curl/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/mbedtls/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/mbedtls/3rdparty/everest/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/mbedtls/3rdparty/p256-m"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/games/BOOK_TO_GAME/external/src/mbedtls/3rdparty/p256-m/p256-m"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			],
+			"sysroot" : 
+			{
+				"path" : "C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot"
+			}
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "book_miniz::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "pugixml-static::@2a51ceecac855e4800ad"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "SDL2main::@a79358cd36900c097e78"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "SDL2-static::@a79358cd36900c097e78"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "SDL2_image::@268d60a6bad752bd6682"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "SDL2_mixer::@e52443e1913250127460"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "SDL2_ttf::@d8d20a632b588d635050"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "freetype::@44851b3c0ce20b9a0f95"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "SDL2_net::@dd2bba72e96a1970270a"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "everest::@0179ad70c2c5d44eeeb3"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "p256m::@f88269df745c2727947a"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "mbedcrypto::@e8431c56b1010b32abba"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "mbedx509::@e8431c56b1010b32abba"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "mbedtls::@e8431c56b1010b32abba"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "libcurl_static::@3e9b93e5b7cc751973fd"
+		}
+	],
+	"id" : "main::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\SDL2\\libSDL2.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\SDL2_image\\libSDL2_image.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\SDL2_mixer\\libSDL2_mixer.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\SDL2_ttf\\libSDL2_ttf.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\SDL2_net\\libSDL2_net.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\curl\\lib\\libcurl-d.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\mbedtls\\library\\libmbedtls.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\mbedtls\\library\\libmbedx509.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\mbedtls\\library\\libmbedcrypto.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "libbook_miniz.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-llog",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-landroid",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "external\\src\\SDL2\\libSDL2main.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "external\\src\\SDL2_ttf\\external\\freetype\\libfreetyped.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "external\\src\\SDL2\\libSDL2.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lm",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lOpenSLES",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-ldl",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-llog",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-landroid",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lGLESv1_CM",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lGLESv2",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "external\\src\\mbedtls\\3rdparty\\everest\\libeverest.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "external\\src\\mbedtls\\3rdparty\\p256-m\\libp256m.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-pthread",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "C:\\android\\sdk\\ndk\\25.2.9519653\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\21\\libz.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "external\\src\\pugixml\\libpugixml.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-latomic -lm",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX",
+		"sysroot" : 
+		{
+			"path" : "C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot"
+		}
+	},
+	"name" : "main",
+	"nameOnDisk" : "libmain.so",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/book_converter.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

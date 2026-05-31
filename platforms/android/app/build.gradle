@@ -40,13 +40,29 @@ android {
         }
     }
 
-    // Unified source of game assets - we use the common assets directory at the root
+    // Unified source of game assets - we copy and package all game config JSONs and assets
     sourceSets {
         main {
-            assets.srcDirs = ['../../../assets']
+            assets.srcDirs = ['src/main/assets']
         }
     }
 }
+
+tasks.register('copyGameAssets', Copy) {
+    from('../../../') {
+        include 'book.json'
+        include 'save.json'
+        include 'options.json'
+        include 'settings.json'
+        include 'ai_*.json'
+    }
+    from('../../../assets') {
+        into('')
+    }
+    into('src/main/assets')
+}
+
+preBuild.dependsOn copyGameAssets
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'

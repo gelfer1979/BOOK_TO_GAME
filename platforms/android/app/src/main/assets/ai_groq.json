@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://api.groq.com/openai/v1/chat/completions",
+  "modelName": "llama-3.3-70b",
+  "apiKey": "",
+  "apiKeyEnvVar": "GROQ_API_KEY",
+  "format": "openai"
+}

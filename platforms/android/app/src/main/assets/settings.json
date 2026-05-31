@@ -1,0 +1,206 @@
+{
+    "AIModel": "ai_puter.json",
+    "CURLOPT_CONNECTTIMEOUT": 5,
+    "CURLOPT_TIMEOUT": 15,
+    "Language": "English",
+    "bookRetries": 3,
+    "choicesSeparator": "\u001f",
+    "fontSizeOffset": 6,
+    "formatReminder": [
+        "[REMINDER: Use the exact output format from your system prompt: narrative text first, then '\u001f', then 2-4 choices each on its own line '- ']"
+    ],
+    "genrePreprocessingPipeline": [
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genres\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genres\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genre\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"genre\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "genres:"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "genre:"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": ","
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\""
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "'"
+        },
+        {
+            "action": "remove_chars",
+            "target": "{}[]"
+        }
+    ],
+    "maxRetries": 3,
+    "maxTurnsForce": 10,
+    "nextChapter": "[chapter]",
+    "playerDead": "[dead]",
+    "preprocessingPipeline": [
+        {
+            "action": "replace",
+            "replacement": "\n",
+            "target": "\\n"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"response\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"narration\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"narrative\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"narrative\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "\"story\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"options\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"choices\":"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"options\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "choicesSeparator",
+            "target": "\"choices\" :"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[dead ]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[ dead]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[death]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[game_over]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "[player_dead]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[dead]",
+            "target": "<player_dead/>"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[chapter ]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[ chapter]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[next_chapter]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "[nextchapter]"
+        },
+        {
+            "action": "replace",
+            "replacement": "[chapter]",
+            "target": "<next_chapter>"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "</next_chapter>"
+        },
+        {
+            "action": "replace",
+            "replacement": "",
+            "target": "[/next_chapter]"
+        },
+        {
+            "action": "remove_chars",
+            "target": "{}"
+        }
+    ],
+    "retryDelayMs": 1000,
+    "systemPrompt": [
+        "You are a text adventure narrator. Narrate in the user's language. Be concise (1-2 short paragraphs). Advance the plot every turn — no loops or repetition.",
+        "",
+        "CHAPTERS: Each chapter lasts 6-8 turns. On transition append '[chapter]' ",
+        "",
+        "DEATH: If the player picks a fatal choice, describe their end and append '[dead]' — no options after. Never label any choice as dangerous.",
+        "",
+        "FORMAT: Narrative first. Then '\u001f'. Then 2-5 options each starting with '- '. NEVER use A) B) C) or 1. 2. 3. or any prefix other than '- '. Options in the same language as the story.",
+        "",
+        "EXAMPLE:",
+        "You hear a noise behind the door. \u001f",
+        "- Open the door",
+        "- Listen through it",
+        "- Walk away",
+        "- Call for help",
+        "- Break it down"
+    ]
+}

@@ -1,0 +1,47 @@
+{
+    "plot": [
+        {
+            "chapter": 1,
+            "description": "Jonathan Harker arrives in the dark heart of the Carpathians. He must navigate local superstitions and reach the Count's coach while collecting protective items like a crucifix. Failure to secure these items will result in immediate vulnerability to the shadows of the pass.",
+            "title": "The Borgo Pass"
+        },
+        {
+            "chapter": 2,
+            "description": "Harker is trapped in Castle Dracula. He must explore the unlocked wings of the castle while avoiding the Count’s predatory vampire brides. He must find a way to signal for help without alerting the Count to his true intent.",
+            "title": "Prisoner of the Castle"
+        },
+        {
+            "chapter": 3,
+            "description": "The perspective shifts to Whitby, England. The player must investigate the wreckage of the Russian schooner Demeter and track the arrival of the Count in the form of a great dog. Objectives include collecting evidence of the dead captain's log and securing the harbor area.",
+            "title": "The Demeter’s Cargo"
+        },
+        {
+            "chapter": 4,
+            "description": "Lucy Westenra falls into a mysterious, lethal lethargy. The player must aid Dr. Seward and Van Helsing in providing blood transfusions and applying garlic-based protections while uncovering the true, sinister nature of Lucy's puncture wounds.",
+            "title": "The Wasting Sickness"
+        },
+        {
+            "chapter": 5,
+            "description": "Lucy has succumbed to the curse. The player must lead the harrowing expedition to the churchyard to confront the 'bloofer lady' and perform the necessary, violent ritual to free her soul from its demonic corruption.",
+            "title": "The Un-Dead Awakens"
+        },
+        {
+            "chapter": 6,
+            "description": "Mina Harker is marked by the Count. The player must compile the scattered journals into a cohesive case file while dodging the Count's surveillance and preventing Renfield from interfering with their research at the asylum.",
+            "title": "The Conspiracy of Silence"
+        },
+        {
+            "chapter": 7,
+            "description": "The hunt moves to the Count's London lairs. The player must systematically locate and sterilize the remaining boxes of earth using Sacred Wafers while managing the team's exposure to the Count's hypnotic influence.",
+            "title": "The Scouring of Carfax"
+        },
+        {
+            "chapter": 8,
+            "description": "The final pursuit into the heart of Transylvania. The player must track the Count’s carriage, defend against a horde of Szgany gypsies in the snow, and reach the castle chapel before the final sunset to end the ancient bloodline once and for all.",
+            "title": "Race to the Abyss"
+        }
+    ],
+    "startPrompt": "You are Jonathan Harker, arriving at the Golden Krone Hotel in Bistritz. The innkeeper's wife has just pressed a cold, heavy crucifix into your palm, her eyes wide with terror. Outside, the carriage to the Borgo Pass waits in the biting wind. Your inventory contains: A journal, a map of Transylvania, and the crucifix. Do you heed the warnings of the locals and abandon the contract, or do you board the carriage to face the unknown darkness of the Count?",
+    "title": "Dracula: The Shadow Over London",
+    "world": "The game is set in the late 19th century, a time of steam, gaslight, and rising scientific optimism clashing with the encroaching darkness of an ancient, preternatural evil. The world follows the lore of the original Stoker narrative: a Gothic realm where Count Dracula, a centuries-old nobleman, uses his mastery over wolves, mist, and the elements to expand his reach from his desolate, cursed castle in the Carpathians to the bustling, vulnerable streets of London.\n\nRules and Faction details: The world operates under strict supernatural boundaries—vampires are repelled by holy symbols, garlic, and wild roses, and are most vulnerable when dormant in their native soil. Factions include the 'Order of the Blood-Hunter,' a small circle of allies led by Van Helsing who sacrifice their sanity and safety to preserve humanity. In contrast, the Count commands thralls like the zoöphagous Renfield and superstitious servants, effectively framing his enemies for his own bloody crimes."
+}

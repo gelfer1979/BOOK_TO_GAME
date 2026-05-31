@@ -1,10 +1,11 @@
 # Walkthrough: Summary Compression, Query Cancellation & Font Scaling
 
-We have successfully designed, implemented, and verified three major features that maximize usability, plot consistency, and runtime reliability:
+We have successfully designed, implemented, and verified four major features that maximize usability, plot consistency, and runtime reliability:
 
 1. **Dynamic Font Scaling System ('A' / 'a' Buttons)**: Adds interactive UI buttons in the window header to scale up or down all text and choice buttons dynamically within comfortable bounds.
 2. **Main Menu AI Query Cancellation & Choice Reversion**: Instantly and safely aborts background AI requests and reverts the last user choice in memory and disk when returning to the main menu.
 3. **Chapter Summary Compression (Every 10 Chapters)**: Dynamically compresses previous chapter summaries in blocks of 10 into single paragraphs to prevent LLM context bloating while maintaining a flawless plot memory.
+4. **Emscripten options.json Preload & Fast English Language Restoration**: Added `options.json` to the Emscripten preloaded files list, and optimized English language switching to restore default English prompts and save options cache instantly and completely without AI involvement.
 
 ---
 
@@ -102,3 +103,63 @@ cmake --build build --config Release
    - Text size decreased smoothly back to normal and down to the `-4px` limit.
 4. Hover states function correctly, rendering high-contrast cyan borders and responsive background changes.
 5. All menu actions, query cancellations, and chapter transitions function in perfect coordination!
+
+---
+
+## 3. Latest Mobile Layout and Packaged Assets Update
+
+### A. Writable Internal Storage Asset Copier (Android)
+To resolve the problem where standard C++ file streams (`std::ifstream`/`std::ofstream`) and directory iterators couldn't access packaged assets inside the compiled APK zip archive:
+1. **Asset Copying Routine**: On Android startup, the app automatically changes its working directory to `SDL_AndroidGetInternalStoragePath()` and copies `book.json`, `save.json`, `settings.json`, `options.json`, and all `ai_*.json` files from the APK assets directory to this writable internal storage.
+2. **Transparent Compatibility**: Once copied, the game seamlessly reads and writes all configuration, saves, and AI model parameters using standard file calls.
+
+### B. Massive UI and Font Enhancements on Mobile Start Screens
+To address complaints regarding tiny fonts and elements in the setup and book selection screens on mobile:
+1. **Dramatically Increased Base Fonts**: Increased mobile base sizes to:
+   - **Title**: `68px` (was 46px - a full 1.5x scale!)
+   - **Messages**: `54px` (was 36px - a full 1.5x scale!)
+   - **UI Elements / Buttons**: `48px` (was 32px - a full 1.5x scale!)
+   - **Small UI / Captions**: `36px` (was 24px - a full 1.5x scale!)
+2. **Expanded Mobile Cards & Spacings**:
+   - Expanded mobile card width `LAYOUT_CARD_W()` to `960px` and card height `LAYOUT_CARD_H()` up to `850px` for setup screens.
+   - Boosted list height to `400px` for maximum readability.
+3. **Huge Option/Select Buttons**:
+   - Increased button heights in startup screens (select book, select AI, continue, load path) to **`100px`-`110px`** with `120px` spacing.
+   - Updated all mouse down coordinate intersections and clipping rect bounds to perfectly match the enlarged coordinates.
+
+---
+
+## 4. Mobile Usability & Input Optimization Update
+
+### A. Non-Intrusive Virtual Keyboard Activation
+* **Improvement**: Removed automatic keyboard popups on screens that contain input boxes. 
+* **Mechanism**: On-screen virtual keyboard (`SDL_StartTextInput()`) is now strictly suppressed until the user explicitly touches or clicks inside a text input field (e.g. the chat input bar in gameplay, or book path/API key entry box). Clicking outside the input bar automatically deactivates input focus and slides the keyboard away (`SDL_StopTextInput()`).
+
+### B. Automatic Clipboard API Key Paste (Android/Mobile)
+* **Improvement**: Selecting an AI model on mobile now instantly parses the clipboard to retrieve the API key, saving it to the model's configuration file and loading the model immediately.
+* **Mechanism**: When a model is tapped, the app checks if the clipboard contains text (`SDL_HasClipboardText()`). If found, it automatically trims it, writes it directly into the selected model's JSON file (`SaveApiKeyToModelJson`), reloads config settings (`ReloadSettingsAndReinit`), and resumes gameplay instantly, bypassing manual text input screens entirely! If the clipboard is empty, it safely falls back to the existing stored key.
+
+### C. Premium Scrollable Language Selection Screen
+* **Improvement**: Replaced the error-prone manual language text entry field with a beautiful, scrollable in-app list of native language options.
+* **Mechanism**: Tapping the Language button transitions to the new `APP_STATE_SELECT_LANGUAGE` screen. It renders a premium scrollable card with customizable font sizes, a cyan border, and high-fidelity touch buttons representing languages with their native localized labels (e.g. `Русский (Russian)`, `עברית (Hebrew)`, `Українська (Ukrainian)`, `Español (Spanish)`, etc.). Selecting an option applies the language immediately and safely returns to the previous screen.
+
+### D. Enforced TLS 1.2 Negotiation & Local CA Certificates Bundle to Resolve Android mbedTLS Bug
+* **Bug**: On Android, mbedTLS negotiating TLS 1.3 has a known bug/limitation where it continues to validate X.509 server certificates even when certificate verification is explicitly disabled (`CURLOPT_SSL_VERIFYPEER, 0L`). Since Android lacks standard path ca-certificates, this caused immediate `ssl_handshake_returned -mbedTLS: (0x02700)` handshaking failures on HTTPS API requests.
+* **Fix**: 
+  1. **TLS 1.2 Forcing**: Added explicit libcurl configuration `CURLOPT_SSLVERSION` set to `CURL_SSLVERSION_TLSv1_2` in both curl request blocks inside [modelapi.h](file:///c:/games/BOOK_TO_GAME/src/modelapi.h) to negotiation standard TLS 1.2.
+  2. **CA Certs Bundle**: Downloaded the official, up-to-date Mozilla CA certs bundle `cacert.pem`, packaged it inside the APK assets directory, copied it to internal storage on startup, and set it inside curl using:
+     ```cpp
+     curl_easy_setopt(curl, CURLOPT_CAINFO, certPath.c_str());
+     ```
+     This completely resolves all SSL verification checks, restoring flawless and secure HTTPS calls to Gemini/OpenAI endpoints.
+
+### E. Super-Sized Top Menu & Elements (1.5x Scale)
+* **Improvement**: Increased the header row height `LAYOUT_HEADER_H()` on mobile to **`95px`** (was 63px - a full 1.5x scale!).
+* **Mechanism**: 
+  * Enlarged the header title font size to `68px`.
+  * Expanded top-right **Home / Main Menu** button size to **`270x68px`** (was 180x45px).
+  * Expanded top-left **'A' and 'a'** font size control buttons to **`68x68px`** (was 45x45px).
+  * Boosted vertical choice buttons inside active gameplay to a height of **`220px`** (was 150px) with **`18px`** spacing (was 12px) to perfectly fit the scaled 1.5x option text.
+
+
+

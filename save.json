@@ -1,37 +1,35 @@
 {
     "activeChoices": [
-        "Ask her about the syndicate brand on her wrist",
-        "Take the tokens and immediately head for the exit",
-        "Offer to disable the device completely for an even higher price",
-        "Advise her to hide before the patrol arrives"
+        "Head to the cylinder with Ogilvy",
+        "Pause to gather more information from other locals",
+        "Ask Ogilvy what he plans to do once there",
+        "Suggest waiting for the authorities to arrive"
     ],
-    "chapterSummaries": [
-        "1::{\n  \"summary\": \"Чтобы избежать личного риска, главный герой отправляет своего неопытного подмастерья Элиаса выполнить заказ, сопровождая его через опасные сектора Ашкелона. После успешного прохождения проверки стражи и бегства от подозрительных лиц в закусочной, игрок решает спрятаться, чтобы убедиться в отсутствии слежки перед завершением доставки. В инвентаре по-прежнему находится рюкзак с ценными платами и инструментами.\"\n}"
-    ],
-    "currentChapter": 2,
+    "chapterSummaries": [],
+    "currentChapter": 1,
     "gameOver": false,
     "gameWon": false,
-    "lastQuery": "Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered",
+    "lastQuery": "Agree to help Ogilvy gather tools",
     "messages": [
         {
             "sender": "AI",
-            "text": "\"Мирьям впустила вас в свою захламленную квартиру, где единственным источником света служил мерцающий неоновый индикатор массивного парового вычислителя. Аппарат издавал болезненный металлический скрежет, и когда вы вскрыли панель, внутри обнаружилось нечто странное: вместо стандартных латунных шестерней там были вживлены примитивные, но явно нелегальные нейронные чипы, излучающие едва уловимое синее свечение. Судя по всему, эта система не просто считала налоги картелей, а скрыто передавала данные из городской сети в неизвестном направлении, что ставит под угрозу всех техно-париев города. Вы понимаете, что замена сгоревшей детали лишь временное решение, но дальнейшее вмешательство может привлечь внимание тех, кто установил этот «жучок». \n\nВам необходимо принять решение, которое определит судьбу этой части городской инфраструктуры и вашу собственную безопасность. [chapter] \",\n\n\u001f\n- Аккуратно извлечь подозрительные чипы, чтобы стереть следы вмешательства\n- Попытаться расшифровать данные, которые передает устройство\n- Быстро заменить сгоревшую деталь и уйти, притворившись, что ничего не заметили\n- Сообщить Мирьям о находке и предложить ей бежать из города\n"
+            "text": "You awaken to the serene yet eerie atmosphere of Woking, unaware that humanity is about to face its darkest hour. The sky is filled with meteors, and an ominous cylinder has crashed nearby. You find yourself drawn to it, sensing that the fate of the world may hinge on your actions. Your first decision could define your path: will you investigate the cylinder, or seek out the local astronomer, Ogilvy?\n\n\u001f\n- Investigate the cylinder\n- Seek out Ogilvy\n"
         },
         {
             "sender": "User",
-            "text": "Быстро заменить сгоревшую деталь и уйти, притворившись, что ничего не заметили"
+            "text": "Seek out Ogilvy"
         },
         {
             "sender": "AI",
-            "text": "\"You focus solely on the faulty steam-valve, suppressing your curiosity about the strange glowing chips. Your hands move with practiced, mechanical efficiency, replacing the damaged part while ignoring the erratic, data-heavy hum of the machine. Miryam watches you with narrow, anxious eyes, her silence heavy in the cramped room. As soon as the turbine stabilizes and the rhythmic clatter returns to a dull, manageable roar, you pack your heavy bag, anxious to vanish into the smog-filled streets before any watchers take notice of your presence. \",\n\n\u001f\n- Discreetly pocket a small, unused component from the workbench as a souvenir\n- Ask Miryam if she knows where the machine's previous technician went\n- Leave immediately without saying a word, hoping to slip back into the shadows\n- Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered\n"
+            "text": "You hustle towards the observatory, your heart pounding with urgency. As you approach, you spot Ogilvy pacing anxiously outside, a deep frown etched on his face. He seems aware of the meteor shower's significance and may have insights into the cylinder. You can see the flicker of fear in his eyes as he glances back towards the crash site. \n\n\"Did you see the meteor? It is unlike anything I have ever observed,\" he says, catching your gaze. \"We need to act quickly, but I require your assistance. Will you help me gather the tools I need?\"\n\n\u001f\n- Agree to help Ogilvy gather tools\n- Ask Ogilvy for more information about the cylinder\n- Suggest alerting the authorities about the cylinder\n- Insist on investigating the cylinder first\n"
         },
         {
             "sender": "User",
-            "text": "Demand extra payment from Miryam for the 'unforeseen difficulties' you encountered"
+            "text": "Agree to help Ogilvy gather tools"
         },
         {
             "sender": "AI",
-            "text": "\"Miryam’s face turns pale as you press her for extra coin, citing the excessive wear on your tools from her malfunctioning machine. She trembles, reaching into a hidden compartment under her desk and pulling out a handful of rusted gear-tokens. As she presses them into your palm, her fingers brush against yours, and you notice a brand—a small, jagged insignia of a local syndicate burned into her wrist. She leans in, whispering that the machine wasn't just broken; it was listening to her thoughts, and by fixing it, you have essentially signed her death warrant. The air in the room suddenly feels dense with the hum of a distant steam-siren, indicating that a patrol is nearby.\",\n\n\u001f\n- Ask her about the syndicate brand on her wrist\n- Take the tokens and immediately head for the exit\n- Offer to disable the device completely for an even higher price\n- Advise her to hide before the patrol arrives\n"
+            "text": "You nod, sensing the gravity of the situation. Ogilvy's relief is palpable as he leads you inside the observatory. Together, you collect various instruments—telescopes, notepads, and a peculiar device that resembles a gunpowder flask. Ogilvy explains that the tools will help him analyze any samples from the cylinder while keeping a safe distance.\n\nAs you exit the observatory, a sense of dread settles in your stomach. The sky begins to darken, and strange noises emerge from the direction of the cylinder. You must decide your next move carefully, as time is of the essence.\n\n\u001f\n- Head to the cylinder with Ogilvy\n- Pause to gather more information from other locals\n- Ask Ogilvy what he plans to do once there\n- Suggest waiting for the authorities to arrive\n"
         }
     ],
     "pendingNextChapter": -1

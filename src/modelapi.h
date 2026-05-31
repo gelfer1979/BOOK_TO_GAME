@@ -1,7 +1,94 @@
 #pragma once
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
+inline void EmscriptenSyncFS() {
+    emscripten_run_script(
+        "FS.syncfs(false, function (err) {"
+        "  if (err) console.error('[IDBFS] syncfs (write) failed:', err);"
+        "  else console.log('[IDBFS] syncfs (write) succeeded.');"
+        "});"
+    );
+}
+inline void EmscriptenHostWrite(const std::string& filename, const std::string& content) {
+    EM_ASM({
+        var fname = UTF8ToString($0);
+        var fcontent = UTF8ToString($1);
+        if (window.chrome && window.chrome.webview) {
+            try {
+                var base64 = btoa(unescape(encodeURIComponent(fcontent)));
+                window.chrome.webview.postMessage({
+                    action: "write_file",
+                    filename: fname,
+                    content: base64
+                });
+            } catch (e) {
+                console.error("[WebView Bridge] Failed to post message:", e);
+            }
+        }
+    }, filename.c_str(), content.c_str());
+}
+
+extern "C" {
+    EM_ASYNC_JS(char*, call_puter_chat_js, (const char* messagesJson, const char* systemPrompt, const char* modelName), {
+        var msgsStr = UTF8ToString(messagesJson);
+        var sysPrompt = UTF8ToString(systemPrompt);
+        var selectedModel = UTF8ToString(modelName) || "claude-3-5-sonnet";
+        
+        var messages = [];
+        if (sysPrompt && sysPrompt.length > 0) {
+            messages.push({ role: "system", content: sysPrompt });
+        }
+        
+        try {
+            var history = JSON.parse(msgsStr);
+            for (var i = 0; i < history.length; i++) {
+                var role = (history[i].sender === "User") ? "user" : "assistant";
+                messages.push({ role: role, content: history[i].text });
+            }
+        } catch (e) {
+            console.error("[Puter JS] Failed to parse history JSON:", e);
+        }
+        
+        console.log("[Puter JS] Calling puter.ai.chat (" + selectedModel + ") with messages:", messages);
+        
+        try {
+            if (typeof puter === 'undefined') {
+                throw new Error("Puter.js library is not loaded. Make sure <script src='https://js.puter.com/v2/'></script> is in your HTML.");
+            }
+            
+            var response = await puter.ai.chat(messages, {
+                model: selectedModel
+            });
+            
+            var responseText = "";
+            if (response && response.message && response.message.content) {
+                responseText = response.message.content;
+            } else if (typeof response === 'string') {
+                responseText = response;
+            } else if (response && response.toString) {
+                responseText = response.toString();
+            }
+            
+            var lengthBytes = lengthBytesUTF8(responseText) + 1;
+            var stringOnWasmHeap = _malloc(lengthBytes);
+            stringToUTF8(responseText, stringOnWasmHeap, lengthBytes);
+            return stringOnWasmHeap;
+            
+        } catch (err) {
+            console.error("[Puter JS] Error during puter.ai.chat:", err);
+            var errText = "Error: " + err.message;
+            var lengthBytes = lengthBytesUTF8(errText) + 1;
+            var stringOnWasmHeap = _malloc(lengthBytes);
+            stringToUTF8(errText, stringOnWasmHeap, lengthBytes);
+            return stringOnWasmHeap;
+        }
+    });
+}
+#else
+inline void EmscriptenSyncFS() {}
+inline void EmscriptenHostWrite(const std::string& filename, const std::string& content) {}
 #endif
+
 
 #ifdef _WIN32
 #ifndef NOMINMAX
@@ -55,6 +142,8 @@ public:
         return ask(history.back().text, language);
     }
     virtual void setSystemPrompt(const std::string& prompt) {}
+    virtual void setRetrySettings(int maxRetries, int retryDelayMs) {}
+    virtual void setTimeoutSettings(int connectTimeout, int requestTimeout) {}
     virtual ~AskAi() = default;
 };
 
@@ -80,6 +169,18 @@ public:
                 
                 if (j.contains("baseUrl") && j["baseUrl"].is_string()) {
                     baseUrl_ = j["baseUrl"].get<std::string>();
+#if defined(__ANDROID__)
+                    size_t pos = baseUrl_.find("127.0.0.1");
+                    if (pos != std::string::npos) {
+                        baseUrl_.replace(pos, 9, "10.0.2.2");
+                    } else {
+                        pos = baseUrl_.find("localhost");
+                        if (pos != std::string::npos) {
+                            baseUrl_.replace(pos, 9, "10.0.2.2");
+                        }
+                    }
+                    std::cout << "[Android Network] Adjusted localhost/127.0.0.1 baseUrl to: " << baseUrl_ << std::endl;
+#endif
                 }
                 if (j.contains("modelName") && j["modelName"].is_string()) {
                     modelName_ = j["modelName"].get<std::string>();
@@ -110,13 +211,13 @@ public:
             std::cerr << "[Config] Failed to open configuration file: " << configFilePath << " (also tried parent directory)." << std::endl;
         }
 
-        if (baseUrl_.empty() && configFilePath != "ai_gemini.json") {
-            std::cout << "[Config] Attempting robust fallback to default 'ai_gemini.json'..." << std::endl;
-            std::ifstream fallbackFile("ai_gemini.json");
-            std::string fallbackLoadedPath = "ai_gemini.json";
+        if (baseUrl_.empty() && configFilePath != "ai_puter.json") {
+            std::cout << "[Config] Attempting robust fallback to default 'ai_puter.json'..." << std::endl;
+            std::ifstream fallbackFile("ai_puter.json");
+            std::string fallbackLoadedPath = "ai_puter.json";
             if (!fallbackFile.is_open()) {
-                fallbackFile.open("../ai_gemini.json");
-                fallbackLoadedPath = "../ai_gemini.json";
+                fallbackFile.open("../ai_puter.json");
+                fallbackLoadedPath = "../ai_puter.json";
             }
             if (fallbackFile.is_open()) {
                 try {
@@ -124,6 +225,18 @@ public:
                     fallbackFile >> j;
                     if (j.contains("baseUrl") && j["baseUrl"].is_string()) {
                         baseUrl_ = j["baseUrl"].get<std::string>();
+#if defined(__ANDROID__)
+                        size_t pos = baseUrl_.find("127.0.0.1");
+                        if (pos != std::string::npos) {
+                            baseUrl_.replace(pos, 9, "10.0.2.2");
+                        } else {
+                            pos = baseUrl_.find("localhost");
+                            if (pos != std::string::npos) {
+                                baseUrl_.replace(pos, 9, "10.0.2.2");
+                            }
+                        }
+                        std::cout << "[Android Network] Adjusted fallback localhost/127.0.0.1 baseUrl to: " << baseUrl_ << std::endl;
+#endif
                     }
                     if (j.contains("modelName") && j["modelName"].is_string()) {
                         modelName_ = j["modelName"].get<std::string>();
@@ -157,6 +270,13 @@ public:
                 apiKey_ = std::string(envVal);
                 std::cout << "[Security] Override API key loaded from environment: " << apiKeyEnvVar_ << std::endl;
             }
+        }
+
+        // Dynamically override Puter configuration natively to use REST endpoint
+        if (baseUrl_ == "puter" || format_ == "puter") {
+            baseUrl_ = "https://api.puter.com/puterai/openai/v1/chat/completions";
+            format_ = "openai";
+            std::cout << "[Config] Puter config detected natively. Overriding to REST endpoint: " << baseUrl_ << std::endl;
         }
     }
 
@@ -401,12 +521,23 @@ public:
             }
 
             // Configure general curl options
+            char errbuf[CURL_ERROR_SIZE] = "";
+            curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errbuf);
+            
             curl_easy_setopt(curl, CURLOPT_URL, baseUrl_.c_str());
             curl_easy_setopt(curl, CURLOPT_POST, 1L);
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonPayload.c_str());
             curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, jsonPayload.length());
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+            curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_MAX_TLSv1_2);
+#if defined(__ANDROID__)
+            const char* internalPath = SDL_AndroidGetInternalStoragePath();
+            if (internalPath) {
+                std::string certPath = std::string(internalPath) + "/cacert.pem";
+                curl_easy_setopt(curl, CURLOPT_CAINFO, certPath.c_str());
+            }
+#endif
             curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, (long)connectTimeout_);
             curl_easy_setopt(curl, CURLOPT_TIMEOUT, (long)requestTimeout_);
 
@@ -434,6 +565,9 @@ public:
 
             if (res != CURLE_OK) {
                 std::string errStr = curl_easy_strerror(res);
+                if (errbuf[0] != '\0') {
+                    errStr += ": " + std::string(errbuf);
+                }
                 curl_slist_free_all(headers);
                 curl_easy_cleanup(curl);
                 
@@ -835,12 +969,23 @@ public:
             }
 
             // Configure general curl options
+            char errbuf[CURL_ERROR_SIZE] = "";
+            curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errbuf);
+            
             curl_easy_setopt(curl, CURLOPT_URL, baseUrl_.c_str());
             curl_easy_setopt(curl, CURLOPT_POST, 1L);
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonPayload.c_str());
             curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, jsonPayload.length());
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+            curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_MAX_TLSv1_2);
+#if defined(__ANDROID__)
+            const char* internalPath = SDL_AndroidGetInternalStoragePath();
+            if (internalPath) {
+                std::string certPath = std::string(internalPath) + "/cacert.pem";
+                curl_easy_setopt(curl, CURLOPT_CAINFO, certPath.c_str());
+            }
+#endif
             curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, (long)connectTimeout_);
             curl_easy_setopt(curl, CURLOPT_TIMEOUT, (long)requestTimeout_);
 
@@ -868,6 +1013,9 @@ public:
 
             if (res != CURLE_OK) {
                 std::string errStr = curl_easy_strerror(res);
+                if (errbuf[0] != '\0') {
+                    errStr += ": " + std::string(errbuf);
+                }
                 curl_slist_free_all(headers);
                 curl_easy_cleanup(curl);
                 
@@ -994,18 +1142,21 @@ public:
     }
 #endif
 
-    void setRetrySettings(int maxRetries, int retryDelayMs) {
+    void setRetrySettings(int maxRetries, int retryDelayMs) override {
         if (maxRetries >= 0) maxRetries_ = maxRetries;
         if (retryDelayMs > 0) retryDelayMs_ = retryDelayMs;
     }
 
-    void setTimeoutSettings(int connectTimeout, int requestTimeout) {
+    void setTimeoutSettings(int connectTimeout, int requestTimeout) override {
         if (connectTimeout > 0) connectTimeout_ = connectTimeout;
         if (requestTimeout > 0) requestTimeout_ = requestTimeout;
     }
 
     int getConnectTimeout() const { return connectTimeout_; }
     int getRequestTimeout() const { return requestTimeout_; }
+    std::string getApiKey() const { return apiKey_; }
+    std::string getBaseUrl() const { return baseUrl_; }
+    std::string getFormat() const { return format_; }
 
 private:
     std::string baseUrl_;
@@ -1016,14 +1167,267 @@ private:
     std::string systemPrompt_;
     int maxRetries_ = 3;
     int retryDelayMs_ = 1000;
-    int connectTimeout_ = 5;
-    int requestTimeout_ = 15;
+    int connectTimeout_ = 20;
+    int requestTimeout_ = 60;
 
     // Static callback function to write received data into a std::string
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
         ((std::string*)userp)->append((char*)contents, size * nmemb);
         return size * nmemb;
     }
+};
+
+class AskAiPuter : public AskAi {
+public:
+    AskAiPuter(const std::string& configFilePath = "ai_puter.json") {
+        std::ifstream file(configFilePath);
+        if (!file.is_open()) {
+            file.open("../" + configFilePath);
+        }
+        if (file.is_open()) {
+            try {
+                nlohmann::json j;
+                file >> j;
+                if (j.contains("modelName") && j["modelName"].is_string()) {
+                    modelName_ = j["modelName"].get<std::string>();
+                }
+            } catch (...) {}
+            file.close();
+        }
+        if (modelName_.empty()) {
+            modelName_ = "claude-3-5-sonnet"; // Best standard fallback for high quality summaries/creative descriptions
+        }
+    }
+    
+    void setSystemPrompt(const std::string& prompt) override {
+        systemPrompt_ = prompt;
+    }
+    
+    void setRetrySettings(int maxRetries, int retryDelayMs) override {}
+    void setTimeoutSettings(int connectTimeout, int requestTimeout) override {}
+    
+    std::string ask(const std::string& question, const std::string& language = "English") override {
+        std::vector<ChatMessageData> history;
+        ChatMessageData msg;
+        msg.sender = "User";
+        msg.text = question;
+        history.push_back(msg);
+        return askChat(history, language);
+    }
+    
+    std::string askChat(const std::vector<ChatMessageData>& history, const std::string& language) override {
+#ifdef __EMSCRIPTEN__
+        nlohmann::json jHistory = nlohmann::json::array();
+        for (const auto& msg : history) {
+            jHistory.push_back({{"sender", msg.sender}, {"text", msg.text}});
+        }
+        std::string historyStr = jHistory.dump();
+        
+        char* responsePtr = call_puter_chat_js(historyStr.c_str(), systemPrompt_.c_str(), modelName_.c_str());
+        std::string result;
+        if (responsePtr != nullptr) {
+            result = std::string(responsePtr);
+            free(responsePtr);
+        }
+        return result;
+#else
+        // 1. Check if ai_puter.json itself has an API key configured (Puter auth token)
+        std::string puterPath = "ai_puter.json";
+        std::ifstream puterFile(puterPath);
+        if (!puterFile.is_open()) {
+            puterFile.open("../" + puterPath);
+        }
+        if (puterFile.is_open()) {
+            try {
+                nlohmann::json j;
+                puterFile >> j;
+                puterFile.close();
+                
+                std::string key = j.value("apiKey", "");
+                std::string envVar = j.value("apiKeyEnvVar", "");
+                if (!envVar.empty()) {
+                    const char* envVal = std::getenv(envVar.c_str());
+                    if (envVal != nullptr && std::strlen(envVal) > 0) {
+                        key = envVal;
+                    }
+                }
+                
+                if (!key.empty()) {
+                    auto puterClient = std::make_unique<AskAiExternal>(puterPath);
+                    puterClient->setTimeoutSettings(20, 60);
+                    puterClient->setSystemPrompt(systemPrompt_);
+                    return puterClient->askChat(history, language);
+                }
+            } catch (...) {
+                if (puterFile.is_open()) puterFile.close();
+            }
+        }
+
+        // 2. Try using the keyless PuterBridge.exe helper via WebView2 on Windows
+#ifdef _WIN32
+        std::string bridgePath = "PuterBridge.exe";
+        if (!std::filesystem::exists(bridgePath)) {
+            bridgePath = "../PuterBridge.exe";
+        }
+        if (!std::filesystem::exists(bridgePath)) {
+            if (std::filesystem::exists("Debug/PuterBridge.exe")) bridgePath = "Debug/PuterBridge.exe";
+            else if (std::filesystem::exists("Release/PuterBridge.exe")) bridgePath = "Release/PuterBridge.exe";
+            else if (std::filesystem::exists("MinSizeRel/PuterBridge.exe")) bridgePath = "MinSizeRel/PuterBridge.exe";
+            else if (std::filesystem::exists("RelWithDebInfo/PuterBridge.exe")) bridgePath = "RelWithDebInfo/PuterBridge.exe";
+        }
+        
+        if (std::filesystem::exists(bridgePath)) {
+            std::cout << "[Puter Bridge] Found bridge executable at: " << bridgePath << std::endl;
+            
+            nlohmann::json requestBody;
+            requestBody["modelName"] = modelName_;
+            requestBody["systemPrompt"] = systemPrompt_;
+            
+            nlohmann::json historyJ = nlohmann::json::array();
+            for (const auto& msg : history) {
+                historyJ.push_back({{"sender", msg.sender}, {"text", msg.text}});
+            }
+            requestBody["history"] = historyJ;
+            
+            std::error_code ec;
+            std::filesystem::remove("puter_response.json", ec);
+            std::filesystem::remove("puter_request.json", ec);
+            
+            std::ofstream reqFile("puter_request.json");
+            if (reqFile.is_open()) {
+                reqFile << requestBody.dump();
+                reqFile.close();
+                
+                std::cout << "[Puter Bridge] Wrote puter_request.json. Launching bridge..." << std::endl;
+                
+                bool success = false;
+                STARTUPINFOA si;
+                PROCESS_INFORMATION pi;
+                ZeroMemory(&si, sizeof(si));
+                si.cb = sizeof(si);
+                si.dwFlags = STARTF_USESHOWWINDOW;
+                si.wShowWindow = SW_HIDE;
+
+                ZeroMemory(&pi, sizeof(pi));
+
+                std::string cmd = "\"" + bridgePath + "\"";
+                std::vector<char> cmdCopy(cmd.begin(), cmd.end());
+                cmdCopy.push_back('\0');
+
+                if (CreateProcessA(
+                    NULL,
+                    cmdCopy.data(),
+                    NULL,
+                    NULL,
+                    FALSE,
+                    CREATE_NO_WINDOW,
+                    NULL,
+                    NULL,
+                    &si,
+                    &pi
+                )) {
+                    WaitForSingleObject(pi.hProcess, INFINITE);
+                    CloseHandle(pi.hProcess);
+                    CloseHandle(pi.hThread);
+                    success = true;
+                } else {
+                    std::cerr << "[Puter Bridge] Failed to launch PuterBridge.exe process. Error code: " << GetLastError() << std::endl;
+                }
+                
+                std::ifstream respFile("puter_response.json");
+                if (respFile.is_open()) {
+                    std::string fileContent((std::istreambuf_iterator<char>(respFile)),
+                                            std::istreambuf_iterator<char>());
+                    respFile.close();
+                    
+                    std::filesystem::remove("puter_request.json", ec);
+                    std::filesystem::remove("puter_response.json", ec);
+                    
+                    if (fileContent.empty()) {
+                        std::cerr << "[Puter Bridge] Bridge finished but puter_response.json was empty." << std::endl;
+                    } else {
+                        try {
+                            nlohmann::json respJ = nlohmann::json::parse(fileContent);
+                            std::string status = respJ.value("status", "error");
+                            std::string response = respJ.value("response", "");
+                            
+                            if (status == "success") {
+                                return response;
+                            } else {
+                                std::cerr << "[Puter Bridge] Bridge returned error: " << response << std::endl;
+                            }
+                        } catch (const std::exception& e) {
+                            std::cerr << "[Puter Bridge] Failed to parse bridge response: " << e.what() << std::endl;
+                            std::cerr << "[Puter Bridge] Raw content: " << fileContent << std::endl;
+                        }
+                    }
+                } else {
+                    std::cerr << "[Puter Bridge] Bridge finished but puter_response.json was not created. Success: " << success << std::endl;
+                }
+            } else {
+                std::cerr << "[Puter Bridge] Failed to write puter_request.json" << std::endl;
+            }
+        }
+#endif
+
+        // 3. Fallback to any other operational AI profile configured with a key
+        std::vector<std::string> fallbacks = {
+            "ai_openrouter.json",
+            "ai_gemini.json",
+            "ai_openai.json",
+            "ai_deepseek.json",
+            "ai_groq.json",
+            "ai_chatgpt.json",
+            "ai_copilot.json",
+            "ai_llama.json"
+        };
+        
+        for (const auto& fPath : fallbacks) {
+            std::ifstream file(fPath);
+            if (!file.is_open()) {
+                file.open("../" + fPath);
+            }
+            if (file.is_open()) {
+                file.close();
+                try {
+                    auto client = std::make_unique<AskAiExternal>(fPath);
+                    std::string key = client->getApiKey();
+                    if (key.empty() || key.rfind("YOUR_", 0) == 0 || key == "your_api_key_here") {
+                        continue; // Skip files without active keys configured
+                    }
+                    
+                    client->setTimeoutSettings(5, 10); // Quick timeouts for validation
+                    std::string testResp = client->ask("Say 'ok'", "English");
+                    
+                    // If it responded successfully without error markings, it is operational!
+                    if (!testResp.empty() && testResp.find("Error") == std::string::npos && 
+                        testResp.find("error") == std::string::npos && testResp.find("invalid") == std::string::npos &&
+                        testResp.find("Invalid") == std::string::npos && testResp.find("unauthorized") == std::string::npos &&
+                        testResp.find("Unauthorized") == std::string::npos) {
+                        client->setTimeoutSettings(20, 60); // Restore normal gameplay timeouts
+                        client->setSystemPrompt(systemPrompt_);
+                        return client->askChat(history, language);
+                    }
+                } catch (...) {}
+            }
+        }
+        
+        // 3. Fallback guide instructions if absolutely no operational keys are found
+        bool isRu = (language == "Russian" || language == "ru" || language == "RU");
+        if (isRu) {
+            return "ИИ по умолчанию (Puter.js) доступен без API-ключа в WebAssembly-версии (в браузере) или при запуске через WebView2 Helper (PuterBridge.exe).\n\n"
+                   "Для игры в этом нативном C++ билде, пожалуйста, убедитесь, что PuterBridge.exe скомпилирован и находится рядом, либо перейдите в Настройки и укажите ваш API-ключ для Google Gemini / OpenRouter / OpenAI.";
+        } else {
+            return "The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using the WebView2 Helper (PuterBridge.exe).\n\n"
+                   "To play this native C++ build, please ensure PuterBridge.exe is built and placed in the same directory, or go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key.";
+        }
+#endif
+        return "";
+    }
+    
+private:
+    std::string systemPrompt_;
+    std::string modelName_;
 };
 
 // Chapter progression details
@@ -1067,7 +1471,7 @@ struct GameState {
     std::string promptAiRuleLanguageEnforcement = "4. LANGUAGE ENFORCEMENT: All generated narration (story) and choices inside <option> tags MUST be strictly written in the target language: '{language}', regardless of the language of the source book lore or chapter plots.\n";
     std::string promptAiFinalChapterWarning = "IMPORTANT: This is the final chapter of the entire book! Resolve all major story conflicts, bring the plot to a grand finale and a satisfying logical conclusion of the entire book. After the </options> tags, you MUST append the transition tag to the epilogue: <next_chapter>{epilogue_chapter}</next_chapter>.\n";
     std::string promptAiEpilogueWriter = "You are a professional epilogue writer. Write a beautiful, brief, and satisfying final conclusion. Do NOT output any choices, options inside <options>, or XML tags. Respond strictly in the target language: '{language}'.";
-    std::string promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices]\"\n}";
+    std::string promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST format the choices at the very end of startPrompt using <options><option>First choice</option><option>Second choice</option></options> tags in the target language. Example: 'Story narration.\\n\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}";
     std::string promptAiBookGenLength = "Generate a logical sequential series of chapters mapping out the story arc according to the user's custom length wishes: \"{wishes}\". Follow this number/range of chapters exactly.";
     std::string promptAiBookGenLengthDefault = "Generate between 3 and 5 logical sequential chapters mapping out the story arc.";
     std::string promptAiBookGenGenre = "\n- Genre and atmosphere constraint: \"{wishes}\". You MUST adapt the quest environment, vocabulary, tropes, and thematic elements to match this chosen genre/atmosphere.";
@@ -1944,9 +2348,12 @@ inline void SaveGame(const GameState& state, const std::string& filename = "save
     
     std::ofstream file(filename);
     if (file.is_open()) {
-        file << j.dump(4);
+        std::string serialized = j.dump(4);
+        file << serialized;
         file.close();
         std::cout << "[SaveGame] Game saved successfully to " << filename << std::endl;
+        EmscriptenSyncFS();
+        EmscriptenHostWrite(filename, serialized);
     } else {
         std::cerr << "[SaveGame] Failed to open " << filename << " for writing" << std::endl;
     }
@@ -2078,7 +2485,7 @@ inline bool ContainsErrorCaseInsensitive(const std::string& str) {
     return lower.find("error") != std::string::npos;
 }
 
-inline void UpdateSystemPrompt(GameState& state, AskAiExternal* aiClient) {
+inline void UpdateSystemPrompt(GameState& state, AskAi* aiClient) {
     std::string combinedPrompt = state.systemPrompt;
     
     if (!state.bookWorld.empty()) {
@@ -2275,6 +2682,7 @@ inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& 
     if (errorFile.is_open()) {
         errorFile << "AI Raw Response:\n" << rawResponse << "\n\nError:\n" << errorMsg << std::endl;
         errorFile.close();
+        EmscriptenSyncFS();
     }
     
     // Write synchronized copy of book_error.txt to the parent folder if running from a build subdirectory
@@ -2287,6 +2695,80 @@ inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& 
             parentErrorFile.close();
         }
     }
+}
+
+inline std::vector<std::string> SplitIntoChunks(const std::string& text, size_t maxChunkSize = 20000) {
+    std::vector<std::string> chunks;
+    if (text.empty()) return chunks;
+    
+    size_t start = 0;
+    size_t length = text.length();
+    
+    while (start < length) {
+        if (length - start <= maxChunkSize) {
+            chunks.push_back(text.substr(start));
+            break;
+        }
+        
+        size_t limit = start + maxChunkSize;
+        size_t splitPoint = std::string::npos;
+        
+        // 1. Try double newline "\n\n" (paragraph boundary)
+        size_t searchPos = text.rfind("\n\n", limit);
+        if (searchPos != std::string::npos && searchPos > start) {
+            splitPoint = searchPos;
+        }
+        
+        // 2. Try single newline "\n"
+        if (splitPoint == std::string::npos || splitPoint <= start) {
+            searchPos = text.rfind("\n", limit);
+            if (searchPos != std::string::npos && searchPos > start) {
+                splitPoint = searchPos + 1;
+            }
+        }
+        
+        // 3. Try sentence endings (punctuation followed by space)
+        if (splitPoint == std::string::npos || splitPoint <= start) {
+            size_t lastDot = text.rfind(". ", limit);
+            size_t lastQ = text.rfind("? ", limit);
+            size_t lastEx = text.rfind("! ", limit);
+            
+            size_t bestPunct = std::string::npos;
+            if (lastDot != std::string::npos && lastDot > start) bestPunct = lastDot + 2;
+            if (lastQ != std::string::npos && lastQ > start) {
+                if (bestPunct == std::string::npos || lastQ + 2 > bestPunct) bestPunct = lastQ + 2;
+            }
+            if (lastEx != std::string::npos && lastEx > start) {
+                if (bestPunct == std::string::npos || lastEx + 2 > bestPunct) bestPunct = lastEx + 2;
+            }
+            if (bestPunct != std::string::npos && bestPunct > start && bestPunct <= limit) {
+                splitPoint = bestPunct;
+            }
+        }
+        
+        // 4. Try space
+        if (splitPoint == std::string::npos || splitPoint <= start) {
+            searchPos = text.rfind(" ", limit);
+            if (searchPos != std::string::npos && searchPos > start) {
+                splitPoint = searchPos + 1;
+            }
+        }
+        
+        // 5. Fallback hard cut
+        if (splitPoint == std::string::npos || splitPoint <= start) {
+            splitPoint = limit;
+        }
+        
+        chunks.push_back(text.substr(start, splitPoint - start));
+        start = splitPoint;
+        
+        // Skip leading whitespace for the next chunk
+        while (start < length && (text[start] == ' ' || text[start] == '\n' || text[start] == '\r' || text[start] == '\t')) {
+            start++;
+        }
+    }
+    
+    return chunks;
 }
 
 inline bool CreateBookFromTxt(
@@ -2326,15 +2808,98 @@ inline bool CreateBookFromTxt(
         return false;
     }
 
-    int totalChapters = ParseChapterCount(lengthWishes);
-    
-    // Temporarily increase timeouts for large book generation (e.g. 240 seconds for Saga)
+    // Capture original timeouts for potential AI summarization requests and later generation timeouts
     int oldConnect = 5;
     int oldRequest = 15;
     AskAiExternal* extClient = dynamic_cast<AskAiExternal*>(aiClient);
     if (extClient) {
         oldConnect = extClient->getConnectTimeout();
         oldRequest = extClient->getRequestTimeout();
+    }
+
+    int totalChapters = ParseChapterCount(lengthWishes);
+    bool isNBook = (txtFilePath.find("nbook_") != std::string::npos);
+    // If text exceeds 20,000 characters, chunk and summarize it to prevent AI context/generation limit errors
+    if (content.length() > 20000 && !isNBook) {
+        std::vector<std::string> chunks = SplitIntoChunks(content, 20000);
+        std::cout << "[AI Book Gen] Large book detected (Length: " << content.length() << " chars). Splitting into " << chunks.size() << " chunks of <= 20,000 characters..." << std::endl;
+        
+        std::string consolidatedSummary = "";
+        int stepNum = 1;
+        for (const auto& chunk : chunks) {
+            std::string statusMsg = "";
+            if (progressCallback) {
+                if (gameLanguage == "Russian") {
+                    statusMsg = "Анализ текста: обработка части " + std::to_string(stepNum) + " из " + std::to_string(chunks.size()) + "...";
+                } else {
+                    statusMsg = "Analyzing text: processing part " + std::to_string(stepNum) + " of " + std::to_string(chunks.size()) + "...";
+                }
+                int maxSummarizeProgress = (totalChapters <= 10) ? 90 : 10;
+                int chunkProgress = (stepNum * maxSummarizeProgress) / chunks.size();
+                if (chunkProgress > maxSummarizeProgress) chunkProgress = maxSummarizeProgress;
+                progressCallback(chunkProgress, statusMsg);
+            }
+            
+            if (aiClient) {
+                aiClient->setSystemPrompt(modelState.promptAiSummarizer);
+            }
+            
+            std::string summaryPrompt;
+            if (gameLanguage == "Russian") {
+                summaryPrompt = "Пожалуйста, напиши подробный и точный пересказ следующей части книги. "
+                                "Сохрани ключевые события, имена персонажей, локации и важные детали сюжета. "
+                                "Напиши пересказ строго на русском языке:\n\n" + chunk;
+            } else {
+                summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
+                                "Preserve all key events, character names, locations, and important plot details. "
+                                "Write the summary strictly in the target language (" + gameLanguage + "):\n\n" + chunk;
+            }
+            
+            std::cout << "[AI Book Gen] Summarizing chunk " << stepNum << "/" << chunks.size() << " (Length: " << chunk.length() << " chars)..." << std::endl;
+            
+            std::string chunkSummary;
+            int attemptSum = 0;
+            int maxAttempts = 3;
+            int delayMs = 1000;
+            
+            if (extClient) {
+                extClient->setTimeoutSettings(15, 120);
+            }
+            
+            while (attemptSum < maxAttempts) {
+                if (aiClient) {
+                    chunkSummary = aiClient->ask(summaryPrompt, gameLanguage);
+                }
+                chunkSummary = Trim(chunkSummary);
+                if (chunkSummary.empty() || chunkSummary.find("Error") != std::string::npos) {
+                    attemptSum++;
+                    std::cout << "[AI Book Gen] Chunk " << stepNum << " summary attempt " << attemptSum << " failed: " << chunkSummary << std::endl;
+                    if (attemptSum < maxAttempts) {
+#ifndef __EMSCRIPTEN__
+                        std::this_thread::sleep_for(std::chrono::milliseconds(delayMs));
+#endif
+                        delayMs *= 2;
+                    }
+                } else {
+                    break;
+                }
+            }
+            
+            if (extClient) {
+                extClient->setTimeoutSettings(oldConnect, oldRequest);
+            }
+            
+            if (chunkSummary.empty() || chunkSummary.find("Error") != std::string::npos) {
+                outError = "Failed to summarize part " + std::to_string(stepNum) + " of the book: " + chunkSummary;
+                return false;
+            }
+            
+            consolidatedSummary += "Part " + std::to_string(stepNum) + " Summary:\n" + chunkSummary + "\n\n";
+            stepNum++;
+        }
+        
+        content = consolidatedSummary;
+        std::cout << "[AI Book Gen] Chunk summarization complete. Consolidated summary length: " << content.length() << " chars." << std::endl;
     }
 
     if (totalChapters <= 10) {
@@ -2389,6 +2954,14 @@ inline bool CreateBookFromTxt(
         
         if (extClient) {
             extClient->setTimeoutSettings(15, 240); // 15s connect, 240s request
+        }
+
+        if (progressCallback) {
+            if (gameLanguage == "Russian") {
+                progressCallback(90, "Создание сюжета и глав книги...");
+            } else {
+                progressCallback(90, "Weaving the quest storyline and chapters...");
+            }
         }
 
         std::cout << "[AI Book Gen] Route A: Sending raw story to AI (Length: " << content.length() << " characters)..." << std::endl;
@@ -2449,8 +3022,11 @@ inline bool CreateBookFromTxt(
                 SaveBookErrorLog(response, outError);
                 return false;
             }
-            outFile << bj.dump(4);
+            std::string serialized = bj.dump(4);
+            outFile << serialized;
             outFile.close();
+            EmscriptenSyncFS();
+            EmscriptenHostWrite("book.json", serialized);
 
             // Overwrite/write copy of book.json to the parent folder if running from a build subdirectory
             std::ifstream parentSettings("../settings.json");
@@ -2465,6 +3041,13 @@ inline bool CreateBookFromTxt(
             }
             
             std::cout << "[AI Book Gen] Successfully generated and saved book.json (Route A)!" << std::endl;
+            if (progressCallback) {
+                if (gameLanguage == "Russian") {
+                    progressCallback(100, "Книга успешно создана! Загрузка...");
+                } else {
+                    progressCallback(100, "Book successfully created! Loading...");
+                }
+            }
             return true;
         } catch (const std::exception& e) {
             outError = std::string("JSON parsing error: ") + e.what() + "\nRaw response starts with: " + response.substr(0, 100);
@@ -2798,8 +3381,11 @@ inline bool CreateBookFromTxt(
             outError = "Could not open book.json for writing.";
             return false;
         }
-        outFile << finalBookJson.dump(4);
+        std::string serialized = finalBookJson.dump(4);
+        outFile << serialized;
         outFile.close();
+        EmscriptenSyncFS();
+        EmscriptenHostWrite("book.json", serialized);
 
         std::ifstream parentSettings("../settings.json");
         if (parentSettings.is_open()) {
@@ -2811,8 +3397,14 @@ inline bool CreateBookFromTxt(
                 std::cout << "[AI Book Gen] Successfully saved synchronized book.json copy to parent directory." << std::endl;
             }
         }
-
         std::cout << "[AI Book Gen] Successfully generated and saved book.json (Route B)!" << std::endl;
+        if (progressCallback) {
+            if (gameLanguage == "Russian") {
+                progressCallback(100, "Книга успешно создана! Загрузка...");
+            } else {
+                progressCallback(100, "Book successfully created! Loading...");
+            }
+        }
         return true;
     }
 }

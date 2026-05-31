@@ -19,7 +19,7 @@ std::string ConvertBookToText(const std::string& filePath);
 
 // Convert and save to a temporary .txt file.
 // Returns path to temp file, or empty string on failure.
-std::string ConvertBookToTempTxt(const std::string& filePath);
+std::string ConvertBookToTempTxt(const std::string& filePath, const std::string& tempDir = "");
 
 // File dialog filter strings for each platform
 const char* GetWindowsDialogFilter();

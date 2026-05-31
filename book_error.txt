@@ -1,72 +1,49 @@
 AI Raw Response:
 {
-    "title": "Женская проза: Шалость",
-    "world": "Ярослава А, автор романа \"ШАЛОСТЬ\", переносит нас в офисное пространство, где работает главная героиня Галина. Она страдает от разбитого сердца и проводит время на работе, заливая свое горе алкоголем. В это же время, ее начальник Борис Палыч, кажется, тоже одинок. История развивается с момента, когда Галина пытается соблазнить своего начальника, до их совместного проведения выходных после того, как они стали парой.",
+    "title": "Invasion of the Martians",
+    "world": "In the late Victorian era, the world appears tranquil and orderly, yet unbeknownst to its inhabitants, a catastrophic threat looms just beyond the stars. Mars, once a vibrant planet, has now succumbed to environmental pressures, birthing a cold-blooded race of Martians seeking a new home. This advanced civilization, unable to sustain life on their home world, sets their sights on Earth—a delicate planet teeming with life they deem theirs for the taking. As cylindrical vessels hurtle from their planet, humanity, occupied by its trivial pursuits, remains blissfully unaware. The convergence of science and the arcane intertwines within this apocalyptic adventure, where the advanced technologies of the Martians stand in stark contrast to the Victorian ingenuity of England. \n\nThe conquest escalates into chaos as the Martians utilize their deadly heat-rays, transforming pastoral landscapes into charred wastelands, and prompting a desperate fight for survival. Factions arise, embodying the chaos of society: the military, attempting to establish order against the invading forces; the civilians, stricken by fear and confusion; and the lost souls wandering through an annihilated world, seeking hope among the ashes. Survival becomes the utmost commodity, as our protagonist grapples not only with external invaders but the very essence of humanity wrapped within the turmoil around him.",
     "plot": [
         {
             "chapter": 1,
-            "title": "Работа и алкоголь",
-            "description": "Галина проводит время на работе в одиночестве, пьет ром из пластикового стаканчика. Она страдает от разбитого сердца и думает о своих бывших отношениях."
+            "title": "The Cylinder Falls",
+            "description": "The story begins as astronomer Ogilvy witnesses the arrival of a Martian cylinder near Woking. As news of the cylinder's crash spreads, a crowd assembles to witness the spectacle. Our protagonist, a local resident, is drawn to the event, troubled by the implications of what may be inside. Tension escalates as the cylinder's lid begins to unscrew. Characters to meet include Ogilvy, Henderson, and the townsfolk. The danger arises as the delegation’s attempt to communicate ends in catastrophe when the Martians unleash their heat-ray, incinerating those nearby. The protagonist must navigate the ensuing chaos, find refuge, and gather supplies to survive this initial encounter.",
         },
         {
             "chapter": 2,
-            "title": "Соблазнение начальника",
-            "description": "Галина решает соблазнить своего начальника Бориса Палыча, который тоже проводит время на работе в одиночестве. Она заходит к нему в кабинет и предлагает выпить вместе."
+            "title": "Chaos Unleashed",
+            "description": "With panic erupting around Horsell Common, our character must decide to flee or assist those left behind. They can choose to seek shelter in a nearby town or gather a group of fighters to stand against the Martians. Key items to find include emergency rations and a map of the area. As the Martians deploy more cylinders, a sense of dread fills the air. The growing military presence offers hope, but the looming threat of the Martians' deadly machines casts a long shadow. The narrator faces dangers from both the Martians and the panicked crowd as they navigate toward safety.",
         },
         {
             "chapter": 3,
-            "title": "Первая ночь",
-            "description": "После того как Галина соблазнила Бориса Палыча, они проводят первую ночь вместе. Он удивлен ее смелостью и страстностью."
+            "title": "Fleeing the Destruction",
+            "description": "After witnessing a devastating attack on the town, the protagonist must decide whether to evacuate with their loved ones or attempt a daring rescue of those left behind. Scenarios involve encounters with soldiers, civilians, or more Martians. Items found could include a horse-drawn cart, weapons, or important documents. The narrative compels players to constantly evaluate their morals amidst chaos, pitting survival against altruism.",
         },
         {
             "chapter": 4,
-            "title": "Корпоратив",
-            "description": "На корпоративе один из коллег пытается пригласить Галину на танец, но она отвергает его. Вместо этого, она уходит и возвращается домой, где проводит ночь с Борисом Палычом."
+            "title": "The Darkest Hour",
+            "description": "Surviving a tumultuous journey through devastated territories leads to a revelation about the Martians' ultimate goal. Dangerous machines scour the landscape, and the protagonist overhears plans to consolidate military forces for defense. A chance encounter with a soldier reveals devastating information about the black smoke the Martians use against humans. The protagonist must secure transportation or means of communication to warn others as chaos reigns; they can find an abandoned boat or a message to bring to London.",
         },
         {
             "chapter": 5,
-            "title": "Новая квартира",
-            "description": "Галина переезжает в новую квартиру, а Борис Палыч приходит поздравить ее. Они проводят вместе ночь и начинают отношения."
+            "title": "A Hopeful Dawn",
+            "description": "Having braved the onslaught and discovered the Martians’ vulnerability, the protagonist embarks on a quest to rally support and inspire hope. Scenarios may include negotiating with military leaders or persuading frightened civilians to rise against oppression. The player can uncover hidden caches of supplies to assist a small band of survivors. The chapter culminates in a significant skirmish, where both human resilience and Martian technology clash violently.",
+        },
+        {
+            "chapter": 6,
+            "title": "Victory Amidst Ruins",
+            "description": "The Martian invasion reaches its climax as their forces seem overpowering, yet unbeknownst to them, Earth's bacteria begin to take effect. The protagonist leads a group of survivors to safety, navigating through bombed out areas. They must decide whether to help individuals who fall behind or prioritize their group, testing their moral center. This chapter leads to a climactic storm where the Martians' collapse becomes a bitter triumph for humanity, but with a heavy price.",
+        },
+        {
+            "chapter": 7,
+            "title": "Rebirth of Humanity",
+            "description": "As the smoke clears and silence fills the air where madness once reigned, the protagonist grapples with the aftermath. They witness the rebirth of their world, encountering remnants and relics of Martian technology. They face the choice of returning to their past life or aiding others in rebuilding society. Introspection becomes imperative as the protagonist reconciles the trauma they’ve witnessed, whilst understanding the fragile reality of human existence against cosmic threats."
         }
     ],
-    "startPrompt": "Половина десятого вечера. Офис, письменный стол и бутылка \"Баккарди Блэк\" в пластиковом стаканчике, который я так удачно стащила у куллера в приемной.\\n- Я страдаю о вечном.\\n- Что может делать женщина в вечернем платье на работе в столь поздний час в одиночестве?\\n- Да, Борис Палыч застал меня врасплох и выгнал из кабинета."
-}
-```python
-{
-    "title": "Женская проза: Шалость",
-    "world": "Ярослава А, автор романа \"ШАЛОСТЬ\", переносит нас в офисное пространство, где работает главная героиня Галина. Она страдает от разбитого сердца и проводит время на работе, заливая свое горе алкоголем. В это же время, ее начальник Борис Палыч, кажется, тоже одинок. История развивается с момента, когда Галина пытается соблазнить своего начальника, до их совместного проведения выходных после того, как они стали парой.",
-    "plot": [
-        {
-            "chapter": 1,
-            "title": "Работа и алкоголь",
-            "description": "Галина проводит время на работе в одиночестве, пьет ром из пластикового стаканчика. Она страдает от разбитого сердца и думает о своих бывших отношениях."
-        },
-        {
-            "chapter": 2,
-            "title": "Соблазнение начальника",
-            "description": "Галина решает соблазнить своего начальника Бориса Палыча, который тоже проводит время на работе в одиночестве. Она заходит к нему в кабинет и предлагает выпить вместе."
-        },
-        {
-            "chapter": 3,
-            "title": "Первая ночь",
-            "description": "После того как Галина соблазнила Бориса Палыча, они проводят первую ночь вместе. Он удивлен ее смелостью и страстностью."
-        },
-        {
-            "chapter": 4,
-            "title": "Корпоратив",
-            "description": "На корпоративе один из коллег пытается пригласить Галину на танец, но она отвергает его. Вместо этого, она уходит и возвращается домой, где проводит ночь с Борисом Палычом."
-        },
-        {
-            "chapter": 5,
-            "title": "Новая квартира",
-            "description": "Галина переезжает в новую квартиру, а Борис Палыч приходит поздравить ее. Они проводят вместе ночь и начинают отношения."
-        }
-    ],
-    "startPrompt": "Половина десятого вечера. Офис, письменный стол и бутылка \"Баккарди Блэк\" в пластиковом стаканчике, который я так удачно стащила у куллера в приемной.\\n- Я страдаю о вечном.\\n- Что может делать женщина в вечернем платье на работе в столь поздний час в одиночестве?\\n- Да, Борис Палыч застал меня врасплох и выгнал из кабинета."
+    "startPrompt": "You awaken to find yourself in a small village near Woking, England. The tranquility of the late 19th century feels ominously misplaced as distant rumbles echo through the air. News has spread of a mysterious event occurring at Horsell Common. You gather your belongings—an old coat, a leather satchel, and barely enough rations to last through the day. Stepping outside, a group of townsfolk hastily discuss rumors of extraterrestrial visitors. As you contemplate your options, the excitement boils over, and you sense a certain dread lurking beneath the surface. \n\nWhat will you do?\n\n<options><option>Investigate the cylinder with the crowd</option><option>Seek shelter away from the commotion</option></options>"
 }
 
 Error:
-JSON parsing error: [json.exception.parse_error.101] parse error at line 33, column 1: syntax error while parsing value - invalid literal; last read: '"Половина десятого вечера. Офис, письменный стол и бутылка \"Баккарди Блэк\" в пластиковом стаканчике, который я так удачно стащила у куллера в приемной.\\n- Я страдаю о вечном.\\n- Что может делать женщина в вечернем платье на работе в столь поздний час в одиночестве?\\n- Да, Борис Палыч застал меня врасплох и выгнал из кабинета."<U+000A>}<U+000A>`'; expected end of input
+JSON parsing error: [json.exception.parse_error.101] parse error at line 9, column 9: syntax error while parsing object key - unexpected '}'; expected string literal
 Raw response starts with: {
-    "title": "Женская проза: Шалость",
-    "world": "Ярослава А, ав�
+    "title": "Invasion of the Martians",
+    "world": "In the late Victorian era, the world appear

@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libp256m.a "CMakeFiles/p256m.dir/p256-m_driver_entrypoints.c.obj" "CMakeFiles/p256m.dir/p256-m/p256-m.c.obj"
+C:\msys64\ucrt64\bin\ranlib.exe libp256m.a

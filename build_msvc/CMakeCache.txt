@@ -23,6 +23,9 @@ BOOK_TO_GAME_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 BOOK_TO_GAME_SOURCE_DIR:STATIC=C:/games/BOOK_TO_GAME
 
+//No help, variable specified on the command line.
+CMAKE_BUILD_TYPE:UNINITIALIZED=Release
+
 //Semicolon separated list of supported configuration types, only
 // supports Debug, Release, MinSizeRel, and RelWithDebInfo, anything
 // else will be ignored.

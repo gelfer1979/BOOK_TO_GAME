@@ -1,0 +1,7 @@
+{
+    "apiKey": "",
+    "apiKeyEnvVar": "",
+    "baseUrl": "puter",
+    "format": "puter",
+    "modelName": "gpt-4o-mini"
+}
