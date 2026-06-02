@@ -44,3 +44,9 @@ external/temp_*/
 # Dynamically generated headers
 external/src/miniz/miniz_export.h
 
+build_appimage/
+build_linux/
+build_native/
+build_msvc/
+build_webview_test/
+build_webview_test2/

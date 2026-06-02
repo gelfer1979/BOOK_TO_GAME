@@ -36,7 +36,13 @@ sudo apt install -y \
     libsdl2-net-dev \
     libcurl4-openssl-dev \
     libwebkit2gtk-4.0-dev \
-    libgtk-3-dev
+    libgtk-3-dev \
+    libwayland-dev \
+    wayland-protocols \
+    libxkbcommon-dev \
+    libegl1-mesa-dev \
+    libwayland-cursor0 \
+    libdecor-0-dev
 ```
 
 ---
@@ -74,8 +80,16 @@ WSL2 automatically configures X11/Wayland display routing (WSLg) on modern Windo
 
 ### A. Run the Native C++ SDL2 Game:
 ```bash
+# On a native Linux system with Wayland compositor (e.g. GNOME, KDE)
+SDL_VIDEODRIVER=wayland ./build_linux/BOOK_TO_GAME
+
+# On WSL2 / WSLg (no native Wayland compositor — uses X11/WSLg fallback)
 ./build_linux/BOOK_TO_GAME
 ```
+
+> **Note:** `SDL_VIDEODRIVER=wayland` is only for native Linux with a Wayland compositor.
+> In WSL2 / WSLg environments **do not** set `SDL_VIDEODRIVER=wayland` — WSLg uses X11/RDP internally
+> and does not expose a real Wayland socket. SDL2 will auto-detect and fall back to X11.
 
 ### B. Run the Native WebKitGTK WebView Wrapper:
 ```bash

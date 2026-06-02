@@ -1,4 +1,8 @@
 #pragma once
+#ifndef _WIN32
+#include <unistd.h>
+#include <sys/wait.h>
+#endif
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 inline void EmscriptenSyncFS() {
@@ -1263,17 +1267,21 @@ public:
             }
         }
 
-        // 2. Try using the keyless PuterBridge.exe helper via WebView2 on Windows
+        // 2. Try using the keyless PuterBridge helper via WebView2 on Windows / WebKitGTK on Linux
+#if defined(_WIN32) || (defined(__linux__) && !defined(__ANDROID__))
+        std::string bridgeName = "PuterBridge";
 #ifdef _WIN32
-        std::string bridgePath = "PuterBridge.exe";
+        bridgeName = "PuterBridge.exe";
+#endif
+        std::string bridgePath = bridgeName;
         if (!std::filesystem::exists(bridgePath)) {
-            bridgePath = "../PuterBridge.exe";
+            bridgePath = "../" + bridgeName;
         }
         if (!std::filesystem::exists(bridgePath)) {
-            if (std::filesystem::exists("Debug/PuterBridge.exe")) bridgePath = "Debug/PuterBridge.exe";
-            else if (std::filesystem::exists("Release/PuterBridge.exe")) bridgePath = "Release/PuterBridge.exe";
-            else if (std::filesystem::exists("MinSizeRel/PuterBridge.exe")) bridgePath = "MinSizeRel/PuterBridge.exe";
-            else if (std::filesystem::exists("RelWithDebInfo/PuterBridge.exe")) bridgePath = "RelWithDebInfo/PuterBridge.exe";
+            if (std::filesystem::exists("Debug/" + bridgeName)) bridgePath = "Debug/" + bridgeName;
+            else if (std::filesystem::exists("Release/" + bridgeName)) bridgePath = "Release/" + bridgeName;
+            else if (std::filesystem::exists("MinSizeRel/" + bridgeName)) bridgePath = "MinSizeRel/" + bridgeName;
+            else if (std::filesystem::exists("RelWithDebInfo/" + bridgeName)) bridgePath = "RelWithDebInfo/" + bridgeName;
         }
         
         if (std::filesystem::exists(bridgePath)) {
@@ -1301,6 +1309,7 @@ public:
                 std::cout << "[Puter Bridge] Wrote puter_request.json. Launching bridge..." << std::endl;
                 
                 bool success = false;
+#ifdef _WIN32
                 STARTUPINFOA si;
                 PROCESS_INFORMATION pi;
                 ZeroMemory(&si, sizeof(si));
@@ -1333,6 +1342,23 @@ public:
                 } else {
                     std::cerr << "[Puter Bridge] Failed to launch PuterBridge.exe process. Error code: " << GetLastError() << std::endl;
                 }
+#else
+                // Linux implementation using fork/exec
+                pid_t pid = fork();
+                if (pid == 0) {
+                    // Child process
+                    execl(bridgePath.c_str(), bridgePath.c_str(), NULL);
+                    std::cerr << "[Puter Bridge] execl failed to run " << bridgePath << std::endl;
+                    exit(1);
+                } else if (pid > 0) {
+                    // Parent process
+                    int status;
+                    waitpid(pid, &status, 0);
+                    success = true;
+                } else {
+                    std::cerr << "[Puter Bridge] fork failed." << std::endl;
+                }
+#endif
                 
                 std::ifstream respFile("puter_response.json");
                 if (respFile.is_open()) {
@@ -1414,12 +1440,16 @@ public:
         
         // 3. Fallback guide instructions if absolutely no operational keys are found
         bool isRu = (language == "Russian" || language == "ru" || language == "RU");
+        std::string currentBridgeName = "PuterBridge";
+#ifdef _WIN32
+        currentBridgeName = "PuterBridge.exe";
+#endif
         if (isRu) {
-            return "ИИ по умолчанию (Puter.js) доступен без API-ключа в WebAssembly-версии (в браузере) или при запуске через WebView2 Helper (PuterBridge.exe).\n\n"
-                   "Для игры в этом нативном C++ билде, пожалуйста, убедитесь, что PuterBridge.exe скомпилирован и находится рядом, либо перейдите в Настройки и укажите ваш API-ключ для Google Gemini / OpenRouter / OpenAI.";
+            return "ИИ по умолчанию (Puter.js) доступен без API-ключа в WebAssembly-версии (в браузере) или при запуске через WebView Helper (" + currentBridgeName + ").\n\n"
+                   "Для игры в этом нативном C++ билде, пожалуйста, убедитесь, что " + currentBridgeName + " скомпилирован и находится рядом, либо перейдите в Настройки и укажите ваш API-ключ для Google Gemini / OpenRouter / OpenAI.";
         } else {
-            return "The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using the WebView2 Helper (PuterBridge.exe).\n\n"
-                   "To play this native C++ build, please ensure PuterBridge.exe is built and placed in the same directory, or go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key.";
+            return "The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using the WebView Helper (" + currentBridgeName + ").\n\n"
+                   "To play this native C++ build, please ensure " + currentBridgeName + " is built and placed in the same directory, or go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key.";
         }
 #endif
         return "";
@@ -2781,31 +2811,11 @@ inline bool CreateBookFromTxt(
     const std::string& fidelityWishes,
     const std::string& customWishes,
     std::string& outError,
-    std::function<void(int progress, const std::string& status)> progressCallback = nullptr
+    std::function<void(int progress, const std::string& status)> progressCallback = nullptr,
+    std::string* contentCache = nullptr
 ) {
     if (aiClient) {
         aiClient->setSystemPrompt(""); // Clear any stale system prompts (e.g. from the old book) to prevent mixing or inheriting old book context
-    }
-
-#if defined(_WIN32)
-    std::ifstream txtFile(std::filesystem::path(BookConverter::UTF8ToWide(txtFilePath)));
-#else
-    std::ifstream txtFile(txtFilePath);
-#endif
-    if (!txtFile.is_open()) {
-        outError = "Could not open text file: " + txtFilePath;
-        return false;
-    }
-    
-    std::stringstream buffer;
-    buffer << txtFile.rdbuf();
-    std::string content = buffer.str();
-    txtFile.close();
-    
-    content = Trim(content);
-    if (content.empty()) {
-        outError = "File is empty: " + txtFilePath;
-        return false;
     }
 
     // Capture original timeouts for potential AI summarization requests and later generation timeouts
@@ -2818,88 +2828,157 @@ inline bool CreateBookFromTxt(
     }
 
     int totalChapters = ParseChapterCount(lengthWishes);
-    bool isNBook = (txtFilePath.find("nbook_") != std::string::npos);
-    // If text exceeds 20,000 characters, chunk and summarize it to prevent AI context/generation limit errors
-    if (content.length() > 20000 && !isNBook) {
-        std::vector<std::string> chunks = SplitIntoChunks(content, 20000);
-        std::cout << "[AI Book Gen] Large book detected (Length: " << content.length() << " chars). Splitting into " << chunks.size() << " chunks of <= 20,000 characters..." << std::endl;
-        
-        std::string consolidatedSummary = "";
-        int stepNum = 1;
-        for (const auto& chunk : chunks) {
-            std::string statusMsg = "";
-            if (progressCallback) {
-                if (gameLanguage == "Russian") {
-                    statusMsg = "Анализ текста: обработка части " + std::to_string(stepNum) + " из " + std::to_string(chunks.size()) + "...";
-                } else {
-                    statusMsg = "Analyzing text: processing part " + std::to_string(stepNum) + " of " + std::to_string(chunks.size()) + "...";
-                }
-                int maxSummarizeProgress = (totalChapters <= 10) ? 90 : 10;
-                int chunkProgress = (stepNum * maxSummarizeProgress) / chunks.size();
-                if (chunkProgress > maxSummarizeProgress) chunkProgress = maxSummarizeProgress;
-                progressCallback(chunkProgress, statusMsg);
-            }
-            
-            if (aiClient) {
-                aiClient->setSystemPrompt(modelState.promptAiSummarizer);
-            }
-            
-            std::string summaryPrompt;
-            if (gameLanguage == "Russian") {
-                summaryPrompt = "Пожалуйста, напиши подробный и точный пересказ следующей части книги. "
-                                "Сохрани ключевые события, имена персонажей, локации и важные детали сюжета. "
-                                "Напиши пересказ строго на русском языке:\n\n" + chunk;
-            } else {
-                summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
-                                "Preserve all key events, character names, locations, and important plot details. "
-                                "Write the summary strictly in the target language (" + gameLanguage + "):\n\n" + chunk;
-            }
-            
-            std::cout << "[AI Book Gen] Summarizing chunk " << stepNum << "/" << chunks.size() << " (Length: " << chunk.length() << " chars)..." << std::endl;
-            
-            std::string chunkSummary;
-            int attemptSum = 0;
-            int maxAttempts = 3;
-            int delayMs = 1000;
-            
-            if (extClient) {
-                extClient->setTimeoutSettings(15, 120);
-            }
-            
-            while (attemptSum < maxAttempts) {
-                if (aiClient) {
-                    chunkSummary = aiClient->ask(summaryPrompt, gameLanguage);
-                }
-                chunkSummary = Trim(chunkSummary);
-                if (chunkSummary.empty() || chunkSummary.find("Error") != std::string::npos) {
-                    attemptSum++;
-                    std::cout << "[AI Book Gen] Chunk " << stepNum << " summary attempt " << attemptSum << " failed: " << chunkSummary << std::endl;
-                    if (attemptSum < maxAttempts) {
-#ifndef __EMSCRIPTEN__
-                        std::this_thread::sleep_for(std::chrono::milliseconds(delayMs));
+
+    std::string content;
+
+    // If a cached (pre-summarized) content is provided, skip file reading and summarization entirely
+    if (contentCache != nullptr && !contentCache->empty()) {
+        content = *contentCache;
+        std::cout << "[AI Book Gen] Using cached summarized content (" << content.length() << " chars). Skipping file reading and summarization." << std::endl;
+    } else {
+#if defined(_WIN32)
+        std::ifstream txtFile(std::filesystem::path(BookConverter::UTF8ToWide(txtFilePath)));
+#else
+        std::ifstream txtFile(txtFilePath);
 #endif
-                        delayMs *= 2;
-                    }
-                } else {
-                    break;
-                }
-            }
-            
-            if (extClient) {
-                extClient->setTimeoutSettings(oldConnect, oldRequest);
-            }
-            
-            if (chunkSummary.empty() || chunkSummary.find("Error") != std::string::npos) {
-                outError = "Failed to summarize part " + std::to_string(stepNum) + " of the book: " + chunkSummary;
-                return false;
-            }
-            
-            consolidatedSummary += "Part " + std::to_string(stepNum) + " Summary:\n" + chunkSummary + "\n\n";
-            stepNum++;
+        if (!txtFile.is_open()) {
+            outError = "Could not open text file: " + txtFilePath;
+            return false;
         }
         
-        content = consolidatedSummary;
-        std::cout << "[AI Book Gen] Chunk summarization complete. Consolidated summary length: " << content.length() << " chars." << std::endl;
+        std::stringstream buffer;
+        buffer << txtFile.rdbuf();
+        content = buffer.str();
+        txtFile.close();
+        
+        content = Trim(content);
+        if (content.empty()) {
+            outError = "File is empty: " + txtFilePath;
+            return false;
+        }
+
+        bool isNBook = (txtFilePath.find("nbook_") != std::string::npos);
+        // If text exceeds 20,000 characters, chunk and summarize it repeatedly until it fits.
+        // Each pass splits the current content into chunks, summarizes each, and merges them.
+        // The loop continues until the result is <= 20,000 chars or cannot be reduced further.
+        if (content.length() > 20000 && !isNBook) {
+            int summarizePass = 1;
+            while (content.length() > 20000) {
+                std::vector<std::string> chunks = SplitIntoChunks(content, 20000);
+                std::cout << "[AI Book Gen] Summarization pass " << summarizePass
+                          << ": content is " << content.length() << " chars, splitting into "
+                          << chunks.size() << " chunks of <= 20,000 characters..." << std::endl;
+
+                // Safety: if there's only one chunk but it's still > 20,000 chars the AI can't
+                // reduce it further — break to avoid an infinite loop.
+                if (chunks.size() <= 1) {
+                    std::cout << "[AI Book Gen] Content fits in a single chunk and cannot be reduced further. Proceeding." << std::endl;
+                    break;
+                }
+
+                std::string consolidatedSummary = "";
+                int stepNum = 1;
+                for (const auto& chunk : chunks) {
+                    std::string statusMsg = "";
+                    if (progressCallback) {
+                        if (summarizePass == 1) {
+                            if (gameLanguage == "Russian") {
+                                statusMsg = "Анализ текста: обработка части " + std::to_string(stepNum) + " из " + std::to_string(chunks.size()) + "...";
+                            } else {
+                                statusMsg = "Analyzing text: processing part " + std::to_string(stepNum) + " of " + std::to_string(chunks.size()) + "...";
+                            }
+                        } else {
+                            if (gameLanguage == "Russian") {
+                                statusMsg = "Сжатие текста (проход " + std::to_string(summarizePass) + "): обработка части " + std::to_string(stepNum) + " из " + std::to_string(chunks.size()) + "...";
+                            } else {
+                                statusMsg = "Compressing text (pass " + std::to_string(summarizePass) + "): processing part " + std::to_string(stepNum) + " of " + std::to_string(chunks.size()) + "...";
+                            }
+                        }
+                        int maxSummarizeProgress = (totalChapters <= 10) ? 90 : 10;
+                        int chunkProgress = (stepNum * maxSummarizeProgress) / chunks.size();
+                        if (chunkProgress > maxSummarizeProgress) chunkProgress = maxSummarizeProgress;
+                        progressCallback(chunkProgress, statusMsg);
+                    }
+                    
+                    if (aiClient) {
+                        aiClient->setSystemPrompt(modelState.promptAiSummarizer);
+                    }
+                    
+                    std::string summaryPrompt;
+                    if (gameLanguage == "Russian") {
+                        summaryPrompt = "Пожалуйста, напиши подробный и точный пересказ следующей части книги. "
+                                        "Сохрани ключевые события, имена персонажей, локации и важные детали сюжета. "
+                                        "Напиши пересказ строго на русском языке:\n\n" + chunk;
+                    } else {
+                        summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
+                                        "Preserve all key events, character names, locations, and important plot details. "
+                                        "Write the summary strictly in the target language (" + gameLanguage + "):\n\n" + chunk;
+                    }
+                    
+                    std::cout << "[AI Book Gen] Pass " << summarizePass << " — summarizing chunk " << stepNum << "/" << chunks.size() << " (Length: " << chunk.length() << " chars)..." << std::endl;
+                    
+                    std::string chunkSummary;
+                    int attemptSum = 0;
+                    int maxAttempts = 3;
+                    int delayMs = 1000;
+                    
+                    if (extClient) {
+                        extClient->setTimeoutSettings(15, 120);
+                    }
+                    
+                    while (attemptSum < maxAttempts) {
+                        if (aiClient) {
+                            chunkSummary = aiClient->ask(summaryPrompt, gameLanguage);
+                        }
+                        chunkSummary = Trim(chunkSummary);
+                        if (chunkSummary.empty() || chunkSummary.find("Error") != std::string::npos) {
+                            attemptSum++;
+                            std::cout << "[AI Book Gen] Pass " << summarizePass << " chunk " << stepNum << " attempt " << attemptSum << " failed: " << chunkSummary << std::endl;
+                            if (attemptSum < maxAttempts) {
+#ifndef __EMSCRIPTEN__
+                                std::this_thread::sleep_for(std::chrono::milliseconds(delayMs));
+#endif
+                                delayMs *= 2;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                    
+                    if (extClient) {
+                        extClient->setTimeoutSettings(oldConnect, oldRequest);
+                    }
+                    
+                    if (chunkSummary.empty() || chunkSummary.find("Error") != std::string::npos) {
+                        outError = "Failed to summarize part " + std::to_string(stepNum) + " of the book (pass " + std::to_string(summarizePass) + "): " + chunkSummary;
+                        return false;
+                    }
+                    
+                    consolidatedSummary += "Part " + std::to_string(stepNum) + " Summary:\n" + chunkSummary + "\n\n";
+                    stepNum++;
+                }
+
+                std::string prevContent = content;
+                content = consolidatedSummary;
+                std::cout << "[AI Book Gen] Pass " << summarizePass << " complete. Content reduced from "
+                          << prevContent.length() << " to " << content.length() << " chars." << std::endl;
+
+                // If the content did not shrink at all, stop to avoid an infinite loop
+                if (content.length() >= prevContent.length()) {
+                    std::cout << "[AI Book Gen] Content did not shrink further. Proceeding with current size." << std::endl;
+                    break;
+                }
+
+                summarizePass++;
+            }
+            std::cout << "[AI Book Gen] Summarization finished after " << summarizePass << " pass(es). Final content length: " << content.length() << " chars." << std::endl;
+        }
+
+        // Save processed content to cache so retries can skip summarization
+        if (contentCache != nullptr) {
+            *contentCache = content;
+            std::cout << "[AI Book Gen] Content cached for potential retries (" << content.length() << " chars)." << std::endl;
+        }
     }
 
     if (totalChapters <= 10) {

@@ -109,6 +109,16 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build static libraries only" FORCE)
 set(SDL_SHARED OFF CACHE BOOL "Disable SDL shared library" FORCE)
 set(SDL_STATIC ON CACHE BOOL "Enable SDL static library" FORCE)
 
+# Linux: Wayland support (dynamic loading = graceful X11 fallback when no Wayland compositor is present, e.g. WSL/WSLg)
+if(UNIX AND NOT APPLE AND NOT ANDROID)
+    set(SDL_WAYLAND ON CACHE BOOL "Enable Wayland video driver" FORCE)
+    set(SDL_WAYLAND_SHARED ON CACHE BOOL "Dynamically load Wayland support (allows X11 fallback)" FORCE)
+    set(SDL_WAYLAND_LIBDECOR ON CACHE BOOL "Use client-side window decorations on Wayland" FORCE)
+    set(SDL_WAYLAND_LIBDECOR_SHARED ON CACHE BOOL "Dynamically load libdecor" FORCE)
+    set(SDL_X11 ON CACHE BOOL "Enable X11 video driver (fallback)" FORCE)
+    set(SDL_X11_SHARED ON CACHE BOOL "Dynamically load X11 support" FORCE)
+endif()
+
 # SDL2_image settings
 set(SDL2IMAGE_VENDORED ON CACHE BOOL "Use vendored libraries" FORCE)
 set(SDL2IMAGE_BACKEND_STB ON CACHE BOOL "Use STB image" FORCE)
@@ -348,19 +358,45 @@ else()
         )
     endif()
 
-    # Copy assets folder to application output directory
+    # Copy assets and configuration files to application output directory
     if(NOT ANDROID)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_CURRENT_SOURCE_DIR}/assets"
             $<TARGET_FILE_DIR:${TARGET_NAME}>/assets
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/book.json"
+            $<TARGET_FILE_DIR:${TARGET_NAME}>/book.json
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/settings.json"
+            $<TARGET_FILE_DIR:${TARGET_NAME}>/settings.json
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/options.json"
+            $<TARGET_FILE_DIR:${TARGET_NAME}>/options.json
         )
+
+        file(GLOB AI_JSON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/ai_*.json")
+        foreach(AI_FILE ${AI_JSON_FILES})
+            get_filename_component(AI_NAME ${AI_FILE} NAME)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different "${AI_FILE}" $<TARGET_FILE_DIR:${TARGET_NAME}>/${AI_NAME}
+            )
+        endforeach()
+
+        file(GLOB NBOOK_TXT_FILES "${CMAKE_CURRENT_SOURCE_DIR}/nbook_*.txt")
+        foreach(NBOOK_FILE ${NBOOK_TXT_FILES})
+            get_filename_component(NBOOK_NAME ${NBOOK_FILE} NAME)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NBOOK_FILE}" $<TARGET_FILE_DIR:${TARGET_NAME}>/${NBOOK_NAME}
+            )
+        endforeach()
+
         install(TARGETS ${TARGET_NAME} DESTINATION bin)
     endif()
 endif()
 
 # 4. Standalone Book Summarizer utility (Windows/Desktop Console Application)
-if(NOT ANDROID AND NOT EMSCRIPTEN)
+if(WIN32)
     add_executable(book_summarizer src/book_summarizer.cpp src/book_converter.cpp)
     target_compile_definitions(book_summarizer PRIVATE CURL_STATICLIB)
     if(MOBI_SUPPORT)
@@ -465,7 +501,7 @@ if(WEBVIEW_SOURCES)
 endif()
 
 # ==============================================================================
-# PUTER BRIDGE BUILD TARGET (Windows only, keyless Puter AI helper)
+# PUTER BRIDGE BUILD TARGET (Keyless Puter AI helper for Windows & Linux)
 # ==============================================================================
 if(WIN32)
     message(STATUS "Configuring PuterBridge (Windows invisible WebView2 helper)...")
@@ -505,5 +541,37 @@ if(WIN32)
     # Add dependency so PuterBridge builds automatically with BOOK_TO_GAME
     if(TARGET BOOK_TO_GAME)
         add_dependencies(BOOK_TO_GAME PuterBridge)
+    endif()
+elseif(UNIX AND NOT APPLE)
+    message(STATUS "Configuring PuterBridge (Linux invisible WebKitGTK helper)...")
+    
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+    pkg_check_modules(WEBKIT2REQUIRED webkit2gtk-4.0)
+    
+    add_executable(PuterBridge src/platforms/linux/puter_bridge_linux.cpp)
+    target_link_libraries(PuterBridge PRIVATE ${GTK3_LIBRARIES} ${WEBKIT2REQUIRED_LIBRARIES})
+    target_include_directories(PuterBridge PRIVATE ${GTK3_INCLUDE_DIRS} ${WEBKIT2REQUIRED_INCLUDE_DIRS})
+    
+    # Copy puter_bridge.html to output folder
+    add_custom_command(TARGET PuterBridge POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:PuterBridge>/assets
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets/puter_bridge.html"
+        $<TARGET_FILE_DIR:PuterBridge>/assets/puter_bridge.html
+    )
+    
+    install(TARGETS PuterBridge DESTINATION bin)
+    
+    # Add dependency so PuterBridge builds automatically with BOOK_TO_GAME
+    if(TARGET BOOK_TO_GAME)
+        add_dependencies(BOOK_TO_GAME PuterBridge)
+        
+        # Add target to bundle the compiled Linux build into a single self-extracting BookToGame.run file
+        add_custom_target(PackLinuxRun
+            COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/platforms/linux/pack_run.sh" "$<TARGET_FILE_DIR:BOOK_TO_GAME>"
+            DEPENDS BOOK_TO_GAME PuterBridge NativeWebViewWrapper
+            COMMENT "Creating single-file self-extracting Linux executable..."
+        )
     endif()
 endif()

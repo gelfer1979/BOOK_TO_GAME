@@ -1,49 +1,64 @@
 AI Raw Response:
 {
-    "title": "Invasion of the Martians",
-    "world": "In the late Victorian era, the world appears tranquil and orderly, yet unbeknownst to its inhabitants, a catastrophic threat looms just beyond the stars. Mars, once a vibrant planet, has now succumbed to environmental pressures, birthing a cold-blooded race of Martians seeking a new home. This advanced civilization, unable to sustain life on their home world, sets their sights on Earth—a delicate planet teeming with life they deem theirs for the taking. As cylindrical vessels hurtle from their planet, humanity, occupied by its trivial pursuits, remains blissfully unaware. The convergence of science and the arcane intertwines within this apocalyptic adventure, where the advanced technologies of the Martians stand in stark contrast to the Victorian ingenuity of England. \n\nThe conquest escalates into chaos as the Martians utilize their deadly heat-rays, transforming pastoral landscapes into charred wastelands, and prompting a desperate fight for survival. Factions arise, embodying the chaos of society: the military, attempting to establish order against the invading forces; the civilians, stricken by fear and confusion; and the lost souls wandering through an annihilated world, seeking hope among the ashes. Survival becomes the utmost commodity, as our protagonist grapples not only with external invaders but the very essence of humanity wrapped within the turmoil around him.",
+    "title": "The Hilarious Misadventures of Pinocchio",
+    "world": "Welcome to the whimsical land of Marionettoria, where puppets roam and mischief reigns supreme! This delightfully chaotic realm is filled with magical creatures, bumbling humans, and plenty of comedic twists. The laws of physics often vanish when puppets come to life, laughter echoes through the streets, and every corner hides a new adventure or blunder. Lorded over by the bumbling but well-meaning Geppetto and his cheeky puppet, Pinocchio, Marionettoria thrives on absurdity and charm. This is a world where friends can become foes, and every laugh has a hint of the absurd.\n\nThe factions of Marionettoria are as zany as they come! There are the Puppet Masters—men and women who seek to amuse through their strings—with their pedantic puppet philosophy. Then there are the Mischief Makers, a group of incorrigible mischief-makers including the Talking Cricket and a host of talking animals who aim to counsel the young and naive. Finally, the Whimsical Folk, a collective of puppets and enchanted beings, support a community of fun and good-natured pranks. In this land, adventures await around every corner, and each decision can lead to hilarity or haphazardness.",
     "plot": [
         {
             "chapter": 1,
-            "title": "The Cylinder Falls",
-            "description": "The story begins as astronomer Ogilvy witnesses the arrival of a Martian cylinder near Woking. As news of the cylinder's crash spreads, a crowd assembles to witness the spectacle. Our protagonist, a local resident, is drawn to the event, troubled by the implications of what may be inside. Tension escalates as the cylinder's lid begins to unscrew. Characters to meet include Ogilvy, Henderson, and the townsfolk. The danger arises as the delegation’s attempt to communicate ends in catastrophe when the Martians unleash their heat-ray, incinerating those nearby. The protagonist must navigate the ensuing chaos, find refuge, and gather supplies to survive this initial encounter.",
+            "title": "A Masterpiece in the Making",
+            "description": "The story begins in the cluttered workshop of Master Antonio, affectionately known as 'Master Cherry' due to his rosy nose. He stumbles upon a peculiar log that laughs and screams as he attempts to carve it. Fearing the aroma of mischief, he hands it over to his bickering neighbor, Geppetto, who dreams of making a dancing marionette. The two bumble their way through a humorous argument but eventually reconcile. Geppetto takes the log home and begins crafting Pinocchio the puppet, who immediately leads Geppetto into a series of laugh-out-loud misadventures. The player must gather supplies for the workshop while deciding how to navigate the comedic antics of both Master Cherry and Geppetto. The dangers include nosy children and the possible threat of the garish woodpeckers of the area.",
         },
         {
             "chapter": 2,
-            "title": "Chaos Unleashed",
-            "description": "With panic erupting around Horsell Common, our character must decide to flee or assist those left behind. They can choose to seek shelter in a nearby town or gather a group of fighters to stand against the Martians. Key items to find include emergency rations and a map of the area. As the Martians deploy more cylinders, a sense of dread fills the air. The growing military presence offers hope, but the looming threat of the Martians' deadly machines casts a long shadow. The narrator faces dangers from both the Martians and the panicked crowd as they navigate toward safety.",
+            "title": "Pinocchio's Little Escapade",
+            "description": "Pinocchio, now a mischievous puppet, thrusts himself into the world, quickly escaping Geppetto's grasp. His defiance leads to a series of slapstick encounters, including being mistaken for a runaway foal by a bumbling policeman. Players must help Geppetto track down Pinocchio, utilizing absurd tools and whimsical distractions while avoiding the teasing children and pranksters lurking nearby. Key characters to interact with include Pinocchio's friends and the quirky townsfolk, each contributing to the chaos.",
         },
         {
             "chapter": 3,
-            "title": "Fleeing the Destruction",
-            "description": "After witnessing a devastating attack on the town, the protagonist must decide whether to evacuate with their loved ones or attempt a daring rescue of those left behind. Scenarios involve encounters with soldiers, civilians, or more Martians. Items found could include a horse-drawn cart, weapons, or important documents. The narrative compels players to constantly evaluate their morals amidst chaos, pitting survival against altruism.",
+            "title": "The Talking Cricket's Wise Words",
+            "description": "Pinocchio, after enduring a rather hilarious altercation with the police, meets the Talking Cricket who delivers sage advice, albeit interrupted by Pinocchio’s antics. Players will use the Cricket's warnings and Pinocchio's unfolding vices to find hidden paths and evade whimsical traps that lead to bigger comic errors. The colorful characters and their relentless humor make this chapter a comedic gauntlet full of poor choices and lighthearted escapades.",
         },
         {
             "chapter": 4,
-            "title": "The Darkest Hour",
-            "description": "Surviving a tumultuous journey through devastated territories leads to a revelation about the Martians' ultimate goal. Dangerous machines scour the landscape, and the protagonist overhears plans to consolidate military forces for defense. A chance encounter with a soldier reveals devastating information about the black smoke the Martians use against humans. The protagonist must secure transportation or means of communication to warn others as chaos reigns; they can find an abandoned boat or a message to bring to London.",
+            "title": "The Bizarre World of the Puppet Theater",
+            "description": "Driven by curiosity, Pinocchio sneaks into a puppet theater and unwittingly joins the chaotic performance. After a humorous mix-up with the frightening puppet master Mangiafuoco ensures a series of nail-biting, rib-tickling moments, including an offer to roast a fellow puppet! Players must navigate these uproarious complications, finding ways to charm the audience, save Harlequin, and impress Mangiafuoco, often through unexpected and laughable ploys.",
         },
         {
             "chapter": 5,
-            "title": "A Hopeful Dawn",
-            "description": "Having braved the onslaught and discovered the Martians’ vulnerability, the protagonist embarks on a quest to rally support and inspire hope. Scenarios may include negotiating with military leaders or persuading frightened civilians to rise against oppression. The player can uncover hidden caches of supplies to assist a small band of survivors. The chapter culminates in a significant skirmish, where both human resilience and Martian technology clash violently.",
+            "title": "Cunning Plans with Fox and Cat",
+            "description": "Pinocchio meets the sly Fox and Cat who promise him tales of riches in the Land of Catchfools, disguised cleverly as 'advisors' with questionable motives. This chapter introduces humorous riddles and challenges, where players must choose whether to trust these two swindlers or follow a more genuine path, leading to slapstick scenarios that result in side-splitting outcomes. Antics include a ludicrous tavern meal and comedic chases!",
         },
         {
             "chapter": 6,
-            "title": "Victory Amidst Ruins",
-            "description": "The Martian invasion reaches its climax as their forces seem overpowering, yet unbeknownst to them, Earth's bacteria begin to take effect. The protagonist leads a group of survivors to safety, navigating through bombed out areas. They must decide whether to help individuals who fall behind or prioritize their group, testing their moral center. This chapter leads to a climactic storm where the Martians' collapse becomes a bitter triumph for humanity, but with a heavy price.",
+            "title": "The Land of Toys Awaits",
+            "description": "Finally succumbing to temptation, Pinocchio and his friends venture into the Land of Toys. Laughter abounds as the children indulge in endless play, but a sinister transformation looms. As the absurdity grows, players will navigate comical challenges as Pinocchio embraces his carefree side while trying to avoid the comedic pitfalls of immaturity that lead to whimsical consequences. Will he still be able to save his friends?",
         },
         {
             "chapter": 7,
-            "title": "Rebirth of Humanity",
-            "description": "As the smoke clears and silence fills the air where madness once reigned, the protagonist grapples with the aftermath. They witness the rebirth of their world, encountering remnants and relics of Martian technology. They face the choice of returning to their past life or aiding others in rebuilding society. Introspection becomes imperative as the protagonist reconciles the trauma they’ve witnessed, whilst understanding the fragile reality of human existence against cosmic threats."
+            "title": "The Circus and the Great Escape",
+            "description": "Captured and displayed as the star performer in a circus, Pinocchio now must endure ridiculous tricks, inevitable bloopers, and perilous performance fails. Players navigate a humorous series of acts while searching for a way to break free from circus life, showcasing hilarious reactions from the audience and comical interactions with other beloved characters like the Fairy. Time is of the essence as he attempts to escape the chaos!",
+        },
+        {
+            "chapter": 8,
+            "title": "The Grand Revelation",
+            "description": "After a series of misadventures, including a clash with the insatiable Green Fisherman, Pinocchio finds himself in the belly of a shark. Joining forces with Geppetto, who has also met his fair share of comical blunders, the duo must concoct a goofy plan, managing to escape despite the ludicrous attempts of the shark to devour them. Friendship rekindles as they navigate their final absurd challenges, culminating in a spectacularly funny reunion on shore.",
+        },
+        {
+            "chapter": 9,
+            "title": "Rebuilding and Redemption",
+            "description": "Back on solid ground, Pinocchio and Geppetto find themselves in the chaotic yet charming company of those they’ve wronged. Here, amidst the laughter and lightheartedness, players must mend relationships while navigating absurdity and helping build a new life, one full of delightful comedic undertones. Other puppets and enchanted beings join them on their journey to redemption, showcasing hilarious consequences along the way.",
+        },
+        {
+            "chapter": 10,
+            "title": "The Final Transformation",
+            "description": "As Pinocchio’s story comes to a close, the Fairy reveals the secret behind becoming a real boy rests on his commitment to honesty and kindness. Players must aid him in making the right comedic choices during a final trial filled with chuckles, heartfelt exchanges, and uproarious moments. Ultimately, the transformation into a real boy marks the culmination of his journey, leaving players laughing and reflecting on the hilarity of life’s misadventures."
         }
     ],
-    "startPrompt": "You awaken to find yourself in a small village near Woking, England. The tranquility of the late 19th century feels ominously misplaced as distant rumbles echo through the air. News has spread of a mysterious event occurring at Horsell Common. You gather your belongings—an old coat, a leather satchel, and barely enough rations to last through the day. Stepping outside, a group of townsfolk hastily discuss rumors of extraterrestrial visitors. As you contemplate your options, the excitement boils over, and you sense a certain dread lurking beneath the surface. \n\nWhat will you do?\n\n<options><option>Investigate the cylinder with the crowd</option><option>Seek shelter away from the commotion</option></options>"
+    "startPrompt": "In the bustling workshop of Master Cherry, a champion of silliness, the scene is set! A wooden log that screams and laughs lies on the table, caught in an hysterical first encounter. Master Cherry bickers with Geppetto, igniting a whirlwind of laughter. Can you help keep their antics from spiraling into full-blown hilarity? Your inventory includes a magic chisel, a quirky hat, and an unexpected rubber chicken! \n\n<options><option>Help Master Cherry carve the log</option><option>Join Geppetto in crafting the puppet</option></options>"
 }
 
 Error:
 JSON parsing error: [json.exception.parse_error.101] parse error at line 9, column 9: syntax error while parsing object key - unexpected '}'; expected string literal
 Raw response starts with: {
-    "title": "Invasion of the Martians",
-    "world": "In the late Victorian era, the world appear
+    "title": "The Hilarious Misadventures of Pinocchio",
+    "world": "Welcome to the whimsical la

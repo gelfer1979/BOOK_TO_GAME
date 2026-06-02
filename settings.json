@@ -3,7 +3,7 @@
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "English",
-    "bookRetries": 3,
+    "bookRetries": 5,
     "choicesSeparator": "\u001f",
     "fontSizeOffset": 6,
     "formatReminder": [
@@ -204,4 +204,4 @@
         "- Call for help",
         "- Break it down"
     ]
-}
+}

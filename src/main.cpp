@@ -178,6 +178,12 @@ struct {
     
     bool running = true;
     bool fileDialogActive = false;
+
+    // Async file dialog (Linux: zenity must not block the SDL main thread)
+    std::atomic<bool> fileDialogDone{false};
+    std::string fileDialogResult;
+    std::thread fileDialogThread;
+
     SDL_Rect deathBtnRect = {0, 0, 0, 0};
     SDL_Rect victoryBtnRect = {0, 0, 0, 0};
     SDL_Rect victoryBtnRect2 = {0, 0, 0, 0};
@@ -307,6 +313,8 @@ void StartBookGeneration(const std::string& filePath);
 void ConsumeApiResponse();
 void MainIteration();
 void ScanAvailableNBooks();
+bool OpenFileDialogAsync(std::string& outPath);
+std::string OpenFileDialog();
 
 void SyncModelToUi() {
     // 1. Convert modelState.messages to uiMessages
@@ -394,7 +402,36 @@ void UpdateSystemPrompt() {
 
 void SaveGame() {
     state.mutex.lock();
-    SaveGame(state.modelState);
+    bool isErrorState = false;
+    
+    // 1. Check if the latest message from the AI contains error markers
+    if (!state.modelState.messages.empty()) {
+        const auto& lastMsg = state.modelState.messages.back();
+        if (lastMsg.sender == "AI") {
+            std::string lowerText = ToLower(lastMsg.text);
+            if (lowerText.find("error") != std::string::npos || 
+                lowerText.find("failed to receive response") != std::string::npos ||
+                lowerText.find("повторить запрос") != std::string::npos ||
+                lowerText.find("retry request") != std::string::npos) {
+                isErrorState = true;
+            }
+        }
+    }
+    
+    // 2. Check if the active choices contain any retry actions
+    for (const auto& choice : state.modelState.activeChoices) {
+        std::string lowerChoice = ToLower(choice);
+        if (lowerChoice.find("retry") != std::string::npos || 
+            lowerChoice.find("повторить") != std::string::npos) {
+            isErrorState = true;
+        }
+    }
+    
+    if (!isErrorState) {
+        SaveGame(state.modelState);
+    } else {
+        std::cout << "[SaveGame] Skipped saving to save.json because an API error state was detected." << std::endl;
+    }
     state.mutex.unlock();
 }
 
@@ -1769,10 +1806,14 @@ void TriggerUiLocalization() {
             }
         }
         state.mutex.lock();
-        state.transitionPrefix = prefixResp;
-        if (!translatedUi.empty()) {
-            state.localizedUi = translatedUi;
+        if (translatedUi.empty()) {
+            state.mutex.unlock();
+            std::cerr << "[Localization] UI localization failed or returned empty! Safely reverting game to English..." << std::endl;
+            ChangeGameLanguage("English");
+            return;
         }
+        state.transitionPrefix = prefixResp;
+        state.localizedUi = translatedUi;
         state.uiLocalized = true;
         GameState tempState = state.modelState;
         
@@ -2046,6 +2087,9 @@ std::string OpenFileDialogImpl() {
     }
     return "";
 #elif defined(__linux__)
+    // On Linux, zenity blocks popen — run it in a background thread to avoid
+    // freezing the SDL event loop. The caller should use the async path instead.
+    // This synchronous path is kept only as a fallback (should not be reached).
     char path[1024] = {0};
     FILE *f = popen((std::string("zenity --file-selection --file-filter='") + BookConverter::GetZenityFilter() + "' 2>/dev/null").c_str(), "r");
     if (f) {
@@ -2061,6 +2105,45 @@ std::string OpenFileDialogImpl() {
 #else
     return "";
 #endif
+#endif
+}
+
+// Launches the file dialog asynchronously on Linux so the SDL event loop keeps running.
+// On all other platforms it falls back to the synchronous OpenFileDialog().
+// Returns true if the dialog was launched asynchronously (result will arrive via
+// state.fileDialogDone / state.fileDialogResult), false if result is already in `outPath`.
+bool OpenFileDialogAsync(std::string& outPath) {
+#if defined(__linux__) && !defined(__ANDROID__)
+    if (state.fileDialogActive) return true; // already open
+    state.fileDialogActive = true;
+    state.fileDialogDone.store(false);
+    state.fileDialogResult.clear();
+    // Detach previous thread if finished
+    if (state.fileDialogThread.joinable()) {
+        state.fileDialogThread.detach();
+    }
+    state.fileDialogThread = std::thread([](){ 
+        char path[1024] = {0};
+        FILE *f = popen((std::string("zenity --file-selection --file-filter='") + BookConverter::GetZenityFilter() + "' 2>/dev/null").c_str(), "r");
+        std::string result;
+        if (f) {
+            if (fgets(path, sizeof(path), f)) {
+                result = path;
+                if (!result.empty() && result.back() == '\n') result.pop_back();
+            }
+            pclose(f);
+        }
+        state.fileDialogResult = result;
+        state.fileDialogDone.store(true);
+        state.fileDialogActive = false;
+        SDL_PumpEvents();
+        SDL_FlushEvent(SDL_DROPFILE);
+    });
+    state.fileDialogThread.detach();
+    return true; // async — caller must wait for fileDialogDone
+#else
+    outPath = OpenFileDialog();
+    return false; // synchronous — result is already in outPath
 #endif
 }
 
@@ -2531,6 +2614,7 @@ void StartBookGeneration(const std::string& filePath) {
         
         bool overallSuccess = false;
         std::string finalErrStr = "";
+        std::string bookContentCache = ""; // Cache of processed/summarized content to skip re-summarization on retries
         
         for (int attempt = 1; attempt <= maxBookAttempts; ++attempt) {
             std::string errStr = "";
@@ -2555,7 +2639,7 @@ void StartBookGeneration(const std::string& filePath) {
             };
             
             std::string outError = "";
-            ok = CreateBookFromTxt(state.modelState, state.aiClient.get(), filePath, state.gameLanguage, lengthWishes, genreWishes, fidelityWishes, customWishes, outError, progressCallback);
+            ok = CreateBookFromTxt(state.modelState, state.aiClient.get(), filePath, state.gameLanguage, lengthWishes, genreWishes, fidelityWishes, customWishes, outError, progressCallback, &bookContentCache);
             errStr = outError;
             
             if (ok) {
@@ -2620,6 +2704,7 @@ void StartBookGeneration(const std::string& filePath) {
         
         bool overallSuccess = false;
         std::string finalErrStr = "";
+        std::string bookContentCache = ""; // Cache of processed/summarized content to skip re-summarization on retries
         
         for (int attempt = 1; attempt <= maxBookAttempts; ++attempt) {
             std::atomic<bool> generationDone(false);
@@ -2668,9 +2753,9 @@ void StartBookGeneration(const std::string& filePath) {
                 state.mutex.unlock();
             };
 
-            std::thread aiThread([&generationDone, &generationSuccess, &errStr, filePath, lengthWishes, genreWishes, fidelityWishes, customWishes, progressCallback]() {
+            std::thread aiThread([&generationDone, &generationSuccess, &errStr, &bookContentCache, filePath, lengthWishes, genreWishes, fidelityWishes, customWishes, progressCallback]() {
                 std::string outError = "";
-                bool ok = CreateBookFromTxt(state.modelState, state.aiClient.get(), filePath, state.gameLanguage, lengthWishes, genreWishes, fidelityWishes, customWishes, outError, progressCallback);
+                bool ok = CreateBookFromTxt(state.modelState, state.aiClient.get(), filePath, state.gameLanguage, lengthWishes, genreWishes, fidelityWishes, customWishes, outError, progressCallback, &bookContentCache);
                 errStr = outError;
                 generationSuccess = ok;
                 generationDone = true;
@@ -3650,6 +3735,18 @@ void MainIteration() {
 
     // 1. Consume any incoming background API responses
     ConsumeApiResponse();
+
+    // 1b. Check if an async file dialog (Linux/zenity) has completed
+#if defined(__linux__) && !defined(__ANDROID__)
+    if (state.fileDialogDone.load()) {
+        state.fileDialogDone.store(false);
+        std::string asyncPath = state.fileDialogResult;
+        state.fileDialogResult.clear();
+        if (!asyncPath.empty()) {
+            InitAdventureSetup(asyncPath);
+        }
+    }
+#endif
     
     // Blinking text cursor timer
     Uint32 currentTicks = SDL_GetTicks();
@@ -3889,8 +3986,9 @@ void MainIteration() {
             } else if (state.appState == APP_STATE_ENTER_TXT_PATH) {
                 SDL_Keycode sym = event.key.keysym.sym;
                 if (sym == SDLK_RETURN || sym == SDLK_SPACE) {
-                    std::string path = OpenFileDialog();
-                    if (!path.empty()) {
+                    std::string path;
+                    bool isAsync = OpenFileDialogAsync(path);
+                    if (!isAsync && !path.empty()) {
                         InitAdventureSetup(path);
                     }
                 }
@@ -4266,8 +4364,9 @@ void MainIteration() {
                 // Click Select File
                 if (mx >= state.customBtnRect2.x && mx <= (state.customBtnRect2.x + state.customBtnRect2.w) &&
                     my >= state.customBtnRect2.y && my <= (state.customBtnRect2.y + state.customBtnRect2.h)) {
-                    std::string path = OpenFileDialog();
-                    if (!path.empty()) {
+                    std::string path;
+                    bool isAsync = OpenFileDialogAsync(path);
+                    if (!isAsync && !path.empty()) {
                         InitAdventureSetup(path);
                     }
                 } else {
@@ -4526,14 +4625,40 @@ void MainIteration() {
     }
     
     if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
-        // 4. Render Scrollable dialogue bubbles
+        state.mutex.lock();
+        // 4. Pre-calculate total content height and update scroll offsets to prevent one-frame rendering lag
+        int lineH = SafeFontHeight(state.fontMessage.get(), 18);
+        int totalContentHeight = 0;
+        for (const auto& msg : state.uiMessages) {
+            int actualBubbleH = msg.lines.size() * (lineH + 4) + 16;
+            totalContentHeight += actualBubbleH + 15;
+        }
+        if (state.modelState.gameWon) {
+            int titleH = SafeFontHeight(state.fontTitle.get(), 24);
+            totalContentHeight += titleH + 15 + 108 + 25;
+        }
+        if (state.modelState.gameOver) {
+            int titleH = SafeFontHeight(state.fontTitle.get(), 24);
+            int btnH = IsMobile() ? 192 : 48;
+            totalContentHeight += titleH + 15 + btnH + 25;
+        }
+        
+        if (totalContentHeight > viewportH) {
+            state.maxScrollOffset = totalContentHeight - viewportH;
+        } else {
+            state.maxScrollOffset = 0;
+        }
+        if (state.scrollToBottom) {
+            state.scrollOffset = state.maxScrollOffset;
+            state.scrollToBottom = false;
+        }
+        
+        // 5. Render Scrollable dialogue bubbles
         SDL_Rect clipRect = { 0, headerH, WINDOW_WIDTH, viewportH };
         SDL_RenderSetClipRect(state.renderer.get(), &clipRect);
         
         int bubbleY = headerH + 20 - state.scrollOffset;
-        int lineH = SafeFontHeight(state.fontMessage.get(), 18);
         
-        state.mutex.lock();
         for (const auto& msg : state.uiMessages) {
             int actualBubbleW = WINDOW_WIDTH - 40;
             int actualBubbleH = msg.lines.size() * (lineH + 4) + 16;
@@ -4647,17 +4772,6 @@ void MainIteration() {
             bubbleY += titleH + 15 + btnRect.h + 25;
         }
         
-        // Update maximum vertical offset scroll bounds
-        int totalContentHeight = bubbleY + state.scrollOffset - (headerH + 20);
-        if (totalContentHeight > viewportH) {
-            state.maxScrollOffset = totalContentHeight - viewportH;
-        } else {
-            state.maxScrollOffset = 0;
-        }
-        if (state.scrollToBottom) {
-            state.scrollOffset = state.maxScrollOffset;
-            state.scrollToBottom = false;
-        }
         state.mutex.unlock();
         
         // Reset ClipRect to allow layout shelf renders
@@ -6037,6 +6151,12 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     }
     
     // 2. Initialize SDL2 subsystems
+    // On Linux/Wayland, SDL2 windows may lack decorations (title bar, close/maximize buttons).
+    // Force X11 backend and disable compositor bypass to ensure the WM draws standard window chrome.
+#if defined(__linux__) && !defined(__ANDROID__)
+    SDL_SetHint(SDL_HINT_VIDEODRIVER, "x11");
+    SDL_SetHint("SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR", "0");
+#endif
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return -1;

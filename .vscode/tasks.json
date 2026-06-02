@@ -92,13 +92,36 @@
         {
             "label": "Build Linux (Release)",
             "type": "shell",
-            "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "command": "if [ -f build_linux/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build_linux/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build_linux; fi; cmake -B build_linux -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build_linux && (chmod +x build_linux/BOOK_TO_GAME build_linux/PuterBridge build_linux/NativeWebViewWrapper 2>/dev/null || true)",
             "windows": {
-                "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release; cmake --build build"
+                "command": "wsl bash -c 'cd \"$PROJECT_DIR\" && cmake -B build_linux -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build_linux && (chmod +x build_linux/BOOK_TO_GAME build_linux/PuterBridge build_linux/NativeWebViewWrapper 2>/dev/null || true)'",
+                "options": {
+                    "env": {
+                        "PROJECT_DIR": "${workspaceFolder}",
+                        "WSLENV": "PROJECT_DIR/p"
+                    }
+                }
             },
             "group": "none",
             "problemMatcher": [],
             "detail": "Compile project for Linux (requires system SDL2 dependencies)"
+        },
+        {
+            "label": "Build Run file for Linux",
+            "type": "shell",
+            "command": "bash platforms/linux/pack_run.sh build_linux && cp build_linux/BookToGame.run . && chmod +x BookToGame.run && echo \"\" && echo \"> BookToGame.run is ready. Launch it manually when needed.\" && echo \"\"",
+            "windows": {
+                "command": "wsl bash -c 'cd \"$PROJECT_DIR\" && bash platforms/linux/build_and_run.sh build_linux'",
+                "options": {
+                    "env": {
+                        "PROJECT_DIR": "${workspaceFolder}",
+                        "WSLENV": "PROJECT_DIR/p"
+                    }
+                }
+            },
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Pack .run from build_linux without launching it"
         },
         {
             "label": "Build iOS (Xcode Project)",
@@ -118,6 +141,26 @@
             "group": "none",
             "problemMatcher": [],
             "detail": "Compile project for macOS (requires Homebrew SDL2 dependencies)"
+        },
+        {
+            "label": "Build AppImage (Linux)",
+            "type": "shell",
+            "command": "bash platforms/linux/build_appimage.sh build_linux",
+            "windows": {
+                "command": "wsl bash -c 'cd \"$PROJECT_DIR\" && bash platforms/linux/build_appimage.sh build_linux'",
+                "options": {
+                    "env": {
+                        "PROJECT_DIR": "${workspaceFolder}",
+                        "WSLENV": "PROJECT_DIR/p"
+                    }
+                }
+            },
+            "dependsOn": [
+                "Build Linux (Release)"
+            ],
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Build a portable AppImage with all dependencies bundled (linuxdeploy auto-downloaded). Output: BOOK_TO_GAME-x86_64.AppImage"
         },
         {
             "label": "Build Book Summarizer",
