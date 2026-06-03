@@ -121,14 +121,10 @@ jobs:
 #           git commit -m "ci: save build logs for ${{ matrix.os }} run ${{ github.run_id }}"
 #           git push origin build-logs-${{ matrix.os }}-${{ github.run_id }} --force
 
-  # 2. DESKTOP BUILDS (macOS - Apple Silicon and Intel)
+  # 2. DESKTOP BUILDS (macOS - Universal arm64+x86_64)
   build-macos:
-    name: Build macOS (${{ matrix.arch }})
+    name: Build macOS (Universal)
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: [ arm64, x86_64 ]
 
     steps:
       - name: Checkout Repository
@@ -140,12 +136,12 @@ jobs:
         run: |
           brew install ninja
 
-      # Configure the project using CMake and Ninja
+      # Configure the project using CMake and Ninja for both architectures
       - name: Configure CMake
         run: |
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} 2>&1 | tee cmake_config.log
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" 2>&1 | tee cmake_config.log
 
       # Build the unified static binary and copy assets
       - name: Compile and Link
@@ -174,14 +170,14 @@ jobs:
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           
-          cd dist && zip -r ../book-to-game-macos-${{ matrix.arch }}.zip *
+          cd dist && zip -r ../book-to-game-macos-universal.zip *
 
       # Upload the finished static packages to GitHub Releases / Artifacts
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: book-to-game-macos-${{ matrix.arch }}
-          path: book-to-game-macos-${{ matrix.arch }}.zip
+          name: book-to-game-macos-universal
+          path: book-to-game-macos-universal.zip
           if-no-files-found: ignore
 
       # Proactively upload debug logs if compilation fails
@@ -189,7 +185,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: debug-logs-macos-${{ matrix.arch }}
+          name: debug-logs-macos-universal
           path: |
             cmake_config.log
             cmake_build.log
@@ -201,10 +197,10 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git checkout -b build-logs-macos-${{ matrix.arch }}-${{ github.run_id }}
+          git checkout -b build-logs-macos-universal-${{ github.run_id }}
           git add cmake_config.log cmake_build.log
-          git commit -m "ci: save build logs for macOS ${{ matrix.arch }} run ${{ github.run_id }}"
-          git push origin build-logs-macos-${{ matrix.arch }}-${{ github.run_id }} --force
+          git commit -m "ci: save build logs for macOS Universal run ${{ github.run_id }}"
+          git push origin build-logs-macos-universal-${{ github.run_id }} --force
 
 #   # 3. MOBILE BUILD FOR ANDROID (APK)
 #   build-android:
