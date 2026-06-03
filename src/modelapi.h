@@ -1182,6 +1182,107 @@ private:
     }
 };
 
+#if defined(__ANDROID__)
+#include <jni.h>
+
+extern "C" void* SDL_AndroidGetJNIEnv(void);
+extern "C" void* SDL_AndroidGetActivity(void);
+
+inline jclass FindClassWithClassLoader(JNIEnv* env, const char* className) {
+    jobject activity = (jobject)SDL_AndroidGetActivity();
+    if (!activity) {
+        std::cerr << "[Android JNI ClassLoader] SDL_AndroidGetActivity returned null" << std::endl;
+        return nullptr;
+    }
+
+    jclass activityClass = env->GetObjectClass(activity);
+    if (!activityClass) {
+        std::cerr << "[Android JNI ClassLoader] Failed to get activity class" << std::endl;
+        return nullptr;
+    }
+
+    jclass classClass = env->FindClass("java/lang/Class");
+    jmethodID getClassLoaderMethod = env->GetMethodID(classClass, "getClassLoader", "()Ljava/lang/ClassLoader;");
+    
+    jobject classLoader = env->CallObjectMethod(activityClass, getClassLoaderMethod);
+    if (!classLoader) {
+        std::cerr << "[Android JNI ClassLoader] Failed to get classLoader instance" << std::endl;
+        env->DeleteLocalRef(activityClass);
+        env->DeleteLocalRef(classClass);
+        return nullptr;
+    }
+
+    jclass classLoaderClass = env->FindClass("java/lang/ClassLoader");
+    jmethodID loadClassMethod = env->GetMethodID(classLoaderClass, "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;");
+
+    std::string dotClassName = className;
+    for (char& c : dotClassName) {
+        if (c == '/') c = '.';
+    }
+    
+    jstring jClassName = env->NewStringUTF(dotClassName.c_str());
+    jclass resultClass = (jclass)env->CallObjectMethod(classLoader, loadClassMethod, jClassName);
+    
+    env->DeleteLocalRef(jClassName);
+    env->DeleteLocalRef(classLoaderClass);
+    env->DeleteLocalRef(classLoader);
+    env->DeleteLocalRef(classClass);
+    env->DeleteLocalRef(activityClass);
+
+    return resultClass;
+}
+
+inline std::string CallAndroidPuterBridge(const std::vector<ChatMessageData>& history, const std::string& systemPrompt, const std::string& modelName) {
+    JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+    if (!env) {
+        std::cerr << "[Android Puter JNI] Failed to get JNIEnv" << std::endl;
+        return "Error: JNIEnv not available.";
+    }
+
+    jclass targetClass = FindClassWithClassLoader(env, "org/libsdl/app/PuterBridgeAndroid");
+    if (!targetClass) {
+        std::cerr << "[Android Puter JNI] Class org/libsdl/app/PuterBridgeAndroid not found via ClassLoader" << std::endl;
+        return "Error: PuterBridgeAndroid class not found.";
+    }
+
+    jmethodID methodId = env->GetStaticMethodID(targetClass, "callPuter", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
+    if (!methodId) {
+        std::cerr << "[Android Puter JNI] Method callPuter not found" << std::endl;
+        env->DeleteLocalRef(targetClass);
+        return "Error: callPuter method not found.";
+    }
+
+    nlohmann::json historyJ = nlohmann::json::array();
+    for (const auto& msg : history) {
+        historyJ.push_back({{"sender", msg.sender}, {"text", msg.text}});
+    }
+    std::string historyStr = historyJ.dump();
+
+    jstring jHistory = env->NewStringUTF(historyStr.c_str());
+    jstring jSystemPrompt = env->NewStringUTF(systemPrompt.c_str());
+    jstring jModelName = env->NewStringUTF(modelName.c_str());
+
+    jstring jResult = (jstring)env->CallStaticObjectMethod(targetClass, methodId, jHistory, jSystemPrompt, jModelName);
+
+    std::string resultStr = "";
+    if (jResult != nullptr) {
+        const char* rawResult = env->GetStringUTFChars(jResult, nullptr);
+        if (rawResult != nullptr) {
+            resultStr = std::string(rawResult);
+            env->ReleaseStringUTFChars(jResult, rawResult);
+        }
+        env->DeleteLocalRef(jResult);
+    }
+
+    env->DeleteLocalRef(jHistory);
+    env->DeleteLocalRef(jSystemPrompt);
+    env->DeleteLocalRef(jModelName);
+    env->DeleteLocalRef(targetClass);
+
+    return resultStr;
+}
+#endif
+
 class AskAiPuter : public AskAi {
 public:
     AskAiPuter(const std::string& configFilePath = "ai_puter.json") {
@@ -1395,6 +1496,9 @@ public:
                 std::cerr << "[Puter Bridge] Failed to write puter_request.json" << std::endl;
             }
         }
+#elif defined(__ANDROID__)
+        // Android keyless Puter bridge JNI caller
+        return CallAndroidPuterBridge(history, systemPrompt_, modelName_);
 #endif
 
         // 3. Fallback to any other operational AI profile configured with a key
@@ -2840,6 +2944,7 @@ inline bool CreateBookFromTxt(
     }
 
     int totalChapters = ParseChapterCount(lengthWishes);
+    bool isNBook = (txtFilePath.find("nbook_") != std::string::npos);
 
     std::string content;
 
@@ -2869,7 +2974,7 @@ inline bool CreateBookFromTxt(
             return false;
         }
 
-        bool isNBook = (txtFilePath.find("nbook_") != std::string::npos);
+        isNBook = (txtFilePath.find("nbook_") != std::string::npos);
         // If text exceeds 20,000 characters, chunk and summarize it repeatedly until it fits.
         // Each pass splits the current content into chunks, summarizes each, and merges them.
         // The loop continues until the result is <= 20,000 chars or cannot be reduced further.
@@ -2893,23 +2998,24 @@ inline bool CreateBookFromTxt(
                 for (const auto& chunk : chunks) {
                     std::string statusMsg = "";
                     if (progressCallback) {
+                        int progress = 0;
                         if (summarizePass == 1) {
                             if (gameLanguage == "Russian") {
-                                statusMsg = "Анализ текста: обработка части " + std::to_string(stepNum) + " из " + std::to_string(chunks.size()) + "...";
+                                statusMsg = "Анализ " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             } else {
-                                statusMsg = "Analyzing text: processing part " + std::to_string(stepNum) + " of " + std::to_string(chunks.size()) + "...";
+                                statusMsg = "Analyzing " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             }
+                            progress = 5 + (stepNum * 25) / chunks.size();
                         } else {
                             if (gameLanguage == "Russian") {
-                                statusMsg = "Сжатие текста (проход " + std::to_string(summarizePass) + "): обработка части " + std::to_string(stepNum) + " из " + std::to_string(chunks.size()) + "...";
+                                statusMsg = "Сжатие " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             } else {
-                                statusMsg = "Compressing text (pass " + std::to_string(summarizePass) + "): processing part " + std::to_string(stepNum) + " of " + std::to_string(chunks.size()) + "...";
+                                statusMsg = "Compressing " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             }
+                            progress = 30 + (stepNum * 15) / chunks.size();
                         }
-                        int maxSummarizeProgress = (totalChapters <= 10) ? 90 : 10;
-                        int chunkProgress = (stepNum * maxSummarizeProgress) / chunks.size();
-                        if (chunkProgress > maxSummarizeProgress) chunkProgress = maxSummarizeProgress;
-                        progressCallback(chunkProgress, statusMsg);
+                        if (progress > 45) progress = 45;
+                        progressCallback(progress, statusMsg);
                     }
                     
                     if (aiClient) {
@@ -3048,10 +3154,11 @@ inline bool CreateBookFromTxt(
         }
 
         if (progressCallback) {
+            int baseProgress = (content.length() > 20000 && !isNBook) ? 45 : 5;
             if (gameLanguage == "Russian") {
-                progressCallback(90, "Создание сюжета и глав книги...");
+                progressCallback(baseProgress, "Создание книги...");
             } else {
-                progressCallback(90, "Weaving the quest storyline and chapters...");
+                progressCallback(baseProgress, "Creating book...");
             }
         }
 
@@ -3134,9 +3241,9 @@ inline bool CreateBookFromTxt(
             std::cout << "[AI Book Gen] Successfully generated and saved book.json (Route A)!" << std::endl;
             if (progressCallback) {
                 if (gameLanguage == "Russian") {
-                    progressCallback(100, "Книга успешно создана! Загрузка...");
+                    progressCallback(100, "Загрузка...");
                 } else {
-                    progressCallback(100, "Book successfully created! Loading...");
+                    progressCallback(100, "Loading...");
                 }
             }
             return true;
@@ -3204,17 +3311,12 @@ inline bool CreateBookFromTxt(
             if (progressCallback) {
                 std::string statusMsg = "";
                 if (gameLanguage == "Russian") {
-                    statusMsg = "Шаг 1 из " + std::to_string(totalSteps) + ": Планирование структуры приключения...";
-                    if (attempt > 1) {
-                        statusMsg += " (Попытка " + std::to_string(attempt) + " из 3)";
-                    }
+                    statusMsg = "Планирование...";
                 } else {
-                    statusMsg = "Step 1 of " + std::to_string(totalSteps) + ": Planning the grand quest blueprint...";
-                    if (attempt > 1) {
-                        statusMsg += " (Attempt " + std::to_string(attempt) + " of 3)";
-                    }
+                    statusMsg = "Planning...";
                 }
-                progressCallback(10, statusMsg);
+                int blueprintProgress = (content.length() > 20000 && !isNBook) ? 50 : 10;
+                progressCallback(blueprintProgress, statusMsg);
             }
 
             if (extClient) {
@@ -3282,16 +3384,15 @@ inline bool CreateBookFromTxt(
             int endCh = std::min(totalChapters, (step + 1) * 10);
             int activeStep = 2 + step;
 
-            int currentProgress = 20 + (step * 80) / totalBlocks;
+            int blueprintProgress = (content.length() > 20000 && !isNBook) ? 50 : 10;
+            int currentProgress = blueprintProgress + (step * (95 - blueprintProgress)) / totalBlocks;
             if (currentProgress > 95) currentProgress = 95;
 
             std::string statusMsg = "";
             if (gameLanguage == "Russian") {
-                statusMsg = "Шаг " + std::to_string(activeStep) + " из " + std::to_string(totalSteps) + 
-                            ": Создание сюжета для глав с " + std::to_string(startCh) + " по " + std::to_string(endCh) + "...";
+                statusMsg = "Главы " + std::to_string(startCh) + "-" + std::to_string(endCh);
             } else {
-                statusMsg = "Step " + std::to_string(activeStep) + " of " + std::to_string(totalSteps) + 
-                            ": Weaving chapters " + std::to_string(startCh) + " to " + std::to_string(endCh) + "...";
+                statusMsg = "Chapters " + std::to_string(startCh) + "-" + std::to_string(endCh);
             }
 
             if (progressCallback) {
@@ -3358,11 +3459,7 @@ inline bool CreateBookFromTxt(
                 if (progressCallback) {
                     std::string attemptStatus = statusMsg;
                     if (attempt > 1) {
-                        if (gameLanguage == "Russian") {
-                            attemptStatus += " (Попытка " + std::to_string(attempt) + " из 3)";
-                        } else {
-                            attemptStatus += " (Attempt " + std::to_string(attempt) + " of 3)";
-                        }
+                        attemptStatus += " [" + std::to_string(attempt) + "/3]";
                     }
                     progressCallback(currentProgress, attemptStatus);
                 }
@@ -3491,9 +3588,9 @@ inline bool CreateBookFromTxt(
         std::cout << "[AI Book Gen] Successfully generated and saved book.json (Route B)!" << std::endl;
         if (progressCallback) {
             if (gameLanguage == "Russian") {
-                progressCallback(100, "Книга успешно создана! Загрузка...");
+                progressCallback(100, "Загрузка...");
             } else {
-                progressCallback(100, "Book successfully created! Loading...");
+                progressCallback(100, "Loading...");
             }
         }
         return true;

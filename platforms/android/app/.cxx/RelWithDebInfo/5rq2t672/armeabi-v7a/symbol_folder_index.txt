@@ -1,0 +1,1 @@
+C:\games\BOOK_TO_GAME\platforms\android\app\build\intermediates\cxx\RelWithDebInfo\5rq2t672\obj\armeabi-v7a

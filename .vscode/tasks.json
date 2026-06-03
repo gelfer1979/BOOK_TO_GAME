@@ -65,6 +65,17 @@
             "detail": "Compile Android project and generate Debug APK"
         },
         {
+            "label": "Build Android APK (Release)",
+            "type": "shell",
+            "command": "cd platforms/android; ./gradlew assembleRelease",
+            "windows": {
+                "command": "Set-Location platforms/android; & ./gradlew.bat assembleRelease"
+            },
+            "group": "none",
+            "problemMatcher": [],
+            "detail": "Compile Android project and generate Release APK"
+        },
+        {
             "label": "Install Android APK & Grant Permissions",
             "type": "shell",
             "command": "adb install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk && adb shell pm grant com.example.booktogame android.permission.READ_EXTERNAL_STORAGE && adb shell appops set --uid com.example.booktogame MANAGE_EXTERNAL_STORAGE allow",

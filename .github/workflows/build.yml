@@ -11,115 +11,115 @@ permissions:
   contents: write
 
 jobs:
-  # 1. DESKTOP BUILDS (Windows, Linux)
-  build-desktop:
-    name: Build on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest, windows-latest ]
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      # Install Linux-specific graphics, audio, and window management dependencies
-      # to ensure the static SDL2 build from source has full native system support.
-      - name: Install Linux Dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            ninja-build \
-            libx11-dev \
-            libxext-dev \
-            libxcursor-dev \
-            libxinerama-dev \
-            libxi-dev \
-            libxrandr-dev \
-            libxss-dev \
-            libxxf86vm-dev \
-            libwayland-dev \
-            libxkbcommon-dev \
-            libasound2-dev \
-            libpulse-dev
-
-      # Setup compiler on Windows to ensure Developer Command Prompt environment
-      - name: Setup MSVC on Windows
-        if: matrix.os == 'windows-latest'
-        uses: ilammy/msvc-dev-cmd@v1
-
-      # Configure the project using CMake and Ninja
-      - name: Configure CMake
-        shell: bash
-        run: |
-          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release 2>&1 | tee cmake_config.log
-
-      # Build the unified static binary and copy assets
-      - name: Compile and Link
-        shell: bash
-        run: |
-          cmake --build build --config Release 2>&1 | tee cmake_build.log
-
-      # Bundle the compiled static binary, assets, and configs into a clean archive
-      - name: Package Distributable
-        shell: bash
-        run: |
-          mkdir -p dist
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            # MSVC/Ninja places exe in build/ root or build/Release/ subfolder
-            EXE_PATH=$(find build -name "BOOK_TO_GAME.exe" 2>/dev/null | head -1)
-            if [ -z "$EXE_PATH" ]; then echo "ERROR: BOOK_TO_GAME.exe not found"; find build -type f -name "*.exe"; exit 1; fi
-            echo "Found exe at: $EXE_PATH"
-            cp "$EXE_PATH" dist/
-            cp -r "$(dirname "$EXE_PATH")/assets" dist/ 2>/dev/null || cp -r build/assets dist/ 2>/dev/null || true
-            cp ai_*.json dist/ 2>/dev/null || true
-            cp options.json dist/ 2>/dev/null || true
-            cp settings.json dist/ 2>/dev/null || true
-            cd dist && powershell -Command "Compress-Archive -Path * -DestinationPath ../book-to-game-windows.zip"
-          else
-            cp build/BOOK_TO_GAME dist/
-            cp -r build/assets dist/
-            cp ai_*.json dist/ 2>/dev/null || true
-            cp options.json dist/ 2>/dev/null || true
-            cp settings.json dist/ 2>/dev/null || true
-            cd dist && tar -czf ../book-to-game-linux.tar.gz *
-          fi
-
-      # Upload the finished static packages to GitHub Releases / Artifacts
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: book-to-game-${{ matrix.os }}
-          path: |
-            book-to-game-windows.zip
-            book-to-game-linux.tar.gz
-          if-no-files-found: ignore
-
-      # Proactively upload debug logs if compilation fails
-      - name: Upload Debug Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-logs-${{ matrix.os }}
-          path: |
-            cmake_config.log
-            cmake_build.log
-
-      # Push desktop build logs to a dedicated branch if failed
-      - name: Push Build Logs to Git
-        if: failure()
-        shell: bash
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git checkout -b build-logs-${{ matrix.os }}-${{ github.run_id }}
-          git add cmake_config.log cmake_build.log
-          git commit -m "ci: save build logs for ${{ matrix.os }} run ${{ github.run_id }}"
-          git push origin build-logs-${{ matrix.os }}-${{ github.run_id }} --force
+#   # 1. DESKTOP BUILDS (Windows, Linux)
+#   build-desktop:
+#     name: Build on ${{ matrix.os }}
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         os: [ ubuntu-latest, windows-latest ]
+# 
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+#         with:
+#           submodules: recursive
+# 
+#       # Install Linux-specific graphics, audio, and window management dependencies
+#       # to ensure the static SDL2 build from source has full native system support.
+#       - name: Install Linux Dependencies
+#         if: matrix.os == 'ubuntu-latest'
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y \
+#             ninja-build \
+#             libx11-dev \
+#             libxext-dev \
+#             libxcursor-dev \
+#             libxinerama-dev \
+#             libxi-dev \
+#             libxrandr-dev \
+#             libxss-dev \
+#             libxxf86vm-dev \
+#             libwayland-dev \
+#             libxkbcommon-dev \
+#             libasound2-dev \
+#             libpulse-dev
+# 
+#       # Setup compiler on Windows to ensure Developer Command Prompt environment
+#       - name: Setup MSVC on Windows
+#         if: matrix.os == 'windows-latest'
+#         uses: ilammy/msvc-dev-cmd@v1
+# 
+#       # Configure the project using CMake and Ninja
+#       - name: Configure CMake
+#         shell: bash
+#         run: |
+#           cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release 2>&1 | tee cmake_config.log
+# 
+#       # Build the unified static binary and copy assets
+#       - name: Compile and Link
+#         shell: bash
+#         run: |
+#           cmake --build build --config Release 2>&1 | tee cmake_build.log
+# 
+#       # Bundle the compiled static binary, assets, and configs into a clean archive
+#       - name: Package Distributable
+#         shell: bash
+#         run: |
+#           mkdir -p dist
+#           if [ "${{ matrix.os }}" = "windows-latest" ]; then
+#             # MSVC/Ninja places exe in build/ root or build/Release/ subfolder
+#             EXE_PATH=$(find build -name "BOOK_TO_GAME.exe" 2>/dev/null | head -1)
+#             if [ -z "$EXE_PATH" ]; then echo "ERROR: BOOK_TO_GAME.exe not found"; find build -type f -name "*.exe"; exit 1; fi
+#             echo "Found exe at: $EXE_PATH"
+#             cp "$EXE_PATH" dist/
+#             cp -r "$(dirname "$EXE_PATH")/assets" dist/ 2>/dev/null || cp -r build/assets dist/ 2>/dev/null || true
+#             cp ai_*.json dist/ 2>/dev/null || true
+#             cp options.json dist/ 2>/dev/null || true
+#             cp settings.json dist/ 2>/dev/null || true
+#             cd dist && powershell -Command "Compress-Archive -Path * -DestinationPath ../book-to-game-windows.zip"
+#           else
+#             cp build/BOOK_TO_GAME dist/
+#             cp -r build/assets dist/
+#             cp ai_*.json dist/ 2>/dev/null || true
+#             cp options.json dist/ 2>/dev/null || true
+#             cp settings.json dist/ 2>/dev/null || true
+#             cd dist && tar -czf ../book-to-game-linux.tar.gz *
+#           fi
+# 
+#       # Upload the finished static packages to GitHub Releases / Artifacts
+#       - name: Upload Artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: book-to-game-${{ matrix.os }}
+#           path: |
+#             book-to-game-windows.zip
+#             book-to-game-linux.tar.gz
+#           if-no-files-found: ignore
+# 
+#       # Proactively upload debug logs if compilation fails
+#       - name: Upload Debug Logs
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: debug-logs-${{ matrix.os }}
+#           path: |
+#             cmake_config.log
+#             cmake_build.log
+# 
+#       # Push desktop build logs to a dedicated branch if failed
+#       - name: Push Build Logs to Git
+#         if: failure()
+#         shell: bash
+#         run: |
+#           git config --global user.name "GitHub Actions"
+#           git config --global user.email "actions@github.com"
+#           git checkout -b build-logs-${{ matrix.os }}-${{ github.run_id }}
+#           git add cmake_config.log cmake_build.log
+#           git commit -m "ci: save build logs for ${{ matrix.os }} run ${{ github.run_id }}"
+#           git push origin build-logs-${{ matrix.os }}-${{ github.run_id }} --force
 
   # 2. DESKTOP BUILDS (macOS - Apple Silicon and Intel)
   build-macos:
@@ -206,145 +206,145 @@ jobs:
           git commit -m "ci: save build logs for macOS ${{ matrix.arch }} run ${{ github.run_id }}"
           git push origin build-logs-macos-${{ matrix.arch }}-${{ github.run_id }} --force
 
-  # 3. MOBILE BUILD FOR ANDROID (APK)
-  build-android:
-    name: Build Android APK
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+#   # 3. MOBILE BUILD FOR ANDROID (APK)
+#   build-android:
+#     name: Build Android APK
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+#         with:
+#           submodules: recursive
+# 
+#       - name: Setup Java
+#         uses: actions/setup-java@v4
+#         with:
+#           distribution: 'temurin'
+#           java-version: '17'
+# 
+#       - name: Setup Android SDK
+#         uses: android-actions/setup-android@v3
+# 
+#       # Compile and assemble Android Release APK
+#       - name: Build Android APK
+#         run: |
+#           set -o pipefail
+#           cd platforms/android
+#           chmod +x gradlew
+#           ./gradlew assembleRelease 2>&1 | tee android_build.log
+# 
+#       # Package Android Distributable (ZIP containing APK + config files in root)
+#       - name: Package Android Distributable
+#         run: |
+#           mkdir -p dist-android
+#           cp platforms/android/app/build/outputs/apk/release/*.apk dist-android/
+#           cp ai_*.json dist-android/ 2>/dev/null || true
+#           cp options.json dist-android/ 2>/dev/null || true
+#           cp settings.json dist-android/ 2>/dev/null || true
+#           cd dist-android && zip -r ../book-to-game-android.zip *
+# 
+#       # Upload the packaged Android ZIP
+#       - name: Upload Packaged Android ZIP
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: book-to-game-android-zip
+#           path: book-to-game-android.zip
+# 
+#       # Upload the compiled APK as an artifact
+#       - name: Upload Android APK
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: book-to-game-android
+#           path: platforms/android/app/build/outputs/apk/release/*.apk
+# 
+#       # Proactively upload debug logs if compilation fails
+#       - name: Upload Android Debug Logs
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: debug-logs-android
+#           path: platforms/android/android_build.log
+# 
+#       # Push Android build logs to a dedicated branch if failed
+#       - name: Push Android Build Logs to Git
+#         if: failure()
+#         shell: bash
+#         run: |
+#           git config --global user.name "GitHub Actions"
+#           git config --global user.email "actions@github.com"
+#           git checkout -b build-logs-android-${{ github.run_id }}
+#           cp platforms/android/android_build.log android_build.log || true
+#           git add android_build.log
+#           git commit -m "ci: save android build logs run ${{ github.run_id }}"
+#           git push origin build-logs-android-${{ github.run_id }} --force
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # Compile and assemble Android Release APK
-      - name: Build Android APK
-        run: |
-          set -o pipefail
-          cd platforms/android
-          chmod +x gradlew
-          ./gradlew assembleRelease 2>&1 | tee android_build.log
-
-      # Package Android Distributable (ZIP containing APK + config files in root)
-      - name: Package Android Distributable
-        run: |
-          mkdir -p dist-android
-          cp platforms/android/app/build/outputs/apk/release/*.apk dist-android/
-          cp ai_*.json dist-android/ 2>/dev/null || true
-          cp options.json dist-android/ 2>/dev/null || true
-          cp settings.json dist-android/ 2>/dev/null || true
-          cd dist-android && zip -r ../book-to-game-android.zip *
-
-      # Upload the packaged Android ZIP
-      - name: Upload Packaged Android ZIP
-        uses: actions/upload-artifact@v4
-        with:
-          name: book-to-game-android-zip
-          path: book-to-game-android.zip
-
-      # Upload the compiled APK as an artifact
-      - name: Upload Android APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: book-to-game-android
-          path: platforms/android/app/build/outputs/apk/release/*.apk
-
-      # Proactively upload debug logs if compilation fails
-      - name: Upload Android Debug Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-logs-android
-          path: platforms/android/android_build.log
-
-      # Push Android build logs to a dedicated branch if failed
-      - name: Push Android Build Logs to Git
-        if: failure()
-        shell: bash
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git checkout -b build-logs-android-${{ github.run_id }}
-          cp platforms/android/android_build.log android_build.log || true
-          git add android_build.log
-          git commit -m "ci: save android build logs run ${{ github.run_id }}"
-          git push origin build-logs-android-${{ github.run_id }} --force
-
-  # 4. MOBILE BUILD FOR IOS (App Bundle)
-  build-ios:
-    name: Build iOS App
-    runs-on: macos-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      # Configure CMake for iOS simulator with Xcode generator and bypass signing
-      - name: Configure CMake for iOS
-        run: |
-          cmake -B build-ios -G Xcode \
-            -DCMAKE_SYSTEM_NAME=iOS \
-            -DCMAKE_OSX_SYSROOT=iphonesimulator \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO \
-            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=NO \
-            -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY="" 2>&1 | tee ios_config.log
-
-      # Compile and link the static iOS binary
-      - name: Compile iOS Binary
-        run: |
-          cmake --build build-ios --config Release 2>&1 | tee ios_build.log
-
-      # Bundle the built app and assets
-      - name: Package iOS Distributable
-        run: |
-          mkdir -p dist-ios
-          cp -r build-ios/Release-iphonesimulator/BOOK_TO_GAME.app dist-ios/
-          cp -r assets dist-ios/BOOK_TO_GAME.app/assets
-          cp ai_*.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
-          cp options.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
-          cp settings.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
-          cp ai_*.json dist-ios/ 2>/dev/null || true
-          cp options.json dist-ios/ 2>/dev/null || true
-          cp settings.json dist-ios/ 2>/dev/null || true
-          cd dist-ios && zip -r ../book-to-game-ios.zip *
-
-      # Upload the compiled iOS zip package as an artifact
-      - name: Upload iOS Package
-        uses: actions/upload-artifact@v4
-        with:
-          name: book-to-game-ios
-          path: book-to-game-ios.zip
-
-      # Proactively upload debug logs if compilation fails
-      - name: Upload iOS Debug Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-logs-ios
-          path: |
-            ios_config.log
-            ios_build.log
-
-      # Push iOS build logs to a dedicated branch if failed
-      - name: Push iOS Build Logs to Git
-        if: failure()
-        shell: bash
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git checkout -b build-logs-ios-${{ github.run_id }}
-          cp ios_config.log ios_config.log || true
-          cp ios_build.log ios_build.log || true
-          git add ios_config.log ios_build.log
-          git commit -m "ci: save ios build logs run ${{ github.run_id }}"
-          git push origin build-logs-ios-${{ github.run_id }} --force
+#   # 4. MOBILE BUILD FOR IOS (App Bundle)
+#   build-ios:
+#     name: Build iOS App
+#     runs-on: macos-latest
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+#         with:
+#           submodules: recursive
+# 
+#       # Configure CMake for iOS simulator with Xcode generator and bypass signing
+#       - name: Configure CMake for iOS
+#         run: |
+#           cmake -B build-ios -G Xcode \
+#             -DCMAKE_SYSTEM_NAME=iOS \
+#             -DCMAKE_OSX_SYSROOT=iphonesimulator \
+#             -DCMAKE_BUILD_TYPE=Release \
+#             -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO \
+#             -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=NO \
+#             -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY="" 2>&1 | tee ios_config.log
+# 
+#       # Compile and link the static iOS binary
+#       - name: Compile iOS Binary
+#         run: |
+#           cmake --build build-ios --config Release 2>&1 | tee ios_build.log
+# 
+#       # Bundle the built app and assets
+#       - name: Package iOS Distributable
+#         run: |
+#           mkdir -p dist-ios
+#           cp -r build-ios/Release-iphonesimulator/BOOK_TO_GAME.app dist-ios/
+#           cp -r assets dist-ios/BOOK_TO_GAME.app/assets
+#           cp ai_*.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
+#           cp options.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
+#           cp settings.json dist-ios/BOOK_TO_GAME.app/ 2>/dev/null || true
+#           cp ai_*.json dist-ios/ 2>/dev/null || true
+#           cp options.json dist-ios/ 2>/dev/null || true
+#           cp settings.json dist-ios/ 2>/dev/null || true
+#           cd dist-ios && zip -r ../book-to-game-ios.zip *
+# 
+#       # Upload the compiled iOS zip package as an artifact
+#       - name: Upload iOS Package
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: book-to-game-ios
+#           path: book-to-game-ios.zip
+# 
+#       # Proactively upload debug logs if compilation fails
+#       - name: Upload iOS Debug Logs
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: debug-logs-ios
+#           path: |
+#             ios_config.log
+#             ios_build.log
+# 
+#       # Push iOS build logs to a dedicated branch if failed
+#       - name: Push iOS Build Logs to Git
+#         if: failure()
+#         shell: bash
+#         run: |
+#           git config --global user.name "GitHub Actions"
+#           git config --global user.email "actions@github.com"
+#           git checkout -b build-logs-ios-${{ github.run_id }}
+#           cp ios_config.log ios_config.log || true
+#           cp ios_build.log ios_build.log || true
+#           git add ios_config.log ios_build.log
+#           git commit -m "ci: save ios build logs run ${{ github.run_id }}"
+#           git push origin build-logs-ios-${{ github.run_id }} --force

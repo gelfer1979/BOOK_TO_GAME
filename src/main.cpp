@@ -190,6 +190,7 @@ struct {
     SDL_Rect clearBtnRect = {0, 0, 0, 0};
     SDL_Rect confirmBtnRect = {0, 0, 0, 0};
     SDL_Rect pasteBtnRect = {0, 0, 0, 0};
+    SDL_Rect inputBarRect = {0, 0, 0, 0};
     std::vector<std::string> setupDynamicGenres;
     int maxRetries = 3;
     int apiRetryCount = 0;
@@ -274,11 +275,11 @@ inline int LAYOUT_HEADER_H() {
 }
 
 inline int LAYOUT_FOOTER_H() {
-    return IsMobile() ? 135 : 60;
+    return IsMobile() ? 190 : 60;
 }
 
 inline int LAYOUT_CHOICE_H() {
-    return IsMobile() ? 220 : 45;
+    return IsMobile() ? 165 : 45;
 }
 
 inline int LAYOUT_CHOICE_SPACING() {
@@ -1916,7 +1917,7 @@ inline std::string GetUiText(const std::string& key) {
     if (key == "pacing_rule_mid") return "- The player has taken {turns} choices. You may now begin to guide the plot towards resolving the main objectives of this chapter.\n- If the player's choices successfully resolve the objectives, you can conclude the chapter on this turn or the next.";
     if (key == "pacing_rule_limit") return "- The player has taken {turns} choices, reaching the chapter turn limit of {max}.\n- You MUST resolve the main objectives of this chapter on this turn, narrate the transition to the next chapter, and append the '<next_chapter>' tag.";
     
-    if (key == "lang_btn_prefix") return "Language: ";
+    if (key == "lang_btn_prefix") return "";
     
     if (key == "continue_title") return "CONTINUE CURRENT BOOK?";
     if (key == "book_detected") return "Saved book detected:";
@@ -2206,9 +2207,9 @@ void ApplyFontScale() {
     int baseSmallUI = 11;
     
     if (IsMobile()) {
-        // Upper row is increased even more for clear readability on high-DPI mobile screens (reduced by 15%)
-        baseTitle = 58;
-        baseMessage = 46;
+        // Upper row is increased by 30% for readability on mobile screens
+        baseTitle = 75;
+        baseMessage = 60;
         baseUI = 62;
         baseSmallUI = 46;
     }
@@ -2231,7 +2232,7 @@ void ApplyFontScale() {
     state.fontUIScaled.reset(TTF_OpenFont(fontPath.c_str(), uiSizeScaled));
     state.fontSmallUIScaled.reset(TTF_OpenFont(fontPath.c_str(), smallUiSizeScaled));
     
-    // Dedicated option fonts (2.5x larger on mobile to fit the enlarged 220px height buttons) (reduced by 15%)
+    // Dedicated option fonts (2.5x larger on mobile to fit the enlarged height buttons) (reduced by 15%)
     int optionUiSize = IsMobile() ? std::max(16, 51 + state.fontSizeOffset) : uiSize;
     int optionSmallUiSize = IsMobile() ? std::max(12, 41 + state.fontSizeOffset) : smallUiSize;
     
@@ -2768,29 +2769,33 @@ void StartBookGeneration(const std::string& filePath) {
             int totalChapters = ParseChapterCount(lengthWishes);
             while (!generationDone) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                if (totalChapters <= 10) {
+                
+                state.mutex.lock();
+                int currentProg = state.generationProgress;
+                std::string currentStatus = state.generationStatus;
+                state.mutex.unlock();
+                
+                bool isGenerating = (currentStatus.find("Создание книги") != std::string::npos || 
+                                     currentStatus.find("Creating book") != std::string::npos);
+                
+                if (isGenerating && currentProg < 95) {
                     msElapsed += 100;
-                    
-                    double targetVal = 15.0 + 70.0 * (1.0 - std::exp(-msElapsed / 8000.0));
+                    int base = (currentProg >= 45) ? 45 : 5;
+                    double targetVal = base + (95.0 - base) * (1.0 - std::exp(-msElapsed / 15000.0));
                     int progress = (int)targetVal;
-                    if (progress > 85) progress = 85;
+                    if (progress > 95) progress = 95;
                     
-                    std::string currentStatus = statusAi;
-                    if (progress > 70) {
-                        currentStatus = statusValidation;
-                    } else if (progress > 45) {
-                        currentStatus = statusChapters;
+                    std::string statusMsg = currentStatus;
+                    if (attempt > 1 && statusMsg.find("[") == std::string::npos) {
+                        statusMsg += " [" + std::to_string(attempt) + "/" + std::to_string(maxBookAttempts) + "]";
                     }
                     
-                    // If we are on attempt > 1, prefix the status with the attempt info
-                    if (attempt > 1) {
-                        currentStatus = "[" + std::to_string(attempt) + "/" + std::to_string(maxBookAttempts) + "] " + currentStatus;
+                    if (progress > currentProg) {
+                        state.mutex.lock();
+                        state.generationProgress = progress;
+                        state.generationStatus = statusMsg;
+                        state.mutex.unlock();
                     }
-                    
-                    state.mutex.lock();
-                    state.generationProgress = progress;
-                    state.generationStatus = currentStatus;
-                    state.mutex.unlock();
                 }
             }
             
@@ -4555,11 +4560,8 @@ void MainIteration() {
                         SubmitInputText();
                     } else {
                         // Check if they clicked inside the text input bar
-                        int footerH = LAYOUT_FOOTER_H();
-                        int barLeft = 70;
-                        int barWidth = state.editingApiKey ? WINDOW_WIDTH - 190 : WINDOW_WIDTH - 140;
-                        if (mx >= barLeft && mx <= (barLeft + barWidth) &&
-                            my >= (WINDOW_HEIGHT - footerH + 10) && my <= (WINDOW_HEIGHT - footerH + 50)) {
+                        if (mx >= state.inputBarRect.x && mx <= (state.inputBarRect.x + state.inputBarRect.w) &&
+                            my >= state.inputBarRect.y && my <= (state.inputBarRect.y + state.inputBarRect.h)) {
                             state.editingGameplayInput = true;
                             SDL_StartTextInput();
                         } else {
@@ -4989,7 +4991,7 @@ void MainIteration() {
                     // Try with the UI font (which is smaller)
                     int tw2 = 0, th2 = 0;
                     if (SafeSizeUTF8(fontUIActive, displayTitle, &tw2, &th2) == 0 && tw2 <= cardW - 60) {
-                        RenderText(state.renderer.get(), fontUIActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
+                        RenderText(state.renderer.get(), fontUIActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 199 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
                     } else {
                         // Still too long. Truncate it character by character with "..."
                         std::string truncated = displayTitle;
@@ -5002,13 +5004,13 @@ void MainIteration() {
                                 break;
                             }
                         }
-                        RenderText(state.renderer.get(), fontUIActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
+                        RenderText(state.renderer.get(), fontUIActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 199 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
                     }
                 } else {
-                    RenderText(state.renderer.get(), fontTitleActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
+                    RenderText(state.renderer.get(), fontTitleActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 199 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
                 }
             } else {
-                RenderText(state.renderer.get(), fontTitleActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 172 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
+                RenderText(state.renderer.get(), fontTitleActive, displayTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 199 : 115), SDL_Color{ 0, 255, 220, 255 }, true);
             }
             
             // Buttons shifted slightly upwards to fit the bottom selector
@@ -5473,7 +5475,7 @@ void MainIteration() {
         SDL_RenderFillRect(state.renderer.get(), &footerBg);
         
         // Define clear button geometry
-        state.clearBtnRect = IsMobile() ? SDL_Rect{ 20, WINDOW_HEIGHT - footerH + 37, 60, 60 } : SDL_Rect{ 20, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+        state.clearBtnRect = IsMobile() ? SDL_Rect{ 20, WINDOW_HEIGHT - footerH + 35, 80, 120 } : SDL_Rect{ 20, WINDOW_HEIGHT - footerH + 10, 40, 40 };
         
         // Handle clear button hover styling
         int mx, my;
@@ -5496,7 +5498,7 @@ void MainIteration() {
         RenderText(state.renderer.get(), state.fontUI.get(), "X", state.clearBtnRect.x + state.clearBtnRect.w / 2, state.clearBtnRect.y + state.clearBtnRect.h / 2, clearTxtColor, true);
 
         // Define confirm button geometry (right edge has same padding as clear button on the left)
-        state.confirmBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 80, WINDOW_HEIGHT - footerH + 37, 60, 60 } : SDL_Rect{ WINDOW_WIDTH - 60, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+        state.confirmBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 100, WINDOW_HEIGHT - footerH + 35, 80, 120 } : SDL_Rect{ WINDOW_WIDTH - 60, WINDOW_HEIGHT - footerH + 10, 40, 40 };
         
         // Handle confirm button hover styling
         bool hoverConfirm = (mx >= state.confirmBtnRect.x && mx <= state.confirmBtnRect.x + state.confirmBtnRect.w &&
@@ -5517,18 +5519,17 @@ void MainIteration() {
         RenderText(state.renderer.get(), state.fontUI.get(), ">", state.confirmBtnRect.x + state.confirmBtnRect.w / 2, state.confirmBtnRect.y + state.confirmBtnRect.h / 2, confirmTxtColor, true);
 
         // Input bar is shifted between the clear and confirm buttons
-        SDL_Rect inputBar;
         if (state.editingApiKey) {
             // Define Paste button geometry (after input bar and before confirm button)
-            state.pasteBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 150, WINDOW_HEIGHT - footerH + 37, 60, 60 } : SDL_Rect{ WINDOW_WIDTH - 110, WINDOW_HEIGHT - footerH + 10, 40, 40 };
-            inputBar = IsMobile() ? SDL_Rect{ 90, WINDOW_HEIGHT - footerH + 37, WINDOW_WIDTH - 250, 60 } : SDL_Rect{ 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 190, 40 };
+            state.pasteBtnRect = IsMobile() ? SDL_Rect{ WINDOW_WIDTH - 190, WINDOW_HEIGHT - footerH + 35, 80, 120 } : SDL_Rect{ WINDOW_WIDTH - 110, WINDOW_HEIGHT - footerH + 10, 40, 40 };
+            state.inputBarRect = IsMobile() ? SDL_Rect{ 110, WINDOW_HEIGHT - footerH + 35, WINDOW_WIDTH - 310, 120 } : SDL_Rect{ 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 190, 40 };
         } else {
             state.pasteBtnRect = { 0, 0, 0, 0 };
-            inputBar = IsMobile() ? SDL_Rect{ 90, WINDOW_HEIGHT - footerH + 37, WINDOW_WIDTH - 180, 60 } : SDL_Rect{ 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 140, 40 };
+            state.inputBarRect = IsMobile() ? SDL_Rect{ 110, WINDOW_HEIGHT - footerH + 35, WINDOW_WIDTH - 220, 120 } : SDL_Rect{ 70, WINDOW_HEIGHT - footerH + 10, WINDOW_WIDTH - 140, 40 };
         }
 
         SDL_Color inputBgColor = { 26, 26, 36, 255 };
-        DrawRoundedRect(state.renderer.get(), inputBar, 8, inputBgColor);
+        DrawRoundedRect(state.renderer.get(), state.inputBarRect, 8, inputBgColor);
 
         // Draw Paste Button if in API Key entry state
         if (state.editingApiKey) {
@@ -5549,18 +5550,20 @@ void MainIteration() {
             int px = state.pasteBtnRect.x;
             int py = state.pasteBtnRect.y;
             
-            // Clipboard board (dark grey)
-            SDL_Rect boardRect = IsMobile() ? SDL_Rect{ px + 18, py + 15, 24, 30 } : SDL_Rect{ px + 12, py + 10, 16, 20 };
+            // Clipboard board (dark grey) centered dynamically
+            int bx = px + (state.pasteBtnRect.w - 24) / 2;
+            int by = py + (state.pasteBtnRect.h - 30) / 2;
+            SDL_Rect boardRect = IsMobile() ? SDL_Rect{ bx, by, 24, 30 } : SDL_Rect{ px + 12, py + 10, 16, 20 };
             SDL_Color boardColor = { 100, 100, 120, 255 };
             DrawRoundedRect(state.renderer.get(), boardRect, 3, boardColor);
             
             // Paper sheet (white/light grey)
-            SDL_Rect paperRect = IsMobile() ? SDL_Rect{ px + 22, py + 21, 15, 19 } : SDL_Rect{ px + 15, py + 14, 10, 13 };
+            SDL_Rect paperRect = IsMobile() ? SDL_Rect{ bx + 4, by + 6, 15, 19 } : SDL_Rect{ px + 15, py + 14, 10, 13 };
             SDL_Color paperColor = hoverPaste ? SDL_Color{ 255, 255, 255, 255 } : SDL_Color{ 200, 200, 210, 255 };
             DrawRoundedRect(state.renderer.get(), paperRect, 1, paperColor);
             
             // Metal clip at the top (Cyan highlight)
-            SDL_Rect clipRect = IsMobile() ? SDL_Rect{ px + 24, py + 12, 12, 6 } : SDL_Rect{ px + 16, py + 8, 8, 4 };
+            SDL_Rect clipRect = IsMobile() ? SDL_Rect{ bx + 6, by - 3, 12, 6 } : SDL_Rect{ px + 16, py + 8, 8, 4 };
             SDL_Color clipColor = hoverPaste ? SDL_Color{ 0, 255, 220, 255 } : SDL_Color{ 0, 192, 255, 255 };
             DrawRoundedRect(state.renderer.get(), clipRect, 1, clipColor);
         }
@@ -5571,11 +5574,11 @@ void MainIteration() {
         } else {
             SDL_SetRenderDrawColor(state.renderer.get(), 40, 40, 60, 255);
         }
-        SDL_RenderDrawRect(state.renderer.get(), &inputBar);
+        SDL_RenderDrawRect(state.renderer.get(), &state.inputBarRect);
         
         // Auto-scroll calculation: find the largest UTF-8 suffix that fits in maxTextW
         std::string visibleText = state.inputText;
-        int maxTextW = inputBar.w - 24; // padding left/right
+        int maxTextW = state.inputBarRect.w - 24; // padding left/right
         int textW = 0, textH = 0;
         
         if (!state.inputText.empty()) {
@@ -5613,21 +5616,23 @@ void MainIteration() {
             }
         }
         
-        // Draw input content or standard placeholder
-        int textOffsetY = IsMobile() ? 5 : 10;
+        // Draw input content or standard placeholder centered vertically
+        int fontH = 0;
+        TTF_SizeUTF8(state.fontUI.get(), "Ag", nullptr, &fontH);
+        int textOffsetY = (state.inputBarRect.h - fontH) / 2;
         if (!state.inputText.empty()) {
             SDL_Color txtColor = { 255, 255, 255, 255 };
-            RenderText(state.renderer.get(), state.fontUI.get(), visibleText, inputBar.x + 12, inputBar.y + textOffsetY, txtColor);
+            RenderText(state.renderer.get(), state.fontUI.get(), visibleText, state.inputBarRect.x + 12, state.inputBarRect.y + textOffsetY, txtColor);
         }
         
         // Draw pulsing vertical text cursor
         if (state.cursorVisible && !state.aiThinking) {
-            int cursorX = inputBar.x + 12 + textW;
-            if (cursorX > inputBar.x + inputBar.w - 12) {
-                cursorX = inputBar.x + inputBar.w - 12;
+            int cursorX = state.inputBarRect.x + 12 + textW;
+            if (cursorX > state.inputBarRect.x + state.inputBarRect.w - 12) {
+                cursorX = state.inputBarRect.x + state.inputBarRect.w - 12;
             }
             
-            SDL_Rect textCursor = { cursorX, inputBar.y + textOffsetY, 2, IsMobile() ? 30 : 20 };
+            SDL_Rect textCursor = { cursorX, state.inputBarRect.y + textOffsetY, 2, fontH };
             SDL_SetRenderDrawColor(state.renderer.get(), 0, 192, 255, 255);
             SDL_RenderFillRect(state.renderer.get(), &textCursor);
         }
@@ -5775,6 +5780,9 @@ extern "C" int SDL_main(int argc, char* argv[]) {
             {"ai_lmstudio.json", "ai_lmstudio.json"},
             {"ai_openai.json", "ai_openai.json"},
             {"ai_openrouter.json", "ai_openrouter.json"},
+            {"nbook_Moby-Dick.txt", "nbook_Moby-Dick.txt"},
+            {"nbook_The War of the Worlds.txt", "nbook_The War of the Worlds.txt"},
+            {"nbook_pinoccio.txt", "nbook_pinoccio.txt"},
             {"font.ttf", "assets/font.ttf"},
             {"sound.wav", "assets/sound.wav"},
             {"logo.png", "assets/logo.png"}

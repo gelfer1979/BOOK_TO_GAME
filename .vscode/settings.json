@@ -4,5 +4,6 @@
         "CMAKE_MAKE_PROGRAM": "C:/msys64/ucrt64/bin/ninja.exe",
         "CMAKE_C_COMPILER": "C:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "C:/msys64/ucrt64/bin/g++.exe"
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

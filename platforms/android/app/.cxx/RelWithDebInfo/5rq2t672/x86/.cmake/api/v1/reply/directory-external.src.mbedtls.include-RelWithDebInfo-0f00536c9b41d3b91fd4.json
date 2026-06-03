@@ -1,0 +1,153 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"external/src/mbedtls/include/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 8,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include/mbedtls",
+			"paths" : 
+			[
+				"external/src/mbedtls/include/mbedtls/aes.h",
+				"external/src/mbedtls/include/mbedtls/aria.h",
+				"external/src/mbedtls/include/mbedtls/asn1.h",
+				"external/src/mbedtls/include/mbedtls/asn1write.h",
+				"external/src/mbedtls/include/mbedtls/base64.h",
+				"external/src/mbedtls/include/mbedtls/bignum.h",
+				"external/src/mbedtls/include/mbedtls/block_cipher.h",
+				"external/src/mbedtls/include/mbedtls/build_info.h",
+				"external/src/mbedtls/include/mbedtls/camellia.h",
+				"external/src/mbedtls/include/mbedtls/ccm.h",
+				"external/src/mbedtls/include/mbedtls/chacha20.h",
+				"external/src/mbedtls/include/mbedtls/chachapoly.h",
+				"external/src/mbedtls/include/mbedtls/check_config.h",
+				"external/src/mbedtls/include/mbedtls/cipher.h",
+				"external/src/mbedtls/include/mbedtls/cmac.h",
+				"external/src/mbedtls/include/mbedtls/compat-2.x.h",
+				"external/src/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h",
+				"external/src/mbedtls/include/mbedtls/config_adjust_legacy_from_psa.h",
+				"external/src/mbedtls/include/mbedtls/config_adjust_psa_from_legacy.h",
+				"external/src/mbedtls/include/mbedtls/config_adjust_psa_superset_legacy.h",
+				"external/src/mbedtls/include/mbedtls/config_adjust_ssl.h",
+				"external/src/mbedtls/include/mbedtls/config_adjust_x509.h",
+				"external/src/mbedtls/include/mbedtls/config_psa.h",
+				"external/src/mbedtls/include/mbedtls/constant_time.h",
+				"external/src/mbedtls/include/mbedtls/ctr_drbg.h",
+				"external/src/mbedtls/include/mbedtls/debug.h",
+				"external/src/mbedtls/include/mbedtls/des.h",
+				"external/src/mbedtls/include/mbedtls/dhm.h",
+				"external/src/mbedtls/include/mbedtls/ecdh.h",
+				"external/src/mbedtls/include/mbedtls/ecdsa.h",
+				"external/src/mbedtls/include/mbedtls/ecjpake.h",
+				"external/src/mbedtls/include/mbedtls/ecp.h",
+				"external/src/mbedtls/include/mbedtls/entropy.h",
+				"external/src/mbedtls/include/mbedtls/error.h",
+				"external/src/mbedtls/include/mbedtls/gcm.h",
+				"external/src/mbedtls/include/mbedtls/hkdf.h",
+				"external/src/mbedtls/include/mbedtls/hmac_drbg.h",
+				"external/src/mbedtls/include/mbedtls/lms.h",
+				"external/src/mbedtls/include/mbedtls/mbedtls_config.h",
+				"external/src/mbedtls/include/mbedtls/md.h",
+				"external/src/mbedtls/include/mbedtls/md5.h",
+				"external/src/mbedtls/include/mbedtls/memory_buffer_alloc.h",
+				"external/src/mbedtls/include/mbedtls/net_sockets.h",
+				"external/src/mbedtls/include/mbedtls/nist_kw.h",
+				"external/src/mbedtls/include/mbedtls/oid.h",
+				"external/src/mbedtls/include/mbedtls/pem.h",
+				"external/src/mbedtls/include/mbedtls/pk.h",
+				"external/src/mbedtls/include/mbedtls/pkcs12.h",
+				"external/src/mbedtls/include/mbedtls/pkcs5.h",
+				"external/src/mbedtls/include/mbedtls/pkcs7.h",
+				"external/src/mbedtls/include/mbedtls/platform.h",
+				"external/src/mbedtls/include/mbedtls/platform_time.h",
+				"external/src/mbedtls/include/mbedtls/platform_util.h",
+				"external/src/mbedtls/include/mbedtls/poly1305.h",
+				"external/src/mbedtls/include/mbedtls/private_access.h",
+				"external/src/mbedtls/include/mbedtls/psa_util.h",
+				"external/src/mbedtls/include/mbedtls/ripemd160.h",
+				"external/src/mbedtls/include/mbedtls/rsa.h",
+				"external/src/mbedtls/include/mbedtls/sha1.h",
+				"external/src/mbedtls/include/mbedtls/sha256.h",
+				"external/src/mbedtls/include/mbedtls/sha3.h",
+				"external/src/mbedtls/include/mbedtls/sha512.h",
+				"external/src/mbedtls/include/mbedtls/ssl.h",
+				"external/src/mbedtls/include/mbedtls/ssl_cache.h",
+				"external/src/mbedtls/include/mbedtls/ssl_ciphersuites.h",
+				"external/src/mbedtls/include/mbedtls/ssl_cookie.h",
+				"external/src/mbedtls/include/mbedtls/ssl_ticket.h",
+				"external/src/mbedtls/include/mbedtls/threading.h",
+				"external/src/mbedtls/include/mbedtls/timing.h",
+				"external/src/mbedtls/include/mbedtls/version.h",
+				"external/src/mbedtls/include/mbedtls/x509.h",
+				"external/src/mbedtls/include/mbedtls/x509_crl.h",
+				"external/src/mbedtls/include/mbedtls/x509_crt.h",
+				"external/src/mbedtls/include/mbedtls/x509_csr.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "include/psa",
+			"paths" : 
+			[
+				"external/src/mbedtls/include/psa/build_info.h",
+				"external/src/mbedtls/include/psa/crypto.h",
+				"external/src/mbedtls/include/psa/crypto_adjust_auto_enabled.h",
+				"external/src/mbedtls/include/psa/crypto_adjust_config_key_pair_types.h",
+				"external/src/mbedtls/include/psa/crypto_adjust_config_synonyms.h",
+				"external/src/mbedtls/include/psa/crypto_builtin_composites.h",
+				"external/src/mbedtls/include/psa/crypto_builtin_key_derivation.h",
+				"external/src/mbedtls/include/psa/crypto_builtin_primitives.h",
+				"external/src/mbedtls/include/psa/crypto_compat.h",
+				"external/src/mbedtls/include/psa/crypto_config.h",
+				"external/src/mbedtls/include/psa/crypto_driver_common.h",
+				"external/src/mbedtls/include/psa/crypto_driver_contexts_composites.h",
+				"external/src/mbedtls/include/psa/crypto_driver_contexts_key_derivation.h",
+				"external/src/mbedtls/include/psa/crypto_driver_contexts_primitives.h",
+				"external/src/mbedtls/include/psa/crypto_extra.h",
+				"external/src/mbedtls/include/psa/crypto_legacy.h",
+				"external/src/mbedtls/include/psa/crypto_platform.h",
+				"external/src/mbedtls/include/psa/crypto_se_driver.h",
+				"external/src/mbedtls/include/psa/crypto_sizes.h",
+				"external/src/mbedtls/include/psa/crypto_struct.h",
+				"external/src/mbedtls/include/psa/crypto_types.h",
+				"external/src/mbedtls/include/psa/crypto_values.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "external/src/mbedtls/include",
+		"source" : "external/src/mbedtls/include"
+	}
+}

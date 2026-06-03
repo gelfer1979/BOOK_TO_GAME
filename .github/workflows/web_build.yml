@@ -1,60 +1,60 @@
-name: WebAssembly Build (Emscripten)
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  build-web:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
-
-    - name: Setup Emscripten SDK
-      uses: emscripten-core/setup-emsdk@v15
-      with:
-        version: 3.1.45
-
-    - name: Configure WebAssembly Build via CMake
-      run: |
-        emcmake cmake -B build_web -DCMAKE_BUILD_TYPE=Release 2>&1 | tee cmake_config.log
-
-    - name: Build WebAssembly (Emscripten)
-      run: |
-        cmake --build build_web --config Release 2>&1 | tee cmake_build.log
-
-    - name: Upload WebAssembly Build Artifacts
-      if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: book-to-game-wasm-build
-        path: build_web/
-
-    - name: Upload WebAssembly Debug Logs
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: debug-logs-web
-        path: |
-          cmake_config.log
-          cmake_build.log
-
-    - name: Push WebAssembly Build Logs to Git
-      if: failure()
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git checkout -b build-logs-web-${{ github.run_id }}
-        git add cmake_config.log cmake_build.log
-        git commit -m "ci: save WebAssembly build logs run ${{ github.run_id }}"
-        git push origin build-logs-web-${{ github.run_id }} --force
+# name: WebAssembly Build (Emscripten)
+# 
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+#   workflow_dispatch:
+# 
+# permissions:
+#   contents: write
+# 
+# jobs:
+#   build-web:
+#     runs-on: ubuntu-latest
+# 
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+#       with:
+#         submodules: recursive
+# 
+#     - name: Setup Emscripten SDK
+#       uses: emscripten-core/setup-emsdk@v15
+#       with:
+#         version: 3.1.45
+# 
+#     - name: Configure WebAssembly Build via CMake
+#       run: |
+#         emcmake cmake -B build_web -DCMAKE_BUILD_TYPE=Release 2>&1 | tee cmake_config.log
+# 
+#     - name: Build WebAssembly (Emscripten)
+#       run: |
+#         cmake --build build_web --config Release 2>&1 | tee cmake_build.log
+# 
+#     - name: Upload WebAssembly Build Artifacts
+#       if: success()
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: book-to-game-wasm-build
+#         path: build_web/
+# 
+#     - name: Upload WebAssembly Debug Logs
+#       if: always()
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: debug-logs-web
+#         path: |
+#           cmake_config.log
+#           cmake_build.log
+# 
+#     - name: Push WebAssembly Build Logs to Git
+#       if: failure()
+#       run: |
+#         git config --global user.name "GitHub Actions"
+#         git config --global user.email "actions@github.com"
+#         git checkout -b build-logs-web-${{ github.run_id }}
+#         git add cmake_config.log cmake_build.log
+#         git commit -m "ci: save WebAssembly build logs run ${{ github.run_id }}"
+#         git push origin build-logs-web-${{ github.run_id }} --force
