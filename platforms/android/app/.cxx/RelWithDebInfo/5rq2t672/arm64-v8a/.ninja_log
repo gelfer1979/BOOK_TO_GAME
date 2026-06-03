@@ -743,3 +743,17 @@
 503	541	8022296090892866	libbook_miniz.a	d079461f4c255599
 18	1395	8022296099421145	CMakeFiles/main.dir/src/book_converter.cpp.o	d3e5d34c54c70610
 1395	1512	8022296100258891	../../../../build/intermediates/cxx/RelWithDebInfo/5rq2t672/obj/arm64-v8a/libmain.so	ab4304a2604e3915
+15	111	8022317503595901	CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o	7c7889b8a73c7bf3
+13	193	8022317504423022	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o	fa2ba0861ef8de1b
+12	262	8022317505102697	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o	373ab441ad596153
+16	494	8022317507403468	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o	ae266c07ae5dc72c
+494	533	8022317507757774	libbook_miniz.a	d079461f4c255599
+17	1332	8022317515732460	CMakeFiles/main.dir/src/book_converter.cpp.o	d3e5d34c54c70610
+1332	1443	8022317516540761	../../../../build/intermediates/cxx/RelWithDebInfo/5rq2t672/obj/arm64-v8a/libmain.so	ab4304a2604e3915
+16	109	8022319311144061	CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o	7c7889b8a73c7bf3
+18	189	8022319311939111	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o	fa2ba0861ef8de1b
+15	262	8022319312669783	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o	373ab441ad596153
+19	509	8022319315122034	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o	ae266c07ae5dc72c
+510	549	8022319315469304	libbook_miniz.a	d079461f4c255599
+20	1302	8022319322990607	CMakeFiles/main.dir/src/book_converter.cpp.o	d3e5d34c54c70610
+1303	1420	8022319323840534	../../../../build/intermediates/cxx/RelWithDebInfo/5rq2t672/obj/arm64-v8a/libmain.so	ab4304a2604e3915

@@ -170,6 +170,9 @@ jobs:
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           
+          # Create DMG file containing the .app bundle
+          hdiutil create -volname "BOOK_TO_GAME" -srcfolder dist/BOOK_TO_GAME.app -ov -format UDZO dist/BOOK_TO_GAME.dmg
+          
           cd dist && zip -r ../book-to-game-macos-universal.zip *
 
       # Upload the finished static packages to GitHub Releases / Artifacts

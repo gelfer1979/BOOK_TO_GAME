@@ -40,7 +40,7 @@ cd "$TMPDIR"
 # If RUN_DIR is writeable, set up persistent configurations and user data next to the .run executable
 if [ -w "$RUN_DIR" ]; then
     # List of mutable config/data files we want to persist in RUN_DIR
-    MUTABLE_FILES=("book.json" "settings.json" "options.json" "save.json")
+    MUTABLE_FILES=("book.json" "settings.json" "options.json")
     
     # Add any extracted ai_*.json files
     for ai_file in ai_*.json; do
@@ -91,7 +91,7 @@ if [ -w "$RUN_DIR" ]; then
     RUN_FILE="$RUN_DIR/BookToGame.run"
 
     # Copy back any non-symlinked mutable files that may have been created/changed
-    for f in book.json settings.json options.json save.json; do
+    for f in book.json settings.json options.json; do
         if [ -f "$f" ] && [ ! -L "$f" ]; then
             cp "$f" "$RUN_DIR/$f"
         fi
@@ -120,7 +120,7 @@ if [ -w "$RUN_DIR" ]; then
         [ -d "assets" ] && REPACK_FILES+=("assets")
 
         # Include updated JSON files from RUN_DIR (source of truth after a run)
-        for f in book.json settings.json options.json save.json; do
+        for f in book.json settings.json options.json; do
             if [ -f "$RUN_DIR/$f" ]; then
                 cp "$RUN_DIR/$f" "$f"
                 REPACK_FILES+=("$f")
@@ -164,9 +164,6 @@ if [ -f "book.json" ]; then
 fi
 if [ -f "options.json" ]; then
     FILES_TO_PACK+=("options.json")
-fi
-if [ -f "save.json" ]; then
-    FILES_TO_PACK+=("save.json")
 fi
 if [ -f "settings.json" ]; then
     FILES_TO_PACK+=("settings.json")

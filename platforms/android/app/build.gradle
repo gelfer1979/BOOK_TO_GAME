@@ -52,7 +52,6 @@ android {
 tasks.register('copyGameAssets', Copy) {
     from('../../../') {
         include 'book.json'
-        include 'save.json'
         include 'options.json'
         include 'settings.json'
         include 'ai_*.json'

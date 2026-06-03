@@ -70,7 +70,7 @@ if [ -d "$BUILD_DIR/assets" ]; then
     echo "       ✓ assets/ directory"
 fi
 
-for f in book.json settings.json options.json save.json; do
+for f in book.json settings.json options.json; do
     if [ -f "$BUILD_DIR/$f" ]; then
         cp "$BUILD_DIR/$f" "$APPDIR/usr/bin/$f"
         echo "       ✓ $f"
@@ -114,7 +114,7 @@ ln -s "$APPDIR/usr/bin/assets" "$WORK_DIR/assets"
 
 # Mutable config files: prefer a copy in $APPIMAGE_DIR (persisted from last run),
 # otherwise seed from the bundled defaults inside the AppImage.
-MUTABLE_FILES=(book.json settings.json options.json save.json)
+MUTABLE_FILES=(book.json settings.json options.json)
 for f in "${MUTABLE_FILES[@]}"; do
     if [ -f "$APPIMAGE_DIR/$f" ]; then
         cp "$APPIMAGE_DIR/$f" "$WORK_DIR/$f"
@@ -160,7 +160,7 @@ fi
 STATUS=$?
 
 # ── persist mutable files back next to the .AppImage ──────────────────────
-for f in book.json settings.json options.json save.json; do
+for f in book.json settings.json options.json; do
     if [ -f "$WORK_DIR/$f" ] && [ ! -L "$WORK_DIR/$f" ]; then
         cp "$WORK_DIR/$f" "$APPIMAGE_DIR/$f"
     fi
