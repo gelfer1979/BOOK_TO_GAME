@@ -2,107 +2,107 @@ C/C++ Structured Log(
 &
 $C:\games\BOOK_TO_GAME\CMakeLists.txtC
 A
-?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	áŒ´íç3Óh ýåžíç3:
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	é€«Ùè3õ¶ ±‡ËØè3:
 8
-6C:\games\BOOK_TO_GAME\external\src\SDL2\CMakeLists.txt	áŒ´íç3Ûƒ ÀŽÙä3L
+6C:\games\BOOK_TO_GAME\external\src\SDL2\CMakeLists.txt	é€«Ùè3Ûƒ ÀŽÙä3L
 J
-HC:\games\BOOK_TO_GAME\external\src\SDL2\cmake\CheckCPUArchitecture.cmake	áŒ´íç3ô ÀŽÙä3>
+HC:\games\BOOK_TO_GAME\external\src\SDL2\cmake\CheckCPUArchitecture.cmake	é€«Ùè3ô ÀŽÙä3>
 <
-:C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\macros.cmake	áŒ´íç3Ï# ÀŽÙä3A
+:C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\macros.cmake	é€«Ùè3Ï# ÀŽÙä3A
 ?
-=C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\sdlchecks.cmake	áŒ´íç3Øü ÀŽÙä3?
+=C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\sdlchecks.cmake	é€«Ùè3Øü ÀŽÙä3?
 =
-;C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\sdlfind.cmake	áŒ´íç3Ö ÀŽÙä3C
+;C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\sdlfind.cmake	é€«Ùè3Ö ÀŽÙä3C
 A
-?C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\sdlplatform.cmake	áŒ´íç3 ÀŽÙä3D
+?C:\games\BOOK_TO_GAME\external\src\SDL2\cmake\sdlplatform.cmake	é€«Ùè3 ÀŽÙä3D
 B
-@C:\games\BOOK_TO_GAME\external\src\SDL2\cmake_uninstall.cmake.in	áŒ´íç3	Þ Ø…ŽÙä3F
+@C:\games\BOOK_TO_GAME\external\src\SDL2\cmake_uninstall.cmake.in	é€«Ùè3	Þ Ø…ŽÙä3F
 D
-BC:\games\BOOK_TO_GAME\external\src\SDL2\include\SDL_config.h.cmake	áŒ´íç3
+BC:\games\BOOK_TO_GAME\external\src\SDL2\include\SDL_config.h.cmake	é€«Ùè3
 Í¶ ÀŽÙä3H
 F
-DC:\games\BOOK_TO_GAME\external\src\SDL2\include\SDL_revision.h.cmake	áŒ´íç3Ö ÀŽÙä3@
+DC:\games\BOOK_TO_GAME\external\src\SDL2\include\SDL_revision.h.cmake	é€«Ùè3Ö ÀŽÙä3@
 >
-<C:\games\BOOK_TO_GAME\external\src\SDL2_image\CMakeLists.txt	áŒ´íç3–‘ ŽÙä3Q
+<C:\games\BOOK_TO_GAME\external\src\SDL2_image\CMakeLists.txt	é€«Ùè3–‘ ŽÙä3Q
 O
-MC:\games\BOOK_TO_GAME\external\src\SDL2_image\cmake\PrivateSdlFunctions.cmake	áŒ´íç3—b ŽÙä3@
+MC:\games\BOOK_TO_GAME\external\src\SDL2_image\cmake\PrivateSdlFunctions.cmake	é€«Ùè3—b ŽÙä3@
 >
-<C:\games\BOOK_TO_GAME\external\src\SDL2_mixer\CMakeLists.txt	áŒ´íç3ŠÊ ø¤ŽÙä3M
+<C:\games\BOOK_TO_GAME\external\src\SDL2_mixer\CMakeLists.txt	é€«Ùè3ŠÊ ø¤ŽÙä3M
 K
-IC:\games\BOOK_TO_GAME\external\src\SDL2_mixer\cmake\PkgConfigHelper.cmake	áŒ´íç3å	 ø¤ŽÙä3Q
+IC:\games\BOOK_TO_GAME\external\src\SDL2_mixer\cmake\PkgConfigHelper.cmake	é€«Ùè3å	 ø¤ŽÙä3Q
 O
-MC:\games\BOOK_TO_GAME\external\src\SDL2_mixer\cmake\PrivateSdlFunctions.cmake	áŒ´íç3—b ø¤ŽÙä3>
+MC:\games\BOOK_TO_GAME\external\src\SDL2_mixer\cmake\PrivateSdlFunctions.cmake	é€«Ùè3—b ø¤ŽÙä3>
 <
-:C:\games\BOOK_TO_GAME\external\src\SDL2_net\CMakeLists.txt	áŒ´íç3°I ˜ÄŽÙä3O
+:C:\games\BOOK_TO_GAME\external\src\SDL2_net\CMakeLists.txt	é€«Ùè3°I ˜ÄŽÙä3O
 M
-KC:\games\BOOK_TO_GAME\external\src\SDL2_net\cmake\PrivateSdlFunctions.cmake	áŒ´íç3žQ ˜ÄŽÙä3>
+KC:\games\BOOK_TO_GAME\external\src\SDL2_net\cmake\PrivateSdlFunctions.cmake	é€«Ùè3žQ ˜ÄŽÙä3>
 <
-:C:\games\BOOK_TO_GAME\external\src\SDL2_ttf\CMakeLists.txt	áŒ´íç3Š~ È´ŽÙä3O
+:C:\games\BOOK_TO_GAME\external\src\SDL2_ttf\CMakeLists.txt	é€«Ùè3Š~ È´ŽÙä3O
 M
-KC:\games\BOOK_TO_GAME\external\src\SDL2_ttf\cmake\PrivateSdlFunctions.cmake	áŒ´íç3—b È´ŽÙä3P
+KC:\games\BOOK_TO_GAME\external\src\SDL2_ttf\cmake\PrivateSdlFunctions.cmake	é€«Ùè3—b È´ŽÙä3P
 N
-LC:\games\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\CMakeLists.txt	áŒ´íç3ž­ Àø´õå3:
+LC:\games\BOOK_TO_GAME\external\src\SDL2_ttf\external\freetype\CMakeLists.txt	é€«Ùè3ž­ Àø´õå3:
 8
-6C:\games\BOOK_TO_GAME\external\src\curl\CMakeLists.txt	áŒ´íç3¡” °žëçä3H
+6C:\games\BOOK_TO_GAME\external\src\curl\CMakeLists.txt	é€«Ùè3¡” °žëçä3H
 F
-DC:\games\BOOK_TO_GAME\external\src\curl\CMake\CurlSymbolHiding.cmake	áŒ´íç3Ô °žëçä3B
+DC:\games\BOOK_TO_GAME\external\src\curl\CMake\CurlSymbolHiding.cmake	é€«Ùè3Ô °žëçä3B
 @
->C:\games\BOOK_TO_GAME\external\src\curl\CMake\FindLibPSL.cmake	áŒ´íç3ê °žëçä3C
+>C:\games\BOOK_TO_GAME\external\src\curl\CMake\FindLibPSL.cmake	é€«Ùè3ê °žëçä3C
 A
-?C:\games\BOOK_TO_GAME\external\src\curl\CMake\FindMbedTLS.cmake	áŒ´íç3™
+?C:\games\BOOK_TO_GAME\external\src\curl\CMake\FindMbedTLS.cmake	é€«Ùè3™
  Ž³®ç3>
 <
-:C:\games\BOOK_TO_GAME\external\src\curl\CMake\Macros.cmake	áŒ´íç3Ù °žëçä3B
+:C:\games\BOOK_TO_GAME\external\src\curl\CMake\Macros.cmake	é€«Ùè3Ù °žëçä3B
 @
->C:\games\BOOK_TO_GAME\external\src\curl\CMake\OtherTests.cmake	áŒ´íç3ß* °žëçä3E
+>C:\games\BOOK_TO_GAME\external\src\curl\CMake\OtherTests.cmake	é€«Ùè3ß* °žëçä3E
 C
-AC:\games\BOOK_TO_GAME\external\src\curl\CMake\PickyWarnings.cmake	áŒ´íç3ùU °žëçä3A
+AC:\games\BOOK_TO_GAME\external\src\curl\CMake\PickyWarnings.cmake	é€«Ùè3ùU °žëçä3A
 ?
-=C:\games\BOOK_TO_GAME\external\src\curl\CMake\Utilities.cmake	áŒ´íç3Í
+=C:\games\BOOK_TO_GAME\external\src\curl\CMake\Utilities.cmake	é€«Ùè3Í
  °žëçä3>
 <
-:C:\games\BOOK_TO_GAME\external\src\curl\lib\CMakeLists.txt	áŒ´íç3‘K ˜úÑ®ç3C
+:C:\games\BOOK_TO_GAME\external\src\curl\lib\CMakeLists.txt	é€«Ùè3‘K ˜úÑ®ç3C
 A
-?C:\games\BOOK_TO_GAME\external\src\curl\lib\curl_config.h.cmake	áŒ´íç3…² ˜¦ëçä3F
+?C:\games\BOOK_TO_GAME\external\src\curl\lib\curl_config.h.cmake	é€«Ùè3…² ˜¦ëçä3F
 D
-BC:\games\BOOK_TO_GAME\external\src\mbedtls\3rdparty\CMakeLists.txt	áŒ´íç3 3 €¾£¢è1N
+BC:\games\BOOK_TO_GAME\external\src\mbedtls\3rdparty\CMakeLists.txt	é€«Ùè3 3 €¾£¢è1N
 L
-JC:\games\BOOK_TO_GAME\external\src\mbedtls\3rdparty\everest\CMakeLists.txt	áŒ´íç3!È €¾£¢è1M
+JC:\games\BOOK_TO_GAME\external\src\mbedtls\3rdparty\everest\CMakeLists.txt	é€«Ùè3!È €¾£¢è1M
 K
-IC:\games\BOOK_TO_GAME\external\src\mbedtls\3rdparty\p256-m\CMakeLists.txt	áŒ´íç3"¢ €¾£¢è1=
+IC:\games\BOOK_TO_GAME\external\src\mbedtls\3rdparty\p256-m\CMakeLists.txt	é€«Ùè3"¢ €¾£¢è1=
 ;
-9C:\games\BOOK_TO_GAME\external\src\mbedtls\CMakeLists.txt	áŒ´íç3#³‘ °þ¦¦è1G
+9C:\games\BOOK_TO_GAME\external\src\mbedtls\CMakeLists.txt	é€«Ùè3#³‘ °þ¦¦è1G
 E
-CC:\games\BOOK_TO_GAME\external\src\mbedtls\framework\CMakeLists.txt	áŒ´íç3$; ˜úª¦è1E
+CC:\games\BOOK_TO_GAME\external\src\mbedtls\framework\CMakeLists.txt	é€«Ùè3$; ˜úª¦è1E
 C
-AC:\games\BOOK_TO_GAME\external\src\mbedtls\include\CMakeLists.txt	áŒ´íç3%¾ €¾£¢è1E
+AC:\games\BOOK_TO_GAME\external\src\mbedtls\include\CMakeLists.txt	é€«Ùè3%¾ €¾£¢è1E
 C
-AC:\games\BOOK_TO_GAME\external\src\mbedtls\library\CMakeLists.txt	áŒ´íç3&¯\ °þ¦¦è1G
+AC:\games\BOOK_TO_GAME\external\src\mbedtls\library\CMakeLists.txt	é€«Ùè3&¯\ °þ¦¦è1G
 E
-CC:\games\BOOK_TO_GAME\external\src\mbedtls\pkgconfig\CMakeLists.txt	áŒ´íç3'ê	 €¾£¢è1=
+CC:\games\BOOK_TO_GAME\external\src\mbedtls\pkgconfig\CMakeLists.txt	é€«Ùè3'ê	 €¾£¢è1=
 ;
-9C:\games\BOOK_TO_GAME\external\src\pugixml\CMakeLists.txt	áŒ´íç3(â[ Ð³¾‚æ3N
+9C:\games\BOOK_TO_GAME\external\src\pugixml\CMakeLists.txt	é€«Ùè3(â[ Ð³¾‚æ3N
 L
-JC:\games\BOOK_TO_GAME\external\src\pugixml\scripts\pugixml-config.cmake.in	áŒ´íç3)Ï Ð³¾‚æ3d
+JC:\games\BOOK_TO_GAME\external\src\pugixml\scripts\pugixml-config.cmake.in	é€«Ùè3)Ï Ð³¾‚æ3d
 b
-`C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\additional_project_files.txt	áŒ´íç3*ÚÐ ÂŒ´íç3a
+`C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\additional_project_files.txt	é€«Ùè3*ÚÐ  šÙè3a
 _
-]C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\android_gradle_build.json	áŒ´íç3+ÚJ ÂŒ´íç3f
+]C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\android_gradle_build.json	é€«Ùè3+ÚJ ¡šÙè3f
 d
-bC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\android_gradle_build_mini.json	áŒ´íç3,£F ÝŒ´íç3S
+bC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\android_gradle_build_mini.json	é€«Ùè3,£F ÃšÙè3S
 Q
-OC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\build.ninja	áŒ´íç3-À¡P ’Œ´íç3W
+OC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\build.ninja	é€«Ùè3-À¡P éŒšÙè3W
 U
-SC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\build.ninja.txt	áŒ´íç3.\
+SC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\build.ninja.txt	é€«Ùè3.\
 Z
-XC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\build_file_index.txt	áŒ´íç3/× ÷Í×®ç3]
+XC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\build_file_index.txt	é€«Ùè3/× ÷Í×®ç3]
 [
-YC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\compile_commands.json	áŒ´íç30…D ’Œ´íç3a
+YC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\compile_commands.json	é€«Ùè30…D èŒšÙè3a
 _
-]C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\compile_commands.json.bin	áŒ´íç31Âù ’Œ´íç3g
+]C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\compile_commands.json.bin	é€«Ùè31Âù èŒšÙè3g
 e
-cC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\metadata_generation_command.txt	áŒ´íç32¸ çÃîÚæ3Z
+cC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\metadata_generation_command.txt	é€«Ùè32¸ çÃîÚæ3Z
 X
-VC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\prefab_config.json	áŒ´íç33( çÃîÚæ3_
+VC:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\prefab_config.json	é€«Ùè33( çÃîÚæ3_
 ]
-[C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\symbol_folder_index.txt	áŒ´íç34Z çÃîÚæ3
+[C:\games\BOOK_TO_GAME\platforms\android\app\.cxx\Debug\5k4jt3w4\x86\symbol_folder_index.txt	é€«Ùè34Z çÃîÚæ3

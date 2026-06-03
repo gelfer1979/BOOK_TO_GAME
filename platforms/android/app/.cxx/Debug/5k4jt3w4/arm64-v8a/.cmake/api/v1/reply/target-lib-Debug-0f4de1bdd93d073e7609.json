@@ -26,13 +26,13 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "mbedx509::@e8431c56b1010b32abba"
-		},
-		{
 			"id" : "mbedcrypto::@e8431c56b1010b32abba"
 		},
 		{
 			"id" : "mbedtls::@e8431c56b1010b32abba"
+		},
+		{
+			"id" : "mbedx509::@e8431c56b1010b32abba"
 		}
 	],
 	"id" : "lib::@e8431c56b1010b32abba",
@@ -64,13 +64,13 @@
 		{
 			"backtrace" : 1,
 			"isGenerated" : true,
-			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/mbedtls/library/CMakeFiles/lib",
+			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/arm64-v8a/external/src/mbedtls/library/CMakeFiles/lib",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/mbedtls/library/CMakeFiles/lib.rule",
+			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/arm64-v8a/external/src/mbedtls/library/CMakeFiles/lib.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

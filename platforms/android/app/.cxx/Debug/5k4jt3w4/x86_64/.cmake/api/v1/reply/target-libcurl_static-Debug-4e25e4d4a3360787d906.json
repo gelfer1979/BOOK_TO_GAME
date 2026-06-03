@@ -133,7 +133,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -Wextra -Wall -pedantic -Wbad-function-cast -Wconversion -Winline -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Wno-long-long -Wno-multichar -Wpointer-arith -Wshadow -Wsign-compare -Wundef -Wunused -Wwrite-strings -Waddress -Wattributes -Wcast-align -Wdeclaration-after-statement -Wdiv-by-zero -Wempty-body -Wendif-labels -Wfloat-equal -Wformat-security -Wignored-qualifiers -Wmissing-field-initializers -Wmissing-noreturn -Wno-format-nonliteral -Wno-system-headers -Wold-style-definition -Wredundant-decls -Wsign-conversion -Wno-error=sign-conversion -Wstrict-prototypes -Wtype-limits -Wunreachable-code -Wunused-parameter -Wvla -Wshift-sign-overflow -Wshorten-64-to-32 -Wlanguage-extension-token -Wformat=2 -Wdouble-promotion -Wenum-conversion -Wpragmas -Wunused-const-variable -Wunreachable-code-break -Wheader-guard -Wsometimes-uninitialized -Wcomma -Wmissing-variable-declarations -Wassign-enum -Wextra-semi-stmt -Wimplicit-fallthrough -fno-limit-debug-info  -fPIC"
+					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -Wextra -Wall -pedantic -Wbad-function-cast -Wconversion -Winline -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Wno-long-long -Wno-multichar -Wpointer-arith -Wshadow -Wsign-compare -Wundef -Wunused -Wwrite-strings -Waddress -Wattributes -Wcast-align -Wdeclaration-after-statement -Wdiv-by-zero -Wempty-body -Wendif-labels -Wfloat-equal -Wformat-security -Wignored-qualifiers -Wmissing-field-initializers -Wmissing-noreturn -Wno-format-nonliteral -Wno-system-headers -Wold-style-definition -Wredundant-decls -Wsign-conversion -Wno-error=sign-conversion -Wstrict-prototypes -Wtype-limits -Wunreachable-code -Wunused-parameter -Wvla -Wshift-sign-overflow -Wshorten-64-to-32 -Wlanguage-extension-token -Wformat=2 -Wdouble-promotion -Wenum-conversion -Wpragmas -Wunused-const-variable -Wunreachable-code-break -Wheader-guard -Wsometimes-uninitialized -Wcomma -Wmissing-variable-declarations -Wassign-enum -Wextra-semi-stmt -Wimplicit-fallthrough -fno-limit-debug-info  -fPIC"
 				},
 				{
 					"fragment" : "-fvisibility=hidden"
@@ -170,7 +170,7 @@
 				},
 				{
 					"backtrace" : 12,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/curl/lib/../include"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib/../include"
 				},
 				{
 					"backtrace" : 13,
@@ -182,7 +182,7 @@
 				},
 				{
 					"backtrace" : 15,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/curl/lib/.."
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib/.."
 				},
 				{
 					"backtrace" : 16,
@@ -190,7 +190,7 @@
 				},
 				{
 					"backtrace" : 17,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/curl/lib"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib"
 				},
 				{
 					"backtrace" : 3,
@@ -400,15 +400,15 @@
 		},
 		{
 			"backtrace" : 3,
+			"id" : "mbedcrypto::@e8431c56b1010b32abba"
+		},
+		{
+			"backtrace" : 3,
 			"id" : "mbedx509::@e8431c56b1010b32abba"
 		},
 		{
 			"backtrace" : 3,
 			"id" : "mbedtls::@e8431c56b1010b32abba"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "mbedcrypto::@e8431c56b1010b32abba"
 		}
 	],
 	"id" : "libcurl_static::@3e9b93e5b7cc751973fd",
@@ -1588,7 +1588,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/curl/lib/curl_config.h",
+			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib/curl_config.h",
 			"sourceGroupIndex" : 0
 		},
 		{

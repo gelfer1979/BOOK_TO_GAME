@@ -12,6 +12,31 @@
     "prompt_ai_rule_options_format": "1. OPTIONS FORMAT: After your narrative, output the \u001f character on its own line, then 2-5 choices each starting with '- '. NEVER use XML tags, numbered lists, or any other prefix.\n",
     "genrePreprocessingPipeline": [
         {
+            "action": "regex_replace",
+            "target": "\\*",
+            "replacement": ""
+        },
+        {
+            "action": "regex_replace",
+            "target": "\\n\\s*\\d+[\\.\\)]\\s*",
+            "replacement": "\n"
+        },
+        {
+            "action": "regex_replace",
+            "target": "\\n\\s*[a-zA-Zа-яА-Я][\\.\\)]\\s*",
+            "replacement": "\n"
+        },
+        {
+            "action": "regex_replace",
+            "target": "\\n\\s*#+\\s*",
+            "replacement": "\n"
+        },
+        {
+            "action": "regex_replace",
+            "target": "(Вариант|Выбор|Option|Choice)\\s*[\\d\\w]*\\s*:\\s*",
+            "replacement": ""
+        },
+        {
             "action": "replace",
             "replacement": "",
             "target": "\"genres\":"

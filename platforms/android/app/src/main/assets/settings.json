@@ -3,13 +3,39 @@
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "English",
-    "bookRetries": 3,
+    "bookRetries": 5,
     "choicesSeparator": "\u001f",
     "fontSizeOffset": 6,
     "formatReminder": [
         "[REMINDER: Use the exact output format from your system prompt: narrative text first, then '\u001f', then 2-4 choices each on its own line '- ']"
     ],
+    "prompt_ai_rule_options_format": "1. OPTIONS FORMAT: After your narrative, output the \u001f character on its own line, then 2-5 choices each starting with '- '. NEVER use XML tags, numbered lists, or any other prefix.\n",
     "genrePreprocessingPipeline": [
+        {
+            "action": "regex_replace",
+            "target": "\\*",
+            "replacement": ""
+        },
+        {
+            "action": "regex_replace",
+            "target": "\\n\\s*\\d+[\\.\\)]\\s*",
+            "replacement": "\n"
+        },
+        {
+            "action": "regex_replace",
+            "target": "\\n\\s*[a-zA-Zа-яА-Я][\\.\\)]\\s*",
+            "replacement": "\n"
+        },
+        {
+            "action": "regex_replace",
+            "target": "\\n\\s*#+\\s*",
+            "replacement": "\n"
+        },
+        {
+            "action": "regex_replace",
+            "target": "(Вариант|Выбор|Option|Choice)\\s*[\\d\\w]*\\s*:\\s*",
+            "replacement": ""
+        },
         {
             "action": "replace",
             "replacement": "",

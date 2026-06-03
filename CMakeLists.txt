@@ -542,7 +542,7 @@ if(WIN32)
     if(TARGET BOOK_TO_GAME)
         add_dependencies(BOOK_TO_GAME PuterBridge)
     endif()
-elseif(UNIX AND NOT APPLE)
+elseif(UNIX AND NOT APPLE AND NOT ANDROID)
     message(STATUS "Configuring PuterBridge (Linux invisible WebKitGTK helper)...")
     
     find_package(PkgConfig REQUIRED)

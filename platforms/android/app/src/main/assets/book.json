@@ -2,46 +2,56 @@
     "plot": [
         {
             "chapter": 1,
-            "description": "Jonathan Harker arrives in the dark heart of the Carpathians. He must navigate local superstitions and reach the Count's coach while collecting protective items like a crucifix. Failure to secure these items will result in immediate vulnerability to the shadows of the pass.",
-            "title": "The Borgo Pass"
+            "description": "Master Antonio, affectionately called Master Cherry, discovers a peculiar piece of firewood that laughs and screams when he tries to carve it. Confused and frightened, he hands it over to his neighbor Geppetto, who dreams of creating a charming marionette. Players must help navigate a humorous quarrel between the two carpenters over the wood and, ultimately, assist Geppetto in bringing the puppetry to life. The chapter involves collecting tools for carving, calming down a bickering crowd, and avoiding antics from children who mock Geppetto's wig.",
+            "title": "The Mysterious Log"
         },
         {
             "chapter": 2,
-            "description": "Harker is trapped in Castle Dracula. He must explore the unlocked wings of the castle while avoiding the Count’s predatory vampire brides. He must find a way to signal for help without alerting the Count to his true intent.",
-            "title": "Prisoner of the Castle"
+            "description": "After Geppetto finishes carving Pinocchio, the mischievous puppet is born. His antics lead to him stealing Geppetto's wig and running away into the streets. Players must help Geppetto chase down Pinocchio while avoiding the policeman who mistakes the puppet for a runaway animal. Later, players assist Pinocchio in his disastrous attempts to fend for himself, from burning his feet to a hilarious failed cooking attempt with a magical egg. This chapter is about learning the consequences of actions and the pitfalls of disobedience.",
+            "title": "Pinocchio's Mischief Begins"
         },
         {
             "chapter": 3,
-            "description": "The perspective shifts to Whitby, England. The player must investigate the wreckage of the Russian schooner Demeter and track the arrival of the Count in the form of a great dog. Objectives include collecting evidence of the dead captain's log and securing the harbor area.",
-            "title": "The Demeter’s Cargo"
+            "description": "As Pinocchio seeks food to satisfy his hunger, he faces the trials of being chased by townsfolk and getting caught by the policeman. Players must find resources to help Pinocchio evade capture while navigating through town. They'll encounter the Talking Cricket, who offers sage advice, only to see Pinocchio shun him. The chapter highlights the importance of listening to wisdom while including amusing escape sequences and amusing hunger-induced antics.",
+            "title": "Misadventures in Town"
         },
         {
             "chapter": 4,
-            "description": "Lucy Westenra falls into a mysterious, lethal lethargy. The player must aid Dr. Seward and Van Helsing in providing blood transfusions and applying garlic-based protections while uncovering the true, sinister nature of Lucy's puncture wounds.",
-            "title": "The Wasting Sickness"
+            "description": "After resting from his exhausting day, Pinocchio wakes to discover his feet are burnt and must enlist Geppetto’s help to get new legs. Reconciling with his father, they embark on a journey into the world of education. Players help Geppetto gather materials to make a paper suit for Pinocchio and ensure he attends school despite temptations that arise. This chapter teaches about the value of education, wrapped in quirky classroom antics.",
+            "title": "A Puppet's Heart"
         },
         {
             "chapter": 5,
-            "description": "Lucy has succumbed to the curse. The player must lead the harrowing expedition to the churchyard to confront the 'bloofer lady' and perform the necessary, violent ritual to free her soul from its demonic corruption.",
-            "title": "The Un-Dead Awakens"
+            "description": "On his way to school, Pinocchio is sidetracked by the enchanting sounds of a puppet theater. Players must navigate through Pinocchio’s internal struggle between desire for fun and the responsibility of school. Once there, they need to avoid the wrath of the terrifying puppet master while participating in a comical performance that leads to unexpected mischief. This chapter explores the idea of the ‘grass is always greener’ while delivering slapstick humor.",
+            "title": "The Call of the Puppet Theater"
         },
         {
             "chapter": 6,
-            "description": "Mina Harker is marked by the Count. The player must compile the scattered journals into a cohesive case file while dodging the Count's surveillance and preventing Renfield from interfering with their research at the asylum.",
-            "title": "The Conspiracy of Silence"
+            "description": "After his return from the theater, Pinocchio encounters the sly Fox and Cat, who lure him into a scheme, promising riches. Players must assist in avoiding the deception of these characters while learning about greed and its humorous consequences. Comedic twists await as Pinocchio believes he can dig for fortune but instead ends up in hysterical predicaments at a tavern and lonely nights fooling around with deceitful companions.",
+            "title": "Foxes, Cats, and Tossed Dreams"
         },
         {
             "chapter": 7,
-            "description": "The hunt moves to the Count's London lairs. The player must systematically locate and sterilize the remaining boxes of earth using Sacred Wafers while managing the team's exposure to the Count's hypnotic influence.",
-            "title": "The Scouring of Carfax"
+            "description": "Pinocchio finds himself in a series of ridiculous situations, including being captured by a Green Fisherman and tricked into becoming a dog. Players must outsmart the comedic characters holding him captive and navigate the misunderstandings that arise, emphasizing the theme of friendship and loyalty through humor while learning lessons about being oneself.",
+            "title": "Trapped in Uncle's Humor"
         },
         {
             "chapter": 8,
-            "description": "The final pursuit into the heart of Transylvania. The player must track the Count’s carriage, defend against a horde of Szgany gypsies in the snow, and reach the castle chapel before the final sunset to end the ancient bloodline once and for all.",
-            "title": "Race to the Abyss"
+            "description": "Pinocchio takes a moment for self-reflection after enduring a mishap as a donkey. This chapter introduces the remorseful side of his character, where he realizes the folly of his past actions through humorous mishaps. Players will help Pinocchio in his endeavors for redemption, as he tries to correct his mistakes while comically grappling with his new donkey form.",
+            "title": "Repentance with a Twist"
+        },
+        {
+            "chapter": 9,
+            "description": "In his final adventure, Pinocchio combines his newfound wisdom with courage and determination to rescue Geppetto from a shark. Players will guide the duo through hilarious challenges, navigating misunderstandings and slapstick humor, leading to a heartfelt reunion and resulting in his transition to a real boy. Themes of sacrifice, love, and redemption are illustrated with whimsy and laughter.",
+            "title": "Fate's Final Blessing"
+        },
+        {
+            "chapter": 10,
+            "description": "As Pinocchio wakes as a real boy, he finds himself excitedly embracing a life filled with joy, mischief, and a newfound understanding of responsibilities. Players must decide on the next funny escapades he will pursue or how he will misunderstand his newly acquired human traits. Filled with laughter, antics, and moral resolutions, this chapter ends with a ceremonial celebration of his journey, reinforcing the comedic principles of life.",
+            "title": "The Real Boy's Journey Begins"
         }
     ],
-    "startPrompt": "You are Jonathan Harker, arriving at the Golden Krone Hotel in Bistritz. The innkeeper's wife has just pressed a cold, heavy crucifix into your palm, her eyes wide with terror. Outside, the carriage to the Borgo Pass waits in the biting wind. Your inventory contains: A journal, a map of Transylvania, and the crucifix. Do you heed the warnings of the locals and abandon the contract, or do you board the carriage to face the unknown darkness of the Count?",
-    "title": "Dracula: The Shadow Over London",
-    "world": "The game is set in the late 19th century, a time of steam, gaslight, and rising scientific optimism clashing with the encroaching darkness of an ancient, preternatural evil. The world follows the lore of the original Stoker narrative: a Gothic realm where Count Dracula, a centuries-old nobleman, uses his mastery over wolves, mist, and the elements to expand his reach from his desolate, cursed castle in the Carpathians to the bustling, vulnerable streets of London.\n\nRules and Faction details: The world operates under strict supernatural boundaries—vampires are repelled by holy symbols, garlic, and wild roses, and are most vulnerable when dormant in their native soil. Factions include the 'Order of the Blood-Hunter,' a small circle of allies led by Van Helsing who sacrifice their sanity and safety to preserve humanity. In contrast, the Count commands thralls like the zoöphagous Renfield and superstitious servants, effectively framing his enemies for his own bloody crimes."
+    "startPrompt": "The whimsical journey of a wooden puppet named Pinocchio begins as his creator, Geppetto, sets forth to teach him the meaning of existence. Amid laughter and chaos, you join Pinocchio, navigating through quirky encounters and whimsical challenges in the quaint village. Armed with only a paper suit and boundless curiosity, will you help Pinocchio discover the world around him? \n\n<options><option>Explore the streets for food</option><option>Visit Geppetto in his workshop</option></options>",
+    "title": "The Whimsical Adventures of Pinocchio",
+    "world": "Welcome to the fantastical and comedic world of Pinocchio, a realm filled with enchanted creatures, lively puppets, and quirky characters, where humor and mischief reign supreme. This whimsical environment, set in a quaint village and intertwined with magical forests and bizarre taverns, thrives on unpredictable antics and uproarious misunderstandings. In this world, wooden puppets can laugh, cry, and even cause unfortunate accidents, all while imparting valuable life lessons about integrity and responsibility.\n\nThe inhabitants include Master Cherry, a comical carpenter known for his bright red nose, and Geppetto, the well-meaning but beleaguered old man, often ridiculed for his peculiar wig. An array of colorful characters joins them, such as the witty Talking Cricket, the mischievous Blue-Haired Fairy, sly Foxes and Cats, and an assortment of other delightful beings. Together, they navigate through each other's errors, forging unexpected friendships and learning to embrace the absurdity of their fates, as every decision leads to comically unforeseen consequences."
 }

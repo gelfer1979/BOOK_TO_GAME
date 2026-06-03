@@ -68,7 +68,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Wall -Wextra -Wwrite-strings -Wpointer-arith -Wimplicit-fallthrough -Wshadow -Wvla -Wformat=2 -Wno-format-nonliteral -Wmissing-declarations -Wmissing-prototypes -Wdocumentation -Wno-documentation-deprecated-sync -Wunreachable-code -O0 -g3 -fPIC"
+					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -Wall -Wextra -Wwrite-strings -Wpointer-arith -Wimplicit-fallthrough -Wshadow -Wvla -Wformat=2 -Wno-format-nonliteral -Wmissing-declarations -Wmissing-prototypes -Wdocumentation -Wno-documentation-deprecated-sync -Wunreachable-code -O0 -g3 -fPIC"
 				},
 				{
 					"fragment" : "-std=c99"
@@ -90,7 +90,7 @@
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/mbedtls/library"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/mbedtls/library"
 				},
 				{
 					"backtrace" : 3,

@@ -29,10 +29,10 @@
 			"id" : "mbedx509::@e8431c56b1010b32abba"
 		},
 		{
-			"id" : "mbedtls::@e8431c56b1010b32abba"
+			"id" : "mbedcrypto::@e8431c56b1010b32abba"
 		},
 		{
-			"id" : "mbedcrypto::@e8431c56b1010b32abba"
+			"id" : "mbedtls::@e8431c56b1010b32abba"
 		}
 	],
 	"id" : "lib::@e8431c56b1010b32abba",

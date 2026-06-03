@@ -50,3 +50,4 @@ build_native/
 build_msvc/
 build_webview_test/
 build_webview_test2/
+BOOK_TO_GAME-x86_64.AppImage

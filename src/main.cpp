@@ -3811,9 +3811,9 @@ void MainIteration() {
             }
             continue;
         } else if (event.type == SDL_FINGERMOTION) {
-            float dx = event.tfinger.x - fingerStartX;
-            float dy = event.tfinger.y - fingerStartY;
-            if (std::abs(dx) > 0.025f || std::abs(dy) > 0.025f) {
+            float pixelDx = (event.tfinger.x - fingerStartX) * WINDOW_WIDTH;
+            float pixelDy = (event.tfinger.y - fingerStartY) * WINDOW_HEIGHT;
+            if (std::abs(pixelDx) > 15.0f || std::abs(pixelDy) > 15.0f) {
                 fingerIsDragging = true;
             }
             
@@ -5307,7 +5307,7 @@ void MainIteration() {
             DrawRoundedRect(state.renderer.get(), cardRect, 10, SDL_Color{ 20, 20, 30, 250 });   // Deep dark background
             
             std::string selectTitle = IsRussianLanguage(state.gameLanguage) ? "ВЫБОР ЯЗЫКА" : "SELECT LANGUAGE";
-            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите язык для ведения истории и интерфейса:" : "Select the target language for story and interface:";
+            std::string selectPrompt = IsRussianLanguage(state.gameLanguage) ? "Выберите язык:" : "Select language:";
             
             RenderText(state.renderer.get(), state.fontTitle.get(), selectTitle, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 60 : 40), SDL_Color{ 255, 215, 0, 255 }, true);
             RenderText(state.renderer.get(), state.fontUI.get(), selectPrompt, WINDOW_WIDTH / 2, cardY + (IsMobile() ? 128 : 85), SDL_Color{ 200, 200, 220, 255 }, true);
@@ -5729,7 +5729,8 @@ extern "C" int SDL_main(int argc, char* argv[]) {
 
 #if defined(__ANDROID__)
     const char* internalPath = SDL_AndroidGetInternalStoragePath();
-    if (internalPath) {
+    if (internalPath) 
+    {
         try {
             std::filesystem::create_directories(internalPath);
         } catch (...) {
@@ -5824,8 +5825,12 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                         dest.write(buffer.data(), size);
                         dest.close();
                         std::cout << "[Android] Successfully copied initial save.json to internal storage." << std::endl;
+                    }
+                }
+            }
         }
     }
+
 #elif defined(__EMSCRIPTEN__)
     const char* internalPath = "/offline";
     try {
@@ -6157,6 +6162,9 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     SDL_SetHint(SDL_HINT_VIDEODRIVER, "x11");
     SDL_SetHint("SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR", "0");
 #endif
+
+    SDL_SetHint(SDL_HINT_TOUCH_MOUSE_EVENTS, "0");
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return -1;

@@ -1151,6 +1151,10 @@ USE_SHARED_MBEDTLS_LIBRARY:BOOL=OFF
 //Build Mbed TLS static library.
 USE_STATIC_MBEDTLS_LIBRARY:BOOL=ON
 
+//Build the native application inside a multiplatform WebView container
+// to support Puter sessions keylessly
+USE_WEBVIEW:BOOL=OFF
+
 //Path to a file.
 ZLIB_INCLUDE_DIR:PATH=C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include
 

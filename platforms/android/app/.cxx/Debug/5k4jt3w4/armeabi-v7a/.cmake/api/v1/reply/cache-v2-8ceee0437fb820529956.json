@@ -11,7 +11,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "x86"
+			"value" : "armeabi-v7a"
 		},
 		{
 			"name" : "ANDROID_NDK",
@@ -59,7 +59,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a"
 		},
 		{
 			"name" : "BOOK_TO_GAME_IS_TOP_LEVEL",
@@ -203,7 +203,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : ""
+			"value" : "1"
 		},
 		{
 			"name" : "CHECK_CPU_ARCHITECTURE_ARM64",
@@ -251,7 +251,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "1"
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_ADDR2LINE",
@@ -279,7 +279,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "x86"
+			"value" : "armeabi-v7a"
 		},
 		{
 			"name" : "CMAKE_ANDROID_NDK",
@@ -367,7 +367,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86"
+			"value" : "c:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -1243,7 +1243,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\build\\intermediates\\cxx\\Debug\\5k4jt3w4\\obj\\x86"
+			"value" : "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\build\\intermediates\\cxx\\Debug\\5k4jt3w4\\obj\\armeabi-v7a"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1575,7 +1575,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\build\\intermediates\\cxx\\Debug\\5k4jt3w4\\obj\\x86"
+			"value" : "C:\\games\\BOOK_TO_GAME\\platforms\\android\\app\\build\\intermediates\\cxx\\Debug\\5k4jt3w4\\obj\\armeabi-v7a"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1946,30 +1946,6 @@
 			"value" : ""
 		},
 		{
-			"name" : "CPU_SUPPORTS_SSE2",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Test CPU_SUPPORTS_SSE2"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "1"
-		},
-		{
-			"name" : "CPU_SUPPORTS_SSE3",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Test CPU_SUPPORTS_SSE3"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "1"
-		},
-		{
 			"name" : "CURL_BINARY_DIR",
 			"properties" : 
 			[
@@ -1979,7 +1955,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/curl"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/curl"
 		},
 		{
 			"name" : "CURL_BROTLI",
@@ -3135,7 +3111,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "[C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/i686-linux-android/21/libz.so][C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include][v1.2.12()]"
+			"value" : "[C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/arm-linux-androideabi/21/libz.so][C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include][v1.2.12()]"
 		},
 		{
 			"name" : "FT_DISABLE_BROTLI",
@@ -3248,18 +3224,6 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "C:/Program Files/Git/cmd/git.exe"
-		},
-		{
-			"name" : "HAVE_3DNOW",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Test HAVE_3DNOW"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "1"
 		},
 		{
 			"name" : "HAVE_ABS",
@@ -3391,7 +3355,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : ""
+			"value" : "1"
 		},
 		{
 			"name" : "HAVE_ARPA_INET_H",
@@ -4495,7 +4459,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "1"
+			"value" : ""
 		},
 		{
 			"name" : "HAVE_INDEX",
@@ -4936,18 +4900,6 @@
 				{
 					"name" : "HELPSTRING",
 					"value" : "Have symbol memset"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "1"
-		},
-		{
-			"name" : "HAVE_MMX",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Test HAVE_MMX"
 				}
 			],
 			"type" : "INTERNAL",
@@ -5860,18 +5812,6 @@
 				{
 					"name" : "HELPSTRING",
 					"value" : "Have symbol sscanf"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "1"
-		},
-		{
-			"name" : "HAVE_SSE",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Test HAVE_SSE"
 				}
 			],
 			"type" : "INTERNAL",
@@ -7099,7 +7039,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/mbedtls"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/mbedtls"
 		},
 		{
 			"name" : "Mbed TLS_IS_TOP_LEVEL",
@@ -7923,7 +7863,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2"
 		},
 		{
 			"name" : "SDL2_DISABLE_INSTALL",
@@ -8007,7 +7947,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2_image"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2_image"
 		},
 		{
 			"name" : "SDL2_image_IS_TOP_LEVEL",
@@ -8043,7 +7983,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2_mixer"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2_mixer"
 		},
 		{
 			"name" : "SDL2_mixer_IS_TOP_LEVEL",
@@ -8079,7 +8019,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2_net"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2_net"
 		},
 		{
 			"name" : "SDL2_net_IS_TOP_LEVEL",
@@ -8115,7 +8055,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2_ttf"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2_ttf"
 		},
 		{
 			"name" : "SDL2_ttf_IS_TOP_LEVEL",
@@ -8142,18 +8082,6 @@
 			"value" : "C:/games/BOOK_TO_GAME/external/src/SDL2_ttf"
 		},
 		{
-			"name" : "SDL_3DNOW",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Use 3Dnow! MMX assembly routines"
-				}
-			],
-			"type" : "BOOL",
-			"value" : "ON"
-		},
-		{
 			"name" : "SDL_ALSA",
 			"properties" : 
 			[
@@ -8176,6 +8104,30 @@
 			],
 			"type" : "BOOL",
 			"value" : "ON"
+		},
+		{
+			"name" : "SDL_ARMNEON",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Use NEON assembly blitters on ARM"
+				}
+			],
+			"type" : "BOOL",
+			"value" : "OFF"
+		},
+		{
+			"name" : "SDL_ARMSIMD",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Use SIMD assembly blitters on ARM"
+				}
+			],
+			"type" : "BOOL",
+			"value" : "OFF"
 		},
 		{
 			"name" : "SDL_ARTS",
@@ -8662,18 +8614,6 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "SDL_MMX",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Use MMX assembly routines"
-				}
-			],
-			"type" : "BOOL",
-			"value" : "ON"
-		},
-		{
 			"name" : "SDL_NAS",
 			"properties" : 
 			[
@@ -8876,54 +8816,6 @@
 			],
 			"type" : "BOOL",
 			"value" : "OFF"
-		},
-		{
-			"name" : "SDL_SSE",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Use SSE assembly routines"
-				}
-			],
-			"type" : "BOOL",
-			"value" : "ON"
-		},
-		{
-			"name" : "SDL_SSE2",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Use SSE2 assembly routines"
-				}
-			],
-			"type" : "BOOL",
-			"value" : "ON"
-		},
-		{
-			"name" : "SDL_SSE3",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Use SSE3 assembly routines"
-				}
-			],
-			"type" : "BOOL",
-			"value" : "ON"
-		},
-		{
-			"name" : "SDL_SSEMATH",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Allow GCC to use SSE floating point math"
-				}
-			],
-			"type" : "BOOL",
-			"value" : "ON"
 		},
 		{
 			"name" : "SDL_STATIC",
@@ -9466,6 +9358,18 @@
 			"value" : "1"
 		},
 		{
+			"name" : "USE_WEBVIEW",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Build the native application inside a multiplatform WebView container to support Puter sessions keylessly"
+				}
+			],
+			"type" : "BOOL",
+			"value" : "OFF"
+		},
+		{
 			"name" : "VULKAN_PASSED_ANDROID_CHECKS",
 			"properties" : 
 			[
@@ -9523,7 +9427,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/i686-linux-android/21/libz.so"
+			"value" : "C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/arm-linux-androideabi/21/libz.so"
 		},
 		{
 			"name" : "_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX",
@@ -9583,7 +9487,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2_ttf/external/freetype"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2_ttf/external/freetype"
 		},
 		{
 			"name" : "freetype_IS_TOP_LEVEL",
@@ -9667,7 +9571,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/pugixml"
+			"value" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/pugixml"
 		},
 		{
 			"name" : "pugixml_IS_TOP_LEVEL",

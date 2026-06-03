@@ -170,7 +170,7 @@
 				},
 				{
 					"backtrace" : 12,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib/../include"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/arm64-v8a/external/src/curl/lib/../include"
 				},
 				{
 					"backtrace" : 13,
@@ -182,7 +182,7 @@
 				},
 				{
 					"backtrace" : 15,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib/.."
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/arm64-v8a/external/src/curl/lib/.."
 				},
 				{
 					"backtrace" : 16,
@@ -190,7 +190,7 @@
 				},
 				{
 					"backtrace" : 17,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/arm64-v8a/external/src/curl/lib"
 				},
 				{
 					"backtrace" : 3,
@@ -396,10 +396,6 @@
 		},
 		{
 			"backtrace" : 3,
-			"id" : "mbedx509::@e8431c56b1010b32abba"
-		},
-		{
-			"backtrace" : 3,
 			"id" : "p256m::@f88269df745c2727947a"
 		},
 		{
@@ -409,6 +405,10 @@
 		{
 			"backtrace" : 3,
 			"id" : "mbedtls::@e8431c56b1010b32abba"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "mbedx509::@e8431c56b1010b32abba"
 		}
 	],
 	"id" : "libcurl_static::@3e9b93e5b7cc751973fd",
@@ -1588,7 +1588,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/x86_64/external/src/curl/lib/curl_config.h",
+			"path" : "platforms/android/app/.cxx/Debug/5k4jt3w4/arm64-v8a/external/src/curl/lib/curl_config.h",
 			"sourceGroupIndex" : 0
 		},
 		{

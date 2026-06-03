@@ -1,4 +1,5 @@
 #pragma once
+#include <regex>
 #ifndef _WIN32
 #include <unistd.h>
 #include <sys/wait.h>
@@ -1783,6 +1784,17 @@ inline void PreprocessRawAiResponse(std::string& aiResponse, const std::string& 
                 );
             } else if (step.action == "trim") {
                 aiResponse = Trim(aiResponse);
+            } else if (step.action == "regex_replace") {
+                 try {
+                        // Создаем регулярное выражение из вашего target
+                        std::regex re(step.target);
+                        // Заменяем все совпадения на replacement
+                        aiResponse = std::regex_replace(aiResponse, re, step.replacement);
+                    } catch (const std::regex_error& e) {
+                        // На случай, если в JSON указана невалидная регулярка, 
+                        // чтобы игра не вылетела с ошибкой
+                        std::cerr << "Regex error: " << e.what() << std::endl;
+    }
             }
         }
     } else {

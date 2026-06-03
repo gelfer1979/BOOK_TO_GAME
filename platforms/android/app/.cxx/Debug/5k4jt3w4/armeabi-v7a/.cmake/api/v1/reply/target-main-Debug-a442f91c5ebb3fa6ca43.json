@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/build/intermediates/cxx/Debug/5k4jt3w4/obj/x86/libmain.so"
+			"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/build/intermediates/cxx/Debug/5k4jt3w4/obj/armeabi-v7a/libmain.so"
 		}
 	],
 	"backtrace" : 1,
@@ -28,31 +28,31 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 192,
+				"line" : 292,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 218,
+				"line" : 318,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 237,
+				"line" : 337,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 241,
+				"line" : 341,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 205,
+				"line" : 305,
 				"parent" : 0
 			},
 			{
@@ -64,7 +64,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 245,
+				"line" : 345,
 				"parent" : 0
 			}
 		]
@@ -75,7 +75,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -fno-limit-debug-info  -fPIC"
+					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -std=c++17 -fno-limit-debug-info  -fPIC"
 				},
 				{
 					"fragment" : "-std=gnu++17"
@@ -127,15 +127,15 @@
 				},
 				{
 					"backtrace" : 2,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2/include"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2/include"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2/include/SDL2"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2/include/SDL2"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/x86/external/src/SDL2/include-config-debug/SDL2"
+					"path" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/Debug/5k4jt3w4/armeabi-v7a/external/src/SDL2/include-config-debug/SDL2"
 				},
 				{
 					"backtrace" : 2,
@@ -190,11 +190,11 @@
 	[
 		{
 			"backtrace" : 2,
-			"id" : "pugixml-static::@2a51ceecac855e4800ad"
+			"id" : "book_miniz::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 2,
-			"id" : "book_miniz::@6890427a1f51a3e7e1df"
+			"id" : "pugixml-static::@2a51ceecac855e4800ad"
 		},
 		{
 			"backtrace" : 4,
@@ -206,19 +206,19 @@
 		},
 		{
 			"backtrace" : 2,
-			"id" : "SDL2_image::@268d60a6bad752bd6682"
-		},
-		{
-			"backtrace" : 2,
 			"id" : "SDL2_mixer::@e52443e1913250127460"
 		},
 		{
 			"backtrace" : 2,
-			"id" : "freetype::@44851b3c0ce20b9a0f95"
+			"id" : "SDL2_image::@268d60a6bad752bd6682"
 		},
 		{
 			"backtrace" : 2,
 			"id" : "SDL2_ttf::@d8d20a632b588d635050"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "freetype::@44851b3c0ce20b9a0f95"
 		},
 		{
 			"backtrace" : 2,
@@ -227,6 +227,10 @@
 		{
 			"backtrace" : 2,
 			"id" : "everest::@0179ad70c2c5d44eeeb3"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "mbedcrypto::@e8431c56b1010b32abba"
 		},
 		{
 			"backtrace" : 2,
@@ -239,10 +243,6 @@
 		{
 			"backtrace" : 2,
 			"id" : "mbedtls::@e8431c56b1010b32abba"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "mbedcrypto::@e8431c56b1010b32abba"
 		},
 		{
 			"backtrace" : 2,
@@ -375,7 +375,7 @@
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "C:\\android\\sdk\\ndk\\25.2.9519653\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\21\\libz.so",
+				"fragment" : "C:\\android\\sdk\\ndk\\25.2.9519653\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\21\\libz.so",
 				"role" : "libraries"
 			},
 			{

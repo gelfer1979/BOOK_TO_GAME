@@ -323,8 +323,8 @@ CMAKE_SYSTEM_NAME:UNINITIALIZED=Android
 //No help, variable specified on the command line.
 CMAKE_SYSTEM_VERSION:UNINITIALIZED=21
 
-//No help, variable specified on the command line.
-CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=C:\Android\Sdk\ndk\25.2.9519653\build\cmake\android.toolchain.cmake
+//The CMake toolchain file
+CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -1132,6 +1132,10 @@ USE_SHARED_MBEDTLS_LIBRARY:BOOL=OFF
 
 //Build Mbed TLS static library.
 USE_STATIC_MBEDTLS_LIBRARY:BOOL=ON
+
+//Build the native application inside a multiplatform WebView container
+// to support Puter sessions keylessly
+USE_WEBVIEW:BOOL=OFF
 
 //Path to a file.
 ZLIB_INCLUDE_DIR:PATH=C:/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include
