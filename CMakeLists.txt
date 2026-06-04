@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(BOOK_TO_GAME LANGUAGES C CXX)
 
+if(APPLE)
+    enable_language(OBJC OBJCXX)
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
