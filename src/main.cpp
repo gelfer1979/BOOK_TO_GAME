@@ -4282,7 +4282,6 @@ void MainIteration() {
                                 state.appState = state.previousAppState;
                                 modelClicked = true;
                                 break;
-                            } else {
                                 std::string existingKey = "";
                                 std::ifstream f(state.selectedAiFilename);
                                 if (!f.is_open()) {
@@ -4298,12 +4297,16 @@ void MainIteration() {
                                     } catch (...) {}
                                     f.close();
                                 }
-                                state.editingApiKey = true;
-                                state.inputText = existingKey;
-                                SDL_StartTextInput();
+                                if (state.selectedAiFilename != "ai_puter.json" && state.selectedAiFilename != "../ai_puter.json" && existingKey.empty()) {
+                                    state.editingApiKey = true;
+                                    state.inputText = existingKey;
+                                    SDL_StartTextInput();
+                                } else {
+                                    ReloadSettingsAndReinit(state.selectedAiFilename);
+                                    state.appState = state.previousAppState;
+                                }
                                 modelClicked = true;
                                 break;
-                            }
                         }
                     }
                 }

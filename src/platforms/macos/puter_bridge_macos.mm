@@ -286,12 +286,6 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     if (activePopupWindows && [activePopupWindows containsObject:window]) {
         [activePopupWindows removeObject:window];
         LogToFile([NSString stringWithFormat:@"[UI Delegate] Removed closed window from active list. Remaining popups: %lu", (unsigned long)[activePopupWindows count]]);
-        
-        // If the user closed the last popup window and login has not completed, terminate with error
-        if ([activePopupWindows count] == 0 && !operationCompleted) {
-            LogToFile(@"[UI Delegate] All popup windows closed by user before login completed. Terminating...");
-            SaveResponseAndExit(@"error", @"Puter bridge login popup closed by user.");
-        }
     }
 }
 
