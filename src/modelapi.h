@@ -1379,6 +1379,11 @@ public:
         bridgeName = "PuterBridge.exe";
 #endif
         std::string bridgePath = bridgeName;
+#ifdef __APPLE__
+        if (!std::filesystem::exists(bridgePath)) {
+            bridgePath = "../MacOS/" + bridgeName;
+        }
+#endif
         if (!std::filesystem::exists(bridgePath)) {
             bridgePath = "../" + bridgeName;
         }
