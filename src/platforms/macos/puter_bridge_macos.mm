@@ -70,6 +70,7 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     else if ([msg containsString:@"\"action\":\"show_login_window\""]) {
         if (mainWindow) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [mainWindow center]; // Move it to the center of the screen so user can log in
                 [mainWindow makeKeyAndOrderFront:nil];
                 [NSApp activateIgnoringOtherApps:YES];
             });
@@ -79,7 +80,8 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     else if ([msg containsString:@"\"action\":\"login_success\""]) {
         if (mainWindow) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [mainWindow orderOut:nil];
+                // Move it back off-screen to hide it cleanly
+                [mainWindow setFrameOrigin:NSMakePoint(-10000, -10000)];
             });
         }
         if (mainWebView) {
@@ -234,8 +236,9 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     }
     requestJsonData = content;
     
-    // 1. Create Headless NSWindow (initially hidden)
-    NSRect frame = NSMakeRect(0, 0, 600, 700);
+    // 1. Create Headless NSWindow positioned way off-screen (so it's active but invisible to user)
+    // This prevents macOS from App Napping/suspending JavaScript execution in the WebView.
+    NSRect frame = NSMakeRect(-10000, -10000, 600, 700);
     mainWindow = [[NSWindow alloc] initWithContentRect:frame
                                              styleMask:(NSWindowStyleMaskTitled |
                                                         NSWindowStyleMaskClosable |
@@ -244,7 +247,6 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
                                                  defer:NO];
     [mainWindow setTitle:@"Puter AI Authentication"];
     [mainWindow setDelegate:self];
-    [mainWindow center];
     
     // 2. Setup configuration & message handler
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
@@ -282,6 +284,9 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     NSURL* readAccessURL = [[fileURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent]; // Access to parent dir containing assets/
     
     [mainWebView loadFileURL:fileURL allowingReadAccessToURL:readAccessURL];
+    
+    // Crucial: order the window front so it activates the WKWebView execution loop immediately
+    [mainWindow orderFront:nil];
     
     // 5. Add 180s fallback timeout
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(180 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
