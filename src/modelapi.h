@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #endif
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+#endif
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 inline void EmscriptenSyncFS() {
@@ -1369,8 +1372,8 @@ public:
             }
         }
 
-        // 2. Try using the keyless PuterBridge helper via WebView2 on Windows / WebKitGTK on Linux
-#if defined(_WIN32) || (defined(__linux__) && !defined(__ANDROID__))
+        // 2. Try using the keyless PuterBridge helper via WebView2 on Windows / WebKitGTK on Linux / WKWebView on macOS
+#if defined(_WIN32) || (defined(__linux__) && !defined(__ANDROID__)) || (defined(__APPLE__) && (!defined(TARGET_OS_IPHONE) || !TARGET_OS_IPHONE))
         std::string bridgeName = "PuterBridge";
 #ifdef _WIN32
         bridgeName = "PuterBridge.exe";

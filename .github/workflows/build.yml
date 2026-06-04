@@ -201,6 +201,16 @@ jobs:
             exit 1
           fi
           
+          # 3. Locate the compiled PuterBridge binary anywhere in the build tree and copy it in
+          BRIDGE_SOURCE=$(find build -type f -name "PuterBridge" 2>/dev/null | grep -v "dist/" | head -n 1)
+          if [ -n "$BRIDGE_SOURCE" ]; then
+            echo "Found PuterBridge binary at: $BRIDGE_SOURCE"
+            cp "$BRIDGE_SOURCE" dist/BOOK_TO_GAME.app/Contents/MacOS/PuterBridge
+            chmod +x dist/BOOK_TO_GAME.app/Contents/MacOS/PuterBridge
+          else
+            echo "WARNING: PuterBridge executable binary not found in build directory!"
+          fi
+          
           # Pack the .app bundle directly into the zip archive
           cd dist && zip -r ../book-to-game-macos-universal.zip BOOK_TO_GAME.app
 

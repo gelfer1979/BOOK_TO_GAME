@@ -578,4 +578,27 @@ elseif(UNIX AND NOT APPLE AND NOT ANDROID)
             COMMENT "Creating single-file self-extracting Linux executable..."
         )
     endif()
+elseif(APPLE AND NOT IOS)
+    message(STATUS "Configuring PuterBridge (macOS invisible WKWebView helper)...")
+    
+    find_library(WEBKIT_FRAMEWORK WebKit REQUIRED)
+    find_library(COCOA_FRAMEWORK Cocoa REQUIRED)
+    
+    add_executable(PuterBridge src/platforms/macos/puter_bridge_macos.mm)
+    target_link_libraries(PuterBridge PRIVATE ${WEBKIT_FRAMEWORK} ${COCOA_FRAMEWORK})
+    
+    # Copy puter_bridge.html to output assets folder
+    add_custom_command(TARGET PuterBridge POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:PuterBridge>/assets
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets/puter_bridge.html"
+        $<TARGET_FILE_DIR:PuterBridge>/assets/puter_bridge.html
+    )
+    
+    install(TARGETS PuterBridge DESTINATION bin)
+    
+    # Add dependency so PuterBridge builds automatically with BOOK_TO_GAME
+    if(TARGET BOOK_TO_GAME)
+        add_dependencies(BOOK_TO_GAME PuterBridge)
+    endif()
 endif()
