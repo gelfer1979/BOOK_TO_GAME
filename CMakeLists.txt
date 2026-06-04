@@ -587,6 +587,10 @@ elseif(APPLE AND NOT IOS)
     add_executable(PuterBridge src/platforms/macos/puter_bridge_macos.mm)
     target_link_libraries(PuterBridge PRIVATE ${WEBKIT_FRAMEWORK} ${COCOA_FRAMEWORK})
     
+    # Embed Info.plist into the command line binary so it gets a stable CFBundleIdentifier.
+    # This enables WebKit to store cookies/localStorage persistently across application launches.
+    target_link_options(PuterBridge PRIVATE "-Wl,-sectcreate,__TEXT,__info_plist,${CMAKE_CURRENT_SOURCE_DIR}/src/platforms/macos/PuterBridgeInfo.plist")
+    
     # Copy puter_bridge.html to output assets folder
     add_custom_command(TARGET PuterBridge POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:PuterBridge>/assets
