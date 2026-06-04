@@ -185,8 +185,12 @@ jobs:
             find dist/BOOK_TO_GAME.app || true
           fi
           
+          # Create a separate folder for DMG content so the .app bundle itself is packaged inside the DMG
+          mkdir -p dist/dmg_content
+          cp -r dist/BOOK_TO_GAME.app dist/dmg_content/
+          
           # Create DMG file containing the .app bundle (which now preserves the executable flag)
-          hdiutil create -volname "BOOK_TO_GAME" -srcfolder dist/BOOK_TO_GAME.app -ov -format UDZO dist/BOOK_TO_GAME.dmg
+          hdiutil create -volname "BOOK_TO_GAME" -srcfolder dist/dmg_content -ov -format UDZO dist/BOOK_TO_GAME.dmg
           
           # Pack only the DMG into the zip to avoid user confusion (raw .app loses permissions in zip)
           cd dist && zip -j ../book-to-game-macos-universal.zip BOOK_TO_GAME.dmg
