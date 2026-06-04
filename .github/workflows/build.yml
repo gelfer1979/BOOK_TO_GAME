@@ -139,6 +139,7 @@ jobs:
       # Configure the project using CMake and Ninja for both architectures
       - name: Configure CMake
         run: |
+          set -o pipefail
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" 2>&1 | tee cmake_config.log
@@ -146,6 +147,7 @@ jobs:
       # Build the unified static binary and copy assets
       - name: Compile and Link
         run: |
+          set -o pipefail
           cmake --build build --config Release 2>&1 | tee cmake_build.log
 
       # Bundle the compiled static binary, assets, and config files into a clean archive
