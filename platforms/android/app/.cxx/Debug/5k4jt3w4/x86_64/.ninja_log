@@ -819,3 +819,10 @@
 140	175	8022291571446677	libbook_miniz.a	d079461f4c255599
 15	754	8022291577218518	CMakeFiles/main.dir/src/book_converter.cpp.o	f4967b6b9b32b9ac
 754	858	8022291578032193	../../../../build/intermediates/cxx/Debug/5k4jt3w4/obj/x86_64/libmain.so	d4844940dfb04352
+13	60	8022328748100889	CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o	2ae93aea7ad84bc1
+16	66	8022328748155896	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o	c92e356fbfbc2638
+15	79	8022328748280897	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o	3cfce607195229f0
+14	139	8022328748866028	CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o	41d9099fb675fde9
+140	176	8022328749181082	libbook_miniz.a	d079461f4c255599
+17	762	8022328755046168	CMakeFiles/main.dir/src/book_converter.cpp.o	f4967b6b9b32b9ac
+762	947	8022328756590401	../../../../build/intermediates/cxx/Debug/5k4jt3w4/obj/x86_64/libmain.so	d4844940dfb04352

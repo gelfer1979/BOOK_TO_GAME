@@ -170,10 +170,14 @@ jobs:
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           
-          # Create DMG file containing the .app bundle
+          # Explicitly set executable permission for the binary inside the app bundle
+          chmod +x dist/BOOK_TO_GAME.app/Contents/MacOS/BOOK_TO_GAME
+          
+          # Create DMG file containing the .app bundle (which now preserves the executable flag)
           hdiutil create -volname "BOOK_TO_GAME" -srcfolder dist/BOOK_TO_GAME.app -ov -format UDZO dist/BOOK_TO_GAME.dmg
           
-          cd dist && zip -r ../book-to-game-macos-universal.zip *
+          # Pack only the DMG into the zip to avoid user confusion (raw .app loses permissions in zip)
+          cd dist && zip -j ../book-to-game-macos-universal.zip BOOK_TO_GAME.dmg
 
       # Upload the finished static packages to GitHub Releases / Artifacts
       - name: Upload Artifact
