@@ -1408,7 +1408,7 @@ public:
             requestBody["history"] = historyJ;
             
             std::error_code ec;
-            // std::filesystem::remove("puter_response.json", ec);
+            std::filesystem::remove("puter_response.json", ec);
             std::filesystem::remove("puter_request.json", ec);
             
             std::ofstream reqFile("puter_request.json");
@@ -1479,7 +1479,7 @@ public:
                     respFile.close();
                     
                     std::filesystem::remove("puter_request.json", ec);
-                    // std::filesystem::remove("puter_response.json", ec);
+                    std::filesystem::remove("puter_response.json", ec);
                     
                     if (fileContent.empty()) {
                         std::cerr << "[Puter Bridge] Bridge finished but puter_response.json was empty." << std::endl;
