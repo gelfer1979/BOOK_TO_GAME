@@ -9,6 +9,7 @@ static NSWindow* mainWindow = nil;
 static WKWebView* mainWebView = nil;
 static NSString* requestJsonData = nil;
 static BOOL operationCompleted = NO;
+static NSMutableArray* activePopupWindows = nil;
 
 // Logging helper
 static void LogToFile(NSString* message) {
@@ -224,8 +225,8 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
 
 - (WKWebView *)webView:(WKWebView *)webView
 createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
-   forNavigationAction:(WKNavigationAction *)navigationAction
-        windowFeatures:(WKWindowFeatures *)windowFeatures {
+    forNavigationAction:(WKNavigationAction *)navigationAction
+         windowFeatures:(WKWindowFeatures *)windowFeatures {
     
     LogToFile(@"[UI Delegate] Creating popup webview (window.open intercept)");
     
@@ -240,6 +241,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     [popupWindow setTitle:@"Puter Authentication"];
     [popupWindow setDelegate:self];
     [popupWindow center];
+    [popupWindow setReleasedWhenClosed:NO];
     
     // Create WKWebView inside the window
     WKWebView* popupWebView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
@@ -248,10 +250,16 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     
     [popupWindow makeKeyAndOrderFront:nil];
     
-    // Load the navigation URL
+    // Retain the popup window in the active array to prevent ARC deallocation
+    if (!activePopupWindows) {
+        activePopupWindows = [[NSMutableArray alloc] init];
+    }
+    [activePopupWindows addObject:popupWindow];
+    LogToFile([NSString stringWithFormat:@"[UI Delegate] Popup window created and retained. Total popups: %lu", (unsigned long)[activePopupWindows count]]);
+    
+    // Let the returned WKWebView load the URL automatically to preserve window connection and OAuth flow.
     if (navigationAction.request.URL) {
-        LogToFile([NSString stringWithFormat:@"[UI Delegate] Popup loading URL: %@", [navigationAction.request.URL absoluteString]]);
-        [popupWebView loadRequest:navigationAction.request];
+        LogToFile([NSString stringWithFormat:@"[UI Delegate] Popup requested URL: %@", [navigationAction.request.URL absoluteString]]);
     }
     
     return popupWebView;
@@ -262,6 +270,21 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     NSWindow* window = webView.window;
     if (window) {
         [window close];
+    }
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+    NSWindow* window = notification.object;
+    LogToFile(@"[UI Delegate] Popup window WillClose callback triggered");
+    if (activePopupWindows && [activePopupWindows containsObject:window]) {
+        [activePopupWindows removeObject:window];
+        LogToFile([NSString stringWithFormat:@"[UI Delegate] Removed closed window from active list. Remaining popups: %lu", (unsigned long)[activePopupWindows count]]);
+        
+        // If the user closed the last popup window and login has not completed, terminate with error
+        if ([activePopupWindows count] == 0 && !operationCompleted) {
+            LogToFile(@"[UI Delegate] All popup windows closed by user before login completed. Terminating...");
+            SaveResponseAndExit(@"error", @"Puter bridge login popup closed by user.");
+        }
     }
 }
 
@@ -374,6 +397,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
                                                  defer:NO];
     [mainWindow setTitle:@"Puter AI Authentication"];
     [mainWindow setDelegate:self];
+    [mainWindow setReleasedWhenClosed:NO];
     
     // 2. Setup configuration & message handler & custom URL scheme handler
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
@@ -413,7 +437,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
-    LogToFile(@"[App Delegate] Main window closed by user");
+    LogToFile(@"[App Delegate] Main window WillClose callback triggered");
     if (!operationCompleted) {
         SaveResponseAndExit(@"error", @"Puter bridge window closed by user.");
     }
