@@ -10,6 +10,20 @@ static WKWebView* mainWebView = nil;
 static NSString* requestJsonData = nil;
 static BOOL operationCompleted = NO;
 
+// Logging helper
+static void LogToFile(NSString* message) {
+    std::cout << [message UTF8String] << std::endl;
+    NSString* logLine = [NSString stringWithFormat:@"%@\n", message];
+    NSFileHandle* fileHandle = [NSFileHandle fileHandleForWritingAtPath:@"puter_bridge_log.txt"];
+    if (fileHandle) {
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:[logLine dataUsingEncoding:NSUTF8StringEncoding]];
+        [fileHandle closeFile];
+    } else {
+        [logLine writeToFile:@"puter_bridge_log.txt" atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+}
+
 // Helper to escape standard JSON for safe injection into a Javascript call
 static NSString* EscapeJavaScriptString(NSString* input) {
     NSMutableString* s = [input mutableCopy];
@@ -24,8 +38,7 @@ static NSString* EscapeJavaScriptString(NSString* input) {
 
 // Write final output and exit
 static void SaveResponseAndExit(NSString* status, NSString* responseText) {
-    std::cout << "[Puter Bridge] SaveResponseAndExit: status=" << [status UTF8String] 
-              << " response length=" << [responseText length] << std::endl;
+    LogToFile([NSString stringWithFormat:@"[Puter Bridge] SaveResponseAndExit: status=%@ response length=%lu", status, (unsigned long)[responseText length]]);
 
     // Escaping for JSON format
     NSMutableString* escapedResponse = [responseText mutableCopy];
@@ -40,7 +53,7 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     NSError* error = nil;
     [jsonString writeToFile:@"puter_response.json" atomically:YES encoding:NSUTF8StringEncoding error:&error];
     if (error) {
-        std::cerr << "[Puter Bridge] Failed to write puter_response.json: " << [[error localizedDescription] UTF8String] << std::endl;
+        LogToFile([NSString stringWithFormat:@"[Puter Bridge] ERROR: Failed to write puter_response.json: %@", [error localizedDescription]]);
     }
     
     operationCompleted = YES;
@@ -59,18 +72,26 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     NSString* msg = message.body;
     if (![msg isKindOfClass:[NSString class]]) return;
     
+    LogToFile([NSString stringWithFormat:@"[Script Message] Received event: %@", msg]);
+    
     // Check for ready action to send payload (immediate invisible execution)
     if ([msg containsString:@"\"action\":\"ready_invisible\""]) {
         if (mainWebView) {
+            LogToFile(@"[Script Message] Bridge ready. Delivering request payload...");
             NSString* jsCode = [NSString stringWithFormat:@"window.chrome.webview._deliverMessage('%@')", EscapeJavaScriptString(requestJsonData)];
-            [mainWebView evaluateJavaScript:jsCode completionHandler:nil];
+            [mainWebView evaluateJavaScript:jsCode completionHandler:^(id result, NSError *error) {
+                if (error) {
+                    LogToFile([NSString stringWithFormat:@"[Script Message] ERROR delivering message: %@", [error localizedDescription]]);
+                }
+            }];
         }
     }
     // Check for login window trigger (user needs to sign in)
     else if ([msg containsString:@"\"action\":\"show_login_window\""]) {
         if (mainWindow) {
+            LogToFile(@"[Script Message] Authentication required. Displaying login window...");
             dispatch_async(dispatch_get_main_queue(), ^{
-                [mainWindow center]; // Move it to the center of the screen so user can log in
+                [mainWindow center];
                 [mainWindow makeKeyAndOrderFront:nil];
                 [NSApp activateIgnoringOtherApps:YES];
             });
@@ -78,9 +99,9 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     }
     // Check for successful login
     else if ([msg containsString:@"\"action\":\"login_success\""]) {
+        LogToFile(@"[Script Message] Login successful. Hiding window and delivering payload...");
         if (mainWindow) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                // Move it back off-screen to hide it cleanly
                 [mainWindow setFrameOrigin:NSMakePoint(-10000, -10000)];
             });
         }
@@ -169,6 +190,33 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
 
 @end
 
+@interface BridgeNavigationDelegate : NSObject <WKNavigationDelegate>
+@end
+
+@implementation BridgeNavigationDelegate
+
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+    LogToFile(@"[Navigation] didStartProvisionalNavigation");
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    LogToFile(@"[Navigation] didFinishNavigation: HTML loaded successfully!");
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    LogToFile([NSString stringWithFormat:@"[Navigation] ERROR didFailNavigation: %@", [error localizedDescription]]);
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    LogToFile([NSString stringWithFormat:@"[Navigation] ERROR didFailProvisionalNavigation: %@", [error localizedDescription]]);
+}
+
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    LogToFile(@"[Navigation] ERROR: Web content process terminated (crashed)!");
+}
+
+@end
+
 @interface BridgeUIDelegate : NSObject <WKUIDelegate, NSWindowDelegate>
 @end
 
@@ -178,6 +226,8 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
 createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
    forNavigationAction:(WKNavigationAction *)navigationAction
         windowFeatures:(WKWindowFeatures *)windowFeatures {
+    
+    LogToFile(@"[UI Delegate] Creating popup webview (window.open intercept)");
     
     // Create new popup window
     NSRect frame = NSMakeRect(0, 0, 500, 600);
@@ -200,7 +250,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     
     // Load the navigation URL
     if (navigationAction.request.URL) {
-        std::cout << "[Puter Bridge] Popup loading URL: " << [[navigationAction.request.URL absoluteString] UTF8String] << std::endl;
+        LogToFile([NSString stringWithFormat:@"[UI Delegate] Popup loading URL: %@", [navigationAction.request.URL absoluteString]]);
         [popupWebView loadRequest:navigationAction.request];
     }
     
@@ -208,7 +258,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 }
 
 - (void)webViewDidClose:(WKWebView *)webView {
-    // When the webview calls window.close() (e.g. self.close() on success)
+    LogToFile(@"[UI Delegate] Closing popup webview");
     NSWindow* window = webView.window;
     if (window) {
         [window close];
@@ -220,24 +270,27 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 @interface BridgeAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     BridgeScriptMessageHandler* messageHandler;
     BridgeUIDelegate* uiDelegate;
+    BridgeNavigationDelegate* navigationDelegate;
 }
 @end
 
 @implementation BridgeAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    LogToFile(@"[App Delegate] applicationDidFinishLaunching started");
+    
     // Load request data
     NSError* error = nil;
     NSString* content = [NSString stringWithContentsOfFile:@"puter_request.json" encoding:NSUTF8StringEncoding error:&error];
     if (error || !content) {
-        std::cerr << "[Puter Bridge] Failed to read puter_request.json" << std::endl;
+        LogToFile([NSString stringWithFormat:@"[App Delegate] ERROR reading puter_request.json: %@", [error localizedDescription]]);
         [NSApp terminate:nil];
         return;
     }
     requestJsonData = content;
+    LogToFile(@"[App Delegate] Successfully read puter_request.json payload");
     
-    // 1. Create Headless NSWindow positioned way off-screen (so it's active but invisible to user)
-    // This prevents macOS from App Napping/suspending JavaScript execution in the WebView.
+    // 1. Create Headless NSWindow positioned way off-screen
     NSRect frame = NSMakeRect(-10000, -10000, 600, 700);
     mainWindow = [[NSWindow alloc] initWithContentRect:frame
                                              styleMask:(NSWindowStyleMaskTitled |
@@ -259,7 +312,10 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     // 3. Initialize WebView
     mainWebView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
     uiDelegate = [[BridgeUIDelegate alloc] init];
+    navigationDelegate = [[BridgeNavigationDelegate alloc] init];
+    
     mainWebView.UIDelegate = uiDelegate;
+    mainWebView.navigationDelegate = navigationDelegate;
     [mainWindow setContentView:mainWebView];
     
     // 4. Load puter_bridge.html
@@ -275,29 +331,39 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     
     // Verify existence of puter_bridge.html
     if (![[NSFileManager defaultManager] fileExistsAtPath:htmlPath]) {
-        // Search in parent directory also
         NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
         htmlPath = [currentDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
+    }
+    
+    LogToFile([NSString stringWithFormat:@"[App Delegate] Resolved HTML file path: %@", htmlPath]);
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:htmlPath]) {
+        LogToFile(@"[App Delegate] ERROR: HTML file does not exist at path!");
+        SaveResponseAndExit(@"error", @"Puter bridge assets not found");
+        return;
     }
     
     NSURL* fileURL = [NSURL fileURLWithPath:htmlPath];
     NSURL* readAccessURL = [[fileURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent]; // Access to parent dir containing assets/
     
+    LogToFile([NSString stringWithFormat:@"[App Delegate] Loading fileURL: %@ (access to: %@)", [fileURL absoluteString], [readAccessURL absoluteString]]);
     [mainWebView loadFileURL:fileURL allowingReadAccessToURL:readAccessURL];
     
     // Crucial: order the window front so it activates the WKWebView execution loop immediately
     [mainWindow orderFront:nil];
+    LogToFile(@"[App Delegate] Window ordered front off-screen");
     
     // 5. Add 180s fallback timeout
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(180 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (!operationCompleted) {
-            std::cerr << "[Puter Bridge] Timeout reached after 180 seconds." << std::endl;
+            LogToFile(@"[App Delegate] Timeout reached after 180 seconds.");
             SaveResponseAndExit(@"error", @"Puter bridge request timed out after 180 seconds.");
         }
     });
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
+    LogToFile(@"[App Delegate] Main window closed by user");
     if (!operationCompleted) {
         SaveResponseAndExit(@"error", @"Puter bridge window closed by user.");
     }
@@ -307,13 +373,21 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        // Clear old log
+        [[NSFileManager defaultManager] removeItemAtPath:@"puter_bridge_log.txt" error:nil];
+        LogToFile(@"=== Puter Bridge execution started ===");
+        
         NSApplication* app = [NSApplication sharedApplication];
+        LogToFile(@"[Main] NSApplication initialized");
+        
         // Crucial: Set activation policy to Regular so that Cocoa windows can be presented and focused
         // when launched as a child process via exec.
         [app setActivationPolicy:NSApplicationActivationPolicyRegular];
+        LogToFile(@"[Main] Activation policy set to Regular");
         
         BridgeAppDelegate* delegate = [[BridgeAppDelegate alloc] init];
         [app setDelegate:delegate];
+        LogToFile(@"[Main] Delegate set, running application...");
         [app run];
     }
     return 0;
