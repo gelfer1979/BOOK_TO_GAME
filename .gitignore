@@ -35,6 +35,7 @@ Thumbs.db
 /platforms/emscripten/build/
 *.html
 !assets/puter_bridge.html
+!platforms/android/app/src/main/assets/puter_bridge.html
 *.js
 *.wasm
 *.data
