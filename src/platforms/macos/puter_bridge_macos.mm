@@ -115,12 +115,7 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     }
     // Check for successful login
     else if ([msg containsString:@"\"action\":\"login_success\""]) {
-        LogToFile(@"[Script Message] Login successful. Hiding window and delivering payload...");
-        if (mainWindow) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [mainWindow setFrameOrigin:NSMakePoint(-10000, -10000)];
-            });
-        }
+        LogToFile(@"[Script Message] Login successful. Delivering payload...");
         if (mainWebView) {
             NSData* data = [requestJsonData dataUsingEncoding:NSUTF8StringEncoding];
             NSString* base64String = [data base64EncodedStringWithOptions:0];
