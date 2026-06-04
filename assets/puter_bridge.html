@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Puter Bridge</title>
+    <script>
+        // WebKit compatibility layer (for Linux WebKitGTK and macOS WKWebView)
+        if (!window.chrome || !window.chrome.webview) {
+            if (window.webkit && window.webkit.messageHandlers) {
+                window.chrome = window.chrome || {};
+                window.chrome.webview = {
+                    postMessage: function(msg) {
+                        window.webkit.messageHandlers.puter.postMessage(JSON.stringify(msg));
+                    },
+                    addEventListener: function(event, callback) {
+                        if (event === 'message') {
+                            window.chrome.webview._messageCallback = callback;
+                        }
+                    },
+                    _deliverMessage: function(dataStr) {
+                        if (window.chrome.webview._messageCallback) {
+                            try {
+                                const data = JSON.parse(dataStr);
+                                window.chrome.webview._messageCallback({ data: data });
+                            } catch (e) {
+                                console.error("[Puter Bridge Compatibility] Failed to parse delivered message:", e);
+                            }
+                        }
+                    }
+                };
+            } else if (window.PuterAndroidBridge) {
+                window.chrome = window.chrome || {};
+                window.chrome.webview = {
+                    postMessage: function(msg) {
+                        window.PuterAndroidBridge.postMessage(JSON.stringify(msg));
+                    },
+                    addEventListener: function(event, callback) {
+                        if (event === 'message') {
+                            window.chrome.webview._messageCallback = callback;
+                        }
+                    },
+                    _deliverMessage: function(dataStr) {
+                        if (window.chrome.webview._messageCallback) {
+                            try {
+                                const data = JSON.parse(dataStr);
+                                window.chrome.webview._messageCallback({ data: data });
+                            } catch (e) {
+                                console.error("[Puter Bridge Android Compatibility] Failed to parse delivered message:", e);
+                            }
+                        }
+                    }
+                };
+            }
+        }
+
+        // ALWAYS spoof location to http://localhost:8000 to guarantee Puter.js authentication works keylessly in the bridge!
+        const fakeLocation = new Proxy(window.location, {
+            get(target, prop) {
+                if (prop === 'protocol') return 'http:';
+                if (prop === 'origin') return 'http://localhost:8000';
+                if (prop === 'hostname') return 'localhost';
+                if (prop === 'port') return '8000';
+                if (prop === 'host') return 'localhost:8000';
+                const val = target[prop];
+                return typeof val === 'function' ? val.bind(target) : val;
+            }
+        });
+
+        // Robust multi-method location spoofing to bypass WebKit/WebView2 non-configurable property locks
+        let spoofed = false;
+        try {
+            Object.defineProperty(window, 'location', {
+                value: fakeLocation,
+                configurable: true,
+                enumerable: true
+            });
+            spoofed = true;
+        } catch (e) {}
+
+        if (!spoofed) {
+            try {
+                Object.defineProperty(Window.prototype, 'location', {
+                    get: function() { return fakeLocation; },
+                    configurable: true,
+                    enumerable: true
+                });
+                spoofed = true;
+            } catch (e) {}
+        }
+
+        if (!spoofed) {
+            try {
+                Object.defineProperty(globalThis, 'location', {
+                    value: fakeLocation,
+                    configurable: true,
+                    enumerable: true
+                });
+                spoofed = true;
+            } catch (e) {}
+        }
+
+        if (!spoofed) {
+            try {
+                delete window.location;
+                window.location = fakeLocation;
+            } catch (e) {}
+        }
+
+        // Also spoof document.location for completeness
+        try {
+            Object.defineProperty(document, 'location', {
+                get: function() { return fakeLocation; },
+                configurable: true
+            });
+        } catch (e) {}
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0b0c10;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            max-width: 450px;
+            width: 90%;
+        }
+        h1 {
+            color: #00c0ff;
+            font-size: 26px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        p {
+            color: #c5c6c7;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #00c0ff 0%, #0077ff 100%);
+            border: none;
+            border-radius: 30px;
+            color: #white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 14px 40px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 192, 255, 0.3);
+            outline: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 192, 255, 0.5);
+        }
+        .btn:active {
+            transform: translateY(1px);
+        }
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #00c0ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #login-area {
+            display: none;
+        }
+        #loading-area {
+            display: block;
+        }
+    </style>
+    <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Loading view -->
+        <div id="loading-area">
+            <div class="loader"></div>
+            <h1 id="status-title">Puter Bridge Active</h1>
+            <p id="status-desc">Ready and listening for game client queries...</p>
+        </div>
+        
+        <!-- Login view (visible only when authentication is required) -->
+        <div id="login-area">
+            <h1>Puter Authentication Required</h1>
+            <p>Please log in to your Puter account (using Gmail, Apple, or Email) to enable free, keyless AI gameplay on desktop.</p>
+            <button class="btn" onclick="triggerPuterLogin()">Sign In / Sign Up</button>
+        </div>
+    </div>
+
+    <script>
+        let isWaitingForLogin = false;
+
+        async function triggerPuterLogin() {
+            try {
+                document.getElementById('login-area').style.display = 'none';
+                document.getElementById('loading-area').style.display = 'block';
+                document.getElementById('status-title').innerText = "Signing In...";
+                document.getElementById('status-desc').innerText = "Please complete the login in the pop-up window.";
+                
+                await puter.auth.signIn();
+                
+                document.getElementById('status-title').innerText = "Login Successful!";
+                document.getElementById('status-desc').innerText = "Continuing gameplay, please wait...";
+                
+                if (window.chrome && window.chrome.webview) {
+                    window.chrome.webview.postMessage({ action: "login_success" });
+                }
+            } catch (err) {
+                console.error("[Puter Bridge] Login failed:", err);
+                document.getElementById('login-area').style.display = 'block';
+                document.getElementById('loading-area').style.display = 'none';
+                alert("Login failed: " + err.message);
+                if (window.chrome && window.chrome.webview) {
+                    window.chrome.webview.postMessage({ action: "error", text: "Login failed: " + err.message });
+                }
+            }
+        }
+
+        if (window.chrome && window.chrome.webview) {
+            window.chrome.webview.addEventListener('message', async function(event) {
+                const request = event.data;
+                const sysPrompt = request.systemPrompt || "";
+                const selectedModel = request.modelName || "claude-3-5-sonnet";
+                
+                document.getElementById('status-title').innerText = "Generating Story...";
+                document.getElementById('status-desc').innerText = "Asking Puter AI (" + selectedModel + ")...";
+                document.getElementById('loading-area').style.display = 'block';
+                document.getElementById('login-area').style.display = 'none';
+                
+                const messages = [];
+                if (sysPrompt && sysPrompt.length > 0) {
+                    messages.push({ role: "system", content: sysPrompt });
+                }
+                
+                try {
+                    const history = request.history || [];
+                    for (let i = 0; i < history.length; i++) {
+                        const role = (history[i].sender === "User") ? "user" : "assistant";
+                        messages.push({ role: role, content: history[i].text });
+                    }
+                } catch (e) {
+                    console.error("[Puter Bridge] Failed to parse history:", e);
+                    window.chrome.webview.postMessage({ action: "error", text: "Failed to parse history: " + e.message });
+                    return;
+                }
+                
+                try {
+                    if (typeof puter === 'undefined') {
+                        throw new Error("Puter.js library is not loaded.");
+                    }
+                    
+                    const response = await puter.ai.chat(messages, {
+                        model: selectedModel
+                    });
+                    
+                    let responseText = "";
+                    if (response && response.message && response.message.content) {
+                        responseText = response.message.content;
+                    } else if (typeof response === 'string') {
+                        responseText = response;
+                    } else if (response && response.toString) {
+                        responseText = response.toString();
+                    }
+                    
+                    window.chrome.webview.postMessage({
+                        action: "response",
+                        text: responseText
+                    });
+                } catch (err) {
+                    console.error("[Puter Bridge] Chat request failed:", err);
+                    window.chrome.webview.postMessage({ action: "error", text: err.message });
+                }
+            });
+            
+            // Check auth status on load
+            const checkAuth = setInterval(async () => {
+                if (typeof puter !== 'undefined') {
+                    clearInterval(checkAuth);
+                    
+                    if (puter.auth.isSignedIn()) {
+                        console.log("[Puter Bridge] User already signed in.");
+                        window.chrome.webview.postMessage({ action: "ready_invisible" });
+                    } else {
+                        console.log("[Puter Bridge] User is not signed in. Displaying authentication interface...");
+                        document.getElementById('loading-area').style.display = 'none';
+                        document.getElementById('login-area').style.display = 'block';
+                        window.chrome.webview.postMessage({ action: "show_login_window" });
+                    }
+                }
+            }, 100);
+        } else {
+            document.getElementById('status-title').innerText = "Developer Console Error";
+            document.getElementById('status-desc').innerText = "window.chrome.webview was not found.";
+        }
+    </script>
+</body>
+</html>

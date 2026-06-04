@@ -34,6 +34,7 @@ Thumbs.db
 # Emscripten / WebAssembly builds
 /platforms/emscripten/build/
 *.html
+!assets/puter_bridge.html
 *.js
 *.wasm
 *.data
