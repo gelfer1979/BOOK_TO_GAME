@@ -4,6 +4,13 @@
 #include <iostream>
 #include <string>
 
+// Private WebKit APIs to register custom schemes as secure and CORS-enabled.
+// This allows cross-origin window.opener access and postMessage to work correctly.
+@interface WKProcessPool (PrivateSchemeRegistration)
++ (void)_registerURLSchemeAsSecure:(NSString *)scheme;
++ (void)_registerURLSchemeAsCORSEnabled:(NSString *)scheme;
+@end
+
 // Global state
 static NSWindow* mainWindow = nil;
 static WKWebView* mainWebView = nil;
@@ -404,6 +411,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     messageHandler = [[BridgeScriptMessageHandler alloc] init];
     [configuration.userContentController addScriptMessageHandler:messageHandler name:@"puter"];
     [configuration.preferences setValue:@YES forKey:@"developerExtrasEnabled"];
+    configuration.preferences.javaScriptCanOpenWindowsAutomatically = YES;
     configuration.websiteDataStore = [WKWebsiteDataStore defaultDataStore];
     
     schemeHandler = [[BridgeURLSchemeHandler alloc] init];
@@ -447,6 +455,14 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        // Register 'app' scheme as secure and CORS-enabled before any WebView initializes
+        if ([WKProcessPool respondsToSelector:@selector(_registerURLSchemeAsSecure:)]) {
+            [WKProcessPool _registerURLSchemeAsSecure:@"app"];
+        }
+        if ([WKProcessPool respondsToSelector:@selector(_registerURLSchemeAsCORSEnabled:)]) {
+            [WKProcessPool _registerURLSchemeAsCORSEnabled:@"app"];
+        }
+
         // Clear old log
         [[NSFileManager defaultManager] removeItemAtPath:@"puter_bridge_log.txt" error:nil];
         LogToFile(@"=== Puter Bridge execution started ===");
