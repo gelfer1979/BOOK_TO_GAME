@@ -17,6 +17,7 @@ static WKWebView* mainWebView = nil;
 static NSString* requestJsonData = nil;
 static BOOL operationCompleted = NO;
 static NSMutableArray* activePopupWindows = nil;
+static id appDelegate = nil;
 
 // Logging helper
 static void LogToFile(NSString* message) {
@@ -478,8 +479,8 @@ int main(int argc, const char * argv[]) {
         [app setActivationPolicy:NSApplicationActivationPolicyRegular];
         LogToFile(@"[Main] Activation policy set to Regular");
         
-        BridgeAppDelegate* delegate = [[BridgeAppDelegate alloc] init];
-        [app setDelegate:delegate];
+        appDelegate = [[BridgeAppDelegate alloc] init];
+        [app setDelegate:appDelegate];
         LogToFile(@"[Main] Delegate set, running application...");
         [app run];
     }
