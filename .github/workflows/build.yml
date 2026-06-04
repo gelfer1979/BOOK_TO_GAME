@@ -166,8 +166,11 @@ jobs:
           # Ensure Contents/Resources exists
           mkdir -p dist/BOOK_TO_GAME.app/Contents/Resources
           
-          # Copy to Contents/Resources (which SDL_GetBasePath returns on macOS)
-          cp -r build/assets dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          # Copy all root assets to Contents/Resources (guaranteeing all game files are present)
+          cp -r assets dist/BOOK_TO_GAME.app/Contents/Resources/
+          # Merge any build-specific assets (like puter_bridge.html) if they exist
+          cp -r build/assets/* dist/BOOK_TO_GAME.app/Contents/Resources/assets/ 2>/dev/null || true
+          
           cp nbook_*.txt dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           cp book.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           cp ai_*.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
@@ -177,8 +180,11 @@ jobs:
           # Ensure Contents/MacOS exists
           mkdir -p dist/BOOK_TO_GAME.app/Contents/MacOS
           
-          # Copy to Contents/MacOS (for fallback or alternate execution modes)
-          cp -r build/assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
+          # Copy all root assets to Contents/MacOS
+          cp -r assets dist/BOOK_TO_GAME.app/Contents/MacOS/
+          # Merge any build-specific assets if they exist
+          cp -r build/assets/* dist/BOOK_TO_GAME.app/Contents/MacOS/assets/ 2>/dev/null || true
+          
           cp nbook_*.txt dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp book.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp ai_*.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
