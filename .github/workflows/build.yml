@@ -168,6 +168,8 @@ jobs:
           
           # Copy to Contents/Resources (which SDL_GetBasePath returns on macOS)
           cp -r build/assets dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          cp nbook_*.txt dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
+          cp book.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           cp ai_*.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           cp options.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
@@ -177,6 +179,8 @@ jobs:
           
           # Copy to Contents/MacOS (for fallback or alternate execution modes)
           cp -r build/assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
+          cp nbook_*.txt dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
+          cp book.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp ai_*.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
