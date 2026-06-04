@@ -4282,6 +4282,7 @@ void MainIteration() {
                                 state.appState = state.previousAppState;
                                 modelClicked = true;
                                 break;
+                            } else {
                                 std::string existingKey = "";
                                 std::ifstream f(state.selectedAiFilename);
                                 if (!f.is_open()) {
@@ -4297,16 +4298,25 @@ void MainIteration() {
                                     } catch (...) {}
                                     f.close();
                                 }
-                                if (state.selectedAiFilename != "ai_puter.json" && state.selectedAiFilename != "../ai_puter.json" && existingKey.empty()) {
+                                
+                                std::string fnLower = state.selectedAiFilename;
+                                std::transform(fnLower.begin(), fnLower.end(), fnLower.begin(), ::tolower);
+                                bool isKeylessOrLocal = (fnLower.find("puter") != std::string::npos ||
+                                                         fnLower.find("lmstudio") != std::string::npos ||
+                                                         fnLower.find("llama") != std::string::npos);
+                                
+                                if (isKeylessOrLocal) {
+                                    ReloadSettingsAndReinit(state.selectedAiFilename);
+                                    state.appState = state.previousAppState;
+                                } else {
+                                    // Always show API key input and wait for confirmation on desktop for external models
                                     state.editingApiKey = true;
                                     state.inputText = existingKey;
                                     SDL_StartTextInput();
-                                } else {
-                                    ReloadSettingsAndReinit(state.selectedAiFilename);
-                                    state.appState = state.previousAppState;
                                 }
                                 modelClicked = true;
                                 break;
+                            }
                         }
                     }
                 }
