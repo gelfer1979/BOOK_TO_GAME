@@ -66,11 +66,12 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     
     operationCompleted = YES;
     
-    // Delay termination by 1000ms to allow WKWebView / WebKit background processes
-    // to flush cookies and localStorage to disk.
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1000 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
-        [NSApp terminate:nil];
-    });
+    // Sleep for 1 second on the main thread to allow background WebKit processes (e.g. database/network)
+    // to write cookies and localStorage to disk.
+    [NSThread sleepForTimeInterval:1.0];
+    
+    // Perform a direct OS-level exit with code 0 to avoid Cocoa window/teardown crashes.
+    exit(0);
 }
 
 @interface BridgeScriptMessageHandler : NSObject <WKScriptMessageHandler>
