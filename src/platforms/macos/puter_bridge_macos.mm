@@ -200,7 +200,7 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    LogToFile(@"[Navigation] didFinishNavigation: HTML loaded successfully!");
+    LogToFile(@"[Navigation] didFinishNavigation: HTML loaded successfully via app://!");
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
@@ -267,10 +267,84 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 
 @end
 
+// Custom WKURLSchemeHandler to load files using app://local/ instead of file://
+// This bypasses Puter.js's "Unsupported Protocol: file://" security checks on macOS.
+@interface BridgeURLSchemeHandler : NSObject <WKURLSchemeHandler>
+@end
+
+@implementation BridgeURLSchemeHandler
+
+- (void)webView:(WKWebView *)webView startURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    NSURL *url = urlSchemeTask.request.URL;
+    NSString *path = url.path;
+    
+    LogToFile([NSString stringWithFormat:@"[Scheme Handler] Request for path: %@", path]);
+    
+    // Resolve file path locally
+    NSString* exeDir = [[NSBundle mainBundle] resourcePath];
+    if (!exeDir) {
+        exeDir = [[NSBundle mainBundle] bundlePath];
+    }
+    
+    if ([path hasPrefix:@"/"]) {
+        path = [path substringFromIndex:1];
+    }
+    
+    // Remove "local/" prefix if requested as app://local/assets/...
+    if ([path hasPrefix:@"local/"]) {
+        path = [path substringFromIndex:6];
+    }
+    
+    NSString* filePath = [exeDir stringByAppendingPathComponent:path];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
+        filePath = [currentDir stringByAppendingPathComponent:path];
+    }
+    
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        // Secondary fallback search
+        NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
+        filePath = [currentDir stringByAppendingPathComponent:path];
+        data = [NSData dataWithContentsOfFile:filePath];
+    }
+    
+    if (data) {
+        NSString *mimeType = @"text/html";
+        if ([filePath hasSuffix:@".html"]) mimeType = @"text/html";
+        else if ([filePath hasSuffix:@".js"]) mimeType = @"application/javascript";
+        else if ([filePath hasSuffix:@".css"]) mimeType = @"text/css";
+        else if ([filePath hasSuffix:@".png"]) mimeType = @"image/png";
+        
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:url
+                                                            MIMEType:mimeType
+                                               expectedContentLength:data.length
+                                                    textEncodingName:@"utf-8"];
+        
+        [urlSchemeTask didReceiveResponse:response];
+        [urlSchemeTask didReceiveData:data];
+        [urlSchemeTask didFinish];
+        LogToFile([NSString stringWithFormat:@"[Scheme Handler] Successfully served file: %@", filePath]);
+    } else {
+        LogToFile([NSString stringWithFormat:@"[Scheme Handler] ERROR: File not found at path: %@", filePath]);
+        NSError *error = [NSError errorWithDomain:NSURLErrorDomain
+                                             code:NSURLErrorResourceUnavailable
+                                         userInfo:nil];
+        [urlSchemeTask didFailWithError:error];
+    }
+}
+
+- (void)webView:(WKWebView *)webView stopURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    // No-op
+}
+
+@end
+
 @interface BridgeAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     BridgeScriptMessageHandler* messageHandler;
     BridgeUIDelegate* uiDelegate;
     BridgeNavigationDelegate* navigationDelegate;
+    BridgeURLSchemeHandler* schemeHandler;
 }
 @end
 
@@ -301,13 +375,15 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     [mainWindow setTitle:@"Puter AI Authentication"];
     [mainWindow setDelegate:self];
     
-    // 2. Setup configuration & message handler
+    // 2. Setup configuration & message handler & custom URL scheme handler
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     messageHandler = [[BridgeScriptMessageHandler alloc] init];
     [configuration.userContentController addScriptMessageHandler:messageHandler name:@"puter"];
     [configuration.preferences setValue:@YES forKey:@"developerExtrasEnabled"];
     configuration.websiteDataStore = [WKWebsiteDataStore defaultDataStore];
-    [configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
+    
+    schemeHandler = [[BridgeURLSchemeHandler alloc] init];
+    [configuration setURLSchemeHandler:schemeHandler forURLScheme:@"app"];
     
     // 3. Initialize WebView
     mainWebView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
@@ -318,36 +394,10 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     mainWebView.navigationDelegate = navigationDelegate;
     [mainWindow setContentView:mainWebView];
     
-    // 4. Load puter_bridge.html
-    NSString* exeDir = [[NSBundle mainBundle] resourcePath];
-    if (!exeDir) {
-        exeDir = [[NSBundle mainBundle] bundlePath];
-    }
-    NSString* htmlPath = [exeDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:htmlPath]) {
-        NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
-        htmlPath = [currentDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
-    }
-    
-    // Verify existence of puter_bridge.html
-    if (![[NSFileManager defaultManager] fileExistsAtPath:htmlPath]) {
-        NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
-        htmlPath = [currentDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
-    }
-    
-    LogToFile([NSString stringWithFormat:@"[App Delegate] Resolved HTML file path: %@", htmlPath]);
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:htmlPath]) {
-        LogToFile(@"[App Delegate] ERROR: HTML file does not exist at path!");
-        SaveResponseAndExit(@"error", @"Puter bridge assets not found");
-        return;
-    }
-    
-    NSURL* fileURL = [NSURL fileURLWithPath:htmlPath];
-    NSURL* readAccessURL = [[fileURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent]; // Access to parent dir containing assets/
-    
-    LogToFile([NSString stringWithFormat:@"[App Delegate] Loading fileURL: %@ (access to: %@)", [fileURL absoluteString], [readAccessURL absoluteString]]);
-    [mainWebView loadFileURL:fileURL allowingReadAccessToURL:readAccessURL];
+    // 4. Load puter_bridge.html via app:// custom scheme
+    NSURL *url = [NSURL URLWithString:@"app://local/assets/puter_bridge.html"];
+    LogToFile([NSString stringWithFormat:@"[App Delegate] Loading app:// URL: %@", [url absoluteString]]);
+    [mainWebView loadRequest:[NSURLRequest requestWithURL:url]];
     
     // Crucial: order the window front so it activates the WKWebView execution loop immediately
     [mainWindow orderFront:nil];
