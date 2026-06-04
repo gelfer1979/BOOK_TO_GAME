@@ -24,7 +24,20 @@
                                 window.chrome.webview._messageCallback({ data: data });
                             } catch (e) {
                                 console.error("[Puter Bridge Compatibility] Failed to parse delivered message:", e);
+                                window.chrome.webview.postMessage({ action: "error", text: "JS parsing error: " + e.message });
                             }
+                        }
+                    },
+                    _deliverMessageBase64: function(base64Str) {
+                        try {
+                            const dataStr = decodeURIComponent(escape(atob(base64Str)));
+                            const data = JSON.parse(dataStr);
+                            if (window.chrome.webview._messageCallback) {
+                                window.chrome.webview._messageCallback({ data: data });
+                            }
+                        } catch (e) {
+                            console.error("[Puter Bridge Compatibility] Failed to parse base64 delivered message:", e);
+                            window.chrome.webview.postMessage({ action: "error", text: "JS base64 parsing error: " + e.message });
                         }
                     }
                 };

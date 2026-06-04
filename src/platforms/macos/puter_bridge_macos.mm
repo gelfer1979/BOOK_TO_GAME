@@ -92,7 +92,9 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     if ([msg containsString:@"\"action\":\"ready_invisible\""]) {
         if (mainWebView) {
             LogToFile(@"[Script Message] Bridge ready. Delivering request payload...");
-            NSString* jsCode = [NSString stringWithFormat:@"window.chrome.webview._deliverMessage('%@')", EscapeJavaScriptString(requestJsonData)];
+            NSData* data = [requestJsonData dataUsingEncoding:NSUTF8StringEncoding];
+            NSString* base64String = [data base64EncodedStringWithOptions:0];
+            NSString* jsCode = [NSString stringWithFormat:@"window.chrome.webview._deliverMessageBase64('%@')", base64String];
             [mainWebView evaluateJavaScript:jsCode completionHandler:^(id result, NSError *error) {
                 if (error) {
                     LogToFile([NSString stringWithFormat:@"[Script Message] ERROR delivering message: %@", [error localizedDescription]]);
@@ -120,8 +122,14 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
             });
         }
         if (mainWebView) {
-            NSString* jsCode = [NSString stringWithFormat:@"window.chrome.webview._deliverMessage('%@')", EscapeJavaScriptString(requestJsonData)];
-            [mainWebView evaluateJavaScript:jsCode completionHandler:nil];
+            NSData* data = [requestJsonData dataUsingEncoding:NSUTF8StringEncoding];
+            NSString* base64String = [data base64EncodedStringWithOptions:0];
+            NSString* jsCode = [NSString stringWithFormat:@"window.chrome.webview._deliverMessageBase64('%@')", base64String];
+            [mainWebView evaluateJavaScript:jsCode completionHandler:^(id result, NSError *error) {
+                if (error) {
+                    LogToFile([NSString stringWithFormat:@"[Script Message] ERROR delivering message: %@", [error localizedDescription]]);
+                }
+            }];
         }
     }
     // Check for success response
