@@ -170,8 +170,20 @@ jobs:
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           
-          # Explicitly set executable permission for the binary inside the app bundle
-          chmod +x dist/BOOK_TO_GAME.app/Contents/MacOS/BOOK_TO_GAME
+          # Find the executable binary inside the app bundle dynamically and set executable permission
+          BINARY_PATH=$(find dist/BOOK_TO_GAME.app -type f -name "BOOK_TO_GAME" 2>/dev/null | head -n 1)
+          if [ -z "$BINARY_PATH" ]; then
+            BINARY_PATH=$(find dist/BOOK_TO_GAME.app/Contents/MacOS -type f 2>/dev/null | head -n 1)
+          fi
+          
+          if [ -n "$BINARY_PATH" ]; then
+            echo "Found binary at: $BINARY_PATH, setting executable permission"
+            chmod +x "$BINARY_PATH"
+          else
+            echo "WARNING: Could not find executable binary in dist/BOOK_TO_GAME.app!"
+            echo "Listing dist/BOOK_TO_GAME.app structure:"
+            find dist/BOOK_TO_GAME.app || true
+          fi
           
           # Create DMG file containing the .app bundle (which now preserves the executable flag)
           hdiutil create -volname "BOOK_TO_GAME" -srcfolder dist/BOOK_TO_GAME.app -ov -format UDZO dist/BOOK_TO_GAME.dmg
