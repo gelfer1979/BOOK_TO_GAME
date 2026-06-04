@@ -308,6 +308,10 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSApplication* app = [NSApplication sharedApplication];
+        // Crucial: Set activation policy to Regular so that Cocoa windows can be presented and focused
+        // when launched as a child process via exec.
+        [app setActivationPolicy:NSApplicationActivationPolicyRegular];
+        
         BridgeAppDelegate* delegate = [[BridgeAppDelegate alloc] init];
         [app setDelegate:delegate];
         [app run];

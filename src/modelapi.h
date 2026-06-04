@@ -1448,12 +1448,13 @@ public:
                     std::cerr << "[Puter Bridge] Failed to launch PuterBridge.exe process. Error code: " << GetLastError() << std::endl;
                 }
 #else
-                // Linux implementation using fork/exec
+                // Linux/macOS implementation using fork/exec
                 pid_t pid = fork();
                 if (pid == 0) {
                     // Child process
-                    execl(bridgePath.c_str(), bridgePath.c_str(), NULL);
-                    std::cerr << "[Puter Bridge] execl failed to run " << bridgePath << std::endl;
+                    std::string absPath = std::filesystem::absolute(bridgePath).string();
+                    execl(absPath.c_str(), absPath.c_str(), NULL);
+                    std::cerr << "[Puter Bridge] execl failed to run " << absPath << std::endl;
                     exit(1);
                 } else if (pid > 0) {
                     // Parent process
