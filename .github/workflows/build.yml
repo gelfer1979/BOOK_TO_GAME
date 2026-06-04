@@ -152,10 +152,16 @@ jobs:
       - name: Package Distributable
         run: |
           mkdir -p dist
-          cp -r build/BOOK_TO_GAME.app dist/
           
-          # Create both Contents/MacOS and Contents/Resources directories
-          mkdir -p dist/BOOK_TO_GAME.app/Contents/MacOS
+          # 1. Copy the .app bundle structure if it exists, or create a clean one
+          if [ -d "build/BOOK_TO_GAME.app" ]; then
+            cp -r build/BOOK_TO_GAME.app dist/
+          else
+            mkdir -p dist/BOOK_TO_GAME.app/Contents/MacOS
+            mkdir -p dist/BOOK_TO_GAME.app/Contents/Resources
+          fi
+          
+          # Ensure Contents/Resources exists
           mkdir -p dist/BOOK_TO_GAME.app/Contents/Resources
           
           # Copy to Contents/Resources (which SDL_GetBasePath returns on macOS)
@@ -164,25 +170,29 @@ jobs:
           cp options.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/Resources/ 2>/dev/null || true
           
+          # Ensure Contents/MacOS exists
+          mkdir -p dist/BOOK_TO_GAME.app/Contents/MacOS
+          
           # Copy to Contents/MacOS (for fallback or alternate execution modes)
           cp -r build/assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || cp -r assets dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp ai_*.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp options.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           cp settings.json dist/BOOK_TO_GAME.app/Contents/MacOS/ 2>/dev/null || true
           
-          # Find the executable binary inside the app bundle dynamically and set executable permission
-          BINARY_PATH=$(find dist/BOOK_TO_GAME.app -type f -name "BOOK_TO_GAME" 2>/dev/null | head -n 1)
-          if [ -z "$BINARY_PATH" ]; then
-            BINARY_PATH=$(find dist/BOOK_TO_GAME.app/Contents/MacOS -type f 2>/dev/null | head -n 1)
+          # 2. Locate the compiled executable binary anywhere in the build tree and copy it in
+          BINARY_SOURCE=$(find build -type f -name "BOOK_TO_GAME" 2>/dev/null | grep -v "dist/" | head -n 1)
+          if [ -z "$BINARY_SOURCE" ]; then
+            BINARY_SOURCE=$(find build -type f -name "NativeWebViewWrapper" 2>/dev/null | grep -v "dist/" | head -n 1)
           fi
           
-          if [ -n "$BINARY_PATH" ]; then
-            echo "Found binary at: $BINARY_PATH, setting executable permission"
-            chmod +x "$BINARY_PATH"
+          if [ -n "$BINARY_SOURCE" ]; then
+            echo "Found compiled binary at: $BINARY_SOURCE"
+            cp "$BINARY_SOURCE" dist/BOOK_TO_GAME.app/Contents/MacOS/BOOK_TO_GAME
+            chmod +x dist/BOOK_TO_GAME.app/Contents/MacOS/BOOK_TO_GAME
           else
-            echo "WARNING: Could not find executable binary in dist/BOOK_TO_GAME.app!"
-            echo "Listing dist/BOOK_TO_GAME.app structure:"
-            find dist/BOOK_TO_GAME.app || true
+            echo "ERROR: Compiled executable binary not found in build directory!"
+            find build -type f || true
+            exit 1
           fi
           
           # Pack the .app bundle directly into the zip archive
