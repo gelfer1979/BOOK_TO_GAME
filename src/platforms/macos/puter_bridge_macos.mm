@@ -12,12 +12,12 @@
 @end
 
 // Global state
-static NSWindow* mainWindow = nil;
-static WKWebView* mainWebView = nil;
-static NSString* requestJsonData = nil;
+static NSWindow* __strong mainWindow = nil;
+static WKWebView* __strong mainWebView = nil;
+static NSString* __strong requestJsonData = nil;
 static BOOL operationCompleted = NO;
-static NSMutableArray* activePopupWindows = nil;
-static id appDelegate = nil;
+static NSMutableArray* __strong activePopupWindows = nil;
+static id __strong appDelegate = nil;
 
 // Logging helper
 static void LogToFile(NSString* message) {

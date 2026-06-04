@@ -502,6 +502,9 @@ endif()
 if(WEBVIEW_SOURCES)
     add_executable(NativeWebViewWrapper ${WEBVIEW_SOURCES})
     target_link_libraries(NativeWebViewWrapper PRIVATE ${WEBVIEW_LIBS})
+    if(APPLE)
+        target_compile_options(NativeWebViewWrapper PRIVATE "-fobjc-arc")
+    endif()
 endif()
 
 # ==============================================================================
@@ -586,6 +589,7 @@ elseif(APPLE AND NOT IOS)
     
     add_executable(PuterBridge src/platforms/macos/puter_bridge_macos.mm)
     target_link_libraries(PuterBridge PRIVATE ${WEBKIT_FRAMEWORK} ${COCOA_FRAMEWORK})
+    target_compile_options(PuterBridge PRIVATE "-fobjc-arc")
     
     # Embed Info.plist into the command line binary so it gets a stable CFBundleIdentifier.
     # This enables WebKit to store cookies/localStorage persistently across application launches.
