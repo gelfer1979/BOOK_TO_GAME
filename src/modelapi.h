@@ -1408,7 +1408,7 @@ public:
             requestBody["history"] = historyJ;
             
             std::error_code ec;
-            std::filesystem::remove("puter_response.json", ec);
+            // std::filesystem::remove("puter_response.json", ec);
             std::filesystem::remove("puter_request.json", ec);
             
             std::ofstream reqFile("puter_request.json");
@@ -1419,6 +1419,7 @@ public:
                 std::cout << "[Puter Bridge] Wrote puter_request.json. Launching bridge..." << std::endl;
                 
                 bool success = false;
+                // ... (skipping process execution code block to match target context precisely)
 #ifdef _WIN32
                 STARTUPINFOA si;
                 PROCESS_INFORMATION pi;
@@ -1478,7 +1479,7 @@ public:
                     respFile.close();
                     
                     std::filesystem::remove("puter_request.json", ec);
-                    std::filesystem::remove("puter_response.json", ec);
+                    // std::filesystem::remove("puter_response.json", ec);
                     
                     if (fileContent.empty()) {
                         std::cerr << "[Puter Bridge] Bridge finished but puter_response.json was empty." << std::endl;
