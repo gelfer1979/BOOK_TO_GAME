@@ -305,7 +305,18 @@
                     });
                 } catch (err) {
                     console.error("[Puter Bridge] Chat request failed:", err);
-                    window.chrome.webview.postMessage({ action: "error", text: err.message });
+                    const errMsg = err.message || "";
+                    if (errMsg.includes("Unauthorized") || errMsg.includes("sign-in") || errMsg.includes("sign in") || errMsg.includes("login") || errMsg.includes("auth")) {
+                        console.log("[Puter Bridge] Session is unauthorized. Signing out and prompting login...");
+                        try {
+                            puter.auth.signOut();
+                        } catch(e){}
+                        document.getElementById('loading-area').style.display = 'none';
+                        document.getElementById('login-area').style.display = 'block';
+                        window.chrome.webview.postMessage({ action: "show_login_window" });
+                    } else {
+                        window.chrome.webview.postMessage({ action: "error", text: errMsg });
+                    }
                 }
             });
             
