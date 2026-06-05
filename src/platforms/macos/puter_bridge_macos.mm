@@ -9,6 +9,7 @@
 @interface WKProcessPool (PrivateSchemeRegistration)
 + (void)_registerURLSchemeAsSecure:(NSString *)scheme;
 + (void)_registerURLSchemeAsCORSEnabled:(NSString *)scheme;
++ (void)_registerURLSchemeAsBypassingContentSecurityPolicy:(NSString *)scheme;
 @end
 
 // Global state
@@ -350,10 +351,17 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
         else if ([filePath hasSuffix:@".css"]) mimeType = @"text/css";
         else if ([filePath hasSuffix:@".png"]) mimeType = @"image/png";
         
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:url
-                                                            MIMEType:mimeType
-                                               expectedContentLength:data.length
-                                                    textEncodingName:@"utf-8"];
+        NSDictionary *headers = @{
+            @"Access-Control-Allow-Origin": @"*",
+            @"Access-Control-Allow-Headers": @"*",
+            @"Access-Control-Allow-Methods": @"*",
+            @"Cross-Origin-Opener-Policy": @"same-origin-allow-popups",
+            @"Content-Type": [NSString stringWithFormat:@"%@; charset=utf-8", mimeType]
+        };
+        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url
+                                                                  statusCode:200
+                                                                 HTTPVersion:@"HTTP/1.1"
+                                                                headerFields:headers];
         
         [urlSchemeTask didReceiveResponse:response];
         [urlSchemeTask didReceiveData:data];
@@ -415,6 +423,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     messageHandler = [[BridgeScriptMessageHandler alloc] init];
     [configuration.userContentController addScriptMessageHandler:messageHandler name:@"puter"];
     [configuration.preferences setValue:@YES forKey:@"developerExtrasEnabled"];
+    [configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
     configuration.preferences.javaScriptCanOpenWindowsAutomatically = YES;
     configuration.websiteDataStore = [WKWebsiteDataStore defaultDataStore];
     
@@ -465,6 +474,9 @@ int main(int argc, const char * argv[]) {
         }
         if ([WKProcessPool respondsToSelector:@selector(_registerURLSchemeAsCORSEnabled:)]) {
             [WKProcessPool _registerURLSchemeAsCORSEnabled:@"app"];
+        }
+        if ([WKProcessPool respondsToSelector:@selector(_registerURLSchemeAsBypassingContentSecurityPolicy:)]) {
+            [WKProcessPool _registerURLSchemeAsBypassingContentSecurityPolicy:@"app"];
         }
 
         // Clear old log

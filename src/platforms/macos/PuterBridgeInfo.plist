@@ -12,5 +12,7 @@
     <string>1.0</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
+    <key>NSCrossWebsiteTrackingUsageDescription</key>
+    <string>We require cross-website tracking to authorize with Puter.js in keyless mode.</string>
 </dict>
 </plist>
