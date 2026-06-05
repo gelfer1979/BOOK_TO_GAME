@@ -444,7 +444,7 @@ public:
                         if (isEn) {
                             aiResponse = "Error: The book content was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different book or select a local/unfiltered AI model in Settings.";
                         } else {
-                            aiResponse = "Ошибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                            aiResponse = "Error: Book content blocked by Google Gemini safety filters (prohibited content). Please choose another book or use a local/uncensored AI model in Settings.";
                         }
                     } else {
                         aiResponse = "Error: Invalid Gemini response format.";
@@ -668,7 +668,7 @@ public:
                                     aiResponse = "Error: " + translated;
                                 } else {
                                     if (language == "Russian" || language == "ru" || language == "RU") {
-                                        aiResponse = "Ошибка: книга отклонена фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другую книгу или используйте локальную/безцензурную модель ИИ в Настройках.";
+                                        aiResponse = "Error: Book content blocked by Google Gemini safety filters (prohibited content). Please choose another book or use a local/uncensored AI model in Settings.";
                                     } else {
                                         aiResponse = "Error: " + englishError;
                                     }
@@ -874,7 +874,7 @@ public:
                         if (isEn) {
                             aiResponse = "Error: The prompt or narrative was blocked by Google Gemini's safety filters (PROHIBITED_CONTENT). Please try a different choice or select a local/unfiltered AI model in Settings.";
                         } else {
-                            aiResponse = "Ошибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                            aiResponse = "Error: Response blocked by Google Gemini safety filters (blocked content). Please select another action or use a local/uncensored AI model in Settings.";
                         }
                     } else {
                         aiResponse = "Error: Invalid Gemini response format.";
@@ -1115,7 +1115,7 @@ public:
                                     aiResponse = "Error: " + translated;
                                 } else {
                                     if (language == "Russian" || language == "ru" || language == "RU") {
-                                        aiResponse = "Ошибка: ответ заблокирован фильтрами безопасности Google Gemini (запрещенный контент). Пожалуйста, выберите другое действие или используйте локальную/безцензурную модель ИИ в Настройках.";
+                                        aiResponse = "Error: Response blocked by Google Gemini safety filters (blocked content). Please select another action or use a local/uncensored AI model in Settings.";
                                     } else {
                                         aiResponse = "Error: " + englishError;
                                     }
@@ -1560,8 +1560,8 @@ public:
         currentBridgeName = "PuterBridge.exe";
 #endif
         if (isRu) {
-            return "ИИ по умолчанию (Puter.js) доступен без API-ключа в WebAssembly-версии (в браузере) или при запуске через WebView Helper (" + currentBridgeName + ").\n\n"
-                   "Для игры в этом нативном C++ билде, пожалуйста, убедитесь, что " + currentBridgeName + " скомпилирован и находится рядом, либо перейдите в Настройки и укажите ваш API-ключ для Google Gemini / OpenRouter / OpenAI.";
+            return "The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using the WebView Helper (" + currentBridgeName + ").\n\n"
+                   "To play this native C++ build, please ensure " + currentBridgeName + " is built and placed in the same directory, or go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key.";
         } else {
             return "The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using the WebView Helper (" + currentBridgeName + ").\n\n"
                    "To play this native C++ build, please ensure " + currentBridgeName + " is built and placed in the same directory, or go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key.";
@@ -1900,13 +1900,13 @@ inline void PreprocessRawAiResponse(std::string& aiResponse, const std::string& 
                 aiResponse = Trim(aiResponse);
             } else if (step.action == "regex_replace") {
                  try {
-                        // Создаем регулярное выражение из вашего target
+                        // Create a regular expression from your target
                         std::regex re(step.target);
-                        // Заменяем все совпадения на replacement
+                        // Replace all matches with replacement
                         aiResponse = std::regex_replace(aiResponse, re, step.replacement);
                     } catch (const std::regex_error& e) {
-                        // На случай, если в JSON указана невалидная регулярка, 
-                        // чтобы игра не вылетела с ошибкой
+                        // In case the JSON contains an invalid regex, 
+                        // so the game doesn't crash with an error
                         std::cerr << "Regex error: " << e.what() << std::endl;
     }
             }
@@ -2058,7 +2058,7 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
                 optLine = Trim(optLine);
             }
             
-            // Strip alphabetical or numerical prefixes like 'A) ', '1. ', Cyrillic 'А) '
+            // Strip alphabetical or numerical prefixes like 'A) ', '1. ', Cyrillic 'A) '
             if (!optLine.empty()) {
                 // Check if it starts with digit followed by . or )
                 size_t digitLen = 0;
@@ -2354,10 +2354,10 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
                 char mappedLetter = '\0';
                 
                 if ((unsigned char)c == 0xD0) {
-                    if (c2 >= 0x90 && c2 <= 0x95) { // А-Е
+                    if (c2 >= 0x90 && c2 <= 0x95) { // Cyrillic A-E
                         isCyrLetter = true;
                         mappedLetter = 'A' + (c2 - 0x90);
-                    } else if (c2 >= 0xB0 && c2 <= 0xB5) { // а-е
+                    } else if (c2 >= 0xB0 && c2 <= 0xB5) { // Cyrillic a-e
                         isCyrLetter = true;
                         mappedLetter = 'A' + (c2 - 0xB0);
                     }
@@ -3011,14 +3011,14 @@ inline bool CreateBookFromTxt(
                         int progress = 0;
                         if (summarizePass == 1) {
                             if (gameLanguage == "Russian") {
-                                statusMsg = "Анализ " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
+                                statusMsg = "Analyzing " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             } else {
                                 statusMsg = "Analyzing " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             }
                             progress = 5 + (stepNum * 25) / chunks.size();
                         } else {
                             if (gameLanguage == "Russian") {
-                                statusMsg = "Сжатие " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
+                                statusMsg = "Compressing " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             } else {
                                 statusMsg = "Compressing " + std::to_string(stepNum) + "/" + std::to_string(chunks.size());
                             }
@@ -3034,9 +3034,9 @@ inline bool CreateBookFromTxt(
                     
                     std::string summaryPrompt;
                     if (gameLanguage == "Russian") {
-                        summaryPrompt = "Пожалуйста, напиши подробный и точный пересказ следующей части книги. "
-                                        "Сохрани ключевые события, имена персонажей, локации и важные детали сюжета. "
-                                        "Напиши пересказ строго на русском языке:\n\n" + chunk;
+                        summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
+                                        "Preserve all key events, character names, locations, and important plot details. "
+                                        "Write the summary strictly in the Russian language:\n\n" + chunk;
                     } else {
                         summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
                                         "Preserve all key events, character names, locations, and important plot details. "
@@ -3166,7 +3166,7 @@ inline bool CreateBookFromTxt(
         if (progressCallback) {
             int baseProgress = (content.length() > 20000 && !isNBook) ? 45 : 5;
             if (gameLanguage == "Russian") {
-                progressCallback(baseProgress, "Создание книги...");
+                progressCallback(baseProgress, "Creating book...");
             } else {
                 progressCallback(baseProgress, "Creating book...");
             }
@@ -3251,7 +3251,7 @@ inline bool CreateBookFromTxt(
             std::cout << "[AI Book Gen] Successfully generated and saved book.json (Route A)!" << std::endl;
             if (progressCallback) {
                 if (gameLanguage == "Russian") {
-                    progressCallback(100, "Загрузка...");
+                    progressCallback(100, "Loading...");
                 } else {
                     progressCallback(100, "Loading...");
                 }
@@ -3321,7 +3321,7 @@ inline bool CreateBookFromTxt(
             if (progressCallback) {
                 std::string statusMsg = "";
                 if (gameLanguage == "Russian") {
-                    statusMsg = "Планирование...";
+                    statusMsg = "Planning...";
                 } else {
                     statusMsg = "Planning...";
                 }
@@ -3400,7 +3400,7 @@ inline bool CreateBookFromTxt(
 
             std::string statusMsg = "";
             if (gameLanguage == "Russian") {
-                statusMsg = "Главы " + std::to_string(startCh) + "-" + std::to_string(endCh);
+                statusMsg = "Chapters " + std::to_string(startCh) + "-" + std::to_string(endCh);
             } else {
                 statusMsg = "Chapters " + std::to_string(startCh) + "-" + std::to_string(endCh);
             }
@@ -3598,7 +3598,7 @@ inline bool CreateBookFromTxt(
         std::cout << "[AI Book Gen] Successfully generated and saved book.json (Route B)!" << std::endl;
         if (progressCallback) {
             if (gameLanguage == "Russian") {
-                progressCallback(100, "Загрузка...");
+                progressCallback(100, "Loading...");
             } else {
                 progressCallback(100, "Loading...");
             }

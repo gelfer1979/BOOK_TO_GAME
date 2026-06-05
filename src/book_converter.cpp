@@ -86,10 +86,10 @@ static std::string CP1251ToUTF8(const std::string& str) {
             } else if (c >= 0xF0 && c <= 0xFF) {
                 out += (char)0xD1;
                 out += (char)(c - 0xF0 + 0x80);
-            } else if (c == 0xA8) { // Ё
+            } else if (c == 0xA8) { // Cyrillic YO
                 out += (char)0xD0;
                 out += (char)0x81;
-            } else if (c == 0xB8) { // ё
+            } else if (c == 0xB8) { // Cyrillic yo
                 out += (char)0xD1;
                 out += (char)0x91;
             } else {

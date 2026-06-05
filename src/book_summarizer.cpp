@@ -172,9 +172,9 @@ int main() {
 
             std::string summaryPrompt;
             if (gameLanguage == "Russian") {
-                summaryPrompt = "Пожалуйста, напиши подробный и точный пересказ следующей части книги. "
-                                "Сохрани ключевые события, имена персонажей, локации и важные детали сюжета. "
-                                "Напиши пересказ строго на русском языке:\n\n" + chunk;
+                summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
+                                "Preserve all key events, character names, locations, and important plot details. "
+                                "Write the summary strictly in the Russian language:\n\n" + chunk;
             } else {
                 summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
                                 "Preserve all key events, character names, locations, and important plot details. "
@@ -212,9 +212,9 @@ int main() {
 
         std::string summaryPrompt;
         if (gameLanguage == "Russian") {
-            summaryPrompt = "Пожалуйста, напиши подробный и точный пересказ следующей части книги. "
-                            "Сохрани ключевые события, имена персонажей, локации и важные детали сюжета. "
-                            "Напиши пересказ строго на русском языке:\n\n" + content;
+            summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
+                            "Preserve all key events, character names, locations, and important plot details. "
+                            "Write the summary strictly in the Russian language:\n\n" + content;
         } else {
             summaryPrompt = "Please write a detailed and accurate plot summary of the following part of the book. "
                             "Preserve all key events, character names, locations, and important plot details. "

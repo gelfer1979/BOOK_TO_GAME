@@ -472,7 +472,7 @@ bool LoadBookConfig(const std::string& filename = "book.json") {
                     bookPlot = bj["plot"].get<std::string>();
                 } else if (bj["plot"].is_array()) {
                     std::stringstream ss;
-                    ss << "Сюжет игры по главам:\n";
+                    ss << "Game plot by chapters:\n";
                     for (const auto& chJson : bj["plot"]) {
                         if (chJson.is_object()) {
                             std::string chTitle = "";
@@ -507,14 +507,14 @@ bool LoadBookConfig(const std::string& filename = "book.json") {
                             state.modelState.chapters.push_back(chData);
                             
                             if (!chNum.empty()) {
-                                ss << "Глава " << chNum;
+                                ss << "Chapter " << chNum;
                             } else {
-                                ss << "Глава";
+                                ss << "Chapter";
                             }
                             if (!chTitle.empty()) {
                                 ss << ": " << chTitle;
                             }
-                            ss << "\nОписание: " << chDesc << "\n\n";
+                            ss << "\nDescription: " << chDesc << "\n\n";
                         } else if (chJson.is_string()) {
                             ss << "- " << chJson.get<std::string>() << "\n";
                         }
@@ -538,10 +538,10 @@ bool LoadBookConfig(const std::string& filename = "book.json") {
             // Also let's construct and set system prompt
             std::string combinedPrompt = state.modelState.systemPrompt;
             if (!bookWorld.empty()) {
-                combinedPrompt += "\n\nИгровой мир:\n" + bookWorld;
+                combinedPrompt += "\n\nGame World:\n" + bookWorld;
             }
             if (!bookPlot.empty()) {
-                combinedPrompt += "\n\nСюжет и цель игры:\n" + bookPlot;
+                combinedPrompt += "\n\nGame Plot and Goal:\n" + bookPlot;
             }
             if (!combinedPrompt.empty()) {
                 state.aiClient->setSystemPrompt(combinedPrompt);
@@ -781,9 +781,9 @@ inline bool IsUkrainianLanguage(const std::string& lang) {
 
 std::string GetStartPrompt(const std::string& lang) {
     if (IsRussianLanguage(lang)) {
-        return "Привет! Расскажи интересную историю на русском языке и предложи варианты выбора.";
+        return "Hello! Tell an interesting story in the Russian language and offer choices.";
     } else if (IsUkrainianLanguage(lang)) {
-        return "Привіт! Розкажи цікаву історію українською мовою та запропонуй варіанти вибору.";
+        return "Hello! Tell an interesting story in the Ukrainian language and offer choices.";
     } else {
         return "Hello! Tell an interesting story in the " + lang + " language and offer choices.";
     }
@@ -791,9 +791,9 @@ std::string GetStartPrompt(const std::string& lang) {
 
 std::string GetSummaryPrompt(const std::string& lang, const std::string& dialogueText) {
     if (IsRussianLanguage(lang)) {
-        return "Сделай краткое саммари (2-3 предложения) на русском языке для пройденной главы на основе следующего диалога. Опиши только ключевые события, достижения игрока, инвентарь и важные сюжетные выборы. Не пиши ничего лишнего.\n\nДиалог:\n" + dialogueText;
+        return "Make a brief summary (2-3 sentences) in the Russian language for the completed chapter based on the following dialogue. Describe only key events, player achievements, inventory, and important story choices. Do not write anything extra.\n\nDialogue:\n" + dialogueText;
     } else if (IsUkrainianLanguage(lang)) {
-        return "Зроби коротке саммарі (2-3 речення) українською мовою для пройденого розділу на основі наступного діалогу. Опиши тільки ключові події, досягнення гравця, інвентар та важливі сюжетні вибори. Не пиши нічого зайвого.\n\nДіалог:\n" + dialogueText;
+        return "Make a brief summary (2-3 sentences) in the Ukrainian language for the completed chapter based on the following dialogue. Describe only key events, player achievements, inventory, and important story choices. Do not write anything extra.\n\nDialogue:\n" + dialogueText;
     } else {
         return "Make a brief summary (2-3 sentences) in the " + lang + " language for the completed chapter based on the following dialogue. Describe only key events, player achievements, inventory, and important story choices. Do not write anything extra.\n\nDialogue:\n" + dialogueText;
     }
@@ -801,9 +801,9 @@ std::string GetSummaryPrompt(const std::string& lang, const std::string& dialogu
 
 std::string GetNextStartMsg(const std::string& lang, int nextChapter) {
     if (IsRussianLanguage(lang)) {
-        return "Начни главу " + std::to_string(nextChapter) + ". Опиши начало новой главы, атмосферу вокруг меня и предложи первые варианты действий.";
+        return "Start Chapter " + std::to_string(nextChapter) + " in the Russian language. Describe the beginning of the new chapter, the atmosphere around me, and suggest the first choices of action.";
     } else if (IsUkrainianLanguage(lang)) {
-        return "Почни розділ " + std::to_string(nextChapter) + ". Опиши початок нового розділу, атмосферу навколо мене та запропонуй перші варіанти дій.";
+        return "Start Chapter " + std::to_string(nextChapter) + " in the Ukrainian language. Describe the beginning of the new chapter, the atmosphere around me, and suggest the first choices of action.";
     } else {
         return "Start Chapter " + std::to_string(nextChapter) + " in the " + lang + " language. Describe the beginning of the new chapter, the atmosphere around me, and suggest the first choices of action.";
     }
@@ -811,9 +811,9 @@ std::string GetNextStartMsg(const std::string& lang, int nextChapter) {
 
 std::string GetEpiloguePrompt(const std::string& lang, const std::string& allSummaries) {
     if (IsRussianLanguage(lang)) {
-        return "Пожалуйста, напиши красивый, трогательный, краткий и торжественный эпилог на русском языке для нашего приключения, основываясь на пройденном пути. Расскажи, как завершилось наше путешествие и к какому финалу мы пришли. Не выводи никаких тегов вариантов выбора или XML.\n\nКраткое содержание нашего пути по главам:\n" + allSummaries;
+        return "Please write a beautiful, moving, brief, and celebratory epilogue in the Russian language for our adventure, based on the journey we have completed. Tell us how our journey concluded and what finale we reached. Do not output any choice tags or XML.\n\nSummary of our journey by chapters:\n" + allSummaries;
     } else if (IsUkrainianLanguage(lang)) {
-        return "Будь ласка, напиши красивий, зворушливий, короткий і урочистий епілог українською мовою для нашої пригоди, грунтуючись на пройденому шляху. Розкажи, як завершилася наша подорож і до якого фіналу ми прийшли. Не виводь жодних тегів варіантів вибору або XML.\n\nКороткий зміст нашого шляху по розділах:\n" + allSummaries;
+        return "Please write a beautiful, moving, brief, and celebratory epilogue in the Ukrainian language for our adventure, based on the journey we have completed. Tell us how our journey concluded and what finale we reached. Do not output any choice tags or XML.\n\nSummary of our journey by chapters:\n" + allSummaries;
     } else {
         return "Please write a beautiful, moving, brief, and celebratory epilogue in the " + lang + " language for our adventure, based on the journey we have completed. Tell us how our journey concluded and what finale we reached. Do not output any choice tags or XML.\n\nSummary of our journey by chapters:\n" + allSummaries;
     }
@@ -4761,7 +4761,7 @@ void MainIteration() {
             int textY = bubbleY + 10;
             SDL_Color redColor = { 255, 60, 60, 255 };
             
-            // "ГЕРОЙ ПОГИБ" - Large title in Red, centered
+            // "HERO IS DEAD" - Large title in Red, centered
             RenderText(state.renderer.get(), state.fontTitle.get(), GetUiText("death_title"), WINDOW_WIDTH / 2, textY + titleH, redColor, true);
             
             textY += titleH + 15;
@@ -6077,7 +6077,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                     bookPlot = bj["plot"].get<std::string>();
                 } else if (bj["plot"].is_array()) {
                     std::stringstream ss;
-                    ss << "Сюжет игры по главам:\n";
+                    ss << "Game plot by chapters:\n";
                     for (const auto& chJson : bj["plot"]) {
                         if (chJson.is_object()) {
                             std::string chTitle = "";
@@ -6112,14 +6112,14 @@ extern "C" int SDL_main(int argc, char* argv[]) {
                             state.modelState.chapters.push_back(chData);
                             
                             if (!chNum.empty()) {
-                                ss << "Глава " << chNum;
+                                ss << "Chapter " << chNum;
                             } else {
-                                ss << "Глава";
+                                ss << "Chapter";
                             }
                             if (!chTitle.empty()) {
                                 ss << ": " << chTitle;
                             }
-                            ss << "\nОписание: " << chDesc << "\n\n";
+                            ss << "\nDescription: " << chDesc << "\n\n";
                         } else if (chJson.is_string()) {
                             ss << "- " << chJson.get<std::string>() << "\n";
                         }
@@ -6167,10 +6167,10 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     // Blend settings.json systemPrompt with book.json world and plot lore
     std::string combinedPrompt = systemPrompt;
     if (!bookWorld.empty()) {
-        combinedPrompt += "\n\nИгровой мир:\n" + bookWorld;
+        combinedPrompt += "\n\nGame World:\n" + bookWorld;
     }
     if (!bookPlot.empty()) {
-        combinedPrompt += "\n\nСюжет и цель игры:\n" + bookPlot;
+        combinedPrompt += "\n\nGame Plot and Goal:\n" + bookPlot;
     }
     if (!combinedPrompt.empty()) {
         state.aiClient->setSystemPrompt(combinedPrompt);
