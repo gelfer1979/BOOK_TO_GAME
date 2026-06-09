@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://openrouter.ai/api/v1/chat/completions",
+  "modelName": "google/gemini-2.5-flash",
+  "apiKey": "",
+  "apiKeyEnvVar": "OPENROUTER_API_KEY",
+  "format": "openai"
+}

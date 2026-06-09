@@ -1,2 +1,0 @@
-C:\msys64\ucrt64\bin\ar.exe qc libSDL2_net.a CMakeFiles/SDL2_net.dir/SDLnet.c.obj CMakeFiles/SDL2_net.dir/SDLnetselect.c.obj CMakeFiles/SDL2_net.dir/SDLnetTCP.c.obj CMakeFiles/SDL2_net.dir/SDLnetUDP.c.obj
-C:\msys64\ucrt64\bin\ranlib.exe libSDL2_net.a

@@ -3,6 +3,7 @@
 #ifndef _WIN32
 #include <unistd.h>
 #include <sys/wait.h>
+#include <spawn.h>
 #endif
 #ifdef __APPLE__
 #include <TargetConditionals.h>
@@ -1454,21 +1455,20 @@ public:
                     std::cerr << "[Puter Bridge] Failed to launch PuterBridge.exe process. Error code: " << GetLastError() << std::endl;
                 }
 #else
-                // Linux/macOS implementation using fork/exec
-                pid_t pid = fork();
-                if (pid == 0) {
-                    // Child process
-                    std::string absPath = std::filesystem::absolute(bridgePath).string();
-                    execl(absPath.c_str(), absPath.c_str(), NULL);
-                    std::cerr << "[Puter Bridge] execl failed to run " << absPath << std::endl;
-                    exit(1);
-                } else if (pid > 0) {
-                    // Parent process
+                // Linux/macOS implementation using posix_spawn (thread-safe for multi-threaded apps)
+                std::string absPath = std::filesystem::absolute(bridgePath).string();
+                pid_t pid;
+                char* const child_argv[] = { const_cast<char*>(absPath.c_str()), nullptr };
+                extern char** environ;
+                
+                int spawnStatus = posix_spawn(&pid, absPath.c_str(), nullptr, nullptr, child_argv, environ);
+                if (spawnStatus == 0) {
                     int status;
-                    waitpid(pid, &status, 0);
-                    success = true;
+                    if (waitpid(pid, &status, 0) != -1) {
+                        success = true;
+                    }
                 } else {
-                    std::cerr << "[Puter Bridge] fork failed." << std::endl;
+                    std::cerr << "[Puter Bridge] posix_spawn failed with error code: " << spawnStatus << std::endl;
                 }
 #endif
                 
@@ -1478,8 +1478,12 @@ public:
                                             std::istreambuf_iterator<char>());
                     respFile.close();
                     
-                    std::filesystem::remove("puter_request.json", ec);
-                    std::filesystem::remove("puter_response.json", ec);
+                    std::error_code copyEc;
+                    std::filesystem::copy_file("puter_response.json", "puter_response_last.json", std::filesystem::copy_options::overwrite_existing, copyEc);
+                    std::filesystem::copy_file("puter_request.json", "puter_request_last.json", std::filesystem::copy_options::overwrite_existing, copyEc);
+                    
+                    // std::filesystem::remove("puter_request.json", ec);
+                    // std::filesystem::remove("puter_response.json", ec);
                     
                     if (fileContent.empty()) {
                         std::cerr << "[Puter Bridge] Bridge finished but puter_response.json was empty." << std::endl;
@@ -1591,6 +1595,7 @@ struct GameState {
     bool gameWon = false;
     int pendingNextChapter = -1;
     int maxTurnsForce = 10;
+    int bookTimeout = 240;
     std::vector<ChatMessageData> messages;
     std::vector<std::string> activeChoices;
     std::string lastQuery = "";
@@ -3051,7 +3056,7 @@ inline bool CreateBookFromTxt(
                     int delayMs = 1000;
                     
                     if (extClient) {
-                        extClient->setTimeoutSettings(15, 120);
+                        extClient->setTimeoutSettings(15, modelState.bookTimeout);
                     }
                     
                     while (attemptSum < maxAttempts) {
@@ -3160,7 +3165,7 @@ inline bool CreateBookFromTxt(
         std::string prompt = modelState.promptAiBookGenerator + "\n" + lengthInstructions + genreInstructions + fidelityInstructions + customInstructions + ruleBlock;
         
         if (extClient) {
-            extClient->setTimeoutSettings(15, 240); // 15s connect, 240s request
+            extClient->setTimeoutSettings(15, modelState.bookTimeout);
         }
 
         if (progressCallback) {
@@ -3330,7 +3335,7 @@ inline bool CreateBookFromTxt(
             }
 
             if (extClient) {
-                extClient->setTimeoutSettings(15, 240);
+                extClient->setTimeoutSettings(15, modelState.bookTimeout);
             }
             std::cout << "[AI Book Gen] Route B: Blueprint Attempt " << attempt << "..." << std::endl;
             std::string response = aiClient->ask(blueprintPrompt, gameLanguage);
@@ -3475,7 +3480,7 @@ inline bool CreateBookFromTxt(
                 }
 
                 if (extClient) {
-                    extClient->setTimeoutSettings(15, 240);
+                    extClient->setTimeoutSettings(15, modelState.bookTimeout);
                 }
                 std::cout << "[AI Book Gen] Hydrating chapters " << startCh << " to " << endCh << " (Attempt " << attempt << ")..." << std::endl;
                 std::string response = aiClient->ask(hydrationPrompt, gameLanguage);

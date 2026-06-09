@@ -325,6 +325,8 @@
                 if (typeof puter !== 'undefined') {
                     clearInterval(checkAuth);
                     
+
+                    
                     if (puter.auth.isSignedIn()) {
                         console.log("[Puter Bridge] User already signed in.");
                         window.chrome.webview.postMessage({ action: "ready_invisible" });

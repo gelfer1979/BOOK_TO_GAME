@@ -198,6 +198,7 @@ struct {
     int retryDelayMs = 1000;
     int connectTimeout = 15;
     int requestTimeout = 45;
+    int bookTimeout = 240;
     std::vector<std::string> savedChoices;
     bool editingLanguage = false;
     std::string tempLanguageInput = "";
@@ -262,6 +263,7 @@ struct {
     int langSelectScrollOffset = 0;
     int langSelectMaxScroll = 0;
     bool editingGameplayInput = false;
+    std::string pendingWindowTitle = "";
 } state;
 
 #if defined(__ANDROID__) || defined(__IPHONEOS__) || defined(IOS)
@@ -530,10 +532,8 @@ bool LoadBookConfig(const std::string& filename = "book.json") {
             state.modelState.bookWorld = bookWorld;
             state.modelState.bookStartPrompt = bookStartPrompt;
             
-            // Apply title to desktop window
-            if (state.window) {
-                SDL_SetWindowTitle(state.window.get(), bookTitle.c_str());
-            }
+            // Apply title to desktop window (scheduled for main thread to prevent macOS crash)
+            state.pendingWindowTitle = bookTitle;
             
             // Also let's construct and set system prompt
             std::string combinedPrompt = state.modelState.systemPrompt;
@@ -3730,6 +3730,18 @@ void ConsumeApiResponse() {
 
 // Main Frame Loop Execution
 void MainIteration() {
+    // Apply pending window title update on the main thread to avoid macOS thread safety crashes
+    std::string titleToSet = "";
+    state.mutex.lock();
+    if (!state.pendingWindowTitle.empty()) {
+        titleToSet = state.pendingWindowTitle;
+        state.pendingWindowTitle = "";
+    }
+    state.mutex.unlock();
+    if (!titleToSet.empty() && state.window) {
+        SDL_SetWindowTitle(state.window.get(), titleToSet.c_str());
+    }
+
     // Ensure SDL text input state matches gameplay/editing requirements
     bool wantTextInput = (state.editingLanguage || state.editingBookPath || state.editingApiKey || state.editingGameplayInput);
     if (wantTextInput && !SDL_IsTextInputActive()) {
@@ -5936,6 +5948,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     int connectTimeout = 15;
     int requestTimeout = 45;
     int maxTurnsForce = 10;
+    int bookTimeout = 240;
     std::ifstream file("settings.json");
     if (!file.is_open()) {
         file.open("../settings.json");
@@ -6044,6 +6057,9 @@ extern "C" int SDL_main(int argc, char* argv[]) {
             }
             if (j.contains("maxTurnsForce") && j["maxTurnsForce"].is_number()) {
                 maxTurnsForce = j["maxTurnsForce"].get<int>();
+            }
+            if (j.contains("BookTimeout") && j["BookTimeout"].is_number()) {
+                bookTimeout = j["BookTimeout"].get<int>();
             }
         } catch (const std::exception& e) {
             std::cerr << "[Config] Parse error settings.json: " << e.what() << std::endl;
@@ -6160,6 +6176,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     state.retryDelayMs = retryDelayMs;
     state.connectTimeout = connectTimeout;
     state.requestTimeout = requestTimeout;
+    state.bookTimeout = bookTimeout;
     
     // Launch AI Translation Thread for chapter transition prefix and UI labels
     TriggerUiLocalization();

@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://api.deepseek.com/v1/chat/completions",
+  "modelName": "deepseek-chat",
+  "apiKey": "",
+  "apiKeyEnvVar": "DEEPSEEK_API_KEY",
+  "format": "openai"
+}

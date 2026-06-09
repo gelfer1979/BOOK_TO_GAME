@@ -161,5 +161,18 @@ To address complaints regarding tiny fonts and elements in the setup and book se
   * Expanded top-left **'A' and 'a'** font size control buttons to **`68x68px`** (was 45x45px).
   * Boosted vertical choice buttons inside active gameplay to a height of **`220px`** (was 150px) with **`18px`** spacing (was 12px) to perfectly fit the scaled 1.5x option text.
 
+---
+
+## 5. Puter Bridge Window Hiding (macOS)
+
+### A. Hidden-by-Default Startup (Accessory App)
+* **Improvement**: On macOS, the PuterBridge helper now launches invisibly in the background. The user is no longer distracted by the bridge's main window if they are already signed in.
+* **Mechanism**:
+  * The application activation policy in `main` is set to `NSApplicationActivationPolicyAccessory` initially, preventing it from appearing in the macOS Dock.
+  * The main Cocoa window is kept hidden upon startup by removing the `[mainWindow orderFront:nil]` call.
+  * If the Puter JS SDK signals that authentication is required (`show_login_window`), the application policy is dynamically promoted to `NSApplicationActivationPolicyRegular`, the window is centered, brought to the front, and given focus so the user can easily log in.
+  * Once the login is successful (`login_success`), the window is hidden again and the policy returns to `NSApplicationActivationPolicyAccessory`.
+
+
 
 

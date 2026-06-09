@@ -1,2 +1,0 @@
-C:\msys64\ucrt64\bin\ar.exe qc libmobi.a CMakeFiles/mobi.dir/buffer.c.obj CMakeFiles/mobi.dir/compression.c.obj CMakeFiles/mobi.dir/debug.c.obj CMakeFiles/mobi.dir/index.c.obj CMakeFiles/mobi.dir/memory.c.obj CMakeFiles/mobi.dir/meta.c.obj CMakeFiles/mobi.dir/parse_rawml.c.obj CMakeFiles/mobi.dir/read.c.obj CMakeFiles/mobi.dir/structure.c.obj CMakeFiles/mobi.dir/util.c.obj CMakeFiles/mobi.dir/write.c.obj CMakeFiles/miniz.dir/miniz.c.obj
-C:\msys64\ucrt64\bin\ranlib.exe libmobi.a

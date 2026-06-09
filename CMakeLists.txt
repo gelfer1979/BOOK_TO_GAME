@@ -379,12 +379,35 @@ else()
             $<TARGET_FILE_DIR:${TARGET_NAME}>/options.json
         )
 
+        if(APPLE AND NOT IOS)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+                $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/assets
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${CMAKE_CURRENT_SOURCE_DIR}/book.json"
+                $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/book.json
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${CMAKE_CURRENT_SOURCE_DIR}/settings.json"
+                $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/settings.json
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${CMAKE_CURRENT_SOURCE_DIR}/options.json"
+                $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/options.json
+            )
+        endif()
+
         file(GLOB AI_JSON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/ai_*.json")
         foreach(AI_FILE ${AI_JSON_FILES})
             get_filename_component(AI_NAME ${AI_FILE} NAME)
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different "${AI_FILE}" $<TARGET_FILE_DIR:${TARGET_NAME}>/${AI_NAME}
             )
+            if(APPLE AND NOT IOS)
+                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${AI_FILE}" $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/${AI_NAME}
+                )
+            endif()
         endforeach()
 
         file(GLOB NBOOK_TXT_FILES "${CMAKE_CURRENT_SOURCE_DIR}/nbook_*.txt")
@@ -393,6 +416,11 @@ else()
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NBOOK_FILE}" $<TARGET_FILE_DIR:${TARGET_NAME}>/${NBOOK_NAME}
             )
+            if(APPLE AND NOT IOS)
+                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NBOOK_FILE}" $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/${NBOOK_NAME}
+                )
+            endif()
         endforeach()
 
         install(TARGETS ${TARGET_NAME} DESTINATION bin)

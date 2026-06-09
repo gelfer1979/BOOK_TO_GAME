@@ -1,0 +1,45 @@
+=== Puter Bridge execution started ===
+[App Delegate] applicationDidFinishLaunching started
+[Server] Listening on 127.0.0.1:8000
+[App Delegate] Loading URL: http://localhost:8000/assets/puter_bridge.html
+[Navigation] didStartProvisionalNavigation
+[Script Message] Received event: {"action":"console_log","level":"log","text":"%c ____  _   _ _____ _____ ____       _ ____  \n|  _ \\| | | |_   _| ____|  _ \\     | / ___| \n| |_) | | | | | | |  _| | |_) | _  | \\___ \\ \n|  __/| |_| | | | | |___|  _ < | |_| |___) |\n|_|    \\___/  |_| |_____|_| \\_(_)___/|____/  color: #000fd8; font-weight: bold; font-size: 14px; font-family: monospace;"}
+[Console:log] %c ____  _   _ _____ _____ ____       _ ____  
+|  _ \| | | |_   _| ____|  _ \     | / ___| 
+| |_) | | | | | | |  _| | |_) | _  | \___ \ 
+|  __/| |_| | | | | |___|  _ < | |_| |___) |
+|_|    \___/  |_| |_____|_| \_(_)___/|____/  color: #000fd8; font-weight: bold; font-size: 14px; font-family: monospace;
+[Script Message] Received event: {"action":"console_log","level":"log","text":"%cSubmit this app to the Puter App Store:\n%chttps://apps.puter.com/ color: rgb(0, 57, 137); font-size: 18px; font-weight: bold; color: #3b82f6; font-size: 18px; font-weight: bold; text-decoration: underline;"}
+[Console:log] %cSubmit this app to the Puter App Store:
+%chttps://apps.puter.com/ color: rgb(0, 57, 137); font-size: 18px; font-weight: bold; color: #3b82f6; font-size: 18px; font-weight: bold; text-decoration: underline;
+[Script Message] Received event: {"action":"console_log","level":"log","text":"%cTo disable this message: %cputer.quiet = true color: #94a3b8; font-size: 11px; color: #94a3b8; font-size: 11px; font-style: italic;"}
+[Console:log] %cTo disable this message: %cputer.quiet = true color: #94a3b8; font-size: 11px; color: #94a3b8; font-size: 11px; font-style: italic;
+[Navigation] didFinishNavigation: HTML loaded successfully!
+[Script Message] Received event: {"action":"console_log","level":"log","text":"[Puter Bridge] User is not signed in. Displaying authentication interface..."}
+[Console:log] [Puter Bridge] User is not signed in. Displaying authentication interface...
+[Script Message] Received event: {"action":"show_login_window"}
+[Script Message] Authentication required. Displaying login window...
+[UI Delegate] Creating popup webview (window.open intercept)
+[UI Delegate] Popup requested URL: https://puter.com/action/sign-in?embedded_in_popup=true&msg_id=1
+[Script Message] Received event: {"action":"console_log","level":"log","text":"%c⚠️Warning⚠️\n%cPlease refrain from adding or pasting any sort of code here, as doing so could potentially compromise your account. \nYou don't get what you intended anyway, but the hacker will! \n\n%cFor further information please visit https://developer.chrome.com/blog/self-xss color:red; font-size:2rem; display:block; margin-left:0; margin-bottom: 20px; background: black; width: 100%; margin-top:20px; font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif; font-size:1rem; font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif; font-size:0.9rem; font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;"}
+[Console:log] %c⚠️Warning⚠️
+%cPlease refrain from adding or pasting any sort of code here, as doing so could potentially compromise your account. 
+You don't get what you intended anyway, but the hacker will! 
+
+%cFor further information please visit https://developer.chrome.com/blog/self-xss color:red; font-size:2rem; display:block; margin-left:0; margin-bottom: 20px; background: black; width: 100%; margin-top:20px; font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif; font-size:1rem; font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif; font-size:0.9rem; font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
+[Script Message] Received event: {"action":"console_log","level":"log","text":"Your Puter information:\n• Version: 2.5.1\n• Server: tel-aviv\n• Deployed: Thu Jun 04 2026 20:51:19 GMT+0300 (Москва, стандартное время)"}
+[Console:log] Your Puter information:
+• Version: 2.5.1
+• Server: tel-aviv
+• Deployed: Thu Jun 04 2026 20:51:19 GMT+0300 (Москва, стандартное время)
+[Script Message] Received event: {"action":"console_log","level":"log","text":"{\"error\":\"Entry not found: path=/sincere_drum_6819/templates\",\"message\":\"Entry not found: path=/sincere_drum_6819/templates\",\"code\":\"subject_does_not_exist\"}"}
+[Console:log] {"error":"Entry not found: path=/sincere_drum_6819/templates","message":"Entry not found: path=/sincere_drum_6819/templates","code":"subject_does_not_exist"}
+[Script Message] Received event: {"action":"console_log","level":"log","text":"{\"error\":\"Entry not found: path=/sincere_drum_6819/templates\",\"message\":\"Entry not found: path=/sincere_drum_6819/templates\",\"code\":\"subject_does_not_exist\"}"}
+[Console:log] {"error":"Entry not found: path=/sincere_drum_6819/templates","message":"Entry not found: path=/sincere_drum_6819/templates","code":"subject_does_not_exist"}
+[Script Message] Received event: {"action":"console_log","level":"log","text":"{\"error\":\"Entry not found: path=/sincere_drum_6819/templates\",\"message\":\"Entry not found: path=/sincere_drum_6819/templates\",\"code\":\"subject_does_not_exist\"}"}
+[Console:log] {"error":"Entry not found: path=/sincere_drum_6819/templates","message":"Entry not found: path=/sincere_drum_6819/templates","code":"subject_does_not_exist"}
+[UI Delegate] Closing popup webview
+[Script Message] Received event: {"action":"login_success"}
+[Script Message] Login successful. Delivering payload...
+[Script Message] Received event: {"action":"response","text":"Got it! How can I assist you today with the information I have?"}
+[Puter Bridge] SaveResponseAndExit: status=success response length=63

@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\BOOK_TO_GAME.dir/objects.a
-C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\BOOK_TO_GAME.dir/objects.a @CMakeFiles\BOOK_TO_GAME.dir\objects1.rsp
-C:\msys64\ucrt64\bin\c++.exe -mwindows -static-libgcc -static-libstdc++ -Wl,--whole-archive CMakeFiles\BOOK_TO_GAME.dir/objects.a -Wl,--no-whole-archive -o BOOK_TO_GAME.exe -Wl,--out-implib,libBOOK_TO_GAME.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\BOOK_TO_GAME.dir\linkLibs.rsp

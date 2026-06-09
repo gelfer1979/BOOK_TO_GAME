@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/games/BOOK_TO_GAME/build_native/_deps/webview2_sdk_bridge-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

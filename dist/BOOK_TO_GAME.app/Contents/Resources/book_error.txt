@@ -1,0 +1,8 @@
+AI Raw Response:
+The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using the WebView Helper (PuterBridge).
+
+To play this native C++ build, please ensure PuterBridge is built and placed in the same directory, or go to Settings and enter your Google Gemini / OpenRouter / OpenAI API key.
+
+Error:
+JSON parsing error: [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - invalid literal; last read: 'T'
+Raw response starts with: The default AI (Puter.js) is available keylessly in the WebAssembly (browser) build or when using th

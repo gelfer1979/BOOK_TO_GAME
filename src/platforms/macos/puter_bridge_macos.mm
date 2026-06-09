@@ -12,6 +12,15 @@
 + (void)_registerURLSchemeAsBypassingContentSecurityPolicy:(NSString *)scheme;
 @end
 
+@interface OffscreenWindow : NSWindow
+@end
+
+@implementation OffscreenWindow
+- (NSRect)constrainFrameRect:(NSRect)frameRect toScreen:(NSScreen *)screen {
+    return frameRect;
+}
+@end
+
 // Global state
 static NSWindow* __strong mainWindow = nil;
 static WKWebView* __strong mainWebView = nil;
@@ -19,6 +28,7 @@ static NSString* __strong requestJsonData = nil;
 static BOOL operationCompleted = NO;
 static NSMutableArray* __strong activePopupWindows = nil;
 static id __strong appDelegate = nil;
+static id __strong activityToken = nil;
 
 // Logging helper
 static void LogToFile(NSString* message) {
@@ -68,12 +78,63 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     
     operationCompleted = YES;
     
+    if (activityToken) {
+        [[NSProcessInfo processInfo] endActivity:activityToken];
+        activityToken = nil;
+    }
+    
     // Sleep for 1 second on the main thread to allow background WebKit processes (e.g. database/network)
     // to write cookies and localStorage to disk.
     [NSThread sleepForTimeInterval:1.0];
     
     // Perform a direct OS-level exit with code 0 to avoid Cocoa window/teardown crashes.
     exit(0);
+}
+
+static NSMutableDictionary* ReadLocalStorageFile(void) {
+    NSString* storePath = @"puter_store.json";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:storePath]) {
+        NSData* data = [NSData dataWithContentsOfFile:storePath];
+        if (data) {
+            NSError* jsonError = nil;
+            NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+            if (dict) {
+                LogToFile([NSString stringWithFormat:@"[ReadLocalStorage] Loaded %lu keys from %@", (unsigned long)[dict count], storePath]);
+                return [dict mutableCopy];
+            } else {
+                LogToFile([NSString stringWithFormat:@"[ReadLocalStorage] ERROR: Failed to parse JSON: %@", [jsonError localizedDescription]]);
+            }
+        } else {
+            LogToFile([NSString stringWithFormat:@"[ReadLocalStorage] ERROR: Failed to read data from %@", storePath]);
+        }
+    } else {
+        LogToFile([NSString stringWithFormat:@"[ReadLocalStorage] Info: File %@ does not exist", storePath]);
+    }
+    return [NSMutableDictionary dictionary];
+}
+
+static void WriteLocalStorageFile(NSDictionary* dict) {
+    NSString* storePath = @"puter_store.json";
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+    if (data) {
+        [data writeToFile:storePath atomically:YES];
+    }
+}
+
+static void UpdateLocalStorageKey(NSString* key, NSString* value) {
+    NSMutableDictionary* dict = ReadLocalStorageFile();
+    dict[key] = value;
+    WriteLocalStorageFile(dict);
+}
+
+static void RemoveLocalStorageKey(NSString* key) {
+    NSMutableDictionary* dict = ReadLocalStorageFile();
+    [dict removeObjectForKey:key];
+    WriteLocalStorageFile(dict);
+}
+
+static void ClearLocalStorage(void) {
+    WriteLocalStorageFile([NSDictionary dictionary]);
 }
 
 @interface BridgeScriptMessageHandler : NSObject <WKScriptMessageHandler>
@@ -87,6 +148,45 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     
     NSString* msg = message.body;
     if (![msg isKindOfClass:[NSString class]]) return;
+    
+    // Handle local storage synchronization from JavaScript
+    if ([msg containsString:@"\"action\":\"store_setItem\""]) {
+        NSData* data = [msg dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (json) {
+            NSString* key = json[@"key"];
+            NSString* value = json[@"value"];
+            if (key && value) {
+                UpdateLocalStorageKey(key, value);
+            }
+        }
+        return;
+    }
+    else if ([msg containsString:@"\"action\":\"store_removeItem\""]) {
+        NSData* data = [msg dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (json) {
+            NSString* key = json[@"key"];
+            if (key) {
+                RemoveLocalStorageKey(key);
+            }
+        }
+        return;
+    }
+    else if ([msg containsString:@"\"action\":\"store_clear\""]) {
+        ClearLocalStorage();
+        return;
+    }
+    else if ([msg containsString:@"\"action\":\"console_log\""]) {
+        NSData* data = [msg dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (json) {
+            NSString* level = json[@"level"];
+            NSString* text = json[@"text"];
+            LogToFile([NSString stringWithFormat:@"[Console:%@] %@", level, text]);
+        }
+        return;
+    }
     
     LogToFile([NSString stringWithFormat:@"[Script Message] Received event: %@", msg]);
     
@@ -109,6 +209,7 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
         if (mainWindow) {
             LogToFile(@"[Script Message] Authentication required. Displaying login window...");
             dispatch_async(dispatch_get_main_queue(), ^{
+                [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
                 [mainWindow center];
                 [mainWindow makeKeyAndOrderFront:nil];
                 [NSApp activateIgnoringOtherApps:YES];
@@ -118,6 +219,12 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
     // Check for successful login
     else if ([msg containsString:@"\"action\":\"login_success\""]) {
         LogToFile(@"[Script Message] Login successful. Delivering payload...");
+        if (mainWindow) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [mainWindow setFrameOrigin:NSMakePoint(-10000, -10000)];
+                [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+            });
+        }
         if (mainWebView) {
             NSData* data = [requestJsonData dataUsingEncoding:NSUTF8StringEncoding];
             NSString* base64String = [data base64EncodedStringWithOptions:0];
@@ -219,7 +326,7 @@ static void SaveResponseAndExit(NSString* status, NSString* responseText) {
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    LogToFile(@"[Navigation] didFinishNavigation: HTML loaded successfully via app://!");
+    LogToFile(@"[Navigation] didFinishNavigation: HTML loaded successfully!");
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
@@ -395,6 +502,12 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     LogToFile(@"[App Delegate] applicationDidFinishLaunching started");
     
+    // Disable App Nap for the process so WKWebView keeps running even when the window is offscreen
+    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+        activityToken = [[NSProcessInfo processInfo] beginActivityWithOptions:NSActivityUserInitiated | NSActivityLatencyCritical reason:@"PuterBridge execution"];
+        LogToFile(@"[App Delegate] App Nap disabled via beginActivityWithOptions");
+    }
+    
     // Load request data
     NSError* error = nil;
     NSString* content = [NSString stringWithContentsOfFile:@"puter_request.json" encoding:NSUTF8StringEncoding error:&error];
@@ -406,14 +519,14 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     requestJsonData = content;
     LogToFile(@"[App Delegate] Successfully read puter_request.json payload");
     
-    // 1. Create Headless NSWindow positioned way off-screen
+    // 1. Create Headless NSWindow positioned way off-screen using OffscreenWindow to prevent window server constraint correction
     NSRect frame = NSMakeRect(-10000, -10000, 600, 700);
-    mainWindow = [[NSWindow alloc] initWithContentRect:frame
-                                             styleMask:(NSWindowStyleMaskTitled |
-                                                        NSWindowStyleMaskClosable |
-                                                        NSWindowStyleMaskResizable)
-                                               backing:NSBackingStoreBuffered
-                                                 defer:NO];
+    mainWindow = [[OffscreenWindow alloc] initWithContentRect:frame
+                                                    styleMask:(NSWindowStyleMaskTitled |
+                                                               NSWindowStyleMaskClosable |
+                                                               NSWindowStyleMaskResizable)
+                                                      backing:NSBackingStoreBuffered
+                                                        defer:NO];
     [mainWindow setTitle:@"Puter AI Authentication"];
     [mainWindow setDelegate:self];
     [mainWindow setReleasedWhenClosed:NO];
@@ -427,6 +540,247 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     configuration.preferences.javaScriptCanOpenWindowsAutomatically = YES;
     configuration.websiteDataStore = [WKWebsiteDataStore defaultDataStore];
     
+    // Load persisted local storage
+    NSDictionary* storedDb = ReadLocalStorageFile();
+    NSMutableString* injectionJs = [NSMutableString string];
+    [injectionJs appendString:@"(function() {\n"
+                               "    const logToHost = (level, args) => {\n"
+                               "        try {\n"
+                               "            window.webkit.messageHandlers.puter.postMessage(JSON.stringify({\n"
+                               "                action: 'console_log',\n"
+                               "                level: level,\n"
+                               "                text: args.map(x => {\n"
+                               "                    if (x === null) return 'null';\n"
+                               "                    if (x === undefined) return 'undefined';\n"
+                               "                    if (typeof x === 'object') {\n"
+                               "                        try { return JSON.stringify(x); } catch(e) { return String(x); }\n"
+                               "                    }\n"
+                               "                    return String(x);\n"
+                               "                }).join(' ')\n"
+                               "            }));\n"
+                               "        } catch(e) {}\n"
+                               "    };\n"
+                               "    const _log = console.log;\n"
+                               "    const _error = console.error;\n"
+                               "    const _warn = console.warn;\n"
+                               "    const _info = console.info;\n"
+                               "    console.log = function(...args) { _log.apply(console, args); logToHost('log', args); };\n"
+                               "    console.error = function(...args) { _error.apply(console, args); logToHost('error', args); };\n"
+                               "    console.warn = function(...args) { _warn.apply(console, args); logToHost('warn', args); };\n"
+                               "    console.info = function(...args) { _info.apply(console, args); logToHost('info', args); };\n"
+                               "    const store = {};\n"];
+    
+    NSMutableDictionary* dbDict = [storedDb mutableCopy];
+    NSString* authToken = nil;
+    if (dbDict) {
+        if (dbDict[@"auth_token_v2"]) {
+            authToken = dbDict[@"auth_token_v2"];
+        } else if (dbDict[@"puter.auth.token.v2"]) {
+            authToken = dbDict[@"puter.auth.token.v2"];
+        }
+    }
+    
+    if (authToken && [authToken isKindOfClass:[NSString class]]) {
+        dbDict[@"auth_token_v2"] = authToken;
+        dbDict[@"puter.auth.token.v2"] = authToken;
+        
+        NSString* escapedToken = EscapeJavaScriptString(authToken);
+        [injectionJs appendFormat:@"    window.auth_token = '%@';\n", escapedToken];
+        LogToFile(@"[Injection] Set window.auth_token and duplicated storage tokens");
+    }
+    
+    if (dbDict) {
+        for (NSString* key in dbDict) {
+            NSString* val = dbDict[key];
+            if ([val isKindOfClass:[NSString class]]) {
+                NSString* escapedVal = EscapeJavaScriptString(val);
+                [injectionJs appendFormat:@"    store['%@'] = '%@';\n", key, escapedVal];
+                LogToFile([NSString stringWithFormat:@"[Injection] Injected localStorage key: %@", key]);
+            }
+        }
+    }
+    
+    [injectionJs appendString:@"    const mockLocalStorage = {\n"
+                               "        getItem: function(key) {\n"
+                               "            return store.hasOwnProperty(key) ? store[key] : null;\n"
+                               "        },\n"
+                               "        setItem: function(key, value) {\n"
+                               "            const valString = String(value);\n"
+                               "            store[key] = valString;\n"
+                               "            window.webkit.messageHandlers.puter.postMessage(JSON.stringify({\n"
+                               "                action: 'store_setItem',\n"
+                               "                key: key,\n"
+                               "                value: valString\n"
+                               "            }));\n"
+                               "        },\n"
+                               "        removeItem: function(key) {\n"
+                               "            delete store[key];\n"
+                               "            window.webkit.messageHandlers.puter.postMessage(JSON.stringify({\n"
+                               "                action: 'store_removeItem',\n"
+                               "                key: key\n"
+                               "            }));\n"
+                               "        },\n"
+                               "        clear: function() {\n"
+                               "            for (const key in store) {\n"
+                               "                if (store.hasOwnProperty(key)) {\n"
+                               "                    delete store[key];\n"
+                               "                }\n"
+                               "            }\n"
+                               "            window.webkit.messageHandlers.puter.postMessage(JSON.stringify({\n"
+                               "                action: 'store_clear'\n"
+                               "            }));\n"
+                               "        },\n"
+                               "        key: function(index) {\n"
+                               "            const keys = Object.keys(store);\n"
+                               "            return index < keys.length ? keys[index] : null;\n"
+                               "        }\n"
+                               "    };\n"
+                               "    const storageProxy = new Proxy(mockLocalStorage, {\n"
+                               "        get: function(target, prop) {\n"
+                               "            if (prop in target) return target[prop];\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                return store.hasOwnProperty(prop) ? store[prop] : undefined;\n"
+                               "            }\n"
+                               "            return undefined;\n"
+                               "        },\n"
+                               "        set: function(target, prop, value) {\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                target.setItem(prop, value);\n"
+                               "                return true;\n"
+                               "            }\n"
+                               "            return false;\n"
+                               "        },\n"
+                               "        deleteProperty: function(target, prop) {\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                target.removeItem(prop);\n"
+                               "                return true;\n"
+                               "            }\n"
+                               "            return false;\n"
+                               "        },\n"
+                               "        has: function(target, prop) {\n"
+                               "            if (prop in target) return true;\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                return store.hasOwnProperty(prop);\n"
+                               "            }\n"
+                               "            return false;\n"
+                               "        },\n"
+                               "        ownKeys: function(target) {\n"
+                               "            return Object.keys(store);\n"
+                               "        },\n"
+                               "        getOwnPropertyDescriptor: function(target, prop) {\n"
+                               "            if (typeof prop === 'string' && store.hasOwnProperty(prop)) {\n"
+                               "                return {\n"
+                               "                    value: store[prop],\n"
+                               "                    writable: true,\n"
+                               "                    enumerable: true,\n"
+                               "                    configurable: true\n"
+                               "                };\n"
+                               "            }\n"
+                               "            return undefined;\n"
+                               "        }\n"
+                               "    });\n"
+                               "    Object.defineProperty(storageProxy, 'length', {\n"
+                               "        get: function() { return Object.keys(store).length; },\n"
+                               "        configurable: true,\n"
+                               "        enumerable: false\n"
+                               "    });\n"
+                               "    try {\n"
+                               "        Object.defineProperty(window, 'localStorage', {\n"
+                               "            value: storageProxy,\n"
+                               "            configurable: true,\n"
+                               "            enumerable: true,\n"
+                               "            writable: false\n"
+                               "        });\n"
+                               "    } catch (e) {\n"
+                               "        console.error('Failed to mock localStorage:', e);\n"
+                               "    }\n"
+                               "    const sessionStore = {};\n"
+                               "    const mockSessionStorage = {\n"
+                               "        getItem: function(key) {\n"
+                               "            return sessionStore.hasOwnProperty(key) ? sessionStore[key] : null;\n"
+                               "        },\n"
+                               "        setItem: function(key, value) {\n"
+                               "            sessionStore[key] = String(value);\n"
+                               "        },\n"
+                               "        removeItem: function(key) {\n"
+                               "            delete sessionStore[key];\n"
+                               "        },\n"
+                               "        clear: function() {\n"
+                               "            for (const key in sessionStore) {\n"
+                               "                delete sessionStore[key];\n"
+                               "            }\n"
+                               "        },\n"
+                               "        key: function(index) {\n"
+                               "            const keys = Object.keys(sessionStore);\n"
+                               "            return index < keys.length ? keys[index] : null;\n"
+                               "        }\n"
+                               "    };\n"
+                               "    const sessionStorageProxy = new Proxy(mockSessionStorage, {\n"
+                               "        get: function(target, prop) {\n"
+                               "            if (prop in target) return target[prop];\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                return sessionStore.hasOwnProperty(prop) ? sessionStore[prop] : undefined;\n"
+                               "            }\n"
+                               "            return undefined;\n"
+                               "        },\n"
+                               "        set: function(target, prop, value) {\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                target.setItem(prop, value);\n"
+                               "                return true;\n"
+                               "            }\n"
+                               "            return false;\n"
+                               "        },\n"
+                               "        deleteProperty: function(target, prop) {\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                target.removeItem(prop);\n"
+                               "                return true;\n"
+                               "            }\n"
+                               "            return false;\n"
+                               "        },\n"
+                               "        has: function(target, prop) {\n"
+                               "            if (prop in target) return true;\n"
+                               "            if (typeof prop === 'string') {\n"
+                               "                return sessionStore.hasOwnProperty(prop);\n"
+                               "            }\n"
+                               "            return false;\n"
+                               "        },\n"
+                               "        ownKeys: function(target) {\n"
+                               "            return Object.keys(sessionStore);\n"
+                               "        },\n"
+                               "        getOwnPropertyDescriptor: function(target, prop) {\n"
+                               "            if (typeof prop === 'string' && sessionStore.hasOwnProperty(prop)) {\n"
+                               "                return {\n"
+                               "                    value: sessionStore[prop],\n"
+                               "                    writable: true,\n"
+                               "                    enumerable: true,\n"
+                               "                    configurable: true\n"
+                               "                };\n"
+                               "            }\n"
+                               "            return undefined;\n"
+                               "        }\n"
+                               "    });\n"
+                               "    Object.defineProperty(sessionStorageProxy, 'length', {\n"
+                               "        get: function() { return Object.keys(sessionStore).length; },\n"
+                               "        configurable: true,\n"
+                               "        enumerable: false\n"
+                               "    });\n"
+                               "    try {\n"
+                               "        Object.defineProperty(window, 'sessionStorage', {\n"
+                               "            value: sessionStorageProxy,\n"
+                               "            configurable: true,\n"
+                               "            enumerable: true,\n"
+                               "            writable: false\n"
+                               "        });\n"
+                               "    } catch (e) {\n"
+                               "        console.error('Failed to mock sessionStorage:', e);\n"
+                               "    }\n"
+                               "})();\n"];
+    
+    WKUserScript* userScript = [[WKUserScript alloc] initWithSource:injectionJs
+                                                      injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+                                                    forMainFrameOnly:NO];
+    [configuration.userContentController addUserScript:userScript];
+    
     schemeHandler = [[BridgeURLSchemeHandler alloc] init];
     [configuration setURLSchemeHandler:schemeHandler forURLScheme:@"app"];
     
@@ -439,10 +793,34 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     mainWebView.navigationDelegate = navigationDelegate;
     [mainWindow setContentView:mainWebView];
     
-    // 4. Load puter_bridge.html via app:// custom scheme
-    NSURL *url = [NSURL URLWithString:@"app://local/assets/puter_bridge.html"];
-    LogToFile([NSString stringWithFormat:@"[App Delegate] Loading app:// URL: %@", [url absoluteString]]);
-    [mainWebView loadRequest:[NSURLRequest requestWithURL:url]];
+    // 4. Load puter_bridge.html content from file and load it using loadHTMLString:baseURL:
+    NSString* exeDir = [[NSBundle mainBundle] resourcePath];
+    if (!exeDir) {
+        exeDir = [[NSBundle mainBundle] bundlePath];
+    }
+    NSString* filePath = [exeDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
+        filePath = [currentDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
+    }
+    
+    NSError* fileLoadError = nil;
+    NSString* htmlContent = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&fileLoadError];
+    if (fileLoadError || !htmlContent) {
+        LogToFile([NSString stringWithFormat:@"[App Delegate] ERROR reading puter_bridge.html, searching fallback: %@", [fileLoadError localizedDescription]]);
+        NSString* currentDir = [[NSFileManager defaultManager] currentDirectoryPath];
+        filePath = [currentDir stringByAppendingPathComponent:@"assets/puter_bridge.html"];
+        htmlContent = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    }
+    
+    if (htmlContent) {
+        NSURL *baseURL = [NSURL URLWithString:@"https://puter.com/"];
+        LogToFile([NSString stringWithFormat:@"[App Delegate] Loading HTML string with baseURL: %@", [baseURL absoluteString]]);
+        [mainWebView loadHTMLString:htmlContent baseURL:baseURL];
+    } else {
+        LogToFile(@"[App Delegate] CRITICAL ERROR: Could not find or read assets/puter_bridge.html!");
+        [NSApp terminate:nil];
+    }
     
     // Crucial: order the window front so it activates the WKWebView execution loop immediately
     [mainWindow orderFront:nil];
@@ -486,10 +864,9 @@ int main(int argc, const char * argv[]) {
         NSApplication* app = [NSApplication sharedApplication];
         LogToFile(@"[Main] NSApplication initialized");
         
-        // Crucial: Set activation policy to Regular so that Cocoa windows can be presented and focused
-        // when launched as a child process via exec.
-        [app setActivationPolicy:NSApplicationActivationPolicyRegular];
-        LogToFile(@"[Main] Activation policy set to Regular");
+        // Crucial: Set activation policy to Accessory initially to hide Dock icon, and elevate only when auth is needed.
+        [app setActivationPolicy:NSApplicationActivationPolicyAccessory];
+        LogToFile(@"[Main] Activation policy set to Accessory");
         
         appDelegate = [[BridgeAppDelegate alloc] init];
         [app setDelegate:appDelegate];

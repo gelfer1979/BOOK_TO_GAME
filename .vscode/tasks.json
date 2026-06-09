@@ -145,13 +145,13 @@
         {
             "label": "Build macOS (Release)",
             "type": "shell",
-            "command": "if [ -f build/CMakeCache.txt ] && ! grep -q \"CMAKE_HOME_DIRECTORY:INTERNAL=$(pwd)\" build/CMakeCache.txt; then echo 'Source path changed! Cleaning build directory...'; rm -rf build; fi; cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build",
+            "command": "bash platforms/macos/build_and_package.sh",
             "windows": {
                 "command": "if (Test-Path build/CMakeCache.txt) { if (!(Select-String -Path build/CMakeCache.txt -SimpleMatch -Pattern \"CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\\', '/'))\")) { Write-Host 'Source path changed! Cleaning build directory...'; Remove-Item -Recurse -Force build } }; cmake -B build -DCMAKE_BUILD_TYPE=Release; cmake --build build"
             },
             "group": "none",
             "problemMatcher": [],
-            "detail": "Compile project for macOS (requires Homebrew SDL2 dependencies)"
+            "detail": "Build project and package macOS bundle (Universal arm64+x86_64, identical to GitHub Actions)"
         },
         {
             "label": "Build AppImage (Linux)",

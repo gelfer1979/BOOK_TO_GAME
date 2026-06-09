@@ -1,3 +1,0 @@
-PuterBridge: WinMain started.
-WebMessageReceived: {"action":"show_login_window"}
-SaveResponseAndExit: status=error response=Puter bridge request timed out after 50 seconds.

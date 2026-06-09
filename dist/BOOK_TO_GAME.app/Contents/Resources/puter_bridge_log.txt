@@ -1,0 +1,26 @@
+=== Puter Bridge execution started ===
+[Main] NSApplication initialized
+[Main] Activation policy set to Accessory
+[Main] Delegate set, running application...
+[App Delegate] applicationDidFinishLaunching started
+[App Delegate] App Nap disabled via beginActivityWithOptions
+[App Delegate] Successfully read puter_request.json payload
+[ReadLocalStorage] Loaded 6 keys from puter_store.json
+[Injection] Set window.auth_token and duplicated storage tokens
+[Injection] Injected localStorage key: has_visited_before
+[Injection] Injected localStorage key: puter.app.id
+[Injection] Injected localStorage key: auth_token_v2
+[Injection] Injected localStorage key: last_valid_ts
+[Injection] Injected localStorage key: puter.auth.token.v2
+[Injection] Injected localStorage key: logged_in_users
+[Injection] Injected localStorage key: user
+[App Delegate] Loading HTML string with baseURL: https://puter.com/
+[App Delegate] Window ordered front off-screen
+[Navigation] didStartProvisionalNavigation
+[Navigation] didFinishNavigation: HTML loaded successfully!
+[Console:log] [Puter Bridge] User already signed in.
+[Script Message] Received event: {"action":"ready_invisible"}
+[Script Message] Bridge ready. Delivering request payload...
+[Console:error] [Puter Bridge] Chat request failed: {"error":"No usage left for request.","message":"No usage left for request.","code":"insufficient_funds"}
+[Script Message] Received event: {"action":"error","text":"No usage left for request."}
+[Puter Bridge] SaveResponseAndExit: status=error response length=26

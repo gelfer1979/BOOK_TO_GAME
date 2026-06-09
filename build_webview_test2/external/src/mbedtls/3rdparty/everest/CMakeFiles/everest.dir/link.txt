@@ -1,2 +1,0 @@
-C:\msys64\ucrt64\bin\ar.exe qc libeverest.a CMakeFiles/everest.dir/library/everest.c.obj CMakeFiles/everest.dir/library/x25519.c.obj CMakeFiles/everest.dir/library/Hacl_Curve25519_joined.c.obj
-C:\msys64\ucrt64\bin\ranlib.exe libeverest.a

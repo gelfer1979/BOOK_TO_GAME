@@ -1,0 +1,7 @@
+{
+    "apiKey": "AQ.Ab8RN6JZugZ5SLXwnR33Kvgydmw4R6i--mTDe9GzABKv_eHJUg",
+    "apiKeyEnvVar": "GEMINI_API_KEY",
+    "baseUrl": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent",
+    "format": "gemini",
+    "modelName": "gemini-3.1-flash-lite"
+}

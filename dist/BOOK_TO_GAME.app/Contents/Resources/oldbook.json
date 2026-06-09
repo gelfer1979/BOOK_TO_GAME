@@ -1,0 +1,27 @@
+{
+    "plot": [
+        {
+            "chapter": 1,
+            "description": "Begin your adventure as you step into the shoes of Master Cherry, a charismatic carpenter. After discovering a peculiar piece of firewood that screams and laughs, you must navigate the local dynamics with your neighbor, Geppetto, who aspires to carve a marionette. Collect items such as wooden tools and pieces of wood while avoiding the judgment of the townsfolk. Resolve your argument with Geppetto and witness the birth of Pinocchio, the animated puppet. Keep your wits about you as Pinocchio's antics unfold, leading to his hasty escape into the town's chaos.",
+            "title": "The Birth of Mischief"
+        },
+        {
+            "chapter": 2,
+            "description": "Pinocchio, now on the run, faces his first trials as he meets a policeman and encounters the Talking Cricket in his home. Choose wisely: listen to the Cricket's advice or dismiss it, knowing it might lead you down a treacherous path. Throughout this journey, gather food and survival tools while evading capture. Your actions dictate Pinocchio's resilience—will you allow him to learn from his mistakes, or let him succumb to greed and mischief? Prepare for encounters with animals and townspeople who will challenge your choices.",
+            "title": "The Quest for Redemption"
+        },
+        {
+            "chapter": 3,
+            "description": "As Pinocchio’s journey leads him to the Land of Toys, temptation reigns supreme. Encounter old friends, like Lamp-Wick, who urge you to abandon your duties and embrace endless play. Will you resist the allure of idleness, or fall prey to its charms? Within this vibrant yet deceptive realm, you will face challenges that test your loyalties and desires. Collect magical items while combating the laziness threatening Pinocchio's transformation into a donkey. Your decisions will either steer him back to the path of right or plunge him deeper into despair.",
+            "title": "The Trials of the Land of Toys"
+        },
+        {
+            "chapter": 4,
+            "description": "Your adventure reaches a climax as Pinocchio navigates through life-changing encounters after being swallowed by a shark. Together with Geppetto, whom you must help rescue, test your intuition and bravery in dire situations. Uncover hidden truths and rewrite the fate of those you've encountered. Ultimately, your choices will lead Pinocchio toward an epiphany about goodness, sacrifice, and transformation into a real boy. Will you guide him to the redemption he seeks, or will he remain a lost puppet haunted by the mistakes of his past?",
+            "title": "The Final Transformation"
+        }
+    ],
+    "startPrompt": "You find yourself in the cozy workshop of Master Antonio, the carpenter known to all as 'Master Cherry' due to his bright red nose. Today, he has stumbled upon a mysterious piece of wood that seems to have a life of its own. It's your chance to alter the fate of a newly crafted puppet, Pinocchio, and even yourself!\n\nGather your tools and engage in lively discussions with your neighbors as you prepare to carve the puppet. However, be cautious—trouble is always around the corner.\n\n<options><option>Try to carve the wood</option><option>Give the wood to Geppetto</option></options>",
+    "title": "The Wooden Boy's Journey",
+    "world": "In a quaint town where carpentry crafts and puppet-making intertwine with magic, legend tells of a wooden puppet named Pinocchio, crafted by the elderly Geppetto. This town is rich in character, featuring a carpenter with a bright red nose, mischievous children, and lively townsfolk who often find themselves embroiled in whimsical adventures. The realm is dotted with strange creatures and enchanted beings, from Talking Crickets to Fairy guardians, each imparting lessons on obedience, honesty, and the desire to transform into a real boy. The dichotomy of innocence and mischief often pits the naive against the cunning, forming a landscape ripe for growth and discovery.\n\nWithin this world exists the motif of transformation, which mirrors the struggles of its inhabitants. As Pinocchio embarks on his misadventures, he encounters entities like the deceitful Fox and Cat, a mysterious Blue-Haired Fairy, and a giant shark in the depths of the sea, symbolizing both the dangers and wonders of life. Adventure awaits at every corner, with towns painted in the hues of playfulness yet tempered by the lessons of consequences that echo throughout the land's rich folklore."
+}
