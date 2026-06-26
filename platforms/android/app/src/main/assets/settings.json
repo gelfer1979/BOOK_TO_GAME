@@ -1,5 +1,6 @@
 {
     "AIModel": "ai_puter.json",
+    "BookTimeout": 240,
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "English",

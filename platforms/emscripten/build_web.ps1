@@ -58,13 +58,15 @@ if ($null -eq $emcmakeCmd) {
 
 # Run CMake configuration and build
 Write-Host "1. Configuring CMake..." -ForegroundColor Green
-if (Test-Path build_web/CMakeCache.txt) {
-    if (!(Select-String -Path build_web/CMakeCache.txt -SimpleMatch -Pattern "CMAKE_HOME_DIRECTORY:INTERNAL=$((Get-Location).Path.Replace('\', '/'))")) {
+$ProjectRoot = (Resolve-Path "$PSScriptRoot/../..").Path
+$BuildDir = "$PSScriptRoot\build_web"
+if (Test-Path "$BuildDir/CMakeCache.txt") {
+    if (!(Select-String -Path "$BuildDir/CMakeCache.txt" -SimpleMatch -Pattern "CMAKE_HOME_DIRECTORY:INTERNAL=$($ProjectRoot.Replace('\', '/'))")) {
         Write-Host "Source path changed! Cleaning build_web directory..." -ForegroundColor Yellow
-        Remove-Item -Recurse -Force build_web
+        Remove-Item -Recurse -Force "$BuildDir"
     }
 }
-emcmake cmake -B build_web -DCMAKE_BUILD_TYPE=Release
+emcmake cmake -S "$ProjectRoot" -B "$BuildDir" -DCMAKE_BUILD_TYPE=Release
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: CMake configuration failed!" -ForegroundColor Red
@@ -72,7 +74,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "2. Building project..." -ForegroundColor Green
-cmake --build build_web --config Release
+cmake --build "$BuildDir" --config Release
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Build execution failed!" -ForegroundColor Red
@@ -86,7 +88,7 @@ Write-Host "=====================================================" -ForegroundCo
 Write-Host "IMPORTANT: WebAssembly files cannot be launched directly via double-click on HTML due to CORS security policies." -ForegroundColor Yellow
 Write-Host "You must launch a local web server to test the build." -ForegroundColor Yellow
 Write-Host "To start a quick server, execute:" -ForegroundColor Gray
-Write-Host "  python -m http.server 8000 --directory build_web" -ForegroundColor Cyan
+Write-Host "  python -m http.server 8000 --directory '$BuildDir'" -ForegroundColor Cyan
 Write-Host "Then navigate in your browser to: http://localhost:8000/BOOK_TO_GAME.html" -ForegroundColor Cyan
 Write-Host "=====================================================" -ForegroundColor Green
 

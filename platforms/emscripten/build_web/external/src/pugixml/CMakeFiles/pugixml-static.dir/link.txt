@@ -1,0 +1,2 @@
+C:\emsdk\upstream\emscripten\emar.bat qc libpugixml.a "CMakeFiles/pugixml-static.dir/src/pugixml.cpp.o"
+C:\emsdk\upstream\emscripten\emranlib.bat libpugixml.a

@@ -5808,6 +5808,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
             {"nbook_Moby-Dick.txt", "nbook_Moby-Dick.txt"},
             {"nbook_The War of the Worlds.txt", "nbook_The War of the Worlds.txt"},
             {"nbook_pinoccio.txt", "nbook_pinoccio.txt"},
+            {"nbook_Alice_in_Wonderland.txt", "nbook_Alice_in_Wonderland.txt"},
             {"font.ttf", "assets/font.ttf"},
             {"sound.wav", "assets/sound.wav"},
             {"logo.png", "assets/logo.png"}

@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/cmake_install.cmake",
+		"C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

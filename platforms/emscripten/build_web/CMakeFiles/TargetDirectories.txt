@@ -1,0 +1,15 @@
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/book_miniz.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/BOOK_TO_GAME.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/edit_cache.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/rebuild_cache.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/list_install_components.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/install.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/install/local.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/CMakeFiles/install/strip.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/pugixml-static.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/edit_cache.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/rebuild_cache.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/list_install_components.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/install.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/install/local.dir
+C:/games/BOOK_TO_GAME/platforms/emscripten/build_web/external/src/pugixml/CMakeFiles/install/strip.dir

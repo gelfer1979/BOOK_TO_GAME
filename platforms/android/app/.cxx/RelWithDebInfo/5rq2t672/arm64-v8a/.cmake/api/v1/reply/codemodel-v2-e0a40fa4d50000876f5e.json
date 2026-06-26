@@ -1,0 +1,638 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						7,
+						8,
+						16
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						9,
+						14
+					]
+				},
+				{
+					"build" : "external/src/pugixml",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.pugixml-RelWithDebInfo-cb354ac670a84ea6100b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "external/src/pugixml",
+					"targetIndexes" : 
+					[
+						19
+					]
+				},
+				{
+					"build" : "external/src/SDL2",
+					"jsonFile" : "directory-external.src.SDL2-RelWithDebInfo-1d739a49b22ef873f025.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "external/src/SDL2",
+					"targetIndexes" : 
+					[
+						1,
+						5,
+						7,
+						20,
+						21
+					]
+				},
+				{
+					"build" : "external/src/SDL2_image",
+					"jsonFile" : "directory-external.src.SDL2_image-RelWithDebInfo-4ab4535c677877509490.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "external/src/SDL2_image",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "external/src/SDL2_mixer",
+					"jsonFile" : "directory-external.src.SDL2_mixer-RelWithDebInfo-5d11410d85c66d4b54cd.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "external/src/SDL2_mixer",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "external/src/SDL2_ttf",
+					"childIndexes" : 
+					[
+						6
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.SDL2_ttf-RelWithDebInfo-5005ba25968eeb00a00b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "external/src/SDL2_ttf",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "external/src/SDL2_ttf/external/freetype",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.SDL2_ttf.external.freetype-RelWithDebInfo-17746b4923600b7db5eb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 5,
+					"projectIndex" : 6,
+					"source" : "external/src/SDL2_ttf/external/freetype",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "external/src/SDL2_net",
+					"jsonFile" : "directory-external.src.SDL2_net-RelWithDebInfo-81ae7b0fe5034c8ff868.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 7,
+					"source" : "external/src/SDL2_net",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "external/src/mbedtls",
+					"childIndexes" : 
+					[
+						9,
+						10,
+						11,
+						14,
+						15
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.mbedtls-RelWithDebInfo-60171f5d1016b04cb147.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "external/src/mbedtls/framework",
+					"jsonFile" : "directory-external.src.mbedtls.framework-RelWithDebInfo-b6c18f97639f304471f8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 8,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/framework"
+				},
+				{
+					"build" : "external/src/mbedtls/include",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.mbedtls.include-RelWithDebInfo-0f00536c9b41d3b91fd4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 8,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/include"
+				},
+				{
+					"build" : "external/src/mbedtls/3rdparty",
+					"childIndexes" : 
+					[
+						12,
+						13
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.mbedtls.3rdparty-RelWithDebInfo-f76e5ec728f7f1618e97.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 8,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/3rdparty"
+				},
+				{
+					"build" : "external/src/mbedtls/3rdparty/everest",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.mbedtls.3rdparty.everest-RelWithDebInfo-0a52c6d62e2fcaf2c4d2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 11,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/3rdparty/everest",
+					"targetIndexes" : 
+					[
+						10
+					]
+				},
+				{
+					"build" : "external/src/mbedtls/3rdparty/p256-m",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.mbedtls.3rdparty.p256-m-RelWithDebInfo-2ece60012ee76c2877e1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 11,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/3rdparty/p256-m",
+					"targetIndexes" : 
+					[
+						18
+					]
+				},
+				{
+					"build" : "external/src/mbedtls/library",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.mbedtls.library-RelWithDebInfo-20550d4c73a2d8367f5b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 8,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/library",
+					"targetIndexes" : 
+					[
+						12,
+						15,
+						16,
+						17
+					]
+				},
+				{
+					"build" : "external/src/mbedtls/pkgconfig",
+					"jsonFile" : "directory-external.src.mbedtls.pkgconfig-RelWithDebInfo-bff69a718ecf448af2a2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 8,
+					"projectIndex" : 8,
+					"source" : "external/src/mbedtls/pkgconfig"
+				},
+				{
+					"build" : "external/src/curl",
+					"childIndexes" : 
+					[
+						17
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.curl-RelWithDebInfo-8fa342257fc6a367056a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.7"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 9,
+					"source" : "external/src/curl"
+				},
+				{
+					"build" : "external/src/curl/lib",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.src.curl.lib-RelWithDebInfo-5fd70e1cb4e112428002.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.7"
+					},
+					"parentIndex" : 16,
+					"projectIndex" : 9,
+					"source" : "external/src/curl/lib",
+					"targetIndexes" : 
+					[
+						13
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						7,
+						8,
+						9
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "BOOK_TO_GAME",
+					"targetIndexes" : 
+					[
+						0,
+						9,
+						14
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "pugixml",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						19
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "SDL2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						5,
+						7,
+						20,
+						21
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "SDL2_image",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "SDL2_mixer",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						6
+					],
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "SDL2_ttf",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "freetype",
+					"parentIndex" : 5,
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "SDL2_net",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15
+					],
+					"name" : "Mbed TLS",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						8,
+						10,
+						12,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						16,
+						17
+					],
+					"name" : "CURL",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						13
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "NativeWebViewWrapper::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NativeWebViewWrapper-RelWithDebInfo-8f24c8842dc154f8f147.json",
+					"name" : "NativeWebViewWrapper",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "SDL2-static::@a79358cd36900c097e78",
+					"jsonFile" : "target-SDL2-static-RelWithDebInfo-165985158b42ec2b0112.json",
+					"name" : "SDL2-static",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "SDL2_image::@268d60a6bad752bd6682",
+					"jsonFile" : "target-SDL2_image-RelWithDebInfo-afc50c8c1a55e36e410b.json",
+					"name" : "SDL2_image",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "SDL2_mixer::@e52443e1913250127460",
+					"jsonFile" : "target-SDL2_mixer-RelWithDebInfo-3c8716c2d245d43a5dbd.json",
+					"name" : "SDL2_mixer",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "SDL2_net::@dd2bba72e96a1970270a",
+					"jsonFile" : "target-SDL2_net-RelWithDebInfo-41c13c62c0efe5a71ec4.json",
+					"name" : "SDL2_net",
+					"projectIndex" : 7
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "SDL2_test::@a79358cd36900c097e78",
+					"jsonFile" : "target-SDL2_test-RelWithDebInfo-4199b211a6091064b33a.json",
+					"name" : "SDL2_test",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "SDL2_ttf::@d8d20a632b588d635050",
+					"jsonFile" : "target-SDL2_ttf-RelWithDebInfo-a3ab3cf09ddaca665d46.json",
+					"name" : "SDL2_ttf",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "SDL2main::@a79358cd36900c097e78",
+					"jsonFile" : "target-SDL2main-RelWithDebInfo-c88bf81e7d9a61abe5ee.json",
+					"name" : "SDL2main",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "apidoc::@bad483ceb08dd3701253",
+					"jsonFile" : "target-apidoc-RelWithDebInfo-1e684d5c2978ae3e6a43.json",
+					"name" : "apidoc",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "book_miniz::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-book_miniz-RelWithDebInfo-b799a58cc6bb199197d8.json",
+					"name" : "book_miniz",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "everest::@0179ad70c2c5d44eeeb3",
+					"jsonFile" : "target-everest-RelWithDebInfo-7ca2991a83afc1d5b767.json",
+					"name" : "everest",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "freetype::@44851b3c0ce20b9a0f95",
+					"jsonFile" : "target-freetype-RelWithDebInfo-e89c344557c70425578d.json",
+					"name" : "freetype",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 14,
+					"id" : "lib::@e8431c56b1010b32abba",
+					"jsonFile" : "target-lib-RelWithDebInfo-5fc701f3a00796041a9d.json",
+					"name" : "lib",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 17,
+					"id" : "libcurl_static::@3e9b93e5b7cc751973fd",
+					"jsonFile" : "target-libcurl_static-RelWithDebInfo-8495c079ca7fc7ca7838.json",
+					"name" : "libcurl_static",
+					"projectIndex" : 9
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-RelWithDebInfo-b80dab1b017912067c1b.json",
+					"name" : "main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 14,
+					"id" : "mbedcrypto::@e8431c56b1010b32abba",
+					"jsonFile" : "target-mbedcrypto-RelWithDebInfo-81658845339ca6c336fc.json",
+					"name" : "mbedcrypto",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 14,
+					"id" : "mbedtls::@e8431c56b1010b32abba",
+					"jsonFile" : "target-mbedtls-RelWithDebInfo-f828f5d2bfd9ee6ae731.json",
+					"name" : "mbedtls",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 14,
+					"id" : "mbedx509::@e8431c56b1010b32abba",
+					"jsonFile" : "target-mbedx509-RelWithDebInfo-bb1c6176c8316dcca60c.json",
+					"name" : "mbedx509",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 13,
+					"id" : "p256m::@f88269df745c2727947a",
+					"jsonFile" : "target-p256m-RelWithDebInfo-a2a26ee2ba3166b92892.json",
+					"name" : "p256m",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "pugixml-static::@2a51ceecac855e4800ad",
+					"jsonFile" : "target-pugixml-static-RelWithDebInfo-9eb83c7115b8f44f04db.json",
+					"name" : "pugixml-static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "sdl_headers_copy::@a79358cd36900c097e78",
+					"jsonFile" : "target-sdl_headers_copy-RelWithDebInfo-0e460f8cab15140a8150.json",
+					"name" : "sdl_headers_copy",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@a79358cd36900c097e78",
+					"jsonFile" : "target-uninstall-RelWithDebInfo-d7e10b0b423b80bc7629.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/games/BOOK_TO_GAME/platforms/android/app/.cxx/RelWithDebInfo/5rq2t672/arm64-v8a",
+		"source" : "C:/games/BOOK_TO_GAME"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

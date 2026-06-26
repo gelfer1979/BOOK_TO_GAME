@@ -9,7 +9,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add include directory for external headers like json.hpp and json_fwd.hpp.
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/external/vc/include")
+# NOTE: excluded from Emscripten builds — the vc/include directory contains SDL2 3.x
+# headers (with Mix_PlayChannel declared as a real function) which conflict with the
+# Emscripten SDL2 2.x port (where Mix_PlayChannel is a macro alias for Mix_PlayChannelTimed).
+if(NOT EMSCRIPTEN)
+    include_directories("${CMAKE_CURRENT_SOURCE_DIR}/external/vc/include")
+endif()
 
 # pugixml (XML parser for fb2/epub/docx)
 set(PUGIXML_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -40,14 +45,39 @@ target_include_directories(book_miniz PUBLIC external/src/miniz)
 # 1. EMSCRIPTEN (WebAssembly) BUILD
 if(EMSCRIPTEN)
     message(STATUS "Configuring build for Emscripten (WebAssembly)...")
-    
+
     add_executable(${PROJECT_NAME} src/main.cpp src/book_converter.cpp)
     
     # Set the target extension for running in a web browser
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
     
-    # Add compiler options for WebAssembly
+    # -----------------------------------------------------------------------
+    # Emscripten's toolchain injects -IC:\emsdk\...\SDL2 BEFORE all our -I
+    # flags, so a bare #include <miniz.h> resolves to the SDL2 sysroot's
+    # monolithic miniz v1.15 instead of our split miniz v3.x headers.
+    #
+    # Solution: force-include our miniz headers via -include flags so the
+    # compiler sees them before any translation unit's #include directives.
+    # This pre-declares all our types (mz_alloc_func, mz_zip_archive, …)
+    # AND sets MINIZ_HEADER_INCLUDED (our miniz.h defines it), turning
+    # SDL2's miniz.h into a no-op when encountered later.
+    #
+    # The -DMINIZ_HEADER_FILE_ONLY guard suppresses SDL2 miniz.h's
+    # implementation body (outside MINIZ_HEADER_INCLUDED) that would
+    # otherwise emit duplicate symbol definitions.
     target_compile_options(${PROJECT_NAME} PRIVATE
+        # MINIZ_HEADER_INCLUDED: neutralizes SDL2's bundled miniz.h (its include
+        # guard) so the header block (region 1) is skipped when SDL2 includes it.
+        # MINIZ_HEADER_FILE_ONLY: also skips the implementation body (region 2)
+        # which lives outside MINIZ_HEADER_INCLUDED and references mz_uint16 etc.
+        "-DMINIZ_HEADER_INCLUDED"
+        "-DMINIZ_HEADER_FILE_ONLY"
+        # Force-include our split miniz v3.x miniz.h BEFORE any TU includes run,
+        # because Emscripten injects -IC:\emsdk\...\SDL2 ahead of our -I paths,
+        # so #include <miniz.h> would otherwise resolve to the SDL2 sysroot copy.
+        # Note: our miniz.h already includes miniz_tinfl.h and miniz_zip.h at
+        # its bottom (lines 612-615), so only one -include flag is needed.
+        "-include" "${CMAKE_CURRENT_SOURCE_DIR}/external/src/miniz/miniz.h"
         "-sUSE_SDL=2"
         "-sUSE_SDL_IMAGE=2"
         "-sUSE_SDL_MIXER=2"
@@ -96,9 +126,23 @@ if(EMSCRIPTEN)
         book_miniz
     )
     
+    # nlohmann JSON: external/vc/include contains SDL2 3.x headers alongside
+    # nlohmann/json.hpp. We cannot add the whole directory because the SDL2 3.x
+    # SDL_mixer.h (real functions) shadows the Emscripten sysroot SDL_mixer.h
+    # (macros) for any #include <SDL2/SDL_mixer.h> lookup.
+    # Solution: generate a minimal redirect directory that contains ONLY the
+    # nlohmann forwarding header, with no SDL2 subdir at all.
+    set(EM_NLOHMANN_DIR "${CMAKE_CURRENT_BINARY_DIR}/em_include/nlohmann")
+    file(MAKE_DIRECTORY "${EM_NLOHMANN_DIR}")
+    file(WRITE "${EM_NLOHMANN_DIR}/json.hpp"
+        "#pragma once\n"
+        "#include \"${CMAKE_CURRENT_SOURCE_DIR}/external/vc/include/nlohmann/json.hpp\"\n"
+    )
+    
     target_include_directories(${PROJECT_NAME} PRIVATE
         external/src/pugixml/src
         external/src/miniz
+        "${CMAKE_CURRENT_BINARY_DIR}/em_include"
     )
     
     return()

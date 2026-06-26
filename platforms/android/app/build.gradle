@@ -7,6 +7,25 @@ android {
     compileSdk 34
     ndkVersion "25.2.9519653"
 
+
+    signingConfigs {
+        release {
+            storeFile file("my-release-key.keystore")
+            storePassword "Zpnt1171"
+            keyAlias "my-key-alias"
+            keyPassword "Zpnt1171"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release // Связываем релиз с ключом
+        }
+    }
+
+
+
     defaultConfig {
         applicationId "com.example.booktogame"
         minSdk 21

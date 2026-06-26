@@ -1,0 +1,2 @@
+C:\emsdk\upstream\emscripten\emar.bat qc libbook_miniz.a CMakeFiles/book_miniz.dir/external/src/miniz/miniz.c.o CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tdef.c.o CMakeFiles/book_miniz.dir/external/src/miniz/miniz_tinfl.c.o CMakeFiles/book_miniz.dir/external/src/miniz/miniz_zip.c.o
+C:\emsdk\upstream\emscripten\emranlib.bat libbook_miniz.a
