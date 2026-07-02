@@ -407,11 +407,13 @@ public:
             var pResponseOut = $4;
             var pResponseCodeOut = $5;
             
-            if (apiKey && format === "gemini") {
-                if (url.indexOf("?") === -1) {
-                    url += "?key=" + apiKey;
-                } else {
-                    url += "&key=" + apiKey;
+            if (apiKey) {
+                if (format === "gemini" || url.indexOf("pollinations.ai") !== -1) {
+                    if (url.indexOf("?") === -1) {
+                        url += "?key=" + apiKey;
+                    } else {
+                        url += "&key=" + apiKey;
+                    }
                 }
             }
             
@@ -420,7 +422,7 @@ public:
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false); // SYNCHRONOUS
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                if (apiKey && format !== "gemini") {
+                if (apiKey && format !== "gemini" && url.indexOf("pollinations.ai") === -1) {
                     xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
                 }
                 xhr.send(payload);
@@ -857,11 +859,13 @@ public:
             var pResponseOut = $4;
             var pResponseCodeOut = $5;
             
-            if (apiKey && format === "gemini") {
-                if (url.indexOf("?") === -1) {
-                    url += "?key=" + apiKey;
-                } else {
-                    url += "&key=" + apiKey;
+            if (apiKey) {
+                if (format === "gemini" || url.indexOf("pollinations.ai") !== -1) {
+                    if (url.indexOf("?") === -1) {
+                        url += "?key=" + apiKey;
+                    } else {
+                        url += "&key=" + apiKey;
+                    }
                 }
             }
             
@@ -870,7 +874,7 @@ public:
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false); // SYNCHRONOUS
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                if (apiKey && format !== "gemini") {
+                if (apiKey && format !== "gemini" && url.indexOf("pollinations.ai") === -1) {
                     xhr.setRequestHeader("Authorization", "Bearer " + apiKey);
                 }
                 xhr.send(payload);

@@ -103,6 +103,8 @@ if(EMSCRIPTEN)
         "-sALLOW_MEMORY_GROWTH=1"
         "-sINITIAL_MEMORY=67108864"
         "-sASYNCIFY=1"
+        "-lidbfs.js"
+        "-sFORCE_FILESYSTEM=1"
         "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/platforms/emscripten/shell.html"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/assets@assets"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/book.json@book.json"
@@ -118,6 +120,7 @@ if(EMSCRIPTEN)
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_lmstudio.json@ai_lmstudio.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_openai.json@ai_openai.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_openrouter.json@ai_openrouter.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_pollimation.json@ai_pollimation.json"
         ${NBOOK_PRELOADS}
     )
     
