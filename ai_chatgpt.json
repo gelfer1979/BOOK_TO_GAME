@@ -3,5 +3,6 @@
   "modelName": "gpt-4o",
   "apiKey": "",
   "apiKeyEnvVar": "OPENAI_API_KEY",
-  "format": "openai"
+  "format": "openai",
+  "apiKeyUrl": "https://platform.openai.com/api-keys"
 }

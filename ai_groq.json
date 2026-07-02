@@ -3,5 +3,6 @@
   "modelName": "llama-3.3-70b",
   "apiKey": "",
   "apiKeyEnvVar": "GROQ_API_KEY",
-  "format": "openai"
+  "format": "openai",
+  "apiKeyUrl": "https://console.groq.com/keys"
 }

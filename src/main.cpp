@@ -21,6 +21,7 @@
 #endif
 #include <windows.h>
 #include <commdlg.h>
+#include <shellapi.h>
 #endif
 
 #define SDL_MAIN_HANDLED
@@ -1000,6 +1001,29 @@ void SaveFontSizeOffsetToSettings(int offset) {
         EmscriptenHostWrite(settingsPath, serialized);
     }
 }
+void OpenBrowserUrl(const std::string& url) {
+    if (url.empty()) return;
+    std::cout << "[Browser] Opening URL: " << url << std::endl;
+#if defined(__EMSCRIPTEN__)
+    EM_ASM({
+        window.open(UTF8ToString($0), '_blank');
+    }, url.c_str());
+#elif defined(__ANDROID__)
+    SDL_OpenURL(url.c_str());
+#elif defined(_WIN32)
+    ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+#elif defined(__APPLE__)
+    std::string cmd = "open \"" + url + "\" &";
+    int ret = std::system(cmd.c_str());
+    (void)ret;
+#elif defined(__linux__)
+    std::string cmd = "xdg-open \"" + url + "\" &";
+    int ret = std::system(cmd.c_str());
+    (void)ret;
+#else
+    SDL_OpenURL(url.c_str());
+#endif
+}
 
 void ScanAvailableAiModels() {
     state.mutex.lock();
@@ -1044,18 +1068,28 @@ void ScanAvailableAiModels() {
         }
     } catch (...) {}
 
-    // Ensure Puter is always first in the list
+    // Ensure ai_pollimation.json is always first, and Puter is second in the list
     state.mutex.lock();
-    auto it = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
+    auto itPuter = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
         return info.filename == "ai_puter.json";
     });
-    if (it != state.availableAiModels.end()) {
-        auto puterInfo = *it;
-        state.availableAiModels.erase(it);
-        state.availableAiModels.insert(state.availableAiModels.begin(), puterInfo);
-    } else {
-        state.availableAiModels.insert(state.availableAiModels.begin(), {"ai_puter.json", "Puter AI (gpt-4o-mini)"});
+    decltype(state.availableAiModels)::value_type puterInfo = {"ai_puter.json", "Puter AI (gpt-4o-mini)"};
+    if (itPuter != state.availableAiModels.end()) {
+        puterInfo = *itPuter;
+        state.availableAiModels.erase(itPuter);
     }
+    
+    auto itPol = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
+        return info.filename == "ai_pollimation.json";
+    });
+    decltype(state.availableAiModels)::value_type pollinationInfo = {"ai_pollimation.json", "openai"};
+    if (itPol != state.availableAiModels.end()) {
+        pollinationInfo = *itPol;
+        state.availableAiModels.erase(itPol);
+    }
+    
+    state.availableAiModels.insert(state.availableAiModels.begin(), puterInfo);
+    state.availableAiModels.insert(state.availableAiModels.begin(), pollinationInfo);
     state.mutex.unlock();
 }
 
@@ -2885,6 +2919,11 @@ void SubmitQuery(const std::string& queryText, bool isRetry, bool showInChat) {
     // Secure a direct local value copy to protect background captures
     std::string queryCopy = queryText;
     
+    if (queryCopy == "Retry request" || queryCopy == "Повторить запрос") {
+        queryCopy = state.modelState.lastQuery;
+        isRetry = true;
+    }
+    
     state.mutex.lock();
     if (!showInChat) {
         state.modelState.pendingNextChapter = -1;
@@ -4029,6 +4068,7 @@ void MainIteration() {
                     if (index >= 0 && index < (int)state.availableAiModels.size()) {
                         state.selectedAiFilename = state.availableAiModels[index].filename;
                         std::string existingKey = "";
+                        std::string keyUrl = "";
                         std::ifstream f(state.selectedAiFilename);
                         if (!f.is_open()) {
                             f.open("../" + state.selectedAiFilename);
@@ -4040,12 +4080,39 @@ void MainIteration() {
                                 if (j.contains("apiKey") && j["apiKey"].is_string()) {
                                     existingKey = j["apiKey"].get<std::string>();
                                 }
+                                if (j.contains("apiKeyUrl") && j["apiKeyUrl"].is_string()) {
+                                    keyUrl = j["apiKeyUrl"].get<std::string>();
+                                }
                             } catch (...) {}
                             f.close();
                         }
+                        
+                        // Fallback urls based on model filename if not in json or empty
+                        std::string fnLower = state.selectedAiFilename;
+                        std::transform(fnLower.begin(), fnLower.end(), fnLower.begin(), ::tolower);
+                        if (keyUrl.empty() && fnLower.find("puter") == std::string::npos && 
+                            fnLower.find("lmstudio") == std::string::npos && fnLower.find("llama") == std::string::npos) {
+                            if (fnLower.find("gemini") != std::string::npos || fnLower.find("summarizer") != std::string::npos) {
+                                keyUrl = "https://aistudio.google.com/app/apikey";
+                            } else if (fnLower.find("openai") != std::string::npos || fnLower.find("chatgpt") != std::string::npos) {
+                                keyUrl = "https://platform.openai.com/api-keys";
+                            } else if (fnLower.find("deepseek") != std::string::npos) {
+                                keyUrl = "https://platform.deepseek.com/api_keys";
+                            } else if (fnLower.find("groq") != std::string::npos) {
+                                keyUrl = "https://console.groq.com/keys";
+                            } else if (fnLower.find("openrouter") != std::string::npos) {
+                                keyUrl = "https://openrouter.ai/keys";
+                            } else if (fnLower.find("copilot") != std::string::npos) {
+                                keyUrl = "https://github.com/settings/tokens";
+                            }
+                        }
+                        
                         state.editingApiKey = true;
                         state.inputText = existingKey;
                         SDL_StartTextInput();
+                        if (!keyUrl.empty()) {
+                            OpenBrowserUrl(keyUrl);
+                        }
                     }
                 }
             } else if (state.appState == APP_STATE_GAMEPLAY || state.appState == APP_STATE_SETUP) {
@@ -4296,6 +4363,7 @@ void MainIteration() {
                                 break;
                             } else {
                                 std::string existingKey = "";
+                                std::string keyUrl = "";
                                 std::ifstream f(state.selectedAiFilename);
                                 if (!f.is_open()) {
                                     f.open("../" + state.selectedAiFilename);
@@ -4306,6 +4374,9 @@ void MainIteration() {
                                         f >> j;
                                         if (j.contains("apiKey") && j["apiKey"].is_string()) {
                                             existingKey = j["apiKey"].get<std::string>();
+                                        }
+                                        if (j.contains("apiKeyUrl") && j["apiKeyUrl"].is_string()) {
+                                            keyUrl = j["apiKeyUrl"].get<std::string>();
                                         }
                                     } catch (...) {}
                                     f.close();
@@ -4321,10 +4392,30 @@ void MainIteration() {
                                     ReloadSettingsAndReinit(state.selectedAiFilename);
                                     state.appState = state.previousAppState;
                                 } else {
+                                    // Fallback urls based on model filename if not in json or empty
+                                    if (keyUrl.empty()) {
+                                        if (fnLower.find("gemini") != std::string::npos || fnLower.find("summarizer") != std::string::npos) {
+                                            keyUrl = "https://aistudio.google.com/app/apikey";
+                                        } else if (fnLower.find("openai") != std::string::npos || fnLower.find("chatgpt") != std::string::npos) {
+                                            keyUrl = "https://platform.openai.com/api-keys";
+                                        } else if (fnLower.find("deepseek") != std::string::npos) {
+                                            keyUrl = "https://platform.deepseek.com/api_keys";
+                                        } else if (fnLower.find("groq") != std::string::npos) {
+                                            keyUrl = "https://console.groq.com/keys";
+                                        } else if (fnLower.find("openrouter") != std::string::npos) {
+                                            keyUrl = "https://openrouter.ai/keys";
+                                        } else if (fnLower.find("copilot") != std::string::npos) {
+                                            keyUrl = "https://github.com/settings/tokens";
+                                        }
+                                    }
+                                    
                                     // Always show API key input and wait for confirmation on desktop for external models
                                     state.editingApiKey = true;
                                     state.inputText = existingKey;
                                     SDL_StartTextInput();
+                                    if (!keyUrl.empty()) {
+                                        OpenBrowserUrl(keyUrl);
+                                    }
                                 }
                                 modelClicked = true;
                                 break;
@@ -5941,7 +6032,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
 #endif
 
     // 1. Load settings.json configuration properties
-    std::string aiModel = "ai_puter.json";
+    std::string aiModel = "ai_pollimation.json";
     std::string systemPrompt = "";
     int maxRetries = 3;
     int bookRetries = 3;

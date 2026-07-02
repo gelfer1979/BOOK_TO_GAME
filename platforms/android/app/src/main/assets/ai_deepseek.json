@@ -3,5 +3,6 @@
   "modelName": "deepseek-chat",
   "apiKey": "",
   "apiKeyEnvVar": "DEEPSEEK_API_KEY",
-  "format": "openai"
+  "format": "openai",
+  "apiKeyUrl": "https://platform.deepseek.com/api_keys"
 }

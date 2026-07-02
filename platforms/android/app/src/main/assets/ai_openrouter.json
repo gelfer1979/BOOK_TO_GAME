@@ -3,5 +3,6 @@
   "modelName": "google/gemini-2.5-flash",
   "apiKey": "",
   "apiKeyEnvVar": "OPENROUTER_API_KEY",
-  "format": "openai"
+  "format": "openai",
+  "apiKeyUrl": "https://openrouter.ai/keys"
 }

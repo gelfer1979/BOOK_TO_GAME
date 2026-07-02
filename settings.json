@@ -1,5 +1,5 @@
 {
-    "AIModel": "ai_puter.json",
+    "AIModel": "ai_pollimation.json",
     "BookTimeout": 240,
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,

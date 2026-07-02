@@ -1,64 +1,44 @@
 AI Raw Response:
 {
-    "title": "The Hilarious Misadventures of Pinocchio",
-    "world": "Welcome to the whimsical land of Marionettoria, where puppets roam and mischief reigns supreme! This delightfully chaotic realm is filled with magical creatures, bumbling humans, and plenty of comedic twists. The laws of physics often vanish when puppets come to life, laughter echoes through the streets, and every corner hides a new adventure or blunder. Lorded over by the bumbling but well-meaning Geppetto and his cheeky puppet, Pinocchio, Marionettoria thrives on absurdity and charm. This is a world where friends can become foes, and every laugh has a hint of the absurd.\n\nThe factions of Marionettoria are as zany as they come! There are the Puppet Masters—men and women who seek to amuse through their strings—with their pedantic puppet philosophy. Then there are the Mischief Makers, a group of incorrigible mischief-makers including the Talking Cricket and a host of talking animals who aim to counsel the young and naive. Finally, the Whimsical Folk, a collective of puppets and enchanted beings, support a community of fun and good-natured pranks. In this land, adventures await around every corner, and each decision can lead to hilarity or haphazardness.",
+    "title": "The Wooden Soul's Redemption",
+    "world": "In a world of shifting shadows and cruel magic, the line between life and wood is perilously thin. This is a realm of dark fantasy where the rain-slicked streets are filled with desperate souls and the forests hide malevolent entities. Magic is not a gift but a heavy burden that demands sacrifice, often manifesting through the whims of fickle Fairies or the curses of ancient wood.\n\nSociety is divided between the powerful—puppet masters and swindlers—and the impoverished, like Geppetto, who survive in damp basements. The Land of Catchfools is a desolate wasteland where greed leads to transformation, and the sea is home to gargantuan monsters that lurk in waiting to swallow the innocent. In this world, obedience is the currency of survival, and truth is the only shield against the cold fire of the furnace or the hunger of the abyss.",
     "plot": [
         {
             "chapter": 1,
-            "title": "A Masterpiece in the Making",
-            "description": "The story begins in the cluttered workshop of Master Antonio, affectionately known as 'Master Cherry' due to his rosy nose. He stumbles upon a peculiar log that laughs and screams as he attempts to carve it. Fearing the aroma of mischief, he hands it over to his bickering neighbor, Geppetto, who dreams of making a dancing marionette. The two bumble their way through a humorous argument but eventually reconcile. Geppetto takes the log home and begins crafting Pinocchio the puppet, who immediately leads Geppetto into a series of laugh-out-loud misadventures. The player must gather supplies for the workshop while deciding how to navigate the comedic antics of both Master Cherry and Geppetto. The dangers include nosy children and the possible threat of the garish woodpeckers of the area.",
+            "title": "The Cursed Timber",
+            "description": "As Master Cherry, you have discovered a log that screams and laughs when carved. You must decide whether to keep this cursed wood or pass the burden to your neighbor Geppetto. If you give it to him, you must navigate his growing obsession and the creation of a puppet that immediately defies the laws of nature."
         },
         {
             "chapter": 2,
-            "title": "Pinocchio's Little Escapade",
-            "description": "Pinocchio, now a mischievous puppet, thrusts himself into the world, quickly escaping Geppetto's grasp. His defiance leads to a series of slapstick encounters, including being mistaken for a runaway foal by a bumbling policeman. Players must help Geppetto track down Pinocchio, utilizing absurd tools and whimsical distractions while avoiding the teasing children and pranksters lurking nearby. Key characters to interact with include Pinocchio's friends and the quirky townsfolk, each contributing to the chaos.",
+            "title": "The Defiant Escape",
+            "description": "Pinocchio has come to life and fled Geppetto's basement. You must navigate through the dangerous city streets, avoid the constable who views you as a beast, and deal with the arrest of Geppetto. The Talking Cricket will offer warnings of doom, but your temper may lead to a violent and tragic consequence."
         },
         {
             "chapter": 3,
-            "title": "The Talking Cricket's Wise Words",
-            "description": "Pinocchio, after enduring a rather hilarious altercation with the police, meets the Talking Cricket who delivers sage advice, albeit interrupted by Pinocchio’s antics. Players will use the Cricket's warnings and Pinocchio's unfolding vices to find hidden paths and evade whimsical traps that lead to bigger comic errors. The colorful characters and their relentless humor make this chapter a comedic gauntlet full of poor choices and lighthearted escapades.",
+            "title": "The Price of Greed",
+            "description": "Starving and alone, Pinocchio must find food in a relentless storm. You will face the temptation of the hatching egg and the cold rejection of the townspeople. The chapter culminates in a tragedy where, after falling asleep near a brazier, his wooden feet are reduced to ash, leaving him helpless when Geppetto returns."
         },
         {
             "chapter": 4,
-            "title": "The Bizarre World of the Puppet Theater",
-            "description": "Driven by curiosity, Pinocchio sneaks into a puppet theater and unwittingly joins the chaotic performance. After a humorous mix-up with the frightening puppet master Mangiafuoco ensures a series of nail-biting, rib-tickling moments, including an offer to roast a fellow puppet! Players must navigate these uproarious complications, finding ways to charm the audience, save Harlequin, and impress Mangiafuoco, often through unexpected and laughable ploys.",
+            "title": "The Theater of Shadows",
+            "description": "After Geppetto sacrifices his coat for a primer, Pinocchio must head to school. However, the siren call of the puppet theater awaits. You enter the world of Mangiafuoco, the fiery master. You must face the fire and decide whether to sacrifice yourself to save Harlequin to earn the gold coins needed for redemption."
         },
         {
             "chapter": 5,
-            "title": "Cunning Plans with Fox and Cat",
-            "description": "Pinocchio meets the sly Fox and Cat who promise him tales of riches in the Land of Catchfools, disguised cleverly as 'advisors' with questionable motives. This chapter introduces humorous riddles and challenges, where players must choose whether to trust these two swindlers or follow a more genuine path, leading to slapstick scenarios that result in side-splitting outcomes. Antics include a ludicrous tavern meal and comedic chases!",
+            "title": "The Land of Catchfools",
+            "description": "Led by the Fox and the Cat, Pinocchio travels to the Magic Field. You must navigate the betrayal at the Red Crab tavern and ignore the ghostly warnings of the Cricket. This chapter leads to a struggle with robbers, a narrow escape from fire, and the ultimate terror of being hung from the Big Oak tree."
         },
         {
             "chapter": 6,
-            "title": "The Land of Toys Awaits",
-            "description": "Finally succumbing to temptation, Pinocchio and his friends venture into the Land of Toys. Laughter abounds as the children indulge in endless play, but a sinister transformation looms. As the absurdity grows, players will navigate comical challenges as Pinocchio embraces his carefree side while trying to avoid the comedic pitfalls of immaturity that lead to whimsical consequences. Will he still be able to save his friends?",
-        },
-        {
-            "chapter": 7,
-            "title": "The Circus and the Great Escape",
-            "description": "Captured and displayed as the star performer in a circus, Pinocchio now must endure ridiculous tricks, inevitable bloopers, and perilous performance fails. Players navigate a humorous series of acts while searching for a way to break free from circus life, showcasing hilarious reactions from the audience and comical interactions with other beloved characters like the Fairy. Time is of the essence as he attempts to escape the chaos!",
-        },
-        {
-            "chapter": 8,
-            "title": "The Grand Revelation",
-            "description": "After a series of misadventures, including a clash with the insatiable Green Fisherman, Pinocchio finds himself in the belly of a shark. Joining forces with Geppetto, who has also met his fair share of comical blunders, the duo must concoct a goofy plan, managing to escape despite the ludicrous attempts of the shark to devour them. Friendship rekindles as they navigate their final absurd challenges, culminating in a spectacularly funny reunion on shore.",
-        },
-        {
-            "chapter": 9,
-            "title": "Rebuilding and Redemption",
-            "description": "Back on solid ground, Pinocchio and Geppetto find themselves in the chaotic yet charming company of those they’ve wronged. Here, amidst the laughter and lightheartedness, players must mend relationships while navigating absurdity and helping build a new life, one full of delightful comedic undertones. Other puppets and enchanted beings join them on their journey to redemption, showcasing hilarious consequences along the way.",
-        },
-        {
-            "chapter": 10,
-            "title": "The Final Transformation",
-            "description": "As Pinocchio’s story comes to a close, the Fairy reveals the secret behind becoming a real boy rests on his commitment to honesty and kindness. Players must aid him in making the right comedic choices during a final trial filled with chuckles, heartfelt exchanges, and uproarious moments. Ultimately, the transformation into a real boy marks the culmination of his journey, leaving players laughing and reflecting on the hilarity of life’s misadventures."
+            "title": "The Fairy's Trial",
+            "description": "Rescued by the Blue-Haired Fairy, Pinocchio must prove his worth. You must resist the temptation of the medicine and face the physical consequences of lying (the growing nose). The final journey involves a sea voyage to find Geppetto, a battle with the Great Shark, and the final transformation into a real boy."
         }
     ],
-    "startPrompt": "In the bustling workshop of Master Cherry, a champion of silliness, the scene is set! A wooden log that screams and laughs lies on the table, caught in an hysterical first encounter. Master Cherry bickers with Geppetto, igniting a whirlwind of laughter. Can you help keep their antics from spiraling into full-blown hilarity? Your inventory includes a magic chisel, a quirky hat, and an unexpected rubber chicken! \n\n<options><option>Help Master Cherry carve the log</option><option>Join Geppetto in crafting the puppet</option></options>"
+    "startPrompt": "The air in the workshop is thick with the scent of cedar and old sweat. You are Antonio, known as 'Master Cherry,' standing over a peculiar piece of firewood. As your chisel touches the grain, the log lets out a blood-curdling shriek followed by a mocking laugh. Your blood runs cold; this is no ordinary wood—it is alive and angry. Outside, your neighbor Geppetto, a man with a yellow wig and a weary heart, waits for a miracle to pull him from poverty. \n\Your current inventory: A rusted chisel, a mallet, and a trembling hand.\n\n<options><option>Attempt to carve the wood to silence it</option><option>Give the screaming log to Geppetto to get rid of it</option></options>"
 }
 
 Error:
-JSON parsing error: [json.exception.parse_error.101] parse error at line 9, column 9: syntax error while parsing object key - unexpected '}'; expected string literal
+JSON parsing error: [json.exception.parse_error.101] parse error at line 36, column 481: syntax error while parsing value - invalid string: forbidden character after backslash; last read: '"The air in the workshop is thick with the scent of cedar and old sweat. You are Antonio, known as 'Master Cherry,' standing over a peculiar piece of firewood. As your chisel touches the grain, the log lets out a blood-curdling shriek followed by a mocking laugh. Your blood runs cold; this is no ordinary wood—it is alive and angry. Outside, your neighbor Geppetto, a man with a yellow wig and a weary heart, waits for a miracle to pull him from poverty. \n\Y'
 Raw response starts with: {
-    "title": "The Hilarious Misadventures of Pinocchio",
-    "world": "Welcome to the whimsical la
+    "title": "The Wooden Soul's Redemption",
+    "world": "In a world of shifting shadows and crue

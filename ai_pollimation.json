@@ -1,0 +1,8 @@
+{
+  "baseUrl": "https://gen.pollinations.ai/v1/chat/completions",
+  "modelName": "Spit-fires/diffusiongemma-26b-a4b-it",
+  "apiKey": "140e33132b26757d796f49407009342e3530174b70786261457f756e081f01022a1c5e",
+  "apiKeyEnvVar": "POLLINATIONS_API_KEY",
+  "format": "openai",
+  "apiKeyUrl": "https://pollinations.ai"
+}

@@ -3,5 +3,6 @@
   "modelName": "gpt-4o",
   "apiKey": "",
   "apiKeyEnvVar": "GITHUB_TOKEN",
-  "format": "openai"
+  "format": "openai",
+  "apiKeyUrl": "https://github.com/settings/tokens"
 }

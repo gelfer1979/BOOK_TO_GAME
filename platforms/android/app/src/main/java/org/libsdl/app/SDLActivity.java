@@ -1812,22 +1812,37 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     /**
      * This method is called by SDL using JNI.
      */
-    public static int openURL(String url)
+    public static int openURL(final String url)
     {
         try {
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-
-            int flags = Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK;
-            if (Build.VERSION.SDK_INT >= 21 /* Android 5.0 (LOLLIPOP) */) {
-                flags |= Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
-            } else {
-                flags |= Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+            final Activity activity = (Activity) getContext();
+            if (activity == null) {
+                Log.e(TAG, "Context is not an Activity or is null, cannot open URL: " + url);
+                return -1;
             }
-            i.addFlags(flags);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
 
-            mSingleton.startActivity(i);
+                        int flags = Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK;
+                        if (Build.VERSION.SDK_INT >= 21 /* Android 5.0 (LOLLIPOP) */) {
+                            flags |= Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
+                        } else {
+                            flags |= Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+                        }
+                        i.addFlags(flags);
+
+                        activity.startActivity(i);
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Failed to open URL on UI thread: " + url, ex);
+                    }
+                }
+            });
         } catch (Exception ex) {
+            Log.e(TAG, "Failed to open URL: " + url, ex);
             return -1;
         }
         return 0;

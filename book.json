@@ -2,56 +2,36 @@
     "plot": [
         {
             "chapter": 1,
-            "description": "Master Antonio, affectionately called Master Cherry, discovers a peculiar piece of firewood that laughs and screams when he tries to carve it. Confused and frightened, he hands it over to his neighbor Geppetto, who dreams of creating a charming marionette. Players must help navigate a humorous quarrel between the two carpenters over the wood and, ultimately, assist Geppetto in bringing the puppetry to life. The chapter involves collecting tools for carving, calming down a bickering crowd, and avoiding antics from children who mock Geppetto's wig.",
-            "title": "The Mysterious Log"
+            "description": "The journey begins in Master Cherry's workshop. After escaping the terror of the screaming log, you deliver it to the elderly Geppetto. You must manage your limited resources and survive the initial chaos of your wooden body. The objective is to survive the first night of rebellion and escape the basement into the dangerous streets before Geppetto can fully discipline you.",
+            "title": "The Cursed Wood"
         },
         {
             "chapter": 2,
-            "description": "After Geppetto finishes carving Pinocchio, the mischievous puppet is born. His antics lead to him stealing Geppetto's wig and running away into the streets. Players must help Geppetto chase down Pinocchio while avoiding the policeman who mistakes the puppet for a runaway animal. Later, players assist Pinocchio in his disastrous attempts to fend for himself, from burning his feet to a hilarious failed cooking attempt with a magical egg. This chapter is about learning the consequences of actions and the pitfalls of disobedience.",
-            "title": "Pinocchio's Mischief Begins"
+            "description": "Now on the streets, hunger emerges as your primary enemy. You must find food without being captured by the law. You will encounter the Talking Cricket; you must decide whether to listen to his warnings or dismiss them. The chapter ends with surviving a night in the cold and avoiding the fatal accident near the brazier that destroys your feet.",
+            "title": "The Hunger and the Cold"
         },
         {
             "chapter": 3,
-            "description": "As Pinocchio seeks food to satisfy his hunger, he faces the trials of being chased by townsfolk and getting caught by the policeman. Players must find resources to help Pinocchio evade capture while navigating through town. They'll encounter the Talking Cricket, who offers sage advice, only to see Pinocchio shun him. The chapter highlights the importance of listening to wisdom while including amusing escape sequences and amusing hunger-induced antics.",
-            "title": "Misadventures in Town"
+            "description": "With new legs but no money, you must return to Geppetto. You must navigate the social pressure of the crowd and the reality of your poverty. The objective is to reach school, but you must resist the temptation of the puppet theater. Failing to protect your primer represents a betrayal of your father's survival.",
+            "title": "The Sacrifice of Paper"
         },
         {
             "chapter": 4,
-            "description": "After resting from his exhausting day, Pinocchio wakes to discover his feet are burnt and must enlist Geppetto’s help to get new legs. Reconciling with his father, they embark on a journey into the world of education. Players help Geppetto gather materials to make a paper suit for Pinocchio and ensure he attends school despite temptations that arise. This chapter teaches about the value of education, wrapped in quirky classroom antics.",
-            "title": "A Puppet's Heart"
+            "description": "You enter the theater and face the wrath of Mangiafuoco. You must survive the threat of the fire by proving your bravery for Harlequin. After receiving five gold coins, you must survive the trek home while avoiding the Fox and the Cat, who represent the greatest threat to your resources.",
+            "title": "The Fire and the Gold"
         },
         {
             "chapter": 5,
-            "description": "On his way to school, Pinocchio is sidetracked by the enchanting sounds of a puppet theater. Players must navigate through Pinocchio’s internal struggle between desire for fun and the responsibility of school. Once there, they need to avoid the wrath of the terrifying puppet master while participating in a comical performance that leads to unexpected mischief. This chapter explores the idea of the ‘grass is always greener’ while delivering slapstick humor.",
-            "title": "The Call of the Puppet Theater"
+            "description": "Led by greed, you travel to the Magic Field. You must survive the betrayal at the tavern and the physical attack by the robbers. The objective is to escape the burning tree and the muddy ditch to reach the safety of the Blue-Haired Girl's house.",
+            "title": "The Field of Catchfools"
         },
         {
             "chapter": 6,
-            "description": "After his return from the theater, Pinocchio encounters the sly Fox and Cat, who lure him into a scheme, promising riches. Players must assist in avoiding the deception of these characters while learning about greed and its humorous consequences. Comedic twists await as Pinocchio believes he can dig for fortune but instead ends up in hysterical predicaments at a tavern and lonely nights fooling around with deceitful companions.",
-            "title": "Foxes, Cats, and Tossed Dreams"
-        },
-        {
-            "chapter": 7,
-            "description": "Pinocchio finds himself in a series of ridiculous situations, including being captured by a Green Fisherman and tricked into becoming a dog. Players must outsmart the comedic characters holding him captive and navigate the misunderstandings that arise, emphasizing the theme of friendship and loyalty through humor while learning lessons about being oneself.",
-            "title": "Trapped in Uncle's Humor"
-        },
-        {
-            "chapter": 8,
-            "description": "Pinocchio takes a moment for self-reflection after enduring a mishap as a donkey. This chapter introduces the remorseful side of his character, where he realizes the folly of his past actions through humorous mishaps. Players will help Pinocchio in his endeavors for redemption, as he tries to correct his mistakes while comically grappling with his new donkey form.",
-            "title": "Repentance with a Twist"
-        },
-        {
-            "chapter": 9,
-            "description": "In his final adventure, Pinocchio combines his newfound wisdom with courage and determination to rescue Geppetto from a shark. Players will guide the duo through hilarious challenges, navigating misunderstandings and slapstick humor, leading to a heartfelt reunion and resulting in his transition to a real boy. Themes of sacrifice, love, and redemption are illustrated with whimsy and laughter.",
-            "title": "Fate's Final Blessing"
-        },
-        {
-            "chapter": 10,
-            "description": "As Pinocchio wakes as a real boy, he finds himself excitedly embracing a life filled with joy, mischief, and a newfound understanding of responsibilities. Players must decide on the next funny escapades he will pursue or how he will misunderstand his newly acquired human traits. Filled with laughter, antics, and moral resolutions, this chapter ends with a ceremonial celebration of his journey, reinforcing the comedic principles of life.",
-            "title": "The Real Boy's Journey Begins"
+            "description": "After being hung from the Big Oak, you must survive the Fairy's rescue. You must navigate the medical debates of the doctors and the temptation of the bitter medicine. The final challenge is surviving the Land of Toys and the journey through the ocean to find Geppetto and finally achieve human transformation.",
+            "title": "The Trial of the Soul"
         }
     ],
-    "startPrompt": "The whimsical journey of a wooden puppet named Pinocchio begins as his creator, Geppetto, sets forth to teach him the meaning of existence. Amid laughter and chaos, you join Pinocchio, navigating through quirky encounters and whimsical challenges in the quaint village. Armed with only a paper suit and boundless curiosity, will you help Pinocchio discover the world around him? \n\n<options><option>Explore the streets for food</option><option>Visit Geppetto in his workshop</option></options>",
-    "title": "The Whimsical Adventures of Pinocchio",
-    "world": "Welcome to the fantastical and comedic world of Pinocchio, a realm filled with enchanted creatures, lively puppets, and quirky characters, where humor and mischief reign supreme. This whimsical environment, set in a quaint village and intertwined with magical forests and bizarre taverns, thrives on unpredictable antics and uproarious misunderstandings. In this world, wooden puppets can laugh, cry, and even cause unfortunate accidents, all while imparting valuable life lessons about integrity and responsibility.\n\nThe inhabitants include Master Cherry, a comical carpenter known for his bright red nose, and Geppetto, the well-meaning but beleaguered old man, often ridiculed for his peculiar wig. An array of colorful characters joins them, such as the witty Talking Cricket, the mischievous Blue-Haired Fairy, sly Foxes and Cats, and an assortment of other delightful beings. Together, they navigate through each other's errors, forging unexpected friendships and learning to embrace the absurdity of their fates, as every decision leads to comically unforeseen consequences."
+    "startPrompt": "The air in the basement smells of sawdust and old wood. You are Pinocchio, a freshly carved puppet made of a log that screamed when touched. Geppetto, the yellow-haired old man, has just finished carving your legs. Your wooden joints creak, and a strange hunger gnaws at your hollow chest. Outside, the world is cold and vast, and you have nothing but your wooden body and a splintering curiosity.\n\n<options><option>Run out of the house to explore the streets</option><option>Stay and help Geppetto finish his work</option></options>",
+    "title": "The Survival of Pinocchio",
+    "world": "In a world where the line between life and wood is thin, a wooden puppet is born from a cursed log. The setting is a harsh, gritty Italian-esque landscape filled with desolate basement dwellings, treacherous forests, and dangerous street-side encounters. Survival is the only law; hunger is a constant shadow, and the environment is unforgiving to those who lack discipline or moral fiber. \n\nThe world is governed by the whims of powerful entities like the cruel Coachman and the terrifying puppet master. Factions exist between the swindlers (the Fox and Cat) who exploit the weak, and the Fairy who represents a fleeting path to redemption. To survive, one must navigate the physical dangers of starvation and the psychological temptations of greed, all while struggling to maintain one's humanity in a cold, wooden reality."
 }

@@ -3,5 +3,6 @@
     "apiKeyEnvVar": "GEMINI_API_KEY",
     "baseUrl": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
     "format": "gemini",
-    "modelName": "gemini-3.1-flash"
+    "modelName": "gemini-3.1-flash",
+    "apiKeyUrl": "https://aistudio.google.com/app/apikey"
 }

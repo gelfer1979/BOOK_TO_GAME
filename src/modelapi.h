@@ -119,6 +119,7 @@ inline void EmscriptenHostWrite(const std::string& filename, const std::string& 
 #include <algorithm>
 #include <cstdint>
 #include <functional>
+#include <cctype>
 #ifndef __EMSCRIPTEN__
 #include <curl/curl.h>
 #endif
@@ -128,6 +129,18 @@ inline void EmscriptenHostWrite(const std::string& filename, const std::string& 
 
 
 inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& errorMsg);
+inline void AppendDebugLog(const std::string& msg) {
+    std::ofstream f("game_log.txt", std::ios::app);
+    if (f.is_open()) {
+        f << msg << std::endl;
+        f.close();
+    }
+    std::ofstream f2("../game_log.txt", std::ios::app);
+    if (f2.is_open()) {
+        f2 << msg << std::endl;
+        f2.close();
+    }
+}
 inline std::string Trim(const std::string& str);
 
 struct PipelineStep {
@@ -272,6 +285,46 @@ public:
         }
 
 
+        // Decrypt if XOR encrypted (starts with XOR: or filename contains pollimation/pollination and is a hex string)
+        {
+            bool shouldDecrypt = false;
+            std::string hexStr = apiKey_;
+            if (apiKey_.rfind("XOR:", 0) == 0) {
+                shouldDecrypt = true;
+                hexStr = apiKey_.substr(4);
+            } else if ((configFilePath.find("pollimation") != std::string::npos || configFilePath.find("pollination") != std::string::npos) && hexStr.length() % 2 == 0) {
+                bool isHex = true;
+                for (char c : hexStr) {
+                    if (!std::isxdigit(static_cast<unsigned char>(c))) {
+                        isHex = false;
+                        break;
+                    }
+                }
+                if (isHex) {
+                    shouldDecrypt = true;
+                }
+            }
+
+            if (shouldDecrypt) {
+                std::string decrypted = "";
+                std::string xorKey = "gelfer19791979";
+                for (size_t i = 0; i < hexStr.length(); i += 2) {
+                    std::string byteString = hexStr.substr(i, 2);
+                    char byte = (char)strtol(byteString.c_str(), nullptr, 16);
+                    char keyChar = xorKey[(i / 2) % xorKey.length()];
+                    decrypted += (byte ^ keyChar);
+                }
+                apiKey_ = decrypted;
+            }
+        }
+        {
+            std::string logMsg = "[Debug] ConfigFilePath: " + configFilePath + ", loadedPath: " + loadedPath + 
+                                 ", API Key length: " + std::to_string(apiKey_.length()) + 
+                                 ", prefix: " + (apiKey_.length() > 5 ? apiKey_.substr(0, 5) : "") + 
+                                 ", env var: " + apiKeyEnvVar_;
+            AppendDebugLog(logMsg);
+        }
+
         // Apply environment override if defined to ensure key security
         if (!apiKeyEnvVar_.empty()) {
             const char* envVal = std::getenv(apiKeyEnvVar_.c_str());
@@ -338,6 +391,7 @@ public:
             }
             requestBody["messages"].push_back({{"role", "user"}, {"content", question}});
             requestBody["temperature"] = 0.7;
+            requestBody["max_tokens"] = 4000;
             jsonPayload = requestBody.dump();
         }
 
@@ -526,6 +580,7 @@ public:
                 }
                 requestBody["messages"].push_back({{"role", "user"}, {"content", question}});
                 requestBody["temperature"] = 0.7;
+                requestBody["max_tokens"] = 4000;
                 jsonPayload = requestBody.dump();
             }
 
@@ -539,7 +594,7 @@ public:
             curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, jsonPayload.length());
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-            curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_MAX_TLSv1_2);
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
 #if defined(__ANDROID__)
             const char* internalPath = SDL_AndroidGetInternalStoragePath();
             if (internalPath) {
@@ -595,6 +650,14 @@ public:
             long httpResponseCode = 0;
             curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpResponseCode);
             std::cout << "[API Response] HTTP status code: " << httpResponseCode << std::endl;
+            {
+                std::string logMsg = "[API Response] URL: " + baseUrl_ + 
+                                     ", Key length: " + std::to_string(apiKey_.length()) + 
+                                     ", Key prefix: " + (apiKey_.length() > 5 ? apiKey_.substr(0, 5) : "") + 
+                                     ", HTTP response: " + std::to_string(httpResponseCode) + 
+                                     ", Body: " + readBuffer;
+                AppendDebugLog(logMsg);
+            }
 
             if (httpResponseCode == 429 || (httpResponseCode >= 500 && httpResponseCode <= 599)) {
                 curl_slist_free_all(headers);
@@ -714,7 +777,12 @@ public:
             nlohmann::json requestBody;
             nlohmann::json contents = nlohmann::json::array();
             
-            for (const auto& msg : history) {
+            size_t startIdx = 0;
+            if (history.size() > 12) {
+                startIdx = history.size() - 12;
+            }
+            for (size_t i = startIdx; i < history.size(); ++i) {
+                const auto& msg = history[i];
                 std::string role = (msg.sender == "User") ? "user" : "model";
                 if (!contents.empty() && contents.back()["role"] == role) {
                     std::string existingText = contents.back()["parts"][0]["text"].get<std::string>();
@@ -758,7 +826,12 @@ public:
                 requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
             }
             
-            for (const auto& msg : history) {
+            size_t startIdx = 0;
+            if (history.size() > 12) {
+                startIdx = history.size() - 12;
+            }
+            for (size_t i = startIdx; i < history.size(); ++i) {
+                const auto& msg = history[i];
                 std::string role = (msg.sender == "User") ? "user" : "assistant";
                 if (!requestBody["messages"].empty() && requestBody["messages"].back()["role"] == role) {
                     std::string existingText = requestBody["messages"].back()["content"].get<std::string>();
@@ -768,6 +841,7 @@ public:
                 }
             }
             requestBody["temperature"] = 0.7;
+            requestBody["max_tokens"] = 4000;
             jsonPayload = requestBody.dump();
         }
 
@@ -920,7 +994,12 @@ public:
                 nlohmann::json requestBody;
                 nlohmann::json contents = nlohmann::json::array();
                 
-                for (const auto& msg : history) {
+                size_t startIdx = 0;
+                if (history.size() > 12) {
+                    startIdx = history.size() - 12;
+                }
+                for (size_t i = startIdx; i < history.size(); ++i) {
+                    const auto& msg = history[i];
                     std::string role = (msg.sender == "User") ? "user" : "model";
                     if (!contents.empty() && contents.back()["role"] == role) {
                         std::string existingText = contents.back()["parts"][0]["text"].get<std::string>();
@@ -964,7 +1043,12 @@ public:
                     requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
                 }
                 
-                for (const auto& msg : history) {
+                size_t startIdx = 0;
+                if (history.size() > 12) {
+                    startIdx = history.size() - 12;
+                }
+                for (size_t i = startIdx; i < history.size(); ++i) {
+                    const auto& msg = history[i];
                     std::string role = (msg.sender == "User") ? "user" : "assistant";
                     if (!requestBody["messages"].empty() && requestBody["messages"].back()["role"] == role) {
                         std::string existingText = requestBody["messages"].back()["content"].get<std::string>();
@@ -974,6 +1058,7 @@ public:
                     }
                 }
                 requestBody["temperature"] = 0.7;
+                requestBody["max_tokens"] = 4000;
                 jsonPayload = requestBody.dump();
             }
 
@@ -987,7 +1072,7 @@ public:
             curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, jsonPayload.length());
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-            curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_MAX_TLSv1_2);
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
 #if defined(__ANDROID__)
             const char* internalPath = SDL_AndroidGetInternalStoragePath();
             if (internalPath) {
@@ -1043,6 +1128,14 @@ public:
             long httpResponseCode = 0;
             curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpResponseCode);
             std::cout << "[API Response] HTTP status code: " << httpResponseCode << std::endl;
+            {
+                std::string logMsg = "[API Response Chat] URL: " + baseUrl_ + 
+                                     ", Key length: " + std::to_string(apiKey_.length()) + 
+                                     ", Key prefix: " + (apiKey_.length() > 5 ? apiKey_.substr(0, 5) : "") + 
+                                     ", HTTP response: " + std::to_string(httpResponseCode) + 
+                                     ", Body: " + readBuffer;
+                AppendDebugLog(logMsg);
+            }
 
             if (httpResponseCode == 429 || (httpResponseCode >= 500 && httpResponseCode <= 599)) {
                 curl_slist_free_all(headers);
@@ -1517,6 +1610,7 @@ public:
 
         // 3. Fallback to any other operational AI profile configured with a key
         std::vector<std::string> fallbacks = {
+            "ai_pollimation.json",
             "ai_openrouter.json",
             "ai_gemini.json",
             "ai_openai.json",
@@ -2000,11 +2094,96 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
         optionsPart.erase(std::remove(optionsPart.begin(), optionsPart.end(), '|'), optionsPart.end());
         
         std::vector<std::string> tempOptions;
-        std::stringstream ss(optionsPart);
-        std::string line;
-        while (std::getline(ss, line)) {
-            std::string optLine = Trim(line);
-            if (optLine.empty()) continue;
+        
+        // 1. Try parsing XML tags from optionsPart if present
+        std::string lowerOptionsPart = ToLower(optionsPart);
+        if (lowerOptionsPart.find("<option") != std::string::npos) {
+            size_t searchPos = 0;
+            while (true) {
+                size_t optStart = lowerOptionsPart.find("<option", searchPos);
+                if (optStart == std::string::npos) break;
+                
+                if (optStart + 7 < lowerOptionsPart.length() && (lowerOptionsPart[optStart + 7] == 's' || lowerOptionsPart[optStart + 7] == 'S')) {
+                    searchPos = optStart + 7;
+                    continue;
+                }
+                
+                size_t tagEnd = lowerOptionsPart.find(">", optStart);
+                if (tagEnd == std::string::npos) break;
+                
+                size_t optEnd = lowerOptionsPart.find("</option>", tagEnd);
+                if (optEnd != std::string::npos) {
+                    std::string optText = optionsPart.substr(tagEnd + 1, optEnd - (tagEnd + 1));
+                    tempOptions.push_back(CleanTextForFont(Trim(optText)));
+                    searchPos = optEnd + 9;
+                } else {
+                    searchPos = tagEnd + 1;
+                }
+            }
+        }
+        
+        // 2. Try parsing square brackets from optionsPart if present and XML parsing yielded nothing
+        if (tempOptions.empty() && lowerOptionsPart.find("[option") != std::string::npos) {
+            size_t searchPos = 0;
+            while (true) {
+                size_t optStart = lowerOptionsPart.find("[option", searchPos);
+                if (optStart == std::string::npos) break;
+                
+                if (optStart + 7 < lowerOptionsPart.length() && (lowerOptionsPart[optStart + 7] == 's' || lowerOptionsPart[optStart + 7] == 'S')) {
+                    searchPos = optStart + 7;
+                    continue;
+                }
+                
+                size_t tagEnd = lowerOptionsPart.find("]", optStart);
+                if (tagEnd == std::string::npos) break;
+                
+                size_t optEnd = lowerOptionsPart.find("[/option]", tagEnd);
+                if (optEnd != std::string::npos) {
+                    std::string optText = optionsPart.substr(tagEnd + 1, optEnd - (tagEnd + 1));
+                    tempOptions.push_back(CleanTextForFont(Trim(optText)));
+                    searchPos = optEnd + 9;
+                } else {
+                    searchPos = tagEnd + 1;
+                }
+            }
+        }
+
+        // Fallback to line-by-line parsing if no tags were parsed
+        if (tempOptions.empty()) {
+            std::stringstream ss(optionsPart);
+            std::string line;
+            while (std::getline(ss, line)) {
+                std::vector<std::string> subLines;
+                std::string currentSub;
+                for (size_t i = 0; i < line.length(); ++i) {
+                    bool isMarker = false;
+                    size_t markerLen = 0;
+                    if (i + 1 < line.length() && (line[i] == '-' || line[i] == '*' || line[i] == '+') && line[i+1] == ' ') {
+                        if (i == 0 || line[i-1] == ' ' || line[i-1] == '\t' || line[i-1] == '-' ||
+                            (i + 2 < line.length() && std::isupper((unsigned char)line[i+2]))) {
+                            isMarker = true;
+                            markerLen = 2;
+                        }
+                    }
+                    if (isMarker) {
+                        currentSub = Trim(currentSub);
+                        if (!currentSub.empty()) {
+                            subLines.push_back(currentSub);
+                        }
+                        currentSub = "";
+                        i += markerLen - 1;
+                    } else {
+                        currentSub += line[i];
+                    }
+                }
+                currentSub = Trim(currentSub);
+                if (!currentSub.empty()) {
+                    subLines.push_back(currentSub);
+                }
+
+                for (auto& optLine : subLines) {
+                    optLine = Trim(optLine);
+                    if (optLine.empty()) continue;
             
             // Trim quotes, commas, and formatting characters from option lines (e.g. from JSON arrays)
             bool cleaned = true;
@@ -2093,9 +2272,40 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
                 tempOptions.push_back(CleanTextForFont(optLine));
             }
         }
+        }
+        }
         
         // Always split and strip, without safety threshold guard
         options = tempOptions;
+
+        // Strip XML tags and bracket wrappers from options text only, and filter out structural options
+        std::vector<std::string> filteredOptions;
+        for (auto& opt : options) {
+            size_t start = opt.find("<");
+            while (start != std::string::npos) {
+                size_t end = opt.find(">", start);
+                if (end != std::string::npos) {
+                    opt.erase(start, end - start + 1);
+                } else {
+                    opt.erase(start);
+                    break;
+                }
+                start = opt.find("<");
+            }
+            for (const std::string& bracket : {"[option]", "[/option]", "[options]", "[/options]"}) {
+                size_t pos = opt.find(bracket);
+                while (pos != std::string::npos) {
+                    opt.erase(pos, bracket.length());
+                    pos = opt.find(bracket);
+                }
+            }
+            opt = Trim(opt);
+            if (!opt.empty() && opt != "options" && opt != "/options" && opt != "option" && opt != "/option") {
+                filteredOptions.push_back(opt);
+            }
+        }
+        options = filteredOptions;
+
         aiResponse = Trim(narrativePart);
         
         // Clean trailing/leading newlines, spaces, and leftover characters
@@ -2250,6 +2460,23 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
             char c = aiResponse[i - 1];
             if (isXmlFormat && c == '<') {
                 eraseStart = i - 1;
+                // Walk back past any whitespace and digit/letter list markers (e.g. "1. ", "a) ")
+                while (eraseStart > limit && std::isspace((unsigned char)aiResponse[eraseStart - 1])) {
+                    eraseStart--;
+                }
+                if (eraseStart > limit && (aiResponse[eraseStart - 1] == '.' || aiResponse[eraseStart - 1] == ')')) {
+                    size_t checkPos = eraseStart - 1;
+                    while (checkPos > limit && std::isspace((unsigned char)aiResponse[checkPos - 1])) {
+                        checkPos--;
+                    }
+                    size_t markerStart = checkPos;
+                    while (markerStart > limit && (std::isdigit((unsigned char)aiResponse[markerStart - 1]) || std::isalpha((unsigned char)aiResponse[markerStart - 1]))) {
+                        markerStart--;
+                    }
+                    if (markerStart < checkPos) {
+                        eraseStart = markerStart;
+                    }
+                }
                 break;
             } else if (!isXmlFormat && c == '[') {
                 eraseStart = i - 1;
@@ -2464,6 +2691,34 @@ inline std::vector<std::string> ExtractAndStripOptions(std::string& aiResponse, 
     while (!aiResponse.empty() && (aiResponse.front() == '\n' || aiResponse.front() == '\r' || aiResponse.front() == ' ')) {
         aiResponse.erase(aiResponse.begin());
     }
+
+    // Strip XML tags and bracket wrappers from options text only, and filter out structural options
+    std::vector<std::string> filteredOptions;
+    for (auto& opt : options) {
+        size_t start = opt.find("<");
+        while (start != std::string::npos) {
+            size_t end = opt.find(">", start);
+            if (end != std::string::npos) {
+                opt.erase(start, end - start + 1);
+            } else {
+                opt.erase(start);
+                break;
+            }
+            start = opt.find("<");
+        }
+        for (const std::string& bracket : {"[option]", "[/option]", "[options]", "[/options]"}) {
+            size_t pos = opt.find(bracket);
+            while (pos != std::string::npos) {
+                opt.erase(pos, bracket.length());
+                pos = opt.find(bracket);
+            }
+        }
+        opt = Trim(opt);
+        if (!opt.empty() && opt != "options" && opt != "/options" && opt != "option" && opt != "/option") {
+            filteredOptions.push_back(opt);
+        }
+    }
+    options = filteredOptions;
     
     return options;
 }
