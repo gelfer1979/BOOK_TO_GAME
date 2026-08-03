@@ -1,5 +1,5 @@
--- The C compiler identification is AppleClang 16.0.0.16000026
--- The CXX compiler identification is AppleClang 16.0.0.16000026
+-- The C compiler identification is AppleClang 21.0.0.21000101
+-- The CXX compiler identification is AppleClang 21.0.0.21000101
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
 -- Check for working C compiler: /usr/bin/cc - skipped
@@ -10,8 +10,8 @@
 -- Check for working CXX compiler: /usr/bin/c++ - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- The OBJC compiler identification is AppleClang 16.0.0.16000026
--- The OBJCXX compiler identification is AppleClang 16.0.0.16000026
+-- The OBJC compiler identification is AppleClang 21.0.0.21000101
+-- The OBJCXX compiler identification is AppleClang 21.0.0.21000101
 -- Detecting OBJC compiler ABI info
 -- Detecting OBJC compiler ABI info - done
 -- Check for working OBJC compiler: /usr/bin/cc - skipped
@@ -32,16 +32,17 @@
 -- Performing Test HAVE_INLINE - Success
 -- Performing Test HAVE_ATTRIBUTE_NORETURN
 -- Performing Test HAVE_ATTRIBUTE_NORETURN - Success
-CMake Deprecation Warning at external/src/SDL2/CMakeLists.txt:8 (cmake_minimum_required):
+CMake Warning (deprecated) at external/src/SDL2/CMakeLists.txt:8 (cmake_minimum_required):
   Compatibility with CMake < 3.10 will be removed from a future version of
   CMake.
 
   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
   to tell CMake that the project requires at least <min> but has been updated
   to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
 
-
--- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Found PkgConfig: /opt/homebrew/bin/pkg-config (found version "3.0.4")
 -- Looking for __GLIBC__
 -- Looking for __GLIBC__ - not found
 -- Performing Test CHECK_CPU_ARCHITECTURE_X86
@@ -392,20 +393,21 @@ CMake Deprecation Warning at external/src/SDL2/CMakeLists.txt:8 (cmake_minimum_r
 -- Looking for include file pthread_np.h - not found
 -- Performing Test HAVE_PTHREAD_SETNAME_NP
 -- Performing Test HAVE_PTHREAD_SETNAME_NP - Success
--- Found Git: /usr/bin/git (found version "2.39.5 (Apple Git-154)")
-CMake Deprecation Warning at external/src/SDL2/CMakeLists.txt:3245 (cmake_minimum_required):
+-- Found Git: /opt/homebrew/bin/git (found version "2.55.0")
+CMake Warning (deprecated) at external/src/SDL2/CMakeLists.txt:3245 (cmake_minimum_required):
   Compatibility with CMake < 3.10 will be removed from a future version of
   CMake.
 
   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
   to tell CMake that the project requires at least <min> but has been updated
   to work with policies introduced by <max> or earlier.
-
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
 
 -- 
 -- SDL2 was configured with the following options:
 -- 
--- Platform: Darwin-24.1.0
+-- Platform: Darwin-25.5.0
 -- 64-bit:   TRUE
 -- Compiler: /usr/bin/cc
 -- Revision: SDL-2.30.9
@@ -526,7 +528,7 @@ CMake Deprecation Warning at external/src/SDL2/CMakeLists.txt:3245 (cmake_minimu
 --   SDL_X11_XSHAPE              (Wanted: OFF): OFF
 --   SDL_XINPUT                  (Wanted: OFF): OFF
 -- 
---  CFLAGS:         -idirafter "/Users/user/Desktop/BOOK_TO_GAME/external/src/SDL2/src/video/khronos"
+--  CFLAGS:         -idirafter "/Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/external/src/SDL2/src/video/khronos"
 --  EXTRA_CFLAGS:   -Wall -Wundef -fno-strict-aliasing -Wdocumentation -Wdocumentation-unknown-command -fcomment-block-commands=threadsafety -fcomment-block-commands=deprecated -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs -D_THREAD_SAFE
 --  EXTRA_LDFLAGS: -Wl,-framework,CoreVideo;-Wl,-framework,Cocoa;-Wl,-framework,IOKit;-Wl,-framework,ForceFeedback;-Wl,-framework,Carbon;-Wl,-framework,CoreAudio;-Wl,-framework,AudioToolbox;-Wl,-framework,AVFoundation;-Wl,-framework,Foundation;-Wl,-weak_framework,GameController;-Wl,-weak_framework,Metal;-Wl,-weak_framework,QuartzCore;-Wl,-weak_framework,CoreHaptics -Wl,-compatibility_version,3001.0.0;-Wl,-current_version,3001.9.0
 --  EXTRA_LIBS:    m
@@ -546,52 +548,53 @@ CMake Deprecation Warning at external/src/SDL2/CMakeLists.txt:3245 (cmake_minimu
 -- Enabled ogg music: using stb_vorbis
 -- Configuring SDL2_ttf 2.22.0
 -- SDL2_ttf: Using vendored freetype library
-CMake Deprecation Warning at external/src/SDL2_ttf/external/freetype/CMakeLists.txt:113 (cmake_minimum_required):
+CMake Warning (deprecated) at external/src/SDL2_ttf/external/freetype/CMakeLists.txt:113 (cmake_minimum_required):
   Compatibility with CMake < 3.10 will be removed from a future version of
   CMake.
 
   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
   to tell CMake that the project requires at least <min> but has been updated
   to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
 
-
--- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
 -- Looking for fcntl.h
 -- Looking for fcntl.h - found
 -- Configuring SDL2_net 2.2.0
-CMake Deprecation Warning at external/src/mbedtls/CMakeLists.txt:21 (cmake_minimum_required):
+CMake Warning (deprecated) at external/src/mbedtls/CMakeLists.txt:21 (cmake_minimum_required):
   Compatibility with CMake < 3.10 will be removed from a future version of
   CMake.
 
   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
   to tell CMake that the project requires at least <min> but has been updated
   to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
 
-
--- Found Python3: /usr/local/Frameworks/Python.framework/Versions/3.14/bin/python3.14 (found version "3.14.5") found components: Interpreter
+-- Found Python3: /opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14 (found version "3.14.6") found components: Interpreter
 -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
 -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
 -- Found Threads: TRUE
--- Using CMake version 4.3.3
+-- Using CMake version 4.4.0
 -- curl version=[8.8.0-DEV]
 -- Picky compiler options: -Wextra -Wall -pedantic -Wbad-function-cast -Wconversion -Winline -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Wno-long-long -Wno-multichar -Wpointer-arith -Wshadow -Wsign-compare -Wundef -Wunused -Wwrite-strings -Waddress -Wattributes -Wcast-align -Wdeclaration-after-statement -Wdiv-by-zero -Wempty-body -Wendif-labels -Wfloat-equal -Wformat-security -Wignored-qualifiers -Wmissing-field-initializers -Wmissing-noreturn -Wno-format-nonliteral -Wno-system-headers -Wold-style-definition -Wredundant-decls -Wsign-conversion -Wno-error=sign-conversion -Wstrict-prototypes -Wtype-limits -Wunreachable-code -Wunused-parameter -Wvla -Wshift-sign-overflow -Wshorten-64-to-32 -Wlanguage-extension-token -Wformat=2 -Wdouble-promotion -Wenum-conversion -Wpragmas -Wunused-const-variable -Wunreachable-code-break -Wheader-guard -Wsometimes-uninitialized -Wcomma -Wmissing-variable-declarations -Wassign-enum -Wextra-semi-stmt -Wimplicit-fallthrough
 -- Performing Test HAVE_SOCKADDR_IN6_SIN6_ADDR
 -- Performing Test HAVE_SOCKADDR_IN6_SIN6_ADDR - Success
 -- Performing Test HAVE_SOCKADDR_IN6_SIN6_SCOPE_ID
 -- Performing Test HAVE_SOCKADDR_IN6_SIN6_SCOPE_ID - Success
--- Found Perl: /usr/bin/perl (found version "5.34.1")
+-- Found Perl: /opt/homebrew/bin/perl (found version "5.42.2")
 -- Looking for connect in socket
 -- Looking for connect in socket - not found
 -- Looking for gethostname
 -- Looking for gethostname - found
--- Found ZLIB: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libz.tbd (found version "1.2.12")
+-- Found ZLIB: /Applications/Xcode_26.6.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libz.tbd (found version "1.2.12")
 CMake Warning at external/src/curl/CMakeLists.txt:763 (message):
   A selected TLS library does not support TLS 1.3.
 
 
 -- Looking for idn2_lookup_ul in idn2
 -- Looking for idn2_lookup_ul in idn2 - not found
--- Could NOT find LibPSL (missing: LIBPSL_LIBRARY LIBPSL_INCLUDE_DIR) 
+-- Found LibPSL: /opt/homebrew/lib/libpsl.dylib (found version "0.23.0")
 -- Performing Test USE_UNIX_SOCKETS
 -- Performing Test USE_UNIX_SOCKETS - Success
 -- Found CA bundle: /etc/ssl/cert.pem
@@ -846,6 +849,6 @@ CMake Warning at external/src/curl/CMakeLists.txt:763 (message):
 -- Configuring traditional C++ SDL2 target build (USE_WEBVIEW=OFF)...
 -- Configuring macOS WKWebView bundle...
 -- Configuring PuterBridge (macOS invisible WKWebView helper)...
--- Configuring done (98.0s)
--- Generating done (0.2s)
--- Build files have been written to: /Users/user/Desktop/BOOK_TO_GAME/build
+-- Configuring done (69.2s)
+-- Generating done (0.7s)
+-- Build files have been written to: /Users/runner/work/BOOK_TO_GAME/BOOK_TO_GAME/build
