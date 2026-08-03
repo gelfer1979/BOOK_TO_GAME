@@ -1,16 +1,27 @@
 {
-    "AIModel": "ai_pollimation.json",
+    "LOCAL": {
+        "context_length": 4096,
+        "temperature": 0.7,
+        "gpu_offload": "max",
+        "thinking": false,
+        "context-shift": true,
+        "flash-attn": true,
+        "no-mmap": true,
+        "threads": 4,
+        "show_window": true
+    },
+    "AIModel": "ai_local.json",
     "BookTimeout": 240,
     "CURLOPT_CONNECTTIMEOUT": 5,
     "CURLOPT_TIMEOUT": 15,
     "Language": "English",
     "bookRetries": 5,
-    "choicesSeparator": "\u001f",
+    "choicesSeparator": "<options>",
     "fontSizeOffset": 6,
     "formatReminder": [
-        "[REMINDER: Use the exact output format from your system prompt: narrative text first, then '\u001f', then 2-4 choices each on its own line '- ']"
+        "REMINDER: Use the exact output format from your system prompt: narrative text first, then <options>, then 2-4 choices each on its own line '- ', then </options>\n"
     ],
-    "prompt_ai_rule_options_format": "1. OPTIONS FORMAT: After your narrative, output the \u001f character on its own line, then 2-5 choices each starting with '- '. NEVER use XML tags, numbered lists, or any other prefix.\n",
+    "prompt_ai_rule_options_format": "OPTIONS FORMAT: After your narrative, output <options>, then 2-5 choices each starting with '- ', then </options>\n",
     "genrePreprocessingPipeline": [
         {
             "action": "regex_replace",
@@ -220,14 +231,9 @@
         "",
         "DEATH: If the player picks a fatal choice, describe their end and append '[dead]' — no options after. Never label any choice as dangerous.",
         "",
-        "FORMAT: Narrative first. Then '\u001f'. Then 2-5 options each starting with '- '. NEVER use A) B) C) or 1. 2. 3. or any prefix other than '- '. Options in the same language as the story.",
+        "FORMAT: Narrative first. Then output interactive choices wrapped inside <options> and </options> tags. Each option must start with a hyphen and a space '- '. NEVER use A) B) C) or 1. 2. 3. or any prefix other than '- '. Options in the same language as the story.",
         "",
         "EXAMPLE:",
-        "You hear a noise behind the door. \u001f",
-        "- Open the door",
-        "- Listen through it",
-        "- Walk away",
-        "- Call for help",
-        "- Break it down"
+        "You hear a noise behind the door. <options>\n- Open the door\n- Listen through it\n- Walk away\n- Call for help\n- Break it down\n</options>"
     ]
 }

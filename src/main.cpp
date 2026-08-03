@@ -37,6 +37,7 @@
 #endif
 
 #include "modelapi.h"
+#include "llama_manager.h"
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -1068,8 +1069,26 @@ void ScanAvailableAiModels() {
         }
     } catch (...) {}
 
-    // Ensure ai_pollimation.json is always first, and Puter is second in the list
+    // Ensure ai_local.json is always first, ai_local_low.json second, then ai_pollimation and puter
     state.mutex.lock();
+    auto itLocal = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
+        return info.filename == "ai_local.json";
+    });
+    decltype(state.availableAiModels)::value_type localInfo = {"ai_local.json", "openai"};
+    if (itLocal != state.availableAiModels.end()) {
+        localInfo = *itLocal;
+        state.availableAiModels.erase(itLocal);
+    }
+
+    auto itLocalLow = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
+        return info.filename == "ai_local_low.json";
+    });
+    decltype(state.availableAiModels)::value_type localLowInfo = {"ai_local_low.json", "openai"};
+    if (itLocalLow != state.availableAiModels.end()) {
+        localLowInfo = *itLocalLow;
+        state.availableAiModels.erase(itLocalLow);
+    }
+
     auto itPuter = std::find_if(state.availableAiModels.begin(), state.availableAiModels.end(), [](const decltype(state.availableAiModels)::value_type& info) {
         return info.filename == "ai_puter.json";
     });
@@ -1090,6 +1109,8 @@ void ScanAvailableAiModels() {
     
     state.availableAiModels.insert(state.availableAiModels.begin(), puterInfo);
     state.availableAiModels.insert(state.availableAiModels.begin(), pollinationInfo);
+    state.availableAiModels.insert(state.availableAiModels.begin(), localLowInfo);
+    state.availableAiModels.insert(state.availableAiModels.begin(), localInfo);
     state.mutex.unlock();
 }
 
@@ -1294,6 +1315,7 @@ void ReloadSettingsAndReinit(const std::string& newAiModelFile) {
     }
     
     // 4. Re-instantiate AskAiExternal and configure it
+    StartLlamaServer(newAiModelFile);
     state.mutex.lock();
     if (newAiModelFile == "ai_puter.json" || newAiModelFile == "../ai_puter.json") {
         state.aiClient = std::make_unique<AskAiPuter>(newAiModelFile);
@@ -1429,7 +1451,7 @@ void TriggerUiLocalization() {
         state.modelState.promptAiRuleLanguageEnforcement = "4. LANGUAGE ENFORCEMENT: All generated narration (story) and choices inside <option> tags MUST be strictly written in the target language: '{language}', regardless of the language of the source book lore or chapter plots.\n";
         state.modelState.promptAiFinalChapterWarning = "IMPORTANT: This is the final chapter of the entire book! Resolve all major story conflicts, bring the plot to a grand finale and a satisfying logical conclusion of the entire book. After the </options> tags, you MUST append the transition tag to the epilogue: <next_chapter>{epilogue_chapter}</next_chapter>.\n";
         state.modelState.promptAiEpilogueWriter = "You are a professional epilogue writer. Write a beautiful, brief, and satisfying final conclusion. Do NOT output any choices, options inside <options>, or XML tags. Respond strictly in the target language: '{language}'.";
-        state.modelState.promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST format the choices at the very end of startPrompt using <options><option>First choice</option><option>Second choice</option></options> tags in the target language. Example: 'Story narration.\\n\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}";
+        state.modelState.promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST format the choices at the very end of startPrompt using <options><option>First choice</option><option>Second choice</option></options> tags in the target language. Example: 'Story narration.\\n\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}";
         state.modelState.promptAiBookGenLength = "Generate a logical sequential series of chapters mapping out the story arc according to the user's custom length wishes: \"{wishes}\". Follow this number/range of chapters exactly.";
         state.modelState.promptAiBookGenLengthDefault = "Generate between 3 and 5 logical sequential chapters mapping out the story arc.";
         state.modelState.promptAiBookGenGenre = "\n- Genre and atmosphere constraint: \"{wishes}\". You MUST adapt the quest environment, vocabulary, tropes, and thematic elements to match this chosen genre/atmosphere.";
@@ -1440,8 +1462,8 @@ void TriggerUiLocalization() {
         state.modelState.promptAiLocalizer = "You are a professional software localizer. Translate all values in the provided JSON to the requested language. Return ONLY valid JSON, with absolutely no markdown, comments, formatting, or options tags.";
         state.modelState.promptAiSummarizer = "You are a professional summarizing assistant. Summarize the text as requested. Do NOT output any options tags, XML, or choice suggestions.";
         state.modelState.promptAiLanguageNormalizer = "You are a standard language name normalizer. Return only the single-word English name of the language, with no other text, options, or tags.";
-        state.modelState.promptAiBookBlueprintGen = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game outline in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST include exactly between 2 and 4 choices at the very end of startPrompt using XML-like option tags in the target language. Example: 'Story narration.\\\\n\\\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}\n\n- Number of chapters constraint: generate exactly {total_chapters} logical sequential chapter titles outline matching the story arc.\n\nYour response must be ONLY valid JSON content. Output only the pure JSON structure.";
-        state.modelState.promptAiBookBlockHydration = "You are an AI interactive game book generator. Your task is to write detailed descriptions and objectives for a specific block of chapters in the game book outline. You are given the game world lore, the full list of planned chapter titles, and the detailed descriptions of the immediately preceding block of chapters for narrative continuity. You must output a JSON object containing the detailed description and objectives for each chapter in the requested block range. The output JSON MUST conform to the following schema:\n{\n    \"plot\": [\n        {\n            \"chapter\": [Chapter Number],\n            \"title\": \"[Chapter Title]\",\n            \"description\": \"[Detailed description of what the player must achieve in this chapter, characters to meet, items to find, and dangers to avoid. 2-3 sentences]\"\n        }\n    ]\n}\n\nGame World: {world}\n\nFull Chapter Outline: {outline}\n\nPrevious Block Details: {previous_details}\n\nYOUR TASK: Generate detailed descriptions strictly for chapters from {start_chapter} to {end_chapter}.\n\nCRITICAL RULES:\n1. All narration and descriptions inside JSON MUST be strictly written in the language: '{language}'.\n2. Your response must be ONLY valid JSON content. Output only the pure JSON structure.";
+        state.modelState.promptAiBookBlueprintGen = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game outline in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"title\": \"[Title of Chapter 1]\"\n        },\n        {\n            \"title\": \"[Title of Chapter 2]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST include exactly between 2 and 4 choices at the very end of startPrompt using XML-like option tags in the target language. Example: 'Story narration.\\\\n\\\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}\n\n- Number of chapters constraint: generate exactly {total_chapters} logical sequential chapter titles outline matching the story arc.\n\nYour response must be ONLY valid JSON content. Output only the pure JSON structure.";
+        state.modelState.promptAiBookBlockHydration = "You are an AI interactive game book generator. Your task is to write detailed descriptions and objectives for a specific block of chapters in the game book outline. You are given the game world lore, the full list of planned chapter titles, and the detailed descriptions of the immediately preceding block of chapters for narrative continuity. You must output a JSON object containing the detailed description and objectives for each chapter in the requested block range. The output JSON MUST conform to the following schema:\n{\n    \"plot\": [\n        {\n            \"title\": \"[Chapter Title]\",\n            \"description\": \"[Detailed description of what the player must achieve in this chapter, characters to meet, items to find, and dangers to avoid. 2-3 sentences]\"\n        }\n    ]\n}\n\nGame World: {world}\n\nFull Chapter Outline: {outline}\n\nPrevious Block Details: {previous_details}\n\nYOUR TASK: Generate detailed descriptions strictly for chapters from {start_chapter} to {end_chapter}.\n\nCRITICAL RULES:\n1. All narration and descriptions inside JSON MUST be strictly written in the language: '{language}'.\n2. Your response must be ONLY valid JSON content. Output only the pure JSON structure.";
         state.modelState.promptAiSummaryCompressor = "You are a professional editor. Your task is to combine and compress multiple sequential chapter summaries into a single, cohesive, and extremely concise paragraph (at most 3-4 sentences) that highlights the most important plot events, character progress, and key items discovered. Write strictly in the target language: '{language}'.";
         state.modelState.uiChaptersRangeLabel = "Chapters {range}";
         
@@ -4091,7 +4113,8 @@ void MainIteration() {
                         std::string fnLower = state.selectedAiFilename;
                         std::transform(fnLower.begin(), fnLower.end(), fnLower.begin(), ::tolower);
                         if (keyUrl.empty() && fnLower.find("puter") == std::string::npos && 
-                            fnLower.find("lmstudio") == std::string::npos && fnLower.find("llama") == std::string::npos) {
+                            fnLower.find("lmstudio") == std::string::npos &&
+                            fnLower.find("local") == std::string::npos) {
                             if (fnLower.find("gemini") != std::string::npos || fnLower.find("summarizer") != std::string::npos) {
                                 keyUrl = "https://aistudio.google.com/app/apikey";
                             } else if (fnLower.find("openai") != std::string::npos || fnLower.find("chatgpt") != std::string::npos) {
@@ -4386,7 +4409,7 @@ void MainIteration() {
                                 std::transform(fnLower.begin(), fnLower.end(), fnLower.begin(), ::tolower);
                                 bool isKeylessOrLocal = (fnLower.find("puter") != std::string::npos ||
                                                          fnLower.find("lmstudio") != std::string::npos ||
-                                                         fnLower.find("llama") != std::string::npos);
+                                                         fnLower.find("local") != std::string::npos);
                                 
                                 if (isKeylessOrLocal) {
                                     ReloadSettingsAndReinit(state.selectedAiFilename);
@@ -5892,8 +5915,9 @@ extern "C" int SDL_main(int argc, char* argv[]) {
             {"ai_gemini.json", "ai_gemini.json"},
             {"ai_puter.json", "ai_puter.json"},
             {"ai_groq.json", "ai_groq.json"},
-            {"ai_llama.json", "ai_llama.json"},
             {"ai_lmstudio.json", "ai_lmstudio.json"},
+            {"ai_local.json", "ai_local.json"},
+            {"ai_local_low.json", "ai_local_low.json"},
             {"ai_openai.json", "ai_openai.json"},
             {"ai_openrouter.json", "ai_openrouter.json"},
             {"ai_pollimation.json", "ai_pollimation.json"},
@@ -5991,8 +6015,9 @@ extern "C" int SDL_main(int argc, char* argv[]) {
         {"/ai_gemini.json", "ai_gemini.json"},
         {"/ai_puter.json", "ai_puter.json"},
         {"/ai_groq.json", "ai_groq.json"},
-        {"/ai_llama.json", "ai_llama.json"},
         {"/ai_lmstudio.json", "ai_lmstudio.json"},
+        {"/ai_local.json", "ai_local.json"},
+        {"/ai_local_low.json", "ai_local_low.json"},
         {"/ai_openai.json", "ai_openai.json"},
         {"/ai_openrouter.json", "ai_openrouter.json"},
         {"/ai_pollimation.json", "ai_pollimation.json"},
@@ -6034,7 +6059,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
 #endif
 
     // 1. Load settings.json configuration properties
-    std::string aiModel = "ai_pollimation.json";
+    std::string aiModel = "ai_local.json";
     std::string systemPrompt = "";
     int maxRetries = 3;
     int bookRetries = 3;
@@ -6257,6 +6282,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
     state.modelState.maxTurnsForce = maxTurnsForce;
     
     // Instanciate external AI API client
+    StartLlamaServer(aiModel);
     if (aiModel == "ai_puter.json" || aiModel == "../ai_puter.json") {
         state.aiClient = std::make_unique<AskAiPuter>(aiModel);
     } else {
@@ -6387,6 +6413,7 @@ extern "C" int SDL_main(int argc, char* argv[]) {
 #endif
     
     // 8. Clean up resources and terminate safely
+    StopLlamaServer();
     SDL_StopTextInput();
     state.fontTitle.reset();
     state.fontMessage.reset();

@@ -26,32 +26,6 @@ std::string GetUiText(const std::string& key) {
     return key;
 }
 
-std::string CleanRawSummary(std::string text) {
-    size_t pos;
-    // Strip JSON keys like "summary": "
-    while ((pos = text.find("\"summary\": \"")) != std::string::npos) {
-        text.replace(pos, 12, "");
-    }
-    while ((pos = text.find("\"summary\" : \"")) != std::string::npos) {
-        text.replace(pos, 13, "");
-    }
-    while ((pos = text.find("\"summary\":")) != std::string::npos) {
-        text.replace(pos, 10, "");
-    }
-    while ((pos = text.find("\"summary\" :")) != std::string::npos) {
-        text.replace(pos, 11, "");
-    }
-    
-    // Strip double quotes, curly braces, and backslashes
-    std::string cleanText = "";
-    for (char c : text) {
-        if (c != '{' && c != '}' && c != '"' && c != '\\') {
-            cleanText += c;
-        }
-    }
-    
-    return Trim(cleanText);
-}
 
 int main() {
     // Set console output code page to UTF-8 to correctly display Russian/Cyrillic characters
@@ -161,7 +135,7 @@ int main() {
     // 5. Chunk and summarize exactly matching game actions
     std::string consolidatedSummary = "";
     if (content.length() > 20000) {
-        std::vector<std::string> chunks = SplitIntoChunks(content, 20000);
+        std::vector<std::string> chunks = SplitIntoChunks(content, 5000);
         std::cout << "[AI Summarizer] Large book detected. Splitting into " << chunks.size() << " chunks..." << std::endl;
 
         int stepNum = 1;

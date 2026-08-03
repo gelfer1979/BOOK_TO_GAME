@@ -1,0 +1,8 @@
+{
+  "apiKey": "",
+  "apiKeyEnvVar": "LOCAL_API_KEY",
+  "baseUrl": "http://127.0.0.1:8080/v1/chat/completions",
+  "format": "openai",
+  "modelName": "Qwen3-4B-Q4_K_M",
+  "modelPath": "assets/Qwen3-4B-Q4_K_M.gguf"
+}

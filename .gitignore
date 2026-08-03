@@ -56,3 +56,9 @@ BOOK_TO_GAME-x86_64.AppImage
 /save.json
 /../save.json
 save.json
+
+# Heavy AI model files
+*.gguf
+
+# Emscripten web build directories
+/platforms/emscripten/build_web/

@@ -168,7 +168,6 @@ public:
     virtual void setTimeoutSettings(int connectTimeout, int requestTimeout) {}
     virtual ~AskAi() = default;
 };
-
 // Universal concrete implementation for external AI services (LM Studio, Google Gemini, etc.)
 class AskAiExternal : public AskAi {
 public:
@@ -206,6 +205,9 @@ public:
                 }
                 if (j.contains("modelName") && j["modelName"].is_string()) {
                     modelName_ = j["modelName"].get<std::string>();
+                }
+                if (j.contains("modelPath") && j["modelPath"].is_string()) {
+                    modelPath_ = j["modelPath"].get<std::string>();
                 }
                 if (j.contains("apiKey") && j["apiKey"].is_string()) {
                     apiKey_ = j["apiKey"].get<std::string>();
@@ -376,9 +378,7 @@ public:
             });
             requestBody["safetySettings"] = safetySettings;
 
-            nlohmann::json genConfig;
-            genConfig["responseMimeType"] = "application/json";
-            requestBody["generationConfig"] = genConfig;
+            // Do not force responseMimeType = "application/json" globally for general text/summarization/chat requests
             
             jsonPayload = requestBody.dump();
         } else {
@@ -567,9 +567,7 @@ public:
                 });
                 requestBody["safetySettings"] = safetySettings;
 
-                nlohmann::json genConfig;
-                genConfig["responseMimeType"] = "application/json";
-                requestBody["generationConfig"] = genConfig;
+                // Do not force responseMimeType = "application/json" globally for general text/summarization/chat requests
                 
                 jsonPayload = requestBody.dump();
             } else {
@@ -814,15 +812,19 @@ public:
             });
             requestBody["safetySettings"] = safetySettings;
 
-            nlohmann::json genConfig;
-            genConfig["responseMimeType"] = "application/json";
-            requestBody["generationConfig"] = genConfig;
+            // Do not force responseMimeType = "application/json" globally for general text/summarization/chat requests
             
             jsonPayload = requestBody.dump();
         } else {
             // Default OpenAI-compatible format
             nlohmann::json requestBody;
-            requestBody["model"] = modelName_;
+            std::string reqModel = modelName_;
+            if (reqModel.length() > 5 && reqModel.compare(reqModel.length() - 5, 5, ".gguf") == 0) {
+                reqModel = reqModel.substr(0, reqModel.length() - 5);
+            } else if (reqModel.length() > 5 && reqModel.compare(reqModel.length() - 5, 5, ".GGUF") == 0) {
+                reqModel = reqModel.substr(0, reqModel.length() - 5);
+            }
+            requestBody["model"] = reqModel;
             requestBody["messages"] = nlohmann::json::array();
             if (!systemPrompt_.empty()) {
                 requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
@@ -1033,15 +1035,19 @@ public:
                 });
                 requestBody["safetySettings"] = safetySettings;
 
-                nlohmann::json genConfig;
-                genConfig["responseMimeType"] = "application/json";
-                requestBody["generationConfig"] = genConfig;
+                // Do not force responseMimeType = "application/json" globally for general text/summarization/chat requests
                 
                 jsonPayload = requestBody.dump();
             } else {
                 // Default OpenAI-compatible format (LM Studio, etc.)
                 nlohmann::json requestBody;
-                requestBody["model"] = modelName_;
+                std::string reqModel = modelName_;
+                if (reqModel.length() > 5 && reqModel.compare(reqModel.length() - 5, 5, ".gguf") == 0) {
+                    reqModel = reqModel.substr(0, reqModel.length() - 5);
+                } else if (reqModel.length() > 5 && reqModel.compare(reqModel.length() - 5, 5, ".GGUF") == 0) {
+                    reqModel = reqModel.substr(0, reqModel.length() - 5);
+                }
+                requestBody["model"] = reqModel;
                 requestBody["messages"] = nlohmann::json::array();
                 if (!systemPrompt_.empty()) {
                     requestBody["messages"].push_back({{"role", "system"}, {"content", systemPrompt_}});
@@ -1267,14 +1273,15 @@ public:
 private:
     std::string baseUrl_;
     std::string modelName_;
+    std::string modelPath_;
     std::string apiKey_;
     std::string apiKeyEnvVar_;
     std::string format_ = "openai";
     std::string systemPrompt_;
     int maxRetries_ = 3;
     int retryDelayMs_ = 1000;
-    int connectTimeout_ = 20;
-    int requestTimeout_ = 60;
+    int connectTimeout_ = 15;
+    int requestTimeout_ = 45;
 
     // Static callback function to write received data into a std::string
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
@@ -1614,6 +1621,8 @@ public:
 
         // 3. Fallback to any other operational AI profile configured with a key
         std::vector<std::string> fallbacks = {
+            "ai_local.json",
+            "ai_local_low.json",
             "ai_pollimation.json",
             "ai_openrouter.json",
             "ai_gemini.json",
@@ -1621,8 +1630,7 @@ public:
             "ai_deepseek.json",
             "ai_groq.json",
             "ai_chatgpt.json",
-            "ai_copilot.json",
-            "ai_llama.json"
+            "ai_copilot.json"
         };
         
         for (const auto& fPath : fallbacks) {
@@ -1719,7 +1727,7 @@ struct GameState {
     std::string promptAiRuleLanguageEnforcement = "4. LANGUAGE ENFORCEMENT: All generated narration (story) and choices inside <option> tags MUST be strictly written in the target language: '{language}', regardless of the language of the source book lore or chapter plots.\n";
     std::string promptAiFinalChapterWarning = "IMPORTANT: This is the final chapter of the entire book! Resolve all major story conflicts, bring the plot to a grand finale and a satisfying logical conclusion of the entire book. After the </options> tags, you MUST append the transition tag to the epilogue: <next_chapter>{epilogue_chapter}</next_chapter>.\n";
     std::string promptAiEpilogueWriter = "You are a professional epilogue writer. Write a beautiful, brief, and satisfying final conclusion. Do NOT output any choices, options inside <options>, or XML tags. Respond strictly in the target language: '{language}'.";
-    std::string promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"chapter\": 1,\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"chapter\": 2,\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST format the choices at the very end of startPrompt using <options><option>First choice</option><option>Second choice</option></options> tags in the target language. Example: 'Story narration.\\n\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}";
+    std::string promptAiBookGenerator = "You are an AI interactive game book generator. Analyze the following raw book/story text and transform it into a structured adventure game in JSON format. The JSON MUST strictly conform to the following schema:\n{\n    \"title\": \"[A short, engaging title for the quest game]\",\n    \"world\": \"[A detailed description of the game world, lore, rules, and faction details based on the text. 2-3 paragraphs]\",\n    \"plot\": [\n        {\n            \"title\": \"[Title of Chapter 1]\",\n            \"description\": \"[Detailed description of what the player must achieve in Chapter 1, characters to meet, items to find, and dangers to avoid]\"\n        },\n        {\n            \"title\": \"[Title of Chapter 2]\",\n            \"description\": \"[Detailed description of Chapter 2 objectives...]\"\n        }\n    ],\n    \"startPrompt\": \"[Introductory prompt that starts the game in Chapter 1, setting the scene, giving initial inventory, and prompting first choices. You MUST format the choices at the very end of startPrompt using <options><option>First choice</option><option>Second choice</option></options> tags in the target language. Example: 'Story narration.\\n\\n<options><option>First choice</option><option>Second choice</option></options>']\"\n}";
     std::string promptAiBookGenLength = "Generate a logical sequential series of chapters mapping out the story arc according to the user's custom length wishes: \"{wishes}\". Follow this number/range of chapters exactly.";
     std::string promptAiBookGenLengthDefault = "Generate between 3 and 5 logical sequential chapters mapping out the story arc.";
     std::string promptAiBookGenGenre = "\n- Genre and atmosphere constraint: \"{wishes}\". You MUST adapt the quest environment, vocabulary, tropes, and thematic elements to match this chosen genre/atmosphere.";
@@ -3117,7 +3125,32 @@ inline void SaveBookErrorLog(const std::string& rawResponse, const std::string& 
     }
 }
 
-inline std::vector<std::string> SplitIntoChunks(const std::string& text, size_t maxChunkSize = 20000) {
+inline std::string CleanRawSummary(std::string text) {
+    size_t pos;
+    while ((pos = text.find("\"summary\": \"")) != std::string::npos) {
+        text.replace(pos, 12, "");
+    }
+    while ((pos = text.find("\"summary\" : \"")) != std::string::npos) {
+        text.replace(pos, 13, "");
+    }
+    while ((pos = text.find("\"summary\":")) != std::string::npos) {
+        text.replace(pos, 10, "");
+    }
+    while ((pos = text.find("\"summary\" :")) != std::string::npos) {
+        text.replace(pos, 11, "");
+    }
+    
+    std::string cleanText = "";
+    for (char c : text) {
+        if (c != '{' && c != '}' && c != '"' && c != '\\') {
+            cleanText += c;
+        }
+    }
+    
+    return Trim(cleanText);
+}
+
+inline std::vector<std::string> SplitIntoChunks(const std::string& text, size_t maxChunkSize = 5000) {
     std::vector<std::string> chunks;
     if (text.empty()) return chunks;
     
@@ -3255,10 +3288,10 @@ inline bool CreateBookFromTxt(
         if (content.length() > 20000 && !isNBook) {
             int summarizePass = 1;
             while (content.length() > 20000) {
-                std::vector<std::string> chunks = SplitIntoChunks(content, 20000);
+                std::vector<std::string> chunks = SplitIntoChunks(content, 5000);
                 std::cout << "[AI Book Gen] Summarization pass " << summarizePass
                           << ": content is " << content.length() << " chars, splitting into "
-                          << chunks.size() << " chunks of <= 20,000 characters..." << std::endl;
+                          << chunks.size() << " chunks of <= 5,000 characters..." << std::endl;
 
                 // Safety: if there's only one chunk but it's still > 20,000 chars the AI can't
                 // reduce it further — break to avoid an infinite loop.
@@ -3346,7 +3379,8 @@ inline bool CreateBookFromTxt(
                         return false;
                     }
                     
-                    consolidatedSummary += "Part " + std::to_string(stepNum) + " Summary:\n" + chunkSummary + "\n\n";
+                    std::string cleanChunk = CleanRawSummary(chunkSummary);
+                    consolidatedSummary += "Part " + std::to_string(stepNum) + " Summary:\n" + cleanChunk + "\n\n";
                     stepNum++;
                 }
 
@@ -3482,12 +3516,15 @@ inline bool CreateBookFromTxt(
                 SaveBookErrorLog(response, outError);
                 return false;
             }
-            if (!bj.contains("startPrompt") || !bj["startPrompt"].is_string()) {
-                outError = "Missing or invalid 'startPrompt' field in generated JSON.";
-                SaveBookErrorLog(response, outError);
-                return false;
+            if (bj["plot"].is_array()) {
+                int chCounter = 1;
+                for (auto& item : bj["plot"]) {
+                    if (item.is_object()) {
+                        item["chapter"] = chCounter++;
+                    }
+                }
             }
-            
+
             std::ofstream outFile("book.json");
             if (!outFile.is_open()) {
                 outError = "Could not open book.json for writing.";
@@ -3645,10 +3682,10 @@ inline bool CreateBookFromTxt(
         }
 
         std::string outlineStr = "";
+        int bpChIdx = 1;
         for (const auto& item : blueprintJson["plot"]) {
-            int chNum = item.value("chapter", 0);
             std::string chTitle = item.value("title", "");
-            outlineStr += "Chapter " + std::to_string(chNum) + ": " + chTitle + "\n";
+            outlineStr += "Chapter " + std::to_string(bpChIdx++) + ": " + chTitle + "\n";
         }
 
         std::map<int, std::string> chapterDescriptions;
@@ -3679,11 +3716,8 @@ inline bool CreateBookFromTxt(
                 int endPrev = step * 10;
                 for (int ch = startPrev; ch <= endPrev; ++ch) {
                     std::string chTitle = "";
-                    for (const auto& item : blueprintJson["plot"]) {
-                        if (item.value("chapter", 0) == ch) {
-                            chTitle = item.value("title", "");
-                            break;
-                        }
+                    if (ch - 1 < (int)blueprintJson["plot"].size()) {
+                        chTitle = blueprintJson["plot"][ch - 1].value("title", "");
                     }
                     std::string desc = chapterDescriptions[ch];
                     previousDetails += "Chapter " + std::to_string(ch) + ": " + chTitle + "\nDescription: " + desc + "\n\n";
@@ -3774,24 +3808,15 @@ inline bool CreateBookFromTxt(
                         continue;
                     }
 
-                    bool chaptersFound = true;
-                    for (int ch = startCh; ch <= endCh; ++ch) {
-                        bool found = false;
-                        for (const auto& item : blockJson["plot"]) {
-                            if (item.contains("chapter") && item["chapter"].is_number() && item["chapter"].get<int>() == ch) {
-                                if (item.contains("description") && item["description"].is_string() && !item["description"].get<std::string>().empty()) {
-                                    found = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (!found) {
-                            chaptersFound = false;
-                            break;
+                    int requiredCount = endCh - startCh + 1;
+                    int validDescCount = 0;
+                    for (const auto& item : blockJson["plot"]) {
+                        if (item.contains("description") && item["description"].is_string() && !item["description"].get<std::string>().empty()) {
+                            validDescCount++;
                         }
                     }
 
-                    if (!chaptersFound) {
+                    if (validDescCount < requiredCount) {
                         blockError = "Hydration JSON plot array does not contain descriptions for all requested chapters in the block.";
                         SaveBookErrorLog(response, blockError);
                         continue;
@@ -3810,26 +3835,29 @@ inline bool CreateBookFromTxt(
                 return false;
             }
 
+            int idxInBlock = 0;
             for (const auto& item : blockJson["plot"]) {
-                int chNum = item.value("chapter", 0);
                 std::string desc = item.value("description", "");
-                if (chNum >= startCh && chNum <= endCh) {
-                    chapterDescriptions[chNum] = desc;
+                int targetCh = startCh + idxInBlock;
+                if (targetCh <= endCh) {
+                    chapterDescriptions[targetCh] = desc;
+                    idxInBlock++;
                 }
             }
         }
 
         nlohmann::json finalPlot = nlohmann::json::array();
+        int finalChNum = 1;
         for (const auto& item : blueprintJson["plot"]) {
-            int chNum = item.value("chapter", 0);
             std::string chTitle = item.value("title", "");
-            std::string chDesc = chapterDescriptions[chNum];
+            std::string chDesc = chapterDescriptions[finalChNum];
 
             nlohmann::json chObj;
-            chObj["chapter"] = chNum;
+            chObj["chapter"] = finalChNum;
             chObj["title"] = chTitle;
             chObj["description"] = chDesc;
             finalPlot.push_back(chObj);
+            finalChNum++;
         }
 
         nlohmann::json finalBookJson;

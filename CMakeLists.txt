@@ -42,11 +42,12 @@ add_library(book_miniz STATIC
 )
 target_include_directories(book_miniz PUBLIC external/src/miniz)
 
+
 # 1. EMSCRIPTEN (WebAssembly) BUILD
 if(EMSCRIPTEN)
     message(STATUS "Configuring build for Emscripten (WebAssembly)...")
 
-    add_executable(${PROJECT_NAME} src/main.cpp src/book_converter.cpp)
+    add_executable(${PROJECT_NAME} src/main.cpp src/book_converter.cpp src/llama_manager.cpp)
     
     # Set the target extension for running in a web browser
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
@@ -116,8 +117,9 @@ if(EMSCRIPTEN)
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_copilot.json@ai_copilot.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_deepseek.json@ai_deepseek.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_groq.json@ai_groq.json"
-        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_llama.json@ai_llama.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_lmstudio.json@ai_lmstudio.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_local.json@ai_local.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_local_low.json@ai_local_low.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_openai.json@ai_openai.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_openrouter.json@ai_openrouter.json"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ai_pollimation.json@ai_pollimation.json"
@@ -340,15 +342,15 @@ else()
     
     if(ANDROID)
         set(TARGET_NAME main)
-        add_library(${TARGET_NAME} SHARED src/main.cpp src/book_converter.cpp)
+        add_library(${TARGET_NAME} SHARED src/main.cpp src/book_converter.cpp src/llama_manager.cpp)
     else()
         set(TARGET_NAME ${PROJECT_NAME})
         if(WIN32)
-            add_executable(${TARGET_NAME} WIN32 src/main.cpp src/book_converter.cpp)
+            add_executable(${TARGET_NAME} WIN32 src/main.cpp src/book_converter.cpp src/llama_manager.cpp)
         elseif(APPLE AND NOT IOS)
-            add_executable(${TARGET_NAME} MACOSX_BUNDLE src/main.cpp src/book_converter.cpp)
+            add_executable(${TARGET_NAME} MACOSX_BUNDLE src/main.cpp src/book_converter.cpp src/llama_manager.cpp)
         else()
-            add_executable(${TARGET_NAME} src/main.cpp src/book_converter.cpp)
+            add_executable(${TARGET_NAME} src/main.cpp src/book_converter.cpp src/llama_manager.cpp)
         endif()
     endif()
 
@@ -379,7 +381,6 @@ else()
         pugixml
         book_miniz
     )
-
     if(MOBI_SUPPORT)
         target_link_libraries(${TARGET_NAME} PRIVATE mobi)
     endif()
